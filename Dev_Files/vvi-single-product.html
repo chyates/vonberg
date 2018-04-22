@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+        <title>VVI New Products</title>
+    </head>
+
+    <body>
+
+        <div id="single-product-container" class="container-fluid">
+            <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
+                <a class="navbar-brand" href="#">
+                    <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                </a>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <form class="form-inline">
+                        <input class="form-control" type="search" placeholder="Search by product number or keyword" aria-label="Search">
+                    </form>
+                </div>
+            </nav><!-- home-top-header end -->
+    
+            <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+                <a class="main-nav-hov nav-link nav-item" href="/products">Products</a>
+                <a class="main-nav-hov nav-link nav-item" href="/resources">Resources</a>
+                <a class="nav-link nav-item" href="/about">About</a>
+                <a class="nav-link nav-item" href="/find-a-distributor">Find a Distributor</a>
+                <a class="nav-link nav-item" href="/contact">Contact</a>
+            </nav><!-- main-navbar end -->
+
+            <div id="single-main-container" class="col-10 mx-auto">
+                <div class="single-product-header-row row">
+                    <div class="col-lg-6">
+                        <h1 class="page-title">Flow Regulating Valves</h1>
+                        <p class="product-info">Vonberg flow regulating valves are pressure compensated valves, providing a regulated flow across a specified pressure range. They are available with our exclusive Surges Internally Dampened (S.I.D) feature designed to eliminate instability inherent in most load lowering applications.</p>
+                    </div>
+                    <div class="col-lg-6">
+                        <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
+                    </div>
+                </div><!-- single-product-header-row end -->
+                <h1 class="page-header">Flow Regulators</h1>
+                <div class="single-product-main row">
+                    <div class="col-lg-4">
+                        <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
+                        <div class="product-text-block my-3">
+                            <h3 class="product-name">270X1 Series</h3>
+                            <p class="product-info">INLINE • SPOOL TYPE</p>
+                        </div>
+                    </div>
+                </div><!-- single-product-main-row end -->
+                <h1 class="page-header">Flow Dividers & Combiners</h1>
+                <div class="single-product-main row">
+                    <div class="col-lg-4">
+                        <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
+                        <div class="product-text-block my-3">
+                            <h3 class="product-name">270X1 Series</h3>
+                            <p class="product-info">INLINE • SPOOL TYPE</p>
+                        </div>
+                    </div>
+                </div><!-- single-product-main-row end -->
+            </div><!-- single-main-container end -->
+        </div><!-- single-product-container end -->
+    </body>
+</html>

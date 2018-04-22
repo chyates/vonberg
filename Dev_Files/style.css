@@ -8,25 +8,11 @@ body {
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
-h1 {
-    font-size: 30px;
-    color: #017d44;
-    letter-spacing: 0;
-    line-height: 42px;
-}
-
 h2 {
     font-size: 24px;
     color: #017d44;
     letter-spacing: 0;
     line-height: 30px;
-}
-
-h3 {
-    font-size: 18px;
-    color: #017d44;
-    letter-spacing: 0;
-    line-height: 25px;
 }
 
 h4 {
@@ -37,7 +23,7 @@ h4 {
 }
 
 p {
-    /* font-family: 'Poppins', sans-serif; */
+    font-family: 'Poppins', sans-serif;
     color: #425460;
     font-size: 14px;
     letter-spacing: 0;
@@ -56,12 +42,16 @@ a:hover {
     text-decoration: none;
 }
 
-#site-container {
+#site-container, #new-products-container,
+#products-landing-container,
+#single-product-container {
     padding: 0;
-    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
 }
 
-#home-container {
+#home-container,
+#new-main-container,
+#landing-main-container,
+#single-main-container {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -289,6 +279,122 @@ a:hover {
 
 @media (max-width: 576px){
     
+}
+
+/* === NEW PRODUCTS PAGE STYLES: GLOBAL / DESKTOP === */
+
+.page-title {
+    font-size: 30px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 42px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;  
+}
+
+.page-header {
+    font-size: 30px;
+    color: #017d44;
+    letter-spacing: 0;
+    font-weight: 600;
+    line-height: 42px;
+    text-transform: uppercase;
+}
+
+.product-name {
+    font-size: 18px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 25px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.product-img-block {
+    height: 180px;
+    width: 280px;
+}
+
+@media (min-width: 992px){
+
+}
+
+/* +++ NEW PRODUCTS: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ NEW PRODUCTS: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === PRODUCTS LANDING PAGE STYLES: GLOBAL / DESKTOP === */
+
+#landing-main-container .product-text-block .product-name {
+    text-align: center;
+}
+
+.landing-img-block {
+    width: 361px;
+    height: 241px;
+}
+
+.landing-list-row {
+    margin: 20px auto;
+}
+
+#landing-main-container .learn-more-block {
+    width: 361px;
+    height: 241px;
+    border: 1px solid #DDDDDD;
+    background-color: rgba(235, 236, 230, 0.5);
+}
+
+#landing-main-container .landing-list-row .landing-img-block {
+    border: 0.67px solid #CCCCCC;
+}
+
+.learn-more-block button.btn.btn-primary {
+    background-color: #017D44;
+    border: 1px solid #017D44;
+    padding: 6px 30px;
+    border-radius: 3px;
+    margin: 10px auto;
+}
+
+.learn-more-block button.btn.btn-primary:hover {
+    background-color: #00632f;
+    border: 1px solid #00632f;
+}
+
+.learn-more-block button.btn.btn-primary a {
+	color: #FFFFFF;
+	font-family: Poppins;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 18px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media (min-width: 992px){
+
+}
+
+/* +++ PRODUCTS LANDING PAGE: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ PRODUCTS LANDING PAGE: MOBILE +++ */
+
+@media (max-width: 576px) {
+
 }
 
 /* === FOOTER STYLES: GLOBAL / DESKTOP === */
