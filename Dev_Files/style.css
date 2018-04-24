@@ -44,14 +44,14 @@ a:hover {
 
 #site-container, #new-products-container,
 #products-landing-container,
-#single-product-container {
+#product-category-container {
     padding: 0;
 }
 
 #home-container,
 #new-main-container,
 #landing-main-container,
-#single-main-container {
+#category-main-container {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -394,6 +394,34 @@ a:hover {
 /* +++ PRODUCTS LANDING PAGE: MOBILE +++ */
 
 @media (max-width: 576px) {
+
+}
+
+/* === PRODUCT CATEGORY STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px){
+
+}
+
+#category-main-container .page-title {
+    text-align: left;
+}
+
+#category-main-container .prod-category-header-row .product-img-block {
+    height: 230px;
+    width: 560px;
+}
+
+
+/* +++ PRODUCT CATEGORY: TABLET +++ */
+
+@media (max-width: 991px){
+
+}
+
+/* +++ PRODUCT CATEGORY: MOBILE +++ */
+
+@media (max-width: 576px){
 
 }
 
