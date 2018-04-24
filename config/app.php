@@ -66,7 +66,7 @@ return [
     'Security' => [
         'salt' => env('SECURITY_SALT', 'db451d4d1ad3e0f795266670585a133ef89057411dddaebbfb5b140192ecc3d9'),
     ],
-    
+
     /**
      * Apply timestamps with the last modified time to static assets (js, css, images).
      * Will append a querystring parameter containing the time the file was modified.
@@ -229,9 +229,9 @@ return [
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'my_app',
+            'username' => 'root',
+            'password' => 'hepcat69',
+            'database' => 'vonberg',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],
@@ -269,9 +269,9 @@ return [
             'persistent' => false,
             'host' => 'localhost',
             //'port' => 'non_standard_port_number',
-            'username' => 'my_app',
-            'password' => 'secret',
-            'database' => 'test_myapp',
+            'username' => 'root',
+            'password' => 'hepcat69',
+            'database' => 'test_vonberg',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'cacheMetadata' => true,

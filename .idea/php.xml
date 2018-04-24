@@ -64,6 +64,7 @@
       <path value="$PROJECT_DIR$/vendor/zendframework/zend-diactoros" />
       <path value="$PROJECT_DIR$/vendor/cakephp/cakephp" />
       <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/friendsofcake/cakephp-csvview" />
     </include_path>
   </component>
 </project>

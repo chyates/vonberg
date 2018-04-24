@@ -34,6 +34,7 @@ class DealersController extends AppController
      */
     public function view($id = null)
     {
+        $this->viewBuilder()->setLayout('admin');
         $dealer = $this->Dealers->get($id, [
             'contain' => []
         ]);
@@ -48,6 +49,7 @@ class DealersController extends AppController
      */
     public function add()
     {
+        $this->viewBuilder()->setLayout('admin');
         $dealer = $this->Dealers->newEntity();
         if ($this->request->is('post')) {
             $dealer = $this->Dealers->patchEntity($dealer, $this->request->getData());
@@ -63,9 +65,9 @@ class DealersController extends AppController
 
     public function index()
     {
-  	$dealers = $this->paginate($this->Dealers);
+        $dealers = $this->paginate($this->Dealers);
         $this->set(compact('dealers'));
-
+        $this->viewBuilder()->setLayout('admin');
     	$options = array(
 	// Refer to php.net fgetcsv for more information
 	'length' => 0,
@@ -100,8 +102,6 @@ $Table->connection()->transactional(function () use ($Table, $entities) {
             
         }
         $this->set('uploadData', $uploadData);
-        
-
    
 }
 
@@ -115,6 +115,7 @@ $Table->connection()->transactional(function () use ($Table, $entities) {
      */
     public function edit($id = null)
     {
+        $this->viewBuilder()->setLayout('admin');
         $dealer = $this->Dealers->get($id, [
             'contain' => []
         ]);
@@ -139,6 +140,7 @@ $Table->connection()->transactional(function () use ($Table, $entities) {
      */
     public function delete($id = null)
     {
+        $this->viewBuilder()->setLayout('admin');
         $this->request->allowMethod(['post', 'delete']);
         $dealer = $this->Dealers->get($id);
         if ($this->Dealers->delete($dealer)) {

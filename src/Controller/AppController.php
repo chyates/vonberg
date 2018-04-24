@@ -53,4 +53,7 @@ class AppController extends Controller
         $this->loadComponent('Csrf');
 	$this->loadComponent('CakeDC/Users.UsersAuth');
     }
+    public function beforeRender(Event $event) {
+        $this->set('Auth', $this->Auth);
+    }
 }
