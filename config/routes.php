@@ -42,6 +42,12 @@ use Cake\Routing\Route\DashedRoute;
  *
  */
 Router::defaultRouteClass(DashedRoute::class);
+// for prefix admin
+Router::prefix('admin', function ($routes) {
+    // All routes here will be prefixed with `/admin`
+    // And have the prefix => admin route element added.
+    $routes->fallbacks('InflectedRoute');
+});
 
 Router::scope('/', function (RouteBuilder $routes) {
     /**
