@@ -210,7 +210,6 @@ Type::build('timestamp')
 Plugin::load('BootstrapUI');
 Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 Plugin::load('Geo', ['bootstrap' => true]);
-Plugin::load('CakePHPCSV');
 Plugin::load('CsvView');
 
 /*

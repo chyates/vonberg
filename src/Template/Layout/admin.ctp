@@ -41,7 +41,7 @@ $cakeDescription = 'Vonberg Dev Site';
 </head>
 <body>
       <div class="container">
-          <?= $this->element('adminnav') ?>
+          <?= $this->element('admin_nav') ?>
 	<?= $this->Flash->render() ?>
     <div class="container clearfix">
         <?= $this->fetch('content') ?>
