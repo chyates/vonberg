@@ -28,7 +28,7 @@
                     <th scope="col"><?= $this->Paginator->sort('styleID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('connectionID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('typeID') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('Last_updated') ?></th>
+                    <th scope="col"><?= $this->Paginator->sort('last_updated') ?></th>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
@@ -39,7 +39,7 @@
                         <td><?= h($part->style->name) ?></td>
                         <td><?= h($part->connection->name) ?></td>
                         <td><?= h($part->type->name) ?></td>
-                        <td><?= h($part->type->Last_updated)?></td>
+                        <td><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $part->partID]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $part->partID]) ?>
