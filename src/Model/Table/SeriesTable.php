@@ -29,7 +29,7 @@ class SeriesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->belongsTo('Parts');
         $this->setTable('series');
         $this->setDisplayField('name');
         $this->setPrimaryKey('seriesID');

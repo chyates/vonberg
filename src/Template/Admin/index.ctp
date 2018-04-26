@@ -24,26 +24,22 @@
             <table cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
-                    <th scope="col"><?= $this->Paginator->sort('partID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('categoryID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('seriesID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('styleID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('connectionID') ?></th>
                     <th scope="col"><?= $this->Paginator->sort('typeID') ?></th>
-                    <th scope="col"><?= $this->Paginator->sort('description') ?></th>
                     <th scope="col" class="actions"><?= __('Actions') ?></th>
                 </tr>
                 </thead>
                 <tbody>
                 <?php foreach ($parts as $part): ?>
                     <tr>
-                        <td><?= $this->Number->format($part->partID) ?></td>
-                        <td><?= h($part->categoryID) ?></td>
-                        <td><?= h($part->seriesID) ?></td>
-                        <td><?= h($part->styleID) ?></td>
-                        <td><?= h($part->connectionID) ?></td>
-                        <td><?= h($part->typeID) ?></td>
-                        <td width="25"><?= wordwrap(stream_get_contents($part->description),25,"\n"); ?></td>
+                        <td><?= h($part->category->name) ?></td>
+                        <td><?= h($part->series->name) ?></td>
+                        <td><?= h($part->style->name) ?></td>
+                        <td><?= h($part->connection->name) ?></td>
+                        <td><?= h($part->type->name) ?></td>
                         <td class="actions">
                             <?= $this->Html->link(__('View'), ['action' => 'view', $part->partID]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $part->partID]) ?>

@@ -18,7 +18,8 @@
         public function index()
         {
             $this->viewBuilder()->setLayout('admin');
-            $query = TableRegistry::get('Parts')->find();
+            $this->loadModel('Parts');
+            $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
             $cat = TableRegistry::get('Categories')->find();
             $this->set('parts', $query);
             $this->set('categories', $cat);

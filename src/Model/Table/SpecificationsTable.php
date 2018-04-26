@@ -29,7 +29,7 @@ class SpecificationsTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->belongsTo('Parts');
         $this->setTable('specifications');
         $this->setDisplayField('specsID');
         $this->setPrimaryKey('specsID');
