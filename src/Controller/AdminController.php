@@ -31,7 +31,10 @@
             $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
             $cat = TableRegistry::get('Categories')->find();
             $this->set('parts', $query);
+            $this->set('id', $id);
+            $cat1 = TableRegistry::get('Categories')->find()->where(['categoryID' => $id])->first();
             $this->set('categories', $cat);
+            $this->set('pagename', $cat1->name);
 
         }
 
