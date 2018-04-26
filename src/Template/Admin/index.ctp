@@ -20,7 +20,7 @@
             </nav>
         </div>
         <div class="dealers index col-xs-8">
-            <h3><?= __('Dealers') ?></h3>
+            <h3><?= __('All Parts') ?></h3>
             <table cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
