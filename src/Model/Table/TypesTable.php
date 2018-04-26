@@ -29,7 +29,7 @@ class TypesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->belongsTo('Parts');
         $this->setTable('types');
         $this->setDisplayField('name');
         $this->setPrimaryKey('typesID');

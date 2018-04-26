@@ -29,7 +29,7 @@ class CategoriesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->belongsTo('Parts');
         $this->setTable('categories');
         $this->setDisplayField('name');
         $this->setPrimaryKey('categoryID');

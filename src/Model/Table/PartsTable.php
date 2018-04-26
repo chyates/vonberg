@@ -29,7 +29,11 @@ class PartsTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-
+        $this->belongsTo('Connections')->setForeignKey('connectionID');
+        $this->belongsTo('Styles')->setForeignKey('styleID');
+        $this->belongsTo('Types')->setForeignKey('typeID');
+        $this->belongsTo('Series')->setForeignKey('seriesID');
+        $this->belongsTo('Categories')->setForeignKey('categoryID');
         $this->setTable('parts');
         $this->setDisplayField('partID');
         $this->setPrimaryKey('partID');
