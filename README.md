@@ -9,13 +9,18 @@ The framework source code can be found here: [cakephp/cakephp](https://github.co
 
 ## Installation
 
-To be added
+To install this codebase on a server, use git.
+ 
+`git clone https://github.com/tjcrowley/VVI.git ./VVI`
 
+Set your webserver's webroot to ./VVI/webroot
+
+Restart the webserver. 
 
 ## Configuration
 
 Read and edit `config/app.php` and setup the `'Datasources'` and any other
-configuration relevant for your server.
+configuration relevant for your server. 
 
 ## Layout
 
