@@ -40,7 +40,7 @@
                     <?php if (!$Auth->user()) { ?>
                         <a class="dropdown-item" href="<?php echo $this->Url->build($Auth->getConfig('loginAction')); ?>">Login</a>
                     <?php } else { ?>
-                        <a class="dropdown-item" href="/admin/">Admin Area</a>
+                        <a class="dropdown-item" href="/admin/">CMS</a>
                         <a class="dropdown-item" href="/logout">Logout</a>
 
                     <?php } ?>

@@ -9,7 +9,7 @@
             <?php
             foreach($categories as $category) {
                 ?>
-                <li><?= $this -> Html -> link($category["name"], array("action" =>      "view", $category["categoryID"])) ?></li>
+                <li><?= $this -> Html -> link($category["name"], array("action" => "catalog", $category["categoryID"])) ?></li>
                 <?php
             }
             ?>
@@ -18,14 +18,14 @@
             </li>
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" href="/" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown09">
                     <a class="dropdown-item" href="#">About Vonberg</a>
                     <a class="dropdown-item" href="/locator">Dealer Locator</a>
                     <?php if (!$Auth->user()) { ?>
                         <a class="login" href="<?php echo $this->Url->build($Auth->getConfig('loginAction')); ?>">Login</a>
                     <?php } else { ?>
-                        <a class="dropdown-item" href="/admin/">Admin Area</a>
+                        <a class="dropdown-item" href="/admin/">CMS</a>
                         <a class="dropdown-item" href="/logout">Logout</a>
 
                     <?php } ?>
