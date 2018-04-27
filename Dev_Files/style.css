@@ -44,14 +44,20 @@ a:hover {
 
 #site-container, #new-products-container,
 #products-landing-container,
-#product-category-container {
+#product-category-container,
+#single-prod-container,
+#gen-info-container,
+#find-distributor-container {
     padding: 0;
 }
 
 #home-container,
 #new-main-container,
 #landing-main-container,
-#category-main-container {
+#category-main-container, 
+#single-prod-main-container,
+#gen-info-main-container,
+#find-distributor-main {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -422,6 +428,202 @@ a:hover {
 /* +++ PRODUCT CATEGORY: MOBILE +++ */
 
 @media (max-width: 576px){
+
+}
+
+/* === SINGLE PRODUCT STYLES: GLOBAL / DESKTOP === */
+
+#single-prod-main .single-prod-left-col .page-title {
+    text-align: left;
+}
+
+.product-render,
+.product-schematic,
+.product-performance,
+.product-order {
+    height: 180px;
+    width: 381px;
+}
+
+.single-prod-right-col .right-top-links a {
+    color: #017D44;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 18px;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+#single-prod-main .single-prod-right-col .right-main-content {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+}
+
+.right-list ul {
+    list-style-position: outside;
+}
+ 
+.right-list li {
+    color: #425460;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.spec-table {
+    background-color: #F9F9F7;
+}
+
+.spec-table td {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.series-model-table-row .table-responsive .model-table.table thead th {
+    border-bottom: none;
+}
+
+.series-model-table-row .table-responsive .model-table.table th {
+    border-top: none;
+}
+
+.series-model-table-row .table-responsive .model-table th.model-table-header {
+    color: #017D44;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    text-transform: uppercase;
+}
+
+.series-model-table-row .table-responsive .model-table td.model-table-data {
+    color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.legal-title {
+    font-size: 11px;
+    color: #111111;
+    line-height: 14px;
+    font-weight: 600;
+}
+
+.legal-block {
+    text-align: center;
+    font-size: 11px;
+    color: #666666;
+    line-height: 16px;
+}
+
+/* === GENERAL INFO TEMPLATE STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px) {
+
+}
+
+#gen-info-main-container .page-header,
+#gen-info-main-container .product-info,
+#gen-info-main-container .product-name {
+    text-align: center;
+}
+
+#gen-info-main-container .resource-block {
+    border: 1px solid #DDDDDD;
+    background-color: rgba(235,236,230,0.3);
+}
+
+p.resource-link a {
+    text-decoration: underline;
+    color: #017d44;
+}
+
+#gen-info-main-container button.contact-us {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 9px 32px;
+    background-color: #017D44;
+    border: 1px solid #017D44;
+    border-radius: 3px;
+    margin: 10px auto;
+}
+
+#gen-info-main-container button.contact-us:hover {
+    background-color: #00632f;
+    border: 1px solid #00632f;
+}
+
+/* +++ GENERAL INFO TEMPLATE: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ GENERAL INFO TEMPLATE: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === FIND A DISTRIBUTOR STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px) {
+
+}
+
+#find-distributor-main .left-search .search-block {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+}
+
+#find-distributor-main .left-search .product-info {
+    text-transform: uppercase;
+}
+
+#find-distributor-main .left-search .btn.btn-primary {
+    background-color: #017D44;
+    border: #017d44;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+#find-distributor-main .left-search .miles-text {
+    font-size: 15px;
+    color: #017D44;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+#find-distributor-main .left-search .search-block .search-text-default {
+    color: #017D44;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: center;
+}
+
+#find-distributor-main .left-search .search-block h4 {
+    text-transform: uppercase;
+}
+
+#find-distributor-main .left-search .search-block .results-link {
+    color: #017D44;
+    text-decoration: underline;
+}
+
+/* +++ FIND A DISTRIBUTOR: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ FIND A DISTRIBUTOR: MOBILE +++ */
+
+@media (max-width: 576px) {
 
 }
 
