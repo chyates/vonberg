@@ -6,12 +6,12 @@
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
         {% load static %}
         <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
-        <title>VVI New Products</title>
+        <title>VVI Single Product</title>
     </head>
 
     <body>
 
-        <div id="single-product-container" class="container-fluid">
+        <div id="single-prod-container" class="container-fluid">
             <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
                 <a class="navbar-brand" href="#">
                     <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
@@ -32,37 +32,174 @@
                 <a class="nav-link nav-item" href="/contact">Contact</a>
             </nav><!-- main-navbar end -->
 
-            <div id="single-main-container" class="col-10 mx-auto">
-                <div class="single-product-header-row row">
-                    <div class="col-lg-6">
-                        <h1 class="page-title">Flow Regulating Valves</h1>
-                        <p class="product-info">Vonberg flow regulating valves are pressure compensated valves, providing a regulated flow across a specified pressure range. They are available with our exclusive Surges Internally Dampened (S.I.D) feature designed to eliminate instability inherent in most load lowering applications.</p>
-                    </div>
-                    <div class="col-lg-6">
-                        <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
-                    </div>
-                </div><!-- single-product-header-row end -->
-                <h1 class="page-header">Flow Regulators</h1>
-                <div class="single-product-main row">
-                    <div class="col-lg-4">
-                        <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="product-name">270X1 Series</h3>
-                            <p class="product-info">INLINE • SPOOL TYPE</p>
+            <div id="single-prod-main-container" class="col-10 mx-auto">
+
+                <div id="single-prod-main" class="row mx-5 px-5">
+                    <div class="single-prod-left-col col-lg-8 px-3 py-5">
+                        <div class="left-info">
+                            <h1 class="page-title">1300 Series</h1>
+                            <h3 class="product-name">Flow Regulator</h3>
+                            <p class="product-info">INLINE • FEMALE NPTF PORTS</p>
                         </div>
-                    </div>
-                </div><!-- single-product-main-row end -->
-                <h1 class="page-header">Flow Dividers & Combiners</h1>
-                <div class="single-product-main row">
-                    <div class="col-lg-4">
-                        <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="product-name">270X1 Series</h3>
-                            <p class="product-info">INLINE • SPOOL TYPE</p>
+
+                        <div class="left-desc">
+                            <h3 class="product-name">Description</h3>
+                            <p class="product-info">
+                                AN IN-LINE, PRESSURE-COMPENSATED, NONADJUSTABLE FLOW REGULATOR WITH FEMALE NPTF PORTS, INTENDED FOR FIXED DISPLACEMENT HYDRAULIC CIRCUIT APPLICATIONS.
+                            </p>
                         </div>
+
+                        <div class="left-img-div">
+                            <h3 class="product-name">Product Rendering</h3>
+                            <img class="product-render img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                        </div>
+
+                        <div class="left-img-div">
+                            <h3 class="product-name">Schematic</h3>
+                            <img class="product-schematic img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                        </div>
+
+                        <div class="left-img-div">    
+                            <h3 class="product-name">Typical Performance</h3>
+                            <img class="product-performance img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                        </div>
+                    </div><!-- .single-prod-left-col end -->
+
+                    <div class="single-prod-right-col col-lg-4 px-0 py-5">
+                        <div class="right-top-links row mb-2 justify-content-between">
+                            <a href="/stp">Get STP File</a>
+                            <a href="/pricing">View Pricing</a>
+                            <a href="/pdf">Download PDF</a>
+                        </div>
+
+                        <div class="right-main-content row p-4">
+                            <h3 class="product-name">Operation</h3>
+
+                            <ul class="right-list px-3">
+                                <li class="mt-2 pl-3">IN THE CONTROLLED DIRECTION THIS REGULATOR WILL MAINTAIN A CONSTANT FLOW RATE THROUGHOUT A SPECIFIED PRESSURE RANGE.</li>
+                                <li class="mt-2 pl-3">REVERSE FLOW PASSES THROUGH THE CONTROLLING ORIFICE AND IS UNCONTROLLED PRODUCING A PRESSURE DIFFERENTIAL OF 120 PSI MAX. AT 150% OF CONTROLLED FLOW.</li>
+                            </ul>
+
+                            <h3 class="product-name">Feature</h3>
+
+                            <ul class="right-list px-3">
+                                <li class="mt-2 pl-3">SURGES INTERNALLY DAMPENED FEATURE IS OPTIONAL FOR LOAD LOWERING APPLICATIONS.</li>
+                                <li class="mt-2 pl-3">ALUMINUM BODY, STEEL INTERNALS.</li>
+                                <li class="mt-2 pl-3">HYDRAULIC FLUIDS - GENERAL.</li>
+                                <li class="mt-2 pl-3">NO INTERNAL PACKINGS. ALTERNATE DIVIDE RATIOS AVAILABLE UPON REQUEST.</li>
+                            </ul>
+
+                            <h3 class="product-name">Specifications</h3>
+
+                            <div class="spec-table table-sm">
+                                <table class="table">
+                                    <tr>
+                                        <td>Pressure Range</td>
+                                        <td>250 PSI TO 4500 PSI</td>
+                                    </tr>
+                                    <tr>
+                                        <td>TEMPERATURE RANGE</td>
+                                        <td>250°F TO -40°F</td>
+                                    </tr>
+                                    <tr>
+                                        <td>Flow Tolerance</td>
+                                        <td>+/- 10%</td>
+                                    </tr>
+                                    <tr>
+                                        <td>MAX. PRESSURE DIFFERENTIAL "1" TO "2"</td>
+                                        <td>100 PSI</td>
+                                    </tr>
+                                    <tr>
+                                        <td>DIVIDE / COMBINE RATIO</td>
+                                        <td>50:50</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="right-col-bottom row">
+                            <h3 class="product-name">Ordering Information</h3>
+                            
+                            <img class="product-order img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                        </div>
+
+                    </div><!-- .single-prod-right-col end -->
+                    
+                </div><!-- #single-prod-main end -->
+
+                <div class="series-model-table-row row mx-5 px-5">
+                    <div class="table-responsive">
+                        <table class="model-table table">
+                            <thead>
+                                <th class="model-table-header">Model</th>
+                                <th class="model-table-header">Inlet/Outlet</th>
+                                <th class="model-table-header">Flow Range</th>
+                                <th class="model-table-header">L</th>
+                                <th class="model-table-header">Hex</th>
+                            </thead>
+                            
+                            <tbody>
+                                <tr>
+                                    <td class="model-table-data">1302</td>
+                                    <td class="model-table-data">1/4-18 NPTF</td>
+                                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
+                                    <td class="model-table-data">3.50</td>
+                                    <td class="model-table-data">0.938</td>
+                                </tr>
+                                <tr>
+                                    <td class="model-table-data">1302</td>
+                                    <td class="model-table-data">1/4-18 NPTF</td>
+                                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
+                                    <td class="model-table-data">3.50</td>
+                                    <td class="model-table-data">0.938</td>
+                                </tr>
+                                <tr>
+                                    <td class="model-table-data">1302</td>
+                                    <td class="model-table-data">1/4-18 NPTF</td>
+                                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
+                                    <td class="model-table-data">3.50</td>
+                                    <td class="model-table-data">0.938</td>
+                                </tr>
+                                <tr>
+                                    <td class="model-table-data">1302</td>
+                                    <td class="model-table-data">1/4-18 NPTF</td>
+                                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
+                                    <td class="model-table-data">3.50</td>
+                                    <td class="model-table-data">0.938</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-                </div><!-- single-product-main-row end -->
-            </div><!-- single-main-container end -->
-        </div><!-- single-product-container end -->
+
+                </div><!-- .series-model-table end -->
+
+                <div class="legalese row mx-5 px-5 pb-5">
+                    <p class="legal-title mx-auto mb-1">Page last updated: November 08, 2017</p>
+                    <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
+                    <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
+                </div> <!-- .legalese end -->
+                
+            </div><!-- #single-prod-main-container end -->
+
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                <div class="col-lg">
+                    <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                </div>
+                <div class="col-lg">
+                    <p>info@vonberg.com</p>
+                </div>
+                <div class="col-lg offset-lg">
+                    <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                    <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                </div>
+            </div><!-- vvi-footer end -->
+        </div>
     </body>
 </html>

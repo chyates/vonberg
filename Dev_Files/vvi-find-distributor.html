@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+        <title>VVI General Information</title>
+    </head>
+
+    <body>
+
+        <div id="find-distributor-container" class="container-fluid">
+            <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
+                <a class="navbar-brand" href="#">
+                    <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                </a>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <form class="form-inline">
+                        <input class="form-control" type="search" placeholder="Search by product number or keyword" aria-label="Search">
+                    </form>
+                </div>
+            </nav><!-- home-top-header end -->
+    
+            <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+                <a class="main-nav-hov nav-link nav-item" href="/products">Products</a>
+                <a class="main-nav-hov nav-link nav-item" href="/resources">Resources</a>
+                <a class="nav-link nav-item" href="/about">About</a>
+                <a class="nav-link nav-item" href="/find-a-distributor">Find a Distributor</a>
+                <a class="nav-link nav-item" href="/contact">Contact</a>
+            </nav><!-- main-navbar end -->
+
+            <div id="find-distributor-main" class="col-lg-10 mx-auto p-5">
+                <div class="row">
+                    <div class="col-lg-5 left-search">
+                        <h1 class="page-header">Find a Distributor</h1>
+                        <p class="product-info">Enter Zip Code</p>
+                        <form class="form-inline">
+                            <input type="text" class="mr-2 col-8 form-control">
+                            <input type="button" class="form-control btn btn-primary" value="SEARCH">
+                        </form>
+                        <p class="miles-text">Results within 200 miles</p>
+                        <div class="search-block mt-2 p-4">
+                            <!-- Default to this block of text if nothing has been searched -->
+                            <!-- <p class="mx-auto my-auto search-text-default">Use the search bar above to find distributors in your area.</p> -->
+
+                            <!-- Else, populate search results like this: -->
+                            <h4>Kraft Fluid Systems Inc</h4>
+                            <div class="row no-gutters">
+                                <div class="col-8 d-flex flex-column justify-content-between">
+                                    <p>14300 Foltz Parkway<br>Cleveland, OH 44149</p>
+                                    <p><a class="results-link" href="/test">www.kraftfluid.com</a></p>
+                                </div>
+                                <div class="col-4 d-flex flex-column justify-content-between">
+                                    <p>P: (800) 257-1155 <br> P: (440) 238-5545 <br> F: (440) 238-5266</p>
+                                    <p><a class="results-link" href="/test">Get directions ></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div><!-- .left-search end -->
+
+                    <div class="col-lg-7 right-map">
+                        <!-- Google map goes here, replace dummy image -->
+                        <img class="img-fluid map-fpo" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                    </div>
+                </div>
+            </div><!-- #find-distributor-main end -->
+
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>info@vonberg.com</p>
+                    </div>
+                    <div class="col-lg offset-lg">
+                        <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                        <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                    </div>
+                </div>
+            </div><!-- vvi-footer end -->
+        </div><!-- #find-distributor-container end -->
+    </body>
+</html>
