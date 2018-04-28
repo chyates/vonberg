@@ -1,0 +1,661 @@
+/* === GLOBAL SITE STYLES === */
+
+@import url('https://fonts.googleapis.com/css?family=Poppins');
+
+body {
+    background-color: #EBECE6;
+    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif !important;
+    box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
+}
+
+h2 {
+    font-size: 24px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 30px;
+}
+
+h4 {
+    font-size: 16px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 18px;
+}
+
+p {
+    font-family: 'Poppins', sans-serif;
+    color: #425460;
+    font-size: 14px;
+    letter-spacing: 0;
+    line-height: 21px;
+}
+
+.btn:focus {
+    box-shadow: none;
+}
+
+.form-control:focus {
+    box-shadow: none;
+}
+
+a:hover {
+    text-decoration: none;
+}
+
+#site-container, #new-products-container,
+#products-landing-container,
+#product-category-container,
+#single-prod-container,
+#gen-info-container,
+#find-distributor-container {
+    padding: 0;
+}
+
+#home-container,
+#new-main-container,
+#landing-main-container,
+#category-main-container, 
+#single-prod-main-container,
+#gen-info-main-container,
+#find-distributor-main {
+    background-color: #FFFFFF;
+    box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
+}
+
+/* +++ GLOBAL STYLES: DESKTOP SPECIFIC +++ */
+
+@media (min-width: 992px){
+
+}
+
+/* +++ GLOBAL STYLES: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ GLOBAL STYLES: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+    h1 {
+        font-size: 26px;
+        color: #017d44;
+        letter-spacing: 0;
+    }
+    
+    h2 {
+        font-size: 19px;
+        color: #017d44;
+        letter-spacing: 0;
+    }
+    
+    h3 {
+        font-size: 16px;
+        color: #017d44;
+        letter-spacing: 0;
+        line-height: 21px;
+    }
+}
+
+/* === HEADER STYLES: GLOBAL / DESTKOP === */
+
+#home-top-header {
+    background-color: #FFFFFF;
+}
+
+.header-link {
+    color: #017d44;
+    text-transform: uppercase;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    line-height: 22px;
+    font-size: 14px;
+}
+
+.header-link:hover {
+    color: #017d44;
+}
+
+.header-image {
+    width: 221px;
+    height: 75px;
+}
+
+#main-navbar {
+    background-color: #017d44;
+    box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
+    height: 40px;
+}
+
+#main-navbar .nav-link {
+    color: #FFFFFF;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-family: "Poppins", sans-serif;
+    padding: 16px 20px;
+}
+
+#main-navbar .main-nav-hov:hover {
+    color: #017d44;
+    background-color: #FFFFFF;
+}
+
+@media (min-width: 992px){
+    
+}
+
+/* +++ HEADER: TABLET +++ */
+
+@media (max-width: 991px) {
+    
+}
+
+/* +++ HEADER: MOBILE +++ */
+
+@media (max-width: 576px){
+
+}
+
+/* === HOMEPAGE HERO STYLES: GLOBAL / DESKTOP === */
+
+#home-container {
+    background-color: #ffffff;
+    padding: 30px 40px;
+    box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
+}
+
+#hero-slider .carousel-item img {
+    height: 410px;
+}
+
+@media (min-width: 992px){
+    
+}
+
+/* +++ HOMEPAGE HERO: TABLET +++ */
+
+@media (max-width: 991px) {
+    
+}
+
+/* +++ HOMEPAGE HERO: MOBILE +++ */
+
+@media (max-width: 576px){
+    
+}
+
+/* === HOMEPAGE CARDS STYLES: GLOBAL / DESKTOP === */
+
+.homepage-single-card.card {
+    border-radius: 0;
+    box-sizing: border-box;
+    border: 1px solid #DDDDDD;
+    font-family: 'Poppins', sans-serif;
+}
+
+.homepage-single-card.card img {
+    height: 230px;
+}
+
+.homepage-single-card.card .card-body {
+    border-radius: 0;
+    max-height: 215px;
+    background-color: #F9F9F7;
+}
+
+.homepage-single-card .card-body .card-text {
+    color: #425460;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.homepage-single-card .card-body button.btn.btn-primary {
+    background-color: #017D44;
+    border: 1px solid #017D44;
+    padding: 6px 30px;
+    border-radius: 3px;
+}
+
+.homepage-single-card .card-body button.btn.btn-primary:hover {
+    background-color: #00632f;
+    border: 1px solid #00632f;
+}
+
+.homepage-single-card .card-body button.btn.btn-primary a {
+	color: #FFFFFF;
+	font-family: Poppins;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 18px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media (min-width: 992px){
+    
+}
+
+/* +++ HOMEPAGE CARDS: TABLET +++ */
+
+@media (max-width: 991px) {
+    
+}
+
+/* +++ HOMEPAGE CARDS: MOBILE +++ */
+
+@media (max-width: 576px){
+    
+}
+
+/* === HOMEPAGE LOWER LOGOS STYLES: GLOBAL / DESKTOP === */
+
+#home-lower-logos p{
+    color: #666666;
+    font-size: 15px;
+    font-style: italic;
+    line-height: 25px;
+    margin: 0;
+}
+
+#home-lower-logos .home-lower-cert {
+    font-size: 13px;
+    font-weight: bold;
+    font-family: "Poppins", sans-serif;
+    line-height: 18px;
+    font-style: normal;
+}
+
+#home-lower-logos .my-4 img {
+    margin: 0 24px;
+}
+
+@media (min-width: 992px){
+    
+}
+
+/* +++ HOMEPAGE LOWER LOGOS: TABLET +++ */
+
+@media (max-width: 991px) {
+    
+}
+
+/* +++ HOMEPAGE LOWER LOGOS: MOBILE +++ */
+
+@media (max-width: 576px){
+    
+}
+
+/* === NEW PRODUCTS PAGE STYLES: GLOBAL / DESKTOP === */
+
+.page-title {
+    font-size: 30px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 42px;
+    font-weight: 600;
+    text-transform: uppercase;
+    text-align: center;  
+}
+
+.page-header {
+    font-size: 30px;
+    color: #017d44;
+    letter-spacing: 0;
+    font-weight: 600;
+    line-height: 42px;
+    text-transform: uppercase;
+}
+
+.product-name {
+    font-size: 18px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 25px;
+    text-transform: uppercase;
+    font-weight: 600;
+}
+
+.product-img-block {
+    height: 180px;
+    width: 280px;
+}
+
+@media (min-width: 992px){
+
+}
+
+/* +++ NEW PRODUCTS: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ NEW PRODUCTS: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === PRODUCTS LANDING PAGE STYLES: GLOBAL / DESKTOP === */
+
+#landing-main-container .product-text-block .product-name {
+    text-align: center;
+}
+
+.landing-img-block {
+    width: 361px;
+    height: 241px;
+}
+
+.landing-list-row {
+    margin: 20px auto;
+}
+
+#landing-main-container .learn-more-block {
+    width: 361px;
+    height: 241px;
+    border: 1px solid #DDDDDD;
+    background-color: rgba(235, 236, 230, 0.5);
+}
+
+#landing-main-container .landing-list-row .landing-img-block {
+    border: 0.67px solid #CCCCCC;
+}
+
+.learn-more-block button.btn.btn-primary {
+    background-color: #017D44;
+    border: 1px solid #017D44;
+    padding: 6px 30px;
+    border-radius: 3px;
+    margin: 10px auto;
+}
+
+.learn-more-block button.btn.btn-primary:hover {
+    background-color: #00632f;
+    border: 1px solid #00632f;
+}
+
+.learn-more-block button.btn.btn-primary a {
+	color: #FFFFFF;
+	font-family: Poppins;
+	font-size: 13px;
+	font-weight: bold;
+	line-height: 18px;
+    text-align: center;
+    text-transform: uppercase;
+}
+
+@media (min-width: 992px){
+
+}
+
+/* +++ PRODUCTS LANDING PAGE: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ PRODUCTS LANDING PAGE: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === PRODUCT CATEGORY STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px){
+
+}
+
+#category-main-container .page-title {
+    text-align: left;
+}
+
+#category-main-container .prod-category-header-row .product-img-block {
+    height: 230px;
+    width: 560px;
+}
+
+
+/* +++ PRODUCT CATEGORY: TABLET +++ */
+
+@media (max-width: 991px){
+
+}
+
+/* +++ PRODUCT CATEGORY: MOBILE +++ */
+
+@media (max-width: 576px){
+
+}
+
+/* === SINGLE PRODUCT STYLES: GLOBAL / DESKTOP === */
+
+#single-prod-main .single-prod-left-col .page-title {
+    text-align: left;
+}
+
+.product-render,
+.product-schematic,
+.product-performance,
+.product-order {
+    height: 180px;
+    width: 381px;
+}
+
+.single-prod-right-col .right-top-links a {
+    color: #017D44;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 18px;
+    text-transform: uppercase;
+    text-decoration: underline;
+}
+
+#single-prod-main .single-prod-right-col .right-main-content {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+}
+
+.right-list ul {
+    list-style-position: outside;
+}
+ 
+.right-list li {
+    color: #425460;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 21px;
+}
+
+.spec-table {
+    background-color: #F9F9F7;
+}
+
+.spec-table td {
+    font-size: 14px;
+    text-transform: uppercase;
+}
+
+.series-model-table-row .table-responsive .model-table.table thead th {
+    border-bottom: none;
+}
+
+.series-model-table-row .table-responsive .model-table.table th {
+    border-top: none;
+}
+
+.series-model-table-row .table-responsive .model-table th.model-table-header {
+    color: #017D44;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    text-transform: uppercase;
+}
+
+.series-model-table-row .table-responsive .model-table td.model-table-data {
+    color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+	line-height: 20px;
+}
+
+.legal-title {
+    font-size: 11px;
+    color: #111111;
+    line-height: 14px;
+    font-weight: 600;
+}
+
+.legal-block {
+    text-align: center;
+    font-size: 11px;
+    color: #666666;
+    line-height: 16px;
+}
+
+/* === GENERAL INFO TEMPLATE STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px) {
+
+}
+
+#gen-info-main-container .page-header,
+#gen-info-main-container .product-info,
+#gen-info-main-container .product-name {
+    text-align: center;
+}
+
+#gen-info-main-container .resource-block {
+    border: 1px solid #DDDDDD;
+    background-color: rgba(235,236,230,0.3);
+}
+
+p.resource-link a {
+    text-decoration: underline;
+    color: #017d44;
+}
+
+#gen-info-main-container button.contact-us {
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 13px;
+    text-transform: uppercase;
+    padding: 9px 32px;
+    background-color: #017D44;
+    border: 1px solid #017D44;
+    border-radius: 3px;
+    margin: 10px auto;
+}
+
+#gen-info-main-container button.contact-us:hover {
+    background-color: #00632f;
+    border: 1px solid #00632f;
+}
+
+/* +++ GENERAL INFO TEMPLATE: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ GENERAL INFO TEMPLATE: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === FIND A DISTRIBUTOR STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px) {
+
+}
+
+#find-distributor-main .left-search .search-block {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+}
+
+#find-distributor-main .left-search .product-info {
+    text-transform: uppercase;
+}
+
+#find-distributor-main .left-search .btn.btn-primary {
+    background-color: #017D44;
+    border: #017d44;
+    font-size: 13px;
+    font-weight: bold;
+    padding: 10px 14px;
+    text-align: center;
+}
+
+#find-distributor-main .left-search .miles-text {
+    font-size: 15px;
+    color: #017D44;
+    font-weight: 500;
+    margin-bottom: 0;
+    margin-top: 20px;
+}
+
+#find-distributor-main .left-search .search-block .search-text-default {
+    color: #017D44;
+    font-weight: 500;
+    line-height: 22px;
+    text-align: center;
+}
+
+#find-distributor-main .left-search .search-block h4 {
+    text-transform: uppercase;
+}
+
+#find-distributor-main .left-search .search-block .results-link {
+    color: #017D44;
+    text-decoration: underline;
+}
+
+/* +++ FIND A DISTRIBUTOR: TABLET +++ */
+
+@media (max-width: 991px) {
+
+}
+
+/* +++ FIND A DISTRIBUTOR: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === FOOTER STYLES: GLOBAL / DESKTOP === */
+
+#vvi-footer {
+    padding: 30px 40px;
+}
+
+#vvi-footer p {
+    color: #111111;
+    font-family: Poppins;
+    font-size: 13px;
+    line-height: 18px;
+}
+
+#vvi-footer .offset-lg img {
+    margin: 0 5px;
+}
+
+@media (min-width: 992px){
+    
+}
+
+/* +++ FOOTER: TABLET +++ */
+
+@media (max-width: 991px) {
+    
+}
+
+/* +++ FOOTER: MOBILE +++ */
+
+@media (max-width: 576px){
+    
+}
