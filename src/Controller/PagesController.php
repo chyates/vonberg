@@ -34,7 +34,9 @@ class PagesController extends AppController
     {
        // allow all action
     $this->Auth->allow(['display']);
-        }
+    $this->viewBuilder()->setLayout('vonberg');
+
+    }
 
     /**
      * Displays a view
