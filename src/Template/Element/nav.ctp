@@ -1,6 +1,6 @@
 <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
     <a class="navbar-brand" href="/">
-        <img class="header-image img-fluid" src="img/Vonberg-Logo.svg" alt="">
+        <img class="header-image img-fluid" src="/img/Vonberg-Logo.svg" alt="">
     </a>
     <div class="d-flex flex-row justify-content-end">
         <a class="header-link nav-link" href="/products/new">New Products</a>
