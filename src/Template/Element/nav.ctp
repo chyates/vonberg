@@ -3,7 +3,7 @@
         <img class="header-image img-fluid" src="img/Vonberg-Logo.svg" alt="">
     </a>
     <div class="d-flex flex-row justify-content-end">
-        <a class="header-link nav-link" href="/products">New Products</a>
+        <a class="header-link nav-link" href="/products/new">New Products</a>
         <form class="form-inline">
             <input class="form-control" type="search" placeholder="Search by product number or keyword" aria-label="Search">
         </form>
