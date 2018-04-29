@@ -210,7 +210,7 @@ Type::build('timestamp')
 Plugin::load('BootstrapUI');
 Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 Plugin::load('Geo', ['bootstrap' => true]);
-Plugin::load('CsvView');
+//Plugin::load('CsvView');
 /*
  * Only try to load DebugKit in development mode
  * Debug Kit should not be installed on a production system
