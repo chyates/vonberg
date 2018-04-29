@@ -4,7 +4,7 @@
 
 body {
     background-color: #EBECE6;
-    font-family: "Gill Sans", "Gill Sans MT", Calibri, sans-serif !important;
+    font-family: "Gill Sans MT", "Gill Sans", Calibri, sans-serif !important;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
@@ -47,7 +47,9 @@ a:hover {
 #product-category-container,
 #single-prod-container,
 #gen-info-container,
-#find-distributor-container {
+#find-distributor-container,
+#contact-us-container,
+#about-container {
     padding: 0;
 }
 
@@ -57,7 +59,9 @@ a:hover {
 #category-main-container, 
 #single-prod-main-container,
 #gen-info-main-container,
-#find-distributor-main {
+#find-distributor-main,
+#contact-main-container,
+#about-main-container {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -516,6 +520,50 @@ a:hover {
     line-height: 16px;
 }
 
+/* +++ SINGLE PRODUCT MODAL STYLES: STP / CONFIRM +++ */
+
+#get-stp-modal .modal-header,
+#stp-thanks-modal .modal-header {
+    border-bottom: none;
+}
+
+#get-stp-form .page-header,
+#get-stp-form p {
+    text-align: center;
+}
+
+#get-stp-form label {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #425460;
+}
+
+#get-stp-form .form-group label {
+    font-weight: bold;
+}
+
+#get-stp-form p a {
+    font-size: 14px;
+    line-height: 18px;
+    color: #017D44;
+    text-decoration: underline;
+}
+
+#get-stp-form .col-6 p {
+    font-size: 11px;
+}
+
+#get-stp-form button,
+#stp-thanks-modal .thanks-close {
+    background-color: #017D44;
+    border-color: #017D44;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 58px;
+}
+
 /* === GENERAL INFO TEMPLATE STYLES: GLOBAL / DESKTOP === */
 
 @media (min-width: 992px) {
@@ -624,6 +672,106 @@ p.resource-link a {
 /* +++ FIND A DISTRIBUTOR: MOBILE +++ */
 
 @media (max-width: 576px) {
+
+}
+
+/* === CONTACT US STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px) {
+
+}
+
+.contact-left .contact-block {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+}
+
+#contact-form label {
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
+    color: #425460;
+    font-weight: 500;
+}
+
+#contact-form .form-group .col-6 p {
+    font-size: 11px;
+}
+
+#contact-form button {
+    background-color: #017D44;
+    border-color: #017D44;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 58px;
+}
+
+/* +++ CONTACT US: TABLET +++ */
+
+@media (max-width: 991px){
+
+}
+
+/* +++ CONTACT US: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+}
+
+/* === ABOUT PAGE STYLES: GLOBAL / DESKTOP === */
+
+.about-hero-img {
+    height: 420px;
+    width: 100%;
+}
+
+.text-block {
+    margin: -15em 5em;
+}
+
+.text-block h1 {
+    color: #FFFFFF;
+    text-transform: uppercase;
+    font-size: 51px;
+    line-height: 55px;
+    text-shadow: 2px 4px rgba(0,0,0,0.24);
+}
+
+.about-block {
+    width: 528px;
+    max-height: 600px;
+}
+
+.about-title {
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.about-block, .about-lower-hero {
+    background-color: #F9F9F7;
+    border: 1px solid #DDDDDD;
+}
+
+.about-block img {
+    height: 350px;
+    width: 100%;
+    border-bottom: 1px solid #CCCCCC;
+}
+
+@media (min-width: 992px){
+
+}
+
+/* +++ ABOUT: TABLET +++ */
+
+@media (max-width: 991px){
+
+}
+
+/* +++ ABOUT: MOBILE +++ */
+
+@media (max-width: 576px){
 
 }
 

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+        <title>VVI Contact Us</title>
+    </head>
+
+    <body>
+
+        <div id="contact-us-container" class="container-fluid">
+            <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
+                <a class="navbar-brand" href="#">
+                    <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                </a>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <form class="form-inline">
+                        <input class="form-control" type="search" placeholder="Search by product number or keyword" aria-label="Search">
+                    </form>
+                </div>
+            </nav><!-- home-top-header end -->
+    
+            <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+                <a class="main-nav-hov nav-link nav-item" href="/products">Products</a>
+                <a class="main-nav-hov nav-link nav-item" href="/resources">Resources</a>
+                <a class="nav-link nav-item" href="/about">About</a>
+                <a class="nav-link nav-item" href="/find-a-distributor">Find a Distributor</a>
+                <a class="nav-link nav-item" href="/contact">Contact</a>
+            </nav><!-- main-navbar end -->
+
+            <div id="contact-main-container" class="col-8 mx-auto p-5">
+                <div class="row no-gutters px-5">
+                    <div class="col-lg-4 mr-5 py-2 contact-left">
+                        <div class="contact-block p-4">
+                            <h3 class="product-name">Vonberg Valve, Inc.</h3>
+                            <p>3800 Industrial Avenue<br>Rolling Meadows, IL<br>60008-1085 USA</p>
+                            <p>Phone: (847) 259-3800<br>Fax: (847) 259-3997<br>Email: info@vonberg.com</p>
+                        </div>
+                    </div><!-- .contact-left end -->
+                    <div class="col-lg-6 contact-right">
+                        <h1 class="page-header">Contact Us</h1>
+                        <form id="contact-form">
+                            <div class="form-group">
+                                <label>Full Name*</label>
+                                <input type="text" name="customer-name" class="form-control">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="text" name="customer-company" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Company</label>
+                                <input type="tel" name="customer-phone" class="form-control">
+                            </div>
+
+                            <div class="form-group">
+                                <label>Email Address*</label>
+                                <input type="email" class="form-control" name="customer-email">
+                            </div>
+
+                            <div class="form-group">
+                                <div class="row no-gutters">
+                                    <label>What is your role?</label>
+                                </div>
+                                
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="model" value="model1">
+                                    <label class="form-check-label">Manufacturer</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="model" value="model2">
+                                    <label class="form-check-label">Distributor</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input type="checkbox" class="form-check-input" name="model" value="model3">
+                                    <label class="form-check-label">End user</label>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label>Remarks, Special Requests, or Questions*:</label>
+                                <textarea name="customer-comments" class="form-control" rows="4" cols="50"></textarea>
+                            </div>
+
+                            <div class="g-recaptcha mb-3" data-sitekey="6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y"></div>
+
+                            <div class="form-group row no-gutters">
+                                <div class="col-6 my-auto">
+                                    <p class="my-auto text-left">*required fields</p>
+                                </div>
+                                <div class="col-6 text-right">
+                                    <button type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div><!-- .contact-right end -->
+                </div>
+            </div><!-- #contact-main-container end -->
+
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>info@vonberg.com</p>
+                    </div>
+                    <div class="col-lg offset-lg">
+                        <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                        <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                    </div>
+                </div>
+            </div><!-- vvi-footer end -->
+        </div><!-- #contact-us-container end -->
+        <script src='https://www.google.com/recaptcha/api.js'></script>
+    </body>
+</html>
