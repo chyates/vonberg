@@ -1,5 +1,5 @@
 <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
-    <a class="navbar-brand" href="#">
+    <a class="navbar-brand" href="/">
         <img class="header-image img-fluid" src="img/Vonberg-Logo.svg" alt="">
     </a>
     <div class="d-flex flex-row justify-content-end">
@@ -14,6 +14,6 @@
     <a class="main-nav-hov nav-link nav-item" href="/products">Products</a>
     <a class="main-nav-hov nav-link nav-item" href="/resources">Resources</a>
     <a class="nav-link nav-item" href="/about">About</a>
-    <a class="nav-link nav-item" href="/find-a-distributor">Find a Distributor</a>
+    <a class="nav-link nav-item" href="/locator">Find a Distributor</a>
     <a class="nav-link nav-item" href="/contact">Contact</a>
 </nav><!-- main-navbar end -->

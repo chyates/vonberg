@@ -34,8 +34,6 @@ class PagesController extends AppController
     {
        // allow all action
     $this->Auth->allow(['display']);
-    $this->viewBuilder()->setLayout('vonberg');
-
     }
 
     /**
@@ -65,7 +63,6 @@ class PagesController extends AppController
             $subpage = $path[1];
         }
         $this->set(compact('page', 'subpage'));
-
         try {
             $this->render(implode('/', $path));
         } catch (MissingTemplateException $exception) {
