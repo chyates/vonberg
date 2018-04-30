@@ -19,9 +19,9 @@
                 <a class="nav-link disabled" href="#">Custom Products</a>
             </li>
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="http://example.com" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
+                <a class="nav-link dropdown-toggle" href="/products" id="dropdown09" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown</a>
                 <div class="dropdown-menu" aria-labelledby="dropdown09">
-                    <a class="dropdown-item" href="#">About Vonberg</a>
+                    <a class="dropdown-item" href="/about">About Vonberg</a>
                     <a class="dropdown-item" href="/locator">Dealer Locator</a>
                     <?php if (!$Auth->user()) { ?>
                         <a class="login" href="<?php echo $this->Url->build($Auth->getConfig('loginAction')); ?>">Login</a>
