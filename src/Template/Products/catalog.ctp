@@ -11,10 +11,13 @@
 
     <?php
         $counter=0;
-        $typecount="";
+        $typecount=0;
         foreach ($parts as $part):
-        if ($typecount!=$part->partID) {
-          echo'<div class="prod-category-main row mx-5">
+        if ($typecount<>$part->typeID) {
+            if ($typecount<>0) {
+                echo '</div>';
+            }
+            echo'<div class="prod-category-main row mx-5">
                <div class="col-lg">
                <h1 class="page-header">';
                     echo $part->type->name;
@@ -35,13 +38,10 @@
             </div>
         <?php
             if(++$counter % 3 === 0) {
-        echo '</div> <div class="prod-category-main row mx-5">';
+                    echo '</div><div class="prod-category-main row mx-5">';
             }
-            if ($typecount!=$part->partID){
-                $typecount=$part->partID;
-                echo '</div>';
-            }
-            endforeach; ?>
+            $typecount = $part->typeID;
+        endforeach; ?>
 
     </div><!-- single-product-main-row end, 2 -->
 </div><!-- single-main-container end -->
