@@ -49,7 +49,11 @@ a:hover {
 #gen-info-container,
 #find-distributor-container,
 #contact-us-container,
-#about-container {
+#about-container,
+#customize-container,
+#resources-container,
+#prices-container,
+#prices-results-container {
     padding: 0;
 }
 
@@ -61,7 +65,11 @@ a:hover {
 #gen-info-main-container,
 #find-distributor-main,
 #contact-main-container,
-#about-main-container {
+#about-main-container,
+#customize-main-container,
+#resources-main-container,
+#prices-main-container,
+#prices-results-main-container {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -130,6 +138,48 @@ a:hover {
     background-color: #017d44;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
     height: 40px;
+}
+
+#product-dropdown .dropdown-menu, #resources-dropdown .dropdown-menu {
+    border: 1px solid #979797;
+    box-shadow: 0 1px 17px 2px rgba(0,0,0,0.2);
+    padding: 0;
+}
+
+#product-dropdown.dropdown,
+#resources-dropdown.dropdown { 
+    position: static; 
+}
+
+#product-dropdown .dropdown-menu,
+#resources-dropdown .dropdown-menu { 
+    width: 100%; 
+    text-align: left; 
+}
+
+#product-dropdown .dropdown-menu> p ,
+#product-dropdown .dropdown-menu > p { 
+    display: inline-block; 
+}
+
+.drop-header {
+    color: #017D44;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+}
+
+.drop-content {
+    color: #4A4A4A;
+    line-height: 17px;
+}
+
+.last-prod-drop {
+    background-color: #EBECE6;
+}
+
+.last-prod-drop .drop-header {
+    opacity: 1;
 }
 
 #main-navbar .nav-link {
@@ -774,6 +824,214 @@ p.resource-link a {
 @media (max-width: 576px){
 
 }
+
+/* === PRODUCT CUSTOMIZATION STYLES: GLOBAL / DESKTOP === */
+
+.customize-subtitle {
+    padding: 0 86px;
+}
+
+.customize-left img {
+    height: 250px;
+    width: 480px;
+    border: 1px solid #DDDDDD;
+}
+
+.customize-left .btn {
+    background-color: #017D44;
+    border-color: #017D44;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}
+
+.customize-right .example-block {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+    padding: 20px;
+}
+
+.example-block ul {
+    list-style-position: outside;
+    padding: 0 14px;
+}
+
+.example-block ul li {
+    color: #425460;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 21px;
+    padding-left: 7px;
+}
+
+/* +++ PRODUCT CUSTOMIZATION: TABLET +++ */
+
+/* +++ PRODUCT CUSTOMIZATION: MOBILE +++ */
+
+/* === RESOURCES PAGE STYLES: GLOBAL / DESKTOP === */
+
+.resource-block {
+    border: 1px solid #DDDDDD;
+    background-color: rgba(235,236,230,0.3);
+}
+
+.resource-block h2 {
+    text-transform: uppercase;
+}
+
+.resource-block .btn, .download-btn {
+    background-color: #017D44;
+    border-color: #017D44;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}
+
+.resource-block input, .resource-block select {
+    border: 1px solid #9B9B9B;
+    border-radius: 2px;
+}
+
+.resource-block label {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 22px;
+}
+
+.resource-block p {
+    margin: 10px 0;
+    font-size: 13px;
+}
+
+/* +++ RESOURCES: TABLET +++ */
+
+/* === PRODUCT PRICES STYLES: GLOBAL / DESKTOP === */
+
+#prices-main-container .btn {
+    background-color: #017D44;
+    border-color: #017D44;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}
+
+#prices-main-container img {
+    box-sizing: border-box;
+    height: 282px;
+    width: 382px;
+    border: 1px solid #CCCCCC;
+}
+
+#prices-main-container input, #prices-main-container select {
+    border: 1px solid #9B9B9B;
+    border-radius: 2px;
+}
+
+#prices-main-container label {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 22px;
+}
+
+#prices-main-container .col-lg-6 p {
+    color: #666666;
+    font-size: 20px;
+}
+
+#prices-main-container .col-lg-6 p a {
+    color: #017D44;
+    text-decoration: underline;
+}
+
+#prices-main-container ul {
+    list-style-position: outside;
+    padding: 0 14px;
+}
+
+#prices-main-container ul li {
+    color: #425460;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 21px;
+    padding-left: 7px;
+}
+
+/* +++ PRODUCT PRICES: TABLET +++ */
+
+/* +++ PRODUCT PRICES: MOBILE +++ */
+
+/* === PRODUCT PRICE RESULTS STYLES: GLOBAL / DESKTOP === */
+
+#prices-results-main-container .btn {
+    background-color: #017D44;
+    border-color: #017D44;
+    color: #FFFFFF;
+    font-size: 13px;
+    font-weight: bold;
+    line-height: 18px;
+    padding: 10px 20px;
+    text-transform: uppercase;
+}
+
+#prices-results-main-container img {
+    box-sizing: border-box;
+    height: 282px;
+    width: 382px;
+    border: 1px solid #CCCCCC;
+}
+
+#prices-results-main-container input, #prices-main-container select {
+    border: 1px solid #9B9B9B;
+    border-radius: 2px;
+}
+
+#prices-results-main-container label {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+	font-weight: 500;
+	line-height: 22px;
+}
+
+#prices-results-main-container .col-lg-6 p {
+    color: #666666;
+    font-size: 20px;
+}
+
+#prices-results-main-container .col-lg-6 p a {
+    color: #017D44;
+    text-decoration: underline;
+}
+
+#prices-results-main-container ul {
+    list-style-position: outside;
+    padding: 0 14px;
+}
+
+#prices-results-main-container ul li {
+    color: #425460;
+    font-family: Poppins;
+    font-size: 14px;
+    line-height: 21px;
+    padding-left: 7px;
+}
+
+/* +++ PRODUCT PRICE RESULTS: TABLET +++ */
+
+/* +++ PRODUCT PRICE RESULTS: MOBILE +++ */
 
 /* === FOOTER STYLES: GLOBAL / DESKTOP === */
 
