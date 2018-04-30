@@ -17,36 +17,36 @@
         <div class="dropdown-menu" aria-labelledby="product-dropdown">
             <div class="row no-gutters justify-content-between">
                 <div class="col">
-                    <p class="drop-header"><A HREF="/products">Flow Regulating Valves</A></p>
+                    <p class="drop-header"><A HREF="/products/catalog/1">Flow Regulating Valves</A></p>
                     <p class="drop-content">Flow Regulators</p>
                     <p class="drop-content">Flow Dividers & Combiners</p>
                 </div>
                 <div class="col">
-                    <p class="drop-header">Directional Valves</p>
+                    <p class="drop-header"><A HREF="/products/catalog/2">Directional Valves</A></p>
                     <p class="drop-content">Check Valves - Poppet</p>
                     <p class="drop-content">Check Valves - Ball</p>
                     <p class="drop-content">Shuttle Valves</p>
                 </div>
                 <div class="col">
-                    <p class="drop-header">Safety Valves</p>
+                    <p class="drop-header"><A HREF="/products/catalog/3">Safety Valves</A></p>
                     <p class="drop-content">Velocity Fuses</p>
                     <p class="drop-content">Flow Limiters</p>
                 </div>
                 <div class="col">
-                    <p class="drop-header">Pressure Controls</p>
+                    <p class="drop-header"><A HREF="/products/catalog/5">Pressure Controls</A></p>
                     <p class="drop-content">Counterbalance Valves</p>
                     <p class="drop-content">Relief Valves - Direct Acting</p>
                     <p class="drop-content">Relief Valves - Differential Area</p>
                 </div>
                 <div class="col">
-                    <p class="drop-header">Cartridge Bodies</p>
+                    <p class="drop-header"><A HREF="/products/catalog/7">Cartridge Bodies</A></p>
                     <p class="drop-content">2-Way Manifolds</p>
                     <p class="drop-content">3-Way Manifolds</p>
                     <p class="drop-content">3-Way T-Series Manifolds</p>
                     <p class="drop-content">Cavity Plugs</p>
                 </div>
                 <div class="col last-prod-drop">
-                    <p class="drop-header">Product Customization</p>
+                    <p class="drop-header"><A HREF="/products/catalog/6">Product Customization</A></p>
                     <p class="drop-header">Application Information</p>
                 </div>
             </div>

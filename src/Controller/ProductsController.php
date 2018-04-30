@@ -51,16 +51,19 @@ class ProductsController extends AppController
         $this->loadModel('Parts');
         if (!empty($cat)) {
         $query =  $this->Parts->find('all',
-            [
+            [   'conditions' => ['Parts.categoryID' => $cat],
                 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
                 ])
-            ->order(['typeID'=>'desc'])
-            ->group(['typeID']);
+            ->order(['typeID'=>'desc']);
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }
+
         $types = TableRegistry::get('Types')->find();
         $cat2 = TableRegistry::get('Categories')->get($cat);
+        $textblocks = TableRegistry::get('TextBlocks')->find();
+        $specs = TableRegistry::get('Specifications')->find();
+
 
 
         $this->set('types', $types);
