@@ -30,8 +30,7 @@ class ProductsController extends AppController
     public function view($id=null)
     {
         $this->loadModel('Parts');
-        $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
-
+        $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks']]);
         $this->set('part', $part);
 
     }
@@ -54,7 +53,7 @@ class ProductsController extends AppController
             [   'conditions' => ['Parts.categoryID' => $cat],
                 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
                 ])
-            ->order(['typeID'=>'desc']);
+            ->order(['typeID'=>'ASC']);
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }

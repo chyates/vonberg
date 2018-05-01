@@ -34,6 +34,8 @@ class PartsTable extends Table
         $this->belongsTo('Types')->setForeignKey('typeID');
         $this->belongsTo('Series')->setForeignKey('seriesID');
         $this->belongsTo('Categories')->setForeignKey('categoryID');
+        $this->hasMany('TextBlocks')->setForeignKey('partID');
+        $this->hasMany('Specifications')->setForeignKey('partID');
         $this->setTable('parts');
         $this->setDisplayField('partID');
         $this->setPrimaryKey('partID');
