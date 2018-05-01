@@ -33,7 +33,7 @@ class TextBlocksTable extends Table
         $this->setTable('text_blocks');
         $this->setDisplayField('text_blockID');
         $this->setPrimaryKey('text_blockID');
-        $this->hasMany('TextBlockBullets')->setForeignKey('text_blockID');
+        $this->hasMany('TextBlockBullets',['order' =>'TextBlockBullets.order desc'])->setForeignKey('text_blockID');
     }
 
     /**

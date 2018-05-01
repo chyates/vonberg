@@ -165,42 +165,27 @@
     <div class="series-model-table-row row mx-5 px-5">
         <div class="table-responsive">
             <table class="model-table table">
+
                 <thead>
-                <th class="model-table-header">Model</th>
-                <th class="model-table-header">Inlet/Outlet</th>
-                <th class="model-table-header">Flow Range</th>
-                <th class="model-table-header">L</th>
-                <th class="model-table-header">Hex</th>
+                <?php
+                foreach ($part->model_tables->model_table_headers as $header): ?>
+                <th class="model-table-header"><?php echo $header->model_table_text ?></th>
+                <?php endforeach;?>
                 </thead>
 
                 <tbody>
                 <tr>
-                    <td class="model-table-data">1302</td>
-                    <td class="model-table-data">1/4-18 NPTF</td>
-                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
-                    <td class="model-table-data">3.50</td>
-                    <td class="model-table-data">0.938</td>
-                </tr>
-                <tr>
-                    <td class="model-table-data">1302</td>
-                    <td class="model-table-data">1/4-18 NPTF</td>
-                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
-                    <td class="model-table-data">3.50</td>
-                    <td class="model-table-data">0.938</td>
-                </tr>
-                <tr>
-                    <td class="model-table-data">1302</td>
-                    <td class="model-table-data">1/4-18 NPTF</td>
-                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
-                    <td class="model-table-data">3.50</td>
-                    <td class="model-table-data">0.938</td>
-                </tr>
-                <tr>
-                    <td class="model-table-data">1302</td>
-                    <td class="model-table-data">1/4-18 NPTF</td>
-                    <td class="model-table-data">0.25 TO 6.0 GPM</td>
-                    <td class="model-table-data">3.50</td>
-                    <td class="model-table-data">0.938</td>
+                    <?php
+                    $count=0;
+                    foreach ($part->model_tables->model_table_rows as $row):
+                        echo '<td class="model-table-data">'.$row->model_table_text.'</td>';
+                        if ($count <= $part->model_tables->model_table_headers->count()){
+                            echo '</tr><tr>';
+                            $count=0;
+                        }
+                        $count++;
+                    endforeach;
+                    ?>
                 </tr>
                 </tbody>
             </table>
