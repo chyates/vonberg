@@ -116,9 +116,9 @@
             <div class="right-main-content row p-4">
                 <?php
                 $typecount='';
-                if ($part->text_block != Null ) {
+                if ($part->text_blocks != Null ) {
                   echo '<ul class="right-main-content row p-4">';
-                    foreach ($part->text_block as $block):
+                    foreach ($part->text_blocks as $block):
                         if ($typecount <> $block->header) {
                             if ($typecount <> '') {
                                 echo '</ul>';
@@ -128,7 +128,7 @@
                             echo '</h3>
                         <ul class="right-list px-3">';
                         }
-                        foreach ($blocks->textblockbullets as $bullet):
+                        foreach ($block->text_block_bullets as $bullet):
                             echo '<li class="mt-2 pl-3">' . $bullet->bullet_text . '</li>';
                         endforeach; ?>
                         <?php
