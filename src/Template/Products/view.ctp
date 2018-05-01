@@ -168,18 +168,22 @@
 
                 <thead>
                 <?php
-                foreach ($part->model_tables->model_table_headers as $header): ?>
+                $columns=0;
+                foreach ($part->model_table->model_table_headers as $header): ?>
                 <th class="model-table-header"><?php echo $header->model_table_text ?></th>
-                <?php endforeach;?>
+
+                <?php
+                    $columns++;
+                endforeach;?>
                 </thead>
 
                 <tbody>
                 <tr>
                     <?php
-                    $count=0;
-                    foreach ($part->model_tables->model_table_rows as $row):
-                        echo '<td class="model-table-data">'.$row->model_table_text.'</td>';
-                        if ($count <= $part->model_tables->model_table_headers->count()){
+                    $count=1;
+                    foreach ($part->model_table->model_table_rows as $row):
+                        echo '<td class="model-table-data">'.$row->model_table_row_text.'</td>';
+                        if ($count >= $columns){
                             echo '</tr><tr>';
                             $count=0;
                         }
