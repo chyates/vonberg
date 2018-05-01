@@ -93,17 +93,17 @@
 
             <div class="left-img-div">
                 <h3 class="product-name">Product Rendering</h3>
-                <img class="product-render img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                <img class="product-render img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
             </div>
 
             <div class="left-img-div">
                 <h3 class="product-name">Schematic</h3>
-                <img class="product-schematic img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                <img  src="<?= "/img/parts/".$part->partID."/hydraulic_symbol.jpg"; ?>"/>
             </div>
 
             <div class="left-img-div">
                 <h3 class="product-name">Typical Performance</h3>
-                <img class="product-performance img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                <img class="product-performance img-fluid" src="<?= "/img/parts/".$part->partID."/typical_performance.jpg"; ?>"/>
             </div>
         </div><!-- .single-prod-left-col end -->
 
@@ -155,7 +155,7 @@
             <div class="right-col-bottom row">
                 <h3 class="product-name">Ordering Information</h3>
 
-                <img class="product-order img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png"/>
+                <img class="product-order img-fluid" src="<?= "/img/parts/".$part->partID."/ordering_information.jpg"; ?>"/>
             </div>
 
         </div><!-- .single-prod-right-col end -->
