@@ -87,7 +87,7 @@
             <div class="left-desc">
                 <h3 class="product-name">Description</h3>
                 <p class="product-info">
-                    <?= fread($part->description,256) ?>
+                    <?php echo $part->description; ?>
                 </p>
             </div>
 
