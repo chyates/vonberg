@@ -30,7 +30,7 @@ class ProductsController extends AppController
     public function view($id=null)
     {
         $this->loadModel('Parts');
-        $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets']]]);
+        $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
         $this->set('part', $part);
 
     }
