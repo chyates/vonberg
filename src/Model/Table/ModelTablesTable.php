@@ -29,8 +29,8 @@ class ModelTablesTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->hasMany('ModelTableHeaders',['order' =>'ModelTableHeaders.order_num desc'])->setForeignKey('model_tableID');
-        $this->hasMany('ModelTableRows',['order' =>'ModelTableRows.order_num desc'])->setForeignKey('model_tableID');
+        $this->hasMany('ModelTableHeaders',['sort' =>'ModelTableHeaders.order_num ASC'])->setForeignKey('model_tableID');
+        $this->hasMany('ModelTableRows',['sort' =>'ModelTableRows.order_num ASC'])->setForeignKey('model_tableID');
         $this->setTable('model_tables');
         $this->setDisplayField('model_tableID');
         $this->setPrimaryKey('model_tableID');

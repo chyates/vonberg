@@ -34,9 +34,9 @@ class PartsTable extends Table
         $this->belongsTo('Types')->setForeignKey('typeID');
         $this->belongsTo('Series')->setForeignKey('seriesID');
         $this->belongsTo('Categories')->setForeignKey('categoryID');
-        $this->hasMany('TextBlocks',['order' =>'TextBlocks.order desc'])->setForeignKey('partID');
-        $this->hasOne('ModelTables', ['order' =>'ModelTables.order_num desc'])->setForeignKey('partID');
-        $this->hasMany('Specifications', ['order' =>'Specifications.order desc'])->setForeignKey('partID');
+        $this->hasMany('TextBlocks',['sort' =>'TextBlocks.order_num ASC'])->setForeignKey('partID');
+        $this->hasOne('ModelTables')->setForeignKey('partID');
+        $this->hasMany('Specifications', ['sort' =>'Specifications.order_num ASC'])->setForeignKey('partID');
         $this->setTable('parts');
         $this->setDisplayField('partID');
         $this->setPrimaryKey('partID');
