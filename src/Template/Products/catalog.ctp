@@ -2,7 +2,7 @@
     <div class="prod-category-header-row row mx-5">
         <div class="col-lg-7 my-5 my-auto">
             <h1 class="page-title"><?= h($category->name) ?></h1>
-            <p class="product-info">Vonberg flow regulating valves are pressure compensated valves, providing a regulated flow across a specified pressure range. They are available with our exclusive Surges Internally Dampened (S.I.D) feature designed to eliminate instability inherent in most load lowering applications.</p>
+            <p class="product-info"><?php echo $category->description; ?> </p>
         </div>
         <div class="col-lg-5 my-5">
             <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">

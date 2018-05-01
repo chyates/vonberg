@@ -113,23 +113,29 @@
                 <a data-toggle="modal" data-target="#stp-thanks-modal">View Pricing</a>
                 <a href="/pdf">Download PDF</a>
             </div>
-
             <div class="right-main-content row p-4">
-                <h3 class="product-name">Operation</h3>
-
-                <ul class="right-list px-3">
-                    <li class="mt-2 pl-3">IN THE CONTROLLED DIRECTION THIS REGULATOR WILL MAINTAIN A CONSTANT FLOW RATE THROUGHOUT A SPECIFIED PRESSURE RANGE.</li>
-                    <li class="mt-2 pl-3">REVERSE FLOW PASSES THROUGH THE CONTROLLING ORIFICE AND IS UNCONTROLLED PRODUCING A PRESSURE DIFFERENTIAL OF 120 PSI MAX. AT 150% OF CONTROLLED FLOW.</li>
-                </ul>
-
-                <h3 class="product-name">Feature</h3>
-
-                <ul class="right-list px-3">
-                    <li class="mt-2 pl-3">SURGES INTERNALLY DAMPENED FEATURE IS OPTIONAL FOR LOAD LOWERING APPLICATIONS.</li>
-                    <li class="mt-2 pl-3">ALUMINUM BODY, STEEL INTERNALS.</li>
-                    <li class="mt-2 pl-3">HYDRAULIC FLUIDS - GENERAL.</li>
-                    <li class="mt-2 pl-3">NO INTERNAL PACKINGS. ALTERNATE DIVIDE RATIOS AVAILABLE UPON REQUEST.</li>
-                </ul>
+                <?php
+                $typecount='';
+                if ($part->text_block != Null ) {
+                  echo '<ul class="right-main-content row p-4">';
+                    foreach ($part->text_block as $block):
+                        if ($typecount <> $block->header) {
+                            if ($typecount <> '') {
+                                echo '</ul>';
+                            }
+                            echo '<h3 class="product-name">';
+                            echo $block->header;
+                            echo '</h3>
+                        <ul class="right-list px-3">';
+                        }
+                        foreach ($blocks->textblockbullets as $bullet):
+                            echo '<li class="mt-2 pl-3">' . $bullet->bullet_text . '</li>';
+                        endforeach; ?>
+                        <?php
+                        $typecount = $block->header;
+                    endforeach;
+                    echo '</ul>';
+                }?>
 
                 <h3 class="product-name">Specifications</h3>
 
