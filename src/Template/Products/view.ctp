@@ -113,6 +113,7 @@
                 <a data-toggle="modal" data-target="#stp-thanks-modal">View Pricing</a>
                 <a href="/pdf">Download PDF</a>
             </div>
+
             <div class="right-main-content row p-4">
                 <?php
                 $typecount='';
@@ -138,29 +139,15 @@
                 }?>
 
                 <h3 class="product-name">Specifications</h3>
-
                 <div class="spec-table table-sm">
                     <table class="table">
+                    <?php
+                    foreach ($part->specifications as $spec): ?>
                         <tr>
-                            <td>Pressure Range</td>
-                            <td>250 PSI TO 4500 PSI</td>
+                            <td><?php echo $spec->spec_name;?></td>
+                            <td><?php echo $spec->spec_value;?></td>
                         </tr>
-                        <tr>
-                            <td>TEMPERATURE RANGE</td>
-                            <td>250°F TO -40°F</td>
-                        </tr>
-                        <tr>
-                            <td>Flow Tolerance</td>
-                            <td>+/- 10%</td>
-                        </tr>
-                        <tr>
-                            <td>MAX. PRESSURE DIFFERENTIAL "1" TO "2"</td>
-                            <td>100 PSI</td>
-                        </tr>
-                        <tr>
-                            <td>DIVIDE / COMBINE RATIO</td>
-                            <td>50:50</td>
-                        </tr>
+                    <?php endforeach;?>
                     </table>
                 </div>
             </div>
@@ -222,7 +209,7 @@
     </div><!-- .series-model-table end -->
 
     <div class="legalese row mx-5 px-5 pb-5">
-        <p class="legal-title mx-auto mb-1">Page last updated: November 08, 2017</p>
+        <p class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
     </div> <!-- .legalese end -->
