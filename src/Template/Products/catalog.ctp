@@ -29,7 +29,7 @@
             <div class="col-lg-4 my-3">
 
                 <A HREF=<?= "/products/view/".$part->partID; ?>>
-                <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
+                <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
                 <div class="product-text-block my-3">
                     <h3 class="product-name"><?= h($part->series->name) ?></h3>
                     <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
