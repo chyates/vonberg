@@ -91,7 +91,7 @@ class ProductsController extends AppController
             // processed query params
             ->find('search', ['search' => $this->request->getQueryParams()])
             // You can add extra things to the query if you need to
-            ->contain(['Connections', 'Types','Series','Styles', 'Categories']);
+            ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         $this->set('parts', $this->paginate($query));
     }
