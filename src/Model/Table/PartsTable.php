@@ -51,7 +51,7 @@ class PartsTable extends Table
                 'comparison' => 'LIKE',
                 'wildcardAny' => '*',
                 'wildcardOne' => '?',
-                'field' => ['description', 'Series.name','Types.name','Styles.name'],
+                'field' => ['description', 'Series.name'],
             ])
             ->add('foo', 'Search.Callback', [
                 'callback' => function ($query, $args, $filter) {
