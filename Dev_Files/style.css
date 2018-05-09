@@ -202,7 +202,8 @@ a:hover {
 #customize-main-container,
 #resources-main-container,
 #prices-main-container,
-#prices-results-main-container {
+#prices-results-main-container,
+#cms-main-container {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -986,4 +987,44 @@ p.resource-link a {
 
 #main-navbar .cms-greyed {
     color: #7FBDA1;
+}
+
+#cms-main-container .btn.btn-primary {
+    padding: 1% 4%;
+}
+
+#cms-main-container p {
+    margin: 3% 0;
+}
+
+#cms-main-container hr {
+    width: 750px;
+    background-color: #979797;
+}
+
+#cms-main-container h2,
+#cms-home-table th {
+    text-transform: uppercase;
+}
+
+#cms-home-table th {
+    color: #017D44;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    text-transform: uppercase;
+    border: none;
+}
+
+#cms-home-table td {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+    line-height: 21px;
+    border-top: none;
+    border-bottom: #979797;
+}
+
+#cms-home-table .btn.btn-primary {
+    padding: 4% 12%;
 }

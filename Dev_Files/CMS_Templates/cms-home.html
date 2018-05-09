@@ -60,7 +60,7 @@
                                 <p class="drop-content">Cavity Plugs</p>
                             </div>
                             <div class="col last-prod-drop">
-                                <p class="drop-header">Product Customization</p>
+                                <p class="cms-greyed drop-header">Product Customization</p>
                                 <p class="drop-header">Application Information</p>
                             </div>
                         </div>
@@ -85,6 +85,71 @@
                 <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
                 <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
             </nav><!-- main-navbar end -->
+
+            <div id="cms-main-container" class="col-md-10 mx-auto p-5">
+                <h1 class="page-title">Content Management System</h1>
+                <p class="text-center"><a class="btn btn-primary mr-4" href="/products">Add New Product</a><a class="btn btn-primary mr-4" href="/products">Generate Custom PDF</a><a class="btn btn-primary" href="/products">Manage Resources</a></p>
+                <hr>
+                
+                <div id="cms-home-table" class="table-responsive">
+                    <h2>CSV and Catalogue Files</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Current File</th>
+                                <th>Last Updated</th>
+                                <th>Replace File</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            <!-- This content should be replaced with database logic.
+                            
+                            The current file column will contain a link to existing CSVs, and the last updated column should start with the most recent first. -->
+
+                            <tr>
+                                <td>ProductInformation.csv</td>
+                                <td>2017-11-08 13:46:02</td>
+                                <td><button type="button" class="btn btn-primary">Browse</button></td>
+                                <td>No file chosen</td>
+                            </tr>
+                            <tr>
+                                <td>DistributorInformation.csv</td>
+                                <td>2017-11-08 13:46:02</td>
+                                <td><button type="button" class="btn btn-primary">Browse</button></td>
+                                <td>No file chosen</td>
+                            </tr>
+                            <tr>
+                                <td>VonbergCatalogue.pdf</td>
+                                <td>2017-11-08 13:46:02</td>
+                                <td><button type="button" class="btn btn-primary">Browse</button></td>
+                                <td>No file chosen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div><!-- #cms-main-container end -->
+
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>info@vonberg.com</p>
+                    </div>
+                    <div class="col-lg offset-lg">
+                        <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                        <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                    </div>
+                </div>
+            </div><!-- vvi-footer end -->
         </div><!-- #cms-site-container end -->
     </body>
 </html>
