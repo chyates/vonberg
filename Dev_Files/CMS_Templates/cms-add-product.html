@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+        <title>VVI Homepage</title>
+    </head>
+
+    <body>
+        <div id="cms-add-prod-container" class="outer-container container-fluid">
+            <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
+                <a class="navbar-brand" href="#">
+                    <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                </a>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <p class="cms-top-nav mx-2 my-auto">Add New Product</p>
+                    <p class="cms-top-nav mx-2 my-auto">Generate Custom PDF</p>
+                    <p class="cms-top-nav mx-2 my-auto">Model Pricing</p>
+                    <p class="cms-top-nav mx-2 my-auto">STP Download Report</p>
+                </div>
+            </nav><!-- home-top-header end -->
+
+            <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/cms-product-category">Products</a>
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+                <a class="cms-greyed nav-link nav-item" disabled>About</a>
+                <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
+                <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
+            </nav><!-- main-navbar end -->
+
+            <div id="cms-add-prod-main" class="inner-main col-md-10 mx-auto p-5">
+                <form id="add-prod-form">
+                    <h1 id="title-one" class="page-title">Add New Product</h1>
+                    <h1 id="title-two" class="page-title">Add New Product: Description and Features</h1>
+                    <h1 id="title-three" class="page-title">Add New Product: Series Table</h1>
+                    <h1 id="title-four"class="page-title">Add New Product: Image Uploads</h1>
+                    <div id="one" class="form-slide col-md-5 mx-auto">
+                        <div class="form-group">
+                            <label>Category</label>
+                            <select class="form-control" name="product-category">
+                                <option value="Select..." selected disabled>Select...</option>
+                            </select>
+                        </div>
+
+                        <div class="row no-gutters">
+                            <div class="col-sm-6">
+                                <label>Product Status</label>
+                                <div class="form-check">
+                                    <input type="checkbox" name="new-status" class="form-check-input" value="new" checked>
+                                    <label class="form-check-label">New</label>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <label>Expiration</label>
+                                <select class="form-control" name="product-expiration">
+                                    <option value="Select..." selected disabled>Select...</option>
+                                </select>
+                            </div>
+                        </div>
+
+
+                        <label>Style</label>
+                        <div class="form-group">
+                            <div class="form-check form-check-inline">
+                                <input type="radio" name="product-style" class="form-check-input" value="inline">
+                                <label class="form-check-label">Inline</label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input type="radio" name="product-style" class="form-check-input" value="cartridge">
+                                <label class="form-check-label">Cartridge</label>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Type</label>
+                            <select class="form-control" name="product-type">
+                                <option value="Select..." selected disabled>Select...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Series</label>
+                            <select class="form-control" name="product-series">
+                                <option value="Select..." selected disabled>Select...</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Short Description</label>
+                            <select class="form-control" name="product-short-description">
+                                <option value="Select..." selected disabled>Select...</option>
+                            </select>
+                        </div>
+                        <p class="text-right"><a class="btn btn-primary">Next</a></p>
+                    </div><!-- #one end -->
+
+                    <div id="two" class="form-slide col-md-5 mx-auto">
+                        <div class="form-group">
+                            <label>Detail Description:</label>
+                            <textarea class="form-control" name="product-detail-description" cols="50" rows="6"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Operation</label>
+                            <input type="text" class="form-control" name="product-operation" placeholder="Enter bullet copy...">
+                            <a>Add Bullet</a>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Features</label>
+                            <input type="text" class="form-control" name="product-features" placeholder="Enter bullet copy...">
+                            <a>Add Bullet</a>
+                        </div>
+
+                        <div class="row no-gutters align-items-center">
+                            <div class="col-sm-4">
+                                <label>Specifications</label>
+                                <select class="form-control" name="product-specification">
+                                    <option value="Select..." selected disabled>Select...</option>
+                                </select>
+                                <a>Add Bullet</a>
+                            </div>
+                            <div class="col-sm-8">
+                                <input type="text" name="product-spec-detail" class="form-control" placeholder="Enter value...">
+                            </div>
+                        </div>
+                        <div class="row no-gutters justify-content-between">
+                            <a class="btn btn-primary">Back</a>
+                            <a class="btn btn-primary">Next</a>
+                        </div>
+                    </div><!-- #two end -->
+
+                    <div id="three" class="col-md-8 mx-auto">
+                        <div class="table-create-box">
+                            <input type="text" class="form-control" placeholder="Model" name="table-header">
+                            <input type="text" class="form-control" placeholder="Enter model" name="table-data">
+                        </div>
+                        <div class="row no-gutters justify-content-between">
+                            <a class="btn btn-primary">Back</a>
+                            <a class="btn btn-primary">Next</a>
+                        </div>
+                    </div><!-- #three end -->
+
+                    <div id="four" class="col-md-6 mx-auto">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Model</th>
+                                    <th>Current File</th>
+                                    <th>Upload File</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Model name</td>
+                                    <td>None</td>
+                                    <td>
+                                        <label class="fileContainer">Browse
+                                            <input type="file" class="form-control"/>
+                                        </label>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div><!-- #four end -->
+                </form>
+            </div><!-- #cms-add-prod-main end -->
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>info@vonberg.com</p>
+                    </div>
+                    <div class="col-lg offset-lg">
+                        <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                        <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                    </div>
+                </div>
+            </div><!-- vvi-footer end -->
+        </div><!-- #cms-add-prod-container end -->
+    </body>
+</html>

@@ -38,15 +38,17 @@ body {
 }
 
 /* h2, d/t */
-h2 {
+.category-title {
     font-size: 24px;
     color: #017d44;
     letter-spacing: 0;
     line-height: 30px;
+    text-transform: uppercase;
+    font-weight: 600;
 }
 
 @media (max-width: 576px) {
-    h2 {
+    .category-title {
         font-size: 19px;
         color: #017d44;
         letter-spacing: 0;
@@ -142,7 +144,8 @@ label {
     box-shadow: none;
 }
 
-.btn.btn-primary a {
+.btn.btn-primary a,
+a.btn.btn-primary {
 	color: #FFFFFF;
 	font-family: Poppins;
 	font-size: 13px;
@@ -174,36 +177,11 @@ a:hover {
 /* ** MAIN WEBSITE STYLES ** */
 /* ************************* */ 
 
-#site-container, #new-products-container,
-#products-landing-container,
-#product-category-container,
-#single-prod-container,
-#gen-info-container,
-#find-distributor-container,
-#contact-us-container,
-#about-container,
-#customize-container,
-#resources-container,
-#prices-container,
-#prices-results-container,
-#cms-site-container {
+.outer-container {
     padding: 0;
 }
 
-#home-container,
-#new-main-container,
-#landing-main-container,
-#category-main-container, 
-#single-prod-main-container,
-#gen-info-main-container,
-#find-distributor-main,
-#contact-main-container,
-#about-main-container,
-#customize-main-container,
-#resources-main-container,
-#prices-main-container,
-#prices-results-main-container,
-#cms-main-container {
+.inner-main {
     background-color: #FFFFFF;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
@@ -548,15 +526,15 @@ a:hover {
     text-transform: uppercase;
 }
 
-.series-model-table-row .table-responsive .model-table.table thead th {
+.table-responsive .model-table.table thead th {
     border-bottom: none;
 }
 
-.series-model-table-row .table-responsive .model-table.table th {
+.table-responsive .model-table.table th {
     border-top: none;
 }
 
-.series-model-table-row .table-responsive .model-table th.model-table-header {
+.table-responsive .model-table th.model-table-header {
     color: #017D44;
     font-size: 16px;
     font-weight: 600;
@@ -564,11 +542,12 @@ a:hover {
     text-transform: uppercase;
 }
 
-.series-model-table-row .table-responsive .model-table td.model-table-data {
+.table-responsive .model-table td.model-table-data {
     color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
-	line-height: 20px;
+    line-height: 20px;
+    text-transform: uppercase;
 }
 
 .legal-title {
@@ -983,7 +962,9 @@ p.resource-link a {
 
 /* ********************* */
 /* ** CMS SITE STYLES ** */
-/* ********************* */ 
+/* ********************* */
+
+/* === CMS HOMEPAGE: GLOBAL / DESKTOP === */
 
 #main-navbar .cms-greyed {
     color: #7FBDA1;
@@ -1028,3 +1009,61 @@ p.resource-link a {
 #cms-home-table .btn.btn-primary {
     padding: 4% 12%;
 }
+
+/* +++ CMS HOMEPAGE: TABLET +++ */
+
+/* +++ CMS HOMEPAGE: MOBILE +++ */
+
+/* +++ CMS PRODUCT CATEGORY: GLOBAL / DESKTOP +++ */
+
+.model-table.table-striped>tbody>tr:nth-child(even)>td, 
+.model-table.table-striped>tbody>tr:nth-child(even)>th {
+   background-color: #F9F9F7;
+}
+
+.model-table.table-striped>tbody>tr:nth-child(odd)>td, 
+.model-table.table-striped>tbody>tr:nth-child(odd)>th {
+   background-color: #FFFFFF;
+}
+
+.model-table.table-striped .model-table-data a {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+    line-height: 21px;
+    text-transform: uppercase;
+    padding-right: 5px;
+    text-decoration: underline;
+}
+
+.fileContainer {
+    overflow: hidden;
+    position: relative;
+}
+
+.fileContainer [type=file] {
+    cursor: inherit;
+    display: block;
+    font-size: 999px;
+    filter: alpha(opacity=0);
+    min-height: 100%;
+    min-width: 100%;
+    opacity: 0;
+    position: absolute;
+    right: 0;
+    text-align: right;
+    top: 0;
+    background: red;
+}
+
+/* Example stylistic flourishes */
+
+/* .fileContainer {
+    border-radius: .5em;
+    float: left;
+    padding: .5em;
+}
+
+.fileContainer [type=file] {
+    cursor: pointer;
+} */
