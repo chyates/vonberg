@@ -1036,34 +1036,47 @@ p.resource-link a {
     text-decoration: underline;
 }
 
-.fileContainer {
+/* === ADD PRODUCT: GLOBAL / DESKTOP === */
+
+#add-prod-form label.fileContainer {
     overflow: hidden;
     position: relative;
+    border: 1px solid #017D44;
+    font-size: 13px;
+    font-weight: bold;
+    color: #017D44;
+    border-radius: 3px;
+    padding: 4% 10%;
+    background-color: rgba(204,204,204,0);
 }
 
-.fileContainer [type=file] {
+.fileContainer input[type=file] {
     cursor: inherit;
     display: block;
-    font-size: 999px;
-    filter: alpha(opacity=0);
-    min-height: 100%;
-    min-width: 100%;
     opacity: 0;
     position: absolute;
     right: 0;
-    text-align: right;
+    text-align: center;
     top: 0;
-    background: red;
 }
 
-/* Example stylistic flourishes */
-
-/* .fileContainer {
-    border-radius: .5em;
-    float: left;
-    padding: .5em;
+#add-prod-form .btn.btn-primary {
+    padding: 10px 20px;
 }
 
-.fileContainer [type=file] {
-    cursor: pointer;
-} */
+#add-prod-form .back.btn.btn-primary {
+    border: 1px solid #017D44;
+    font-size: 13px;
+    font-weight: bold;
+    color: #017D44;
+    border-radius: 3px;
+    background-color: rgba(204,204,204,0);
+}
+
+#add-prod-form a.add-bullet {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+	line-height: 21px;
+    text-decoration: underline;
+}
