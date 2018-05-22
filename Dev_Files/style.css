@@ -984,11 +984,18 @@ p.resource-link a {
 }
 
 #cms-main-container h2,
-#cms-home-table th {
+#cms-home-table th,
+.rsrc-table.table-responsive {
     text-transform: uppercase;
 }
 
-#cms-home-table th {
+#cms-home-table th, #cms-home-table td {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+#cms-home-table th,
+.rsrc-table.table-responsive .table th {
     color: #017D44;
     font-size: 16px;
     font-weight: 600;
@@ -997,7 +1004,8 @@ p.resource-link a {
     border: none;
 }
 
-#cms-home-table td {
+#cms-home-table td,
+.rsrc-table.table-responsive .table td {
 	color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
@@ -1079,4 +1087,54 @@ p.resource-link a {
 	font-size: 14px;
 	line-height: 21px;
     text-decoration: underline;
+}
+
+#cms-manage-resources-main p.text-center a.btn.btn-primary {
+    padding: 1% 4%;
+}
+
+.rsrc-table.table-responsive .table tbody tr {
+    border-bottom: 1px solid #979797;
+}
+
+.rsrc-table.table-responsive .table th,
+.rsrc-table.table-responsive .table td {
+    padding-left: 0;
+    padding-right: 0;
+}
+
+.rsrc-table.table-responsive .table td {
+    text-transform: none;
+}
+
+/* === EDIT RESOURCE: GLOBAL / DESKTOP === */
+
+#cms-edit-resource-main label.fileContainer {
+    overflow: hidden;
+    position: relative;
+    font-size: 13px;
+    font-weight: bold;
+    text-transform: uppercase;
+    color: #FFFFFF;
+    background-color: #017D44;
+    border-radius: 3px;
+    padding: 2% 4%;
+}
+
+#cms-edit-resource-main ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-size: 13px;
+  }
+  #cms-edit-resource-main ::-moz-placeholder { /* Firefox 19+ */
+    font-size: 13px;
+  }
+  #cms-edit-resource-main :-ms-input-placeholder { /* IE 10+ */
+    font-size: 13px;
+  }
+  #cms-edit-resource-main :-moz-placeholder { /* Firefox 18- */
+    font-size: 13px;
+  }
+
+#cms-edit-resource-main td p {
+    display: inline-block;
+    vertical-align: top;
 }
