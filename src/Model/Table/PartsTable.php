@@ -40,8 +40,25 @@ class PartsTable extends Table
         $this->setTable('parts');
         $this->setDisplayField('partID');
         $this->setPrimaryKey('partID');
-    }
+        $this->addBehavior('Search.Search');
 
+        $this->searchManager()
+//            ->value('id')
+            ->add('q', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'fieldMode' => 'OR',
+                'comparison' => 'LIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => ['description', 'Series.name'],
+            ])
+            ->add('foo', 'Search.Callback', [
+                'callback' => function ($query, $args, $filter) {
+                    // Modify $query as required
+                }]);
+
+    }
     /**
      * Default validation rules.
      *

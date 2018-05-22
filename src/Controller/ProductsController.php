@@ -8,10 +8,22 @@ use Cake\ORM\TableRegistry;
 
 class ProductsController extends AppController
 {
+
+    public function initialize()
+    {
+        parent::initialize();
+
+        $this->loadComponent('Search.Prg', [
+            // This is default config. You can modify "actions" as needed to make
+            // the PRG component work only for specified methods.
+            'actions' => ['index', 'search']
+        ]);
+    }
+
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index','new']);
+        $this->Auth->allow(['index','catalog','view','new','search']);
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -69,5 +81,18 @@ class ProductsController extends AppController
         $this->set('parts', $query);
         $this->set('category', $cat2);
 
+    }
+
+    public function search()
+    {
+        $this->loadModel('Parts');
+        $query = $this->Parts
+            // Use the plugins 'search' custom finder and pass in the
+            // processed query params
+            ->find('search', ['search' => $this->request->getQueryParams()])
+            // You can add extra things to the query if you need to
+            ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+
+        $this->set('parts', $this->paginate($query));
     }
 }

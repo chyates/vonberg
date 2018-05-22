@@ -4,9 +4,13 @@
     </a>
     <div class="d-flex flex-row justify-content-end">
         <a class="header-link nav-link" href="/products/new">New Products</a>
-        <form class="form-inline">
-            <input class="form-control" type="search" placeholder="Search by product number or keyword" aria-label="Search">
-        </form>
+
+        <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'search']]);
+        // You'll need to populate $authors in the template from your controller
+        echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control', 'placeholder'=>'Search by product number or keyword','aria-label'=>'Search']);
+        // Match the search param in your table configuration
+        echo $this->Form->end(); ?>
+
     </div>
 </nav><!-- home-top-header end -->
 
