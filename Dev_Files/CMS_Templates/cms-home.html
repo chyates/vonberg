@@ -12,15 +12,15 @@
     <body>
         <div id="cms-site-container" class="outer-container container-fluid">
             <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/cms-home">
                     <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
                 </a>
                 <div class="d-flex flex-row justify-content-end">
-                    <a class="header-link nav-link" href="/products">New Products</a>
-                    <p class="cms-top-nav mx-2 my-auto">Add New Product</p>
-                    <p class="cms-top-nav mx-2 my-auto">Generate Custom PDF</p>
-                    <p class="cms-top-nav mx-2 my-auto">Model Pricing</p>
-                    <p class="cms-top-nav mx-2 my-auto">STP Download Report</p>
+                    <a class="header-link nav-link" href="/cms-product-category">New Products</a>
+                    <p class="cms-top-nav mx-2 my-auto"><a href="/add-product">Add New Product</a></p>
+                    <p class="cms-top-nav mx-2 my-auto"><a href="/generate-pdf">Generate Custom PDF</a></p>
+                    <p class="cms-top-nav mx-2 my-auto"><a href="/edit-resource">Model Pricing</a></p>
+                    <p class="cms-top-nav mx-2 my-auto"><a href="/manage-resource">STP Download Report</a></p>
                 </div>
             </nav><!-- home-top-header end -->
 
@@ -88,7 +88,7 @@
 
             <div id="cms-main-container" class="inner-main col-md-10 mx-auto p-5">
                 <h1 class="page-title">Content Management System</h1>
-                <p class="text-center"><a class="btn btn-primary mr-4" href="/add-product">Add New Product</a><a class="btn btn-primary mr-4" href="/generate-pdf">Generate Custom PDF</a><a class="btn btn-primary" href="/manage-resource">Manage Resources</a></p>
+                <p class="text-center"><a class="btn btn-primary mr-4" href="/add-product">Add New Product</a><a class="btn btn-primary mr-4" href="/generate-pdf">Generate Custom PDF</a><a class="btn btn-primary" href="/manage-resources">Manage Resources</a></p>
                 <hr>
                 
                 <div id="cms-home-table" class="table-responsive">
@@ -151,5 +151,21 @@
                 </div>
             </div><!-- vvi-footer end -->
         </div><!-- #cms-site-container end -->
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $("#product-dropdown a.main-nav-hov").hover(function(){
+                    $(this).parent('.dropdown').addClass('open').addClass('show');
+                    $(this).attr('aria-expanded', 'true');
+                }, function() {
+                    $(this).parent('.dropdown').removeClass('open').removeClass('show');
+                    $(this).attr('aria-expanded', 'false');
+                });
+            })
+        </script>
     </body>
 </html>
