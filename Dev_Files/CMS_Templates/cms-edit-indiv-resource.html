@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+        <title>VVI Homepage</title>
+    </head>
+
+    <body>
+        <div id="cms-edit-resource-container" class="outer-container container-fluid">
+            <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
+                <a class="navbar-brand" href="/cms-home">
+                    <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                </a>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <p class="cms-top-nav mx-2 my-auto">Add New Product</p>
+                    <p class="cms-top-nav mx-2 my-auto">Generate Custom PDF</p>
+                    <p class="cms-top-nav mx-2 my-auto">Model Pricing</p>
+                    <p class="cms-top-nav mx-2 my-auto">STP Download Report</p>
+                </div>
+            </nav><!-- home-top-header end -->
+
+            <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Products</a>
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+                <a class="cms-greyed nav-link nav-item" disabled>About</a>
+                <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
+                <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
+            </nav><!-- main-navbar end -->
+
+            <div id="cms-edit-resource-main" class="inner-main col-md-10 mx-auto p-5">
+
+                <!-- This template should be used for the pages for General Information, Technical Documentation, and Application Information resources. The information for each resource should already be populated from the database. 
+                
+                The content after the colon should be replaced depending on which resource the user is editing, either General Information, Technical Documentation, or Application Information. -->
+
+                <h1 class="page-title">Edit or Delete Resources: General Information</h1>
+
+                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Edit Title</th>
+                                <th>Current File</th>
+                                <th>Replace File</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
+                                <td>FileName.pdf</td>
+                                <td class="justify-content-between">
+                                    <label class="fileContainer">Browse
+                                        <input type="file" class="form-control"/>
+                                    </label>
+                                    <p class="file-text">No file chosen test</p>
+                                    <label class="update-button fileContainer">Update
+                                        <input type="file" class="form-control"/>
+                                    </label>
+                                    <p><a href="">Delete</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
+                                <td>FileName.pdf</td>
+                                <td class="justify-content-between">
+                                    <label class="fileContainer">Browse
+                                        <input type="file" class="form-control"/>
+                                    </label>
+                                    <p class="file-text">No file chosen</p>
+                                    <label class="update-button fileContainer">Update
+                                        <input type="file" class="form-control"/>
+                                    </label>
+                                    <p><a href="">Delete</a></p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
+                                <td>FileName.pdf</td>
+                                <td class="justify-content-between">
+                                    <label class="fileContainer">Browse
+                                        <input type="file" class="form-control"/>
+                                    </label>
+                                    <p class="file-text">No file chosen</p>
+                                    <label class="update-button fileContainer">Update
+                                        <input type="file" class="form-control"/>
+                                    </label>
+                                    <p><a href="">Delete</a></p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- .rsrc-table end -->
+
+            </div><!-- #cms-edit-resource-main end -->
+
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>info@vonberg.com</p>
+                    </div>
+                    <div class="col-lg offset-lg">
+                        <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                        <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                    </div>
+                </div>
+            </div><!-- vvi-footer end -->
+        </div><!-- #cms-edit-resource-container end -->
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $(".update-button").hide();
+                $(".fileContainer input[type=file]").change(function() {
+                    var filename = $(this).val();
+                    var toChange = $(this).closest('td').children('.file-text');
+                    var nextUpdate = $(this).closest('td').children('.update-button');
+
+                    $(toChange).html(filename);
+                    $(nextUpdate).show();
+                });
+            })
+        </script>
+    </body>
+</html>

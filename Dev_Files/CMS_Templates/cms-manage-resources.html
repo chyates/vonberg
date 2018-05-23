@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" type="text/css" href="{% static 'users/style.css' %}">
+        <title>VVI Homepage</title>
+    </head>
+
+    <body>
+        <div id="cms-manage-resources-container" class="outer-container container-fluid">
+            <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
+                <a class="navbar-brand" href="/cms-home">
+                    <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                </a>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <p class="cms-top-nav mx-2 my-auto">Add New Product</p>
+                    <p class="cms-top-nav mx-2 my-auto">Generate Custom PDF</p>
+                    <p class="cms-top-nav mx-2 my-auto">Model Pricing</p>
+                    <p class="cms-top-nav mx-2 my-auto">STP Download Report</p>
+                </div>
+            </nav><!-- home-top-header end -->
+
+            <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Products</a>
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+                <a class="cms-greyed nav-link nav-item" disabled>About</a>
+                <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
+                <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
+            </nav><!-- main-navbar end -->
+
+            <div id="cms-manage-resources-main" class="inner-main col-md-10 mx-auto p-5">
+                <h1 class="page-title">Manage Resources</h1>
+                <p class="text-center"><a class="btn btn-primary mr-4" href="/add-resource">Add New Resource</a><a class="btn btn-primary mr-4" href="/edit-resource">Edit or Delete Resources</a></p>
+                <hr>
+                
+                <!-- This content should be replaced with database logic.
+                
+                Each category should have its own table with headers and a title. The PDFs should be sorted by category; there absolutely could be more than three per section.  -->
+
+                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+                    <h2 class="category-title">General Information</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Current File</th>
+                                <th>Title</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- .rsrc-table end -->
+
+                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+                    <h2 class="category-title">Technical Documentation</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Current File</th>
+                                <th>Title</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- .rsrc-table end -->
+
+                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+                    <h2 class="category-title">Application Information</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Current File</th>
+                                <th>Title</th>
+                                <th>Last Updated</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                            <tr>
+                                <td>FileName.pdf</td>
+                                <td>File Title Displayed on Site</td>
+                                <td>2017-11-08 13:46:02</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div><!-- .rsrc-table end -->
+            </div><!-- #cms-manage-resources-main end -->
+
+            <div id="vvi-footer" class="col-10 mx-auto">
+                <div class="row">
+                    <div class="col-lg">
+                        <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
+                    </div>
+                    <div class="col-lg">
+                        <p>Vonberg Valve, Inc.<br>3800 Industrial Avenue<br>Rolling Meadows, IL 60008</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>P: 847-259-3800<br>F: 847-259-3997</p>
+                    </div>
+                    <div class="col-lg">
+                        <p>info@vonberg.com</p>
+                    </div>
+                    <div class="col-lg offset-lg">
+                        <img class="img-fluid" src="{% static 'users/linkedin.svg' %}">
+                        <img class="img-fluid" src="{% static 'users/facebook.svg' %}">
+                    </div>
+                </div>
+            </div><!-- vvi-footer end -->
+        </div><!-- #cms-manage-resources-container end -->
+    </body>
+</html>

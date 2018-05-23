@@ -12,7 +12,7 @@
     <body>
         <div id="cms-add-resource-container" class="outer-container container-fluid">
             <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/cms-home">
                     <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
                 </a>
                 <div class="d-flex flex-row justify-content-end">
@@ -25,7 +25,7 @@
             </nav><!-- home-top-header end -->
 
             <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
-                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/cms-product-category">Products</a>
+                <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="">Products</a>
                 <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
                 <a class="cms-greyed nav-link nav-item" disabled>About</a>
                 <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
@@ -33,103 +33,40 @@
             </nav><!-- main-navbar end -->
 
             <div id="cms-add-resource-main" class="inner-main col-md-10 mx-auto p-5">
-                <h1 class="page-title">Manage Resources</h1>
-                <p class="text-center"><a class="btn btn-primary mr-4" href="/add-resource">Add New Resource</a><a class="btn btn-primary mr-4" href="/edit-resource">Edit or Delete Resources</a></p>
-                <hr>
+                <h1 class="page-title">Add Resource</h1>
                 
-                <!-- This follows the same format as the.
-                
-                Each category should have its own table with headers and a title. The PDFs should be sorted by category; there absolutely could be more than three per section.  -->
+                <div class="col-6 mx-auto">
 
-                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
-                    <h2 class="category-title">General Information</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Current File</th>
-                                <th>Title</th>
-                                <th>Last Updated</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- .rsrc-table end -->
-
-                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
-                    <h2 class="category-title">Technical Documentation</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Current File</th>
-                                <th>Title</th>
-                                <th>Last Updated</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- .rsrc-table end -->
-
-                <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
-                    <h2 class="category-title">Application Information</h2>
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Current File</th>
-                                <th>Title</th>
-                                <th>Last Updated</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                            <tr>
-                                <td>FileName.pdf</td>
-                                <td>File Title Displayed on Site</td>
-                                <td>2017-11-08 13:46:02</td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div><!-- .rsrc-table end -->
+                    <form id="add-rsrc-form">
+                        <div class="form-group">
+                            <label>Select Page</label>
+                            <select class="form-control" name="rsrc-page">
+                                <option value="Select..." selected disabled>Choose resources page...</option>
+                                <option value="generalInformation">General Information</option>
+                                <option value="technicalDocumentation">Technical Documentation</option>
+                                <option value="applicationInformation">Application Information</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>File Title</label>
+                            <input type="text" class="form-control" name="product-operation" placeholder="Enter title copy...">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label id="up-label-addrsrc">Upload File</label>
+                            <label class="fileContainer">Browse
+                                <input id="add-rsrc-file" type="file" class="form-control"/>
+                            </label>
+                            <p>No file chosen</p>
+                        </div>
+                        
+                        <div class="form-group text-right">
+                            <label class="sr-only">Submit</label>
+                            <input id="add-rsrc-submit" type="submit" class="btn btn-primary" value="Add Resource">
+                        </div>
+                    </form>
+                </div>
             </div><!-- #cms-manage-resources-main end -->
 
             <div id="vvi-footer" class="col-10 mx-auto">
@@ -153,5 +90,20 @@
                 </div>
             </div><!-- vvi-footer end -->
         </div><!-- #cms-manage-resources-container end -->
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+        <script type="text/javascript">
+            jQuery(document).ready(function($) {
+                $(".fileContainer input[type=file]").change(function() {
+                    var filename = $(this).val();
+                    var toChange = $(this).closest('.form-group').children('p');
+
+                    $(toChange).html(filename);
+                });
+            })
+        </script>
     </body>
 </html>

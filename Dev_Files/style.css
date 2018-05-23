@@ -966,6 +966,15 @@ p.resource-link a {
 
 /* === CMS HOMEPAGE: GLOBAL / DESKTOP === */
 
+.cms-top-nav a {
+    color: #425460;
+}
+
+.cms-top-nav a:hover {
+    color: #425460;
+    text-decoration: underline;
+}
+
 #main-navbar .cms-greyed {
     color: #7FBDA1;
 }
@@ -1046,7 +1055,8 @@ p.resource-link a {
 
 /* === ADD PRODUCT: GLOBAL / DESKTOP === */
 
-#add-prod-form label.fileContainer {
+#add-prod-form label.fileContainer,
+#cms-add-resource-main label.fileContainer {
     overflow: hidden;
     position: relative;
     border: 1px solid #017D44;
@@ -1093,7 +1103,7 @@ p.resource-link a {
     padding: 1% 4%;
 }
 
-.rsrc-table.table-responsive .table tbody tr {
+.rsrc-table.table-responsive .table tbody tr:not(:last-child) {
     border-bottom: 1px solid #979797;
 }
 
@@ -1121,20 +1131,45 @@ p.resource-link a {
     padding: 2% 4%;
 }
 
-#cms-edit-resource-main ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+#cms-edit-resource-main ::-webkit-input-placeholder,
+#cms-add-resource-main ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
     font-size: 13px;
   }
-  #cms-edit-resource-main ::-moz-placeholder { /* Firefox 19+ */
+
+  #cms-edit-resource-main ::-moz-placeholder,
+  #cms-add-resource-main ::-moz-placeholder { /* Firefox 19+ */
     font-size: 13px;
   }
-  #cms-edit-resource-main :-ms-input-placeholder { /* IE 10+ */
+
+  #cms-edit-resource-main :-ms-input-placeholder,
+  #cms-add-resource-main :-ms-input-placeholder { /* IE 10+ */
     font-size: 13px;
   }
-  #cms-edit-resource-main :-moz-placeholder { /* Firefox 18- */
+
+  #cms-edit-resource-main :-moz-placeholder,
+  #cms-add-resource-main :-moz-placeholder { /* Firefox 18- */
     font-size: 13px;
   }
 
 #cms-edit-resource-main td p {
     display: inline-block;
     vertical-align: top;
+}
+
+#cms-add-resource-main label.fileContainer {
+    text-transform: uppercase;
+    padding: 8px 24px;
+}
+
+#add-rsrc-form #up-label-addrsrc {
+    display: block;
+}
+
+#add-rsrc-form .form-group p {
+    display: inline-block;
+    vertical-align: top;
+}
+
+#add-rsrc-form #add-rsrc-submit {
+    padding: 10px 22px;
 }
