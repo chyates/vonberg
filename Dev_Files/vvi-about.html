@@ -10,23 +10,75 @@
     </head>
 
     <body>
-
         <div id="about-container" class="outer-container container-fluid">
             <nav id="home-top-header" class="navbar navbar-expand-lg justify-content-between">
-                <a class="navbar-brand" href="#">
+                <a class="navbar-brand" href="/vvi-home">
                     <img class="header-image img-fluid" src="{% static 'users/Vonberg-Logo.svg' %}" alt="">
                 </a>
                 <div class="d-flex flex-row justify-content-end">
-                    <a class="header-link nav-link" href="/products">New Products</a>
+                    <a class="header-link nav-link" href="/new-products">New Products</a>
                     <form class="form-inline">
                         <input class="form-control" type="search" placeholder="Search by product number or keyword" aria-label="Search">
                     </form>
                 </div>
             </nav><!-- home-top-header end -->
-    
+
             <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
-                <a class="main-nav-hov nav-link nav-item" href="/products">Products</a>
-                <a class="main-nav-hov nav-link nav-item" href="/resources">Resources</a>
+                <!-- Products Dropdown -->
+                <div id="product-dropdown" class="dropdown">
+                    <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+                    <div class="dropdown-menu" aria-labelledby="product-dropdown">
+                        <div class="row no-gutters justify-content-between">
+                            <div class="col">
+                                <p class="drop-header">Flow Regulating Valves</p>
+                                <p class="drop-content">Flow Regulators</p>
+                                <p class="drop-content">Flow Dividers & Combiners</p>
+                            </div>
+                            <div class="col">
+                                <p class="drop-header">Directional Valves</p>
+                                <p class="drop-content">Check Valves - Poppet</p>
+                                <p class="drop-content">Check Valves - Ball</p>
+                                <p class="drop-content">Shuttle Valves</p>
+                            </div>
+                            <div class="col">
+                                <p class="drop-header">Safety Valves</p>
+                                <p class="drop-content">Velocity Fuses</p>
+                                <p class="drop-content">Flow Limiters</p>
+                            </div>
+                            <div class="col">
+                                <p class="drop-header">Pressure Controls</p>
+                                <p class="drop-content">Counterbalance Valves</p>
+                                <p class="drop-content">Relief Valves - Direct Acting</p>
+                                <p class="drop-content">Relief Valves - Differential Area</p>
+                            </div>
+                            <div class="col">
+                                <p class="drop-header">Cartridge Bodies</p>
+                                <p class="drop-content">2-Way Manifolds</p>
+                                <p class="drop-content">3-Way Manifolds</p>
+                                <p class="drop-content">3-Way T-Series Manifolds</p>
+                                <p class="drop-content">Cavity Plugs</p>
+                            </div>
+                            <div class="col last-prod-drop">
+                                <p class="drop-header"><a href="/product-customization">Product Customization</a></p>
+                                <p class="drop-header"><a href="/application-information">Application Information</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Resources Dropdown -->
+                <div id="resources-dropdown" class="dropdown">
+                    <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+                    <div class="dropdown-menu" aria-labelledby="product-dropdown">
+                        <div class="row no-gutters justify-content-between">
+                            <p class="drop-header"><a href="/general-information">General Information</a></p>
+                            <p class="drop-header"><a href="/technical-documentation">Technical Documentation</a></p>
+                            <p class="drop-header"><a href="/application-information">Application Information</a></p>
+                            <p class="drop-header"><a href="/product-prices">Base Product Prices</a></p>
+                            <p class="drop-header">Download Our Catalog</p>
+                        </div>
+                    </div>
+                </div>
                 <a class="nav-link nav-item" href="/about">About</a>
                 <a class="nav-link nav-item" href="/find-a-distributor">Find a Distributor</a>
                 <a class="nav-link nav-item" href="/contact">Contact</a>
@@ -34,7 +86,7 @@
 
             <div id="about-main-container" class="inner-main col-10 mx-auto py-4 px-5">
                 <div class="row no-gutters mb-4">
-                    <img class="about-hero-img img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="about-hero"/>
+                    <img class="about-hero-img img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg" alt="about-hero"/>
                     <div class="text-block align-items-end col-lg-6">
                         <h1>Hydraulic Innovation</h1>
                     </div>
@@ -42,7 +94,7 @@
                 
                 <div class="row no-gutters my-3 justify-content-between">
                     <div class="about-block">
-                        <img class="img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png">
+                        <img class="img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg">
                         <div class="about-block-text p-4">
                             <h2 class="about-title">Design & Engineering</h2>
                             <p>Our highly trained engineers have designed and developed an extensive hydraulic valve product line utilizing state of the art CAD Engineering Technology. When standard Vonberg products do not meet your specific requirements, our engineering staff can develop a custom solution to meet or exceed the demands of your application.</p>
@@ -50,7 +102,7 @@
                     </div>
                     
                     <div class="about-block">
-                        <img class="img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png">
+                        <img class="img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg">
                         <div class="about-block-text p-4">
                             <h2 class="about-title">Manufacturing</h2>
                             <p>Vonberg utilizes the latest in modern manufacturing technology, with automated CNC lathes and CNC machining centers maintaining the tightest tolerance possible, resulting in superior quality valve components. A fully integrated ERP system tracks all sales orders from entry, through manufacturing and production,until themoment the product ships, maintaining our reputation for providing the shortest lead times in the industry.</p>
@@ -60,7 +112,7 @@
 
                 <div class="row no-gutters my-3 justify-content-between">
                     <div class="about-block">
-                        <img class="img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png">
+                        <img class="img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg">
                         <div class="about-block-text p-4">
                             <h2 class="about-title">Assembly & Testing</h2>
                             <p>The Vonberg assembly team combines highly skilled individuals with decades of knowledge and experience, allowing Vonberg to develop a reputation of unsurpassed quality in the hydraulic industry. All testing is done on high pressure test stands with specially designed fixtures to provide quick, accurate and reliable results. This unique test equipment allows Vonberg to analyze the product in a non-destructive manner andmaintain the integrity of delicate pipe threads, o-ring connections and flare fittings.</p>
@@ -68,7 +120,7 @@
                     </div>
                     
                     <div class="about-block">
-                        <img class="img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png">
+                        <img class="img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg">
                         <div class="about-block-text p-4">
                             <h2 class="about-title">Quality Assurance</h2>
                             <p>Vonberg is ISO 9001 certified, and our quality assurance program emphasizes zero defects throughout manufacturing and production. The quality processes aid our highly trained workforce as they utilize calibrated instrumentation, specialized equipment, and documentation to form a superior quality system.</p>
@@ -79,13 +131,13 @@
                 <div class="about-lower-hero my-5">
                     <div class="row no-gutters">
                         <div class="col-lg-4">
-                            <img class="about-hero img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" />
+                            <img class="about-hero img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg" />
                         </div>
                         <div class="col-lg-4">
-                            <img class="about-hero img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" />
+                            <img class="about-hero img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg" />
                         </div>
                         <div class="col-lg-4">
-                            <img class="about-hero img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" />
+                            <img class="about-hero img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg" />
                         </div>
                     </div>
                     <div class="row no-gutters p-4">

@@ -9,7 +9,7 @@ body {
 }
 
 /* h1, d/t */
-.page-title, .page-header {
+.page-title, .page-header, h1 {
     font-size: 30px;
     color: #017d44;
     letter-spacing: 0;
@@ -38,7 +38,7 @@ body {
 }
 
 /* h2, d/t */
-.category-title {
+.category-title, h2 {
     font-size: 24px;
     color: #017d44;
     letter-spacing: 0;
@@ -56,7 +56,7 @@ body {
 }
 
 /* h3, d/t */
-.product-name {
+.product-name, h3 {
     font-size: 18px;
     color: #017d44;
     letter-spacing: 0;
@@ -276,35 +276,22 @@ a:hover {
 
 }
 
-/* === HOMEPAGE HERO STYLES: GLOBAL / DESKTOP === */
+/* === HOMEPAGE STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px){
+    #home-container {
+        padding: 30px 40px;
+    }
+}
 
 #home-container {
     background-color: #ffffff;
-    padding: 30px 40px;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
 #hero-slider .carousel-item img {
     height: 410px;
 }
-
-@media (min-width: 992px){
-    
-}
-
-/* +++ HOMEPAGE HERO: TABLET +++ */
-
-@media (max-width: 991px) {
-    
-}
-
-/* +++ HOMEPAGE HERO: MOBILE +++ */
-
-@media (max-width: 576px){
-    
-}
-
-/* === HOMEPAGE CARDS STYLES: GLOBAL / DESKTOP === */
 
 .homepage-single-card.card {
     border-radius: 0;
@@ -333,23 +320,9 @@ a:hover {
     padding: 6px 30px;
 }
 
-@media (min-width: 992px){
-    
+#homepage-cards {
+    display: flex;
 }
-
-/* +++ HOMEPAGE CARDS: TABLET +++ */
-
-@media (max-width: 991px) {
-    
-}
-
-/* +++ HOMEPAGE CARDS: MOBILE +++ */
-
-@media (max-width: 576px){
-    
-}
-
-/* === HOMEPAGE LOWER LOGOS STYLES: GLOBAL / DESKTOP === */
 
 #home-lower-logos p{
     color: #666666;
@@ -371,20 +344,27 @@ a:hover {
     margin: 0 24px;
 }
 
-@media (min-width: 992px){
-    
-}
-
-/* +++ HOMEPAGE LOWER LOGOS: TABLET +++ */
+/* +++ HOMEPAGE: TABLET +++ */
 
 @media (max-width: 991px) {
     
 }
 
-/* +++ HOMEPAGE LOWER LOGOS: MOBILE +++ */
+/* +++ HOMEPAGE: MOBILE +++ */
 
 @media (max-width: 576px){
-    
+
+    #hero-slider {
+        padding: 15px 0;
+    }
+
+    #homepage-cards {
+        display: block;
+    }
+
+    #home-lower-logos {
+        padding: 3vh 2vw;
+    }
 }
 
 /* === NEW PRODUCTS PAGE STYLES: GLOBAL / DESKTOP === */
@@ -411,6 +391,10 @@ a:hover {
 }
 
 /* === PRODUCTS LANDING PAGE STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px){
+
+}
 
 #landing-main-container .product-text-block .product-name {
     text-align: center;
@@ -441,10 +425,6 @@ a:hover {
     margin: 10px auto;
 }
 
-@media (min-width: 992px){
-
-}
-
 /* +++ PRODUCTS LANDING PAGE: TABLET +++ */
 
 @media (max-width: 991px) {
@@ -455,6 +435,19 @@ a:hover {
 
 @media (max-width: 576px) {
 
+    #landing-main-container .row .col-lg-10.col-12 {
+        padding: 5vh 0;
+    }
+
+    .landing-img-block {
+        width: auto;
+        height: auto;
+    }
+
+    #landing-main-container .learn-more-block {
+        width: auto;
+        height: auto;
+    }
 }
 
 /* === PRODUCT CATEGORY STYLES: GLOBAL / DESKTOP === */
@@ -929,10 +922,6 @@ p.resource-link a {
 
 /* === FOOTER STYLES: GLOBAL / DESKTOP === */
 
-#vvi-footer {
-    padding: 30px 40px;
-}
-
 #vvi-footer p {
     color: #111111;
     font-family: Poppins;
@@ -945,7 +934,9 @@ p.resource-link a {
 }
 
 @media (min-width: 992px){
-    
+    #vvi-footer {
+        padding: 30px 40px;
+    }
 }
 
 /* +++ FOOTER: TABLET +++ */
@@ -957,7 +948,14 @@ p.resource-link a {
 /* +++ FOOTER: MOBILE +++ */
 
 @media (max-width: 576px){
-    
+    #vvi-footer {
+        padding: 4vh 10vw;
+    }
+
+    #vvi-footer .row {
+        display: flex;
+        justify-content: center;
+    }
 }
 
 /* ********************* */
@@ -1119,7 +1117,8 @@ p.resource-link a {
 
 /* === EDIT RESOURCE: GLOBAL / DESKTOP === */
 
-#cms-edit-resource-main label.fileContainer {
+#cms-edit-resource-main label.fileContainer,
+#cms-model-price-main label.fileContainer {
     overflow: hidden;
     position: relative;
     font-size: 13px;
@@ -1151,7 +1150,8 @@ p.resource-link a {
     font-size: 13px;
   }
 
-#cms-edit-resource-main td p {
+#cms-edit-resource-main td p,
+#cms-model-price-main td p {
     display: inline-block;
     vertical-align: top;
 }
