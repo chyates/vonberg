@@ -388,6 +388,11 @@ a:hover {
 
 @media (max-width: 576px) {
 
+    .product-img-block {
+        height: auto;
+        width: auto;
+    }
+
 }
 
 /* === PRODUCTS LANDING PAGE STYLES: GLOBAL / DESKTOP === */
@@ -626,7 +631,10 @@ p.resource-link a {
 /* +++ GENERAL INFO TEMPLATE: MOBILE +++ */
 
 @media (max-width: 576px) {
-
+    #gen-info-main-container .page-header,
+    #gen-info-main-container .product-info {
+        text-align: left;
+    }
 }
 
 /* === FIND A DISTRIBUTOR STYLES: GLOBAL / DESKTOP === */
@@ -681,7 +689,9 @@ p.resource-link a {
 /* +++ FIND A DISTRIBUTOR: MOBILE +++ */
 
 @media (max-width: 576px) {
-
+    #find-distributor-main .right-map {
+        display: none;
+    }
 }
 
 /* === CONTACT US STYLES: GLOBAL / DESKTOP === */
@@ -735,8 +745,8 @@ p.resource-link a {
 }
 
 .about-block {
-    width: 528px;
-    max-height: 600px;
+    width: 37vw;
+    /* max-height: 600px; */
 }
 
 .about-title {
@@ -750,7 +760,7 @@ p.resource-link a {
 }
 
 .about-block img {
-    height: 350px;
+    /* height: 350px; */
     width: 100%;
     border-bottom: 1px solid #CCCCCC;
 }
@@ -763,18 +773,34 @@ p.resource-link a {
 
 @media (max-width: 991px){
 
+    .about-block {
+        width: 46vw;
+    }
 }
 
 /* +++ ABOUT: MOBILE +++ */
 
 @media (max-width: 576px){
-
+    .about-block {
+        width: 100%;
+    }
 }
 
 /* === PRODUCT CUSTOMIZATION STYLES: GLOBAL / DESKTOP === */
 
+@media (min-width: 992px) {
+    .customize-subtitle {
+        padding: 0 10vw;
+    }
+    
+    .customize-right .example-block {
+        border: 1px solid #DDDDDD;
+        background-color: #F9F9F7;
+    }
+}
+
 .customize-subtitle {
-    padding: 0 86px;
+    text-align: center;
 }
 
 .customize-left img {
@@ -790,8 +816,6 @@ p.resource-link a {
 }
 
 .customize-right .example-block {
-    border: 1px solid #DDDDDD;
-    background-color: #F9F9F7;
     padding: 20px;
 }
 
@@ -806,7 +830,40 @@ p.resource-link a {
 
 /* +++ PRODUCT CUSTOMIZATION: TABLET +++ */
 
+@media (max-width: 991px) {
+
+    .customize-subtitle {
+        padding: 0 8vw;
+    }
+
+    #customize-main-container.inner-main .col-lg-10 .row.no-gutters {
+        justify-content: space-between;
+    }
+
+    .customize-right {
+        border: 1px solid #DDDDDD;
+        background-color: #F9F9F7;
+        padding: 20px;
+    }
+}
+
 /* +++ PRODUCT CUSTOMIZATION: MOBILE +++ */
+
+@media (max-width: 576px) {
+
+    .customize-subtitle {
+        padding: 0 2vw;
+    }
+
+    .customize-left img {
+        height: auto;
+        width: auto;
+    }
+
+    /* .customize-right .example-block {
+        padding: 0 20px;
+    } */
+}
 
 /* === RESOURCES PAGE STYLES: GLOBAL / DESKTOP === */
 
@@ -855,12 +912,12 @@ p.resource-link a {
     border-radius: 2px;
 }
 
-#prices-main-container .col-lg-6 p {
+#prices-main-container .col-sm-6 p {
     color: #666666;
     font-size: 20px;
 }
 
-#prices-main-container .col-lg-6 p a {
+#prices-main-container .col-sm-6 p a {
     color: #017D44;
     text-decoration: underline;
 }
@@ -875,6 +932,13 @@ p.resource-link a {
 }
 
 /* +++ PRODUCT PRICES: TABLET +++ */
+
+@media (max-width: 991px) {
+    #prices-main-container.inner-main .col-lg-4 img.img-fluid {
+        width: auto;
+        height: auto;
+    }
+}
 
 /* +++ PRODUCT PRICES: MOBILE +++ */
 
@@ -897,12 +961,12 @@ p.resource-link a {
     border-radius: 2px;
 }
 
-#prices-results-main-container .col-lg-6 p {
+#prices-results-main-container .col-sm-6 p {
     color: #666666;
     font-size: 20px;
 }
 
-#prices-results-main-container .col-lg-6 p a {
+#prices-results-main-container .col-sm-6 p a {
     color: #017D44;
     text-decoration: underline;
 }
