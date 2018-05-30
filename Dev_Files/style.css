@@ -415,10 +415,11 @@ a:hover {
 }
 
 #landing-main-container .learn-more-block {
-    width: 361px;
+    width: auto;
+    padding: 3px;
     height: 241px;
     border: 1px solid #DDDDDD;
-    background-color: rgba(235, 236, 230, 0.5);
+    background-color: rgba(235, 236, 230, 0.5)
 }
 
 #landing-main-container .landing-list-row .landing-img-block {
@@ -485,7 +486,13 @@ a:hover {
 
 /* === SINGLE PRODUCT STYLES: GLOBAL / DESKTOP === */
 
-#single-prod-main .single-prod-left-col .page-title {
+.single-prod-left-col,
+.single-prod-right-col {
+    justify-content: space-between;
+    display: flex;
+}
+
+.single-prod-left-col .page-title {
     text-align: left;
 }
 
@@ -497,6 +504,16 @@ a:hover {
     width: 381px;
 }
 
+.single-prod-right-col .right-main-content {
+    border: 1px solid #DDDDDD;
+    background-color: #F9F9F7;
+}
+
+.single-prod-right-col .right-top-links {
+    display: flex;
+    justify-content: space-between;
+}
+
 .single-prod-right-col .right-top-links a {
     color: #017D44;
     font-family: Poppins;
@@ -506,9 +523,8 @@ a:hover {
     text-decoration: underline;
 }
 
-#single-prod-main .single-prod-right-col .right-main-content {
-    border: 1px solid #DDDDDD;
-    background-color: #F9F9F7;
+.right-main-content {
+    margin-bottom: 20px;
 }
 
 .right-list ul {
@@ -573,10 +589,6 @@ a:hover {
 #get-stp-form p {
     text-align: center;
 }
-
-/* #get-stp-form .form-group label {
-    font-weight: bold;
-} */
 
 #get-stp-form p a {
     font-size: 14px;
@@ -806,11 +818,9 @@ p.resource-link a {
 .customize-left img {
     height: 250px;
     width: 480px;
-    border: 1px solid #DDDDDD;
 }
 
 .customize-left .btn {
-    /* line-height: 18px; */
     padding: 10px 20px;
     text-transform: uppercase;
 }
@@ -874,6 +884,10 @@ p.resource-link a {
 
 .resource-block h2 {
     text-transform: uppercase;
+}
+
+p.resource-link span img.img-fluid {
+    width: 18px;
 }
 
 .resource-block .btn, .download-btn {
@@ -995,6 +1009,10 @@ p.resource-link a {
 
 #vvi-footer .offset-lg img {
     margin: 0 5px;
+}
+
+#vvi-footer .offset-lg .img-fluid {
+    width: 30px;
 }
 
 @media (min-width: 992px){
