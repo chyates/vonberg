@@ -50,7 +50,7 @@
                     <p class="drop-content">Cavity Plugs</p>
                 </div>
                 <div class="col last-prod-drop">
-                    <p class="drop-header"><A HREF="/products/catalog/6">Product Customization</A></p>
+                    <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
                     <p class="drop-header">Application Information</p>
                 </div>
             </div>

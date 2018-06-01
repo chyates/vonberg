@@ -74,10 +74,9 @@
     </div>
 </div>
 
-<div id="single-prod-main-container" class="col-10 mx-auto">
-
-    <div id="single-prod-main" class="row mx-5 px-5">
-        <div class="single-prod-left-col col-lg-8 px-3 py-5">
+<div id="single-prod-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5">
+    <div id="single-prod-main" class="row mx-lg-5 px-lg-5 py-lg-4">
+        <div class="single-prod-left-col flex-column col-sm-7 px-lg-3">
             <div class="left-info">
                 <h1 class="page-title"><?= h($part->series->name);?></h1>
                 <h3 class="product-name"><?= h($part->category->name);?></h3>
@@ -107,22 +106,22 @@
             </div>
         </div><!-- .single-prod-left-col end -->
 
-        <div class="single-prod-right-col col-lg-4 px-0 py-5">
-            <div class="right-top-links row mb-2 justify-content-between">
+        <div class="single-prod-right-col flex-column col-sm-5 px-lg-0 pt-4">
+            <div class="right-top-links">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
                 <a data-toggle="modal" data-target="#stp-thanks-modal">View Pricing</a>
                 <a href="/pdf">Download PDF</a>
             </div>
 
-            <div class="right-main-content row p-4">
+            <div class="right-main-content p-4">
                 <?php
                 $typecount='';
                 if ($part->text_blocks != Null ) {
-                  echo '<ul class="right-main-content row p-4">';
+                  echo '<div class="right-main-content row p-4">';
                     foreach ($part->text_blocks as $block):
                         if ($typecount <> $block->header) {
                             if ($typecount <> '') {
-                                echo '</ul>';
+                                echo '</div>';
                             }
                             echo '<h3 class="product-name">';
                             echo $block->header;
@@ -152,7 +151,7 @@
                 </div>
             </div>
 
-            <div class="right-col-bottom row">
+            <div class="right-col-bottom">
                 <h3 class="product-name">Ordering Information</h3>
 
                 <img class="product-order img-fluid" src="<?= "/img/parts/".$part->partID."/ordering_information.jpg"; ?>"/>
@@ -162,7 +161,7 @@
 
     </div><!-- #single-prod-main end -->
 
-    <div class="series-model-table-row row mx-5 px-5">
+    <div class="series-model-table-row row mx-lg-5 px-lg-5">
         <div class="table-responsive">
             <table class="model-table table">
 
@@ -202,3 +201,4 @@
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
     </div> <!-- .legalese end -->
+</div><!-- #single-prod-main-container end -->
