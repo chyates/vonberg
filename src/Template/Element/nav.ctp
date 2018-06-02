@@ -65,7 +65,7 @@
                 <p class="drop-header"><A HREF="/resources">General Information</A></p>
                 <p class="drop-header">Technical Documentation</p>
                 <p class="drop-header">Application Information</p>
-                <p class="drop-header">Base Product Prices</p>
+                <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
                 <p class="drop-header">Download Our Catalog</p>
             </div>
         </div>

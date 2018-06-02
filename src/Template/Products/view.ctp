@@ -48,27 +48,14 @@
                             <p class="my-auto text-left">*Mandatory</p>
                         </div>
                         <div class="col-6 text-right">
-                            <button type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
+                            <button id="stp-submit" type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="stp-thanks-modal" tabindex="-1" role="dialog" aria-labelledby="stp-thanks-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body col-lg-10 mx-auto text-center">
-                <h1 class="page-header">Thank you!</h1>
-                <p>You will be receiving an email with the STP files shortly.</p>
-                <button type="button" class="thanks-close btn btn-primary">Close</button>
+                <h1 class="thanks page-header">Thank you!</h1>
+                <p class="thanks">You will be receiving an email with the STP files shortly.</p>
+                <button type="button" class="thanks thanks-close btn btn-primary" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -109,7 +96,7 @@
         <div class="single-prod-right-col flex-column col-sm-5 px-lg-0 pt-4">
             <div class="right-top-links">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
-                <a data-toggle="modal" data-target="#stp-thanks-modal">View Pricing</a>
+                <a href="/products/prices">View Pricing</a>
                 <a href="/pdf">Download PDF</a>
             </div>
 
@@ -202,3 +189,13 @@
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
     </div> <!-- .legalese end -->
 </div><!-- #single-prod-main-container end -->
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        $("#get-stp-form").submit(function(e){
+            e.preventDefault();
+            $(this).hide();
+            $(".thanks").show();
+        })
+    })
+</script>

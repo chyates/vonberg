@@ -8,8 +8,6 @@ body {
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
-/* adding comment to test github push, fix repo issues */
-
 /* h1, d/t */
 .page-title, .page-header, h1 {
     font-size: 30px;
@@ -209,7 +207,25 @@ a:hover {
 #resources-dropdown .dropdown-menu {
     border: 1px solid #979797;
     box-shadow: 0 1px 17px 2px rgba(0,0,0,0.2);
+    text-align: left;
+    margin: 0;
+    border-radius: 0;
+}
+
+#product-dropdown .dropdown-menu {
     padding: 0;
+    width: 81%;
+    left: 10%;
+}
+
+#resources-dropdown .dropdown-menu {
+    padding: 3vh 3vw;
+    width: 75%;
+    left: 15%;
+}
+
+.dropdown-menu.show .col {
+    padding: 1vh 1vw;
 }
 
 #product-dropdown.dropdown,
@@ -217,22 +233,21 @@ a:hover {
     position: static; 
 }
 
-#product-dropdown .dropdown-menu,
-#resources-dropdown .dropdown-menu { 
-    width: 100%; 
-    text-align: left; 
-}
-
 #product-dropdown .dropdown-menu > p ,
 #product-dropdown .dropdown-menu > p { 
     display: inline-block; 
 }
 
-.drop-header {
+#resources-dropdown .dropdown-menu.show .row .drop-header {
+    margin-bottom: 0;
+}
+
+.drop-header a {
     color: #017D44;
     font-size: 14px;
     font-weight: 500;
     line-height: 18px;
+    font-weight: bold;
 }
 
 .drop-content {
@@ -241,11 +256,7 @@ a:hover {
 }
 
 .last-prod-drop {
-    background-color: #EBECE6;
-}
-
-.last-prod-drop .drop-header {
-    opacity: 1;
+    background-color: rgba(235,236,230, 0.5);
 }
 
 #main-navbar .nav-link {
@@ -260,16 +271,25 @@ a:hover {
 #main-navbar .main-nav-hov:hover {
     color: #017d44;
     background-color: #FFFFFF;
+    border-radius: 0;
 }
 
 @media (min-width: 992px){
-    
+    #home-top-header {
+        padding: 1vh 10vw;
+    }
+
+    #main-navbar {
+        padding: 0 9vw;
+    }
 }
 
 /* +++ HEADER: TABLET +++ */
 
 @media (max-width: 991px) {
-    
+    #home-top-header {
+        padding: 1vh 2vw;
+    }
 }
 
 /* +++ HEADER: MOBILE +++ */
@@ -601,6 +621,10 @@ a:hover {
     line-height: 18px;
     color: #017D44;
     text-decoration: underline;
+}
+
+#get-stp-modal .thanks {
+    display: none;
 }
 
 #get-stp-form .col-6 p {
@@ -943,7 +967,6 @@ p.resource-link span img.img-fluid {
     box-sizing: border-box;
     height: 282px;
     width: 382px;
-    border: 1px solid #CCCCCC;
 }
 
 #prices-main-container input, #prices-main-container select {

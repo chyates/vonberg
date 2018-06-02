@@ -23,7 +23,7 @@ class ProductsController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index','catalog','view','new','search', 'customization']);
+        $this->Auth->allow(['index','catalog','view','new','search', 'customization', 'prices']);
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -97,6 +97,11 @@ class ProductsController extends AppController
     }
 
     public function customization()
+    {
+        
+    }
+
+    public function prices()
     {
         
     }
