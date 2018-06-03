@@ -137,10 +137,24 @@
                         </div>
                     </div><!-- #two end -->
 
-                    <div id="three" class="form-slide col-md-8 mx-auto">
-                        <div class="table-create-box">
-                            <input type="text" class="form-control" placeholder="Model" name="table-header">
-                            <input type="text" class="form-control" placeholder="Enter model" name="table-data">
+                    <div id="three" class="inactive-slide form-slide">
+                        <div class="buffer-div">
+                            <div class="table-create-box p-3">
+                                <div class="creation-row row no-gutters">
+                                    <div class="data-column">
+                                        <input type="text" class="model-header-input form-control" placeholder="Model" name="table-header">
+                                        <input type="text" class="model-name-input form-control" placeholder="Enter model" name="table-data">
+                                    </div>
+                                    <div class="add-column">
+                                        <a class="model-column add-bullet" href="">Add Column</a>
+                                    </div>
+                                </div>
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <a class="model-row add-bullet" href="">Add Row</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <div class="row no-gutters justify-content-between">
                             <a id="back-three" class="back btn btn-primary">Back</a>
@@ -235,85 +249,96 @@
         <script type="text/javascript">
             jQuery(document).ready(function($) {
             // fxn to flip through form slides
-                $("h1.page-title:not(.active-title)").hide();
-                $("div.form-slide:not(.active-slide)").hide();
-
                 // first next link:
                 $("#next-one").click(function() {
-                    $("#title-one").hide();
-                    $("#title-two").show();
-
-                    $("#one").hide();
-                    $("#two").show();
+                    $("#title-one, #title-two").toggleClass('inactive-title', 'active-title');
+                    $("#one, #two").toggleClass('inactive-slide', 'active-slide');
                 });
-
                 // first back link:
                 $("#back-two").click(function() {
-                    $("#title-one").show();
-                    $("#title-two").hide();
-
-                    $("#two").hide();
-                    $("#one").show();
+                    $("#title-one, #title-two").toggleClass('inactive-title', 'active-title');
+                    $("#one, #two").toggleClass('inactive-slide', 'active-slide');
                 });
+
                 // second next link:
                 $("#next-two").click(function() {
-                    $("#title-two").hide();
-                    $("#title-three").show();
-
-                    $("#two").hide();
-                    $("#three").show();
+                    $("#title-two, #title-three").toggleClass('inactive-title', 'active-title');
+                    $("#two, #three").toggleClass('inactive-slide', 'active-slide');
                 });
-
                 // second back link:
                 $("#back-three").click(function() {
-                    $("#title-two").show();
-                    $("#title-three").hide();
-
-                    $("#three").hide();
-                    $("#two").show();
+                    $("#title-two, #title-three").toggleClass('inactive-title', 'active-title');
+                    $("#two, #three").toggleClass('inactive-slide', 'active-slide');
                 });
+
                 // third next link:
                 $("#next-three").click(function() {
-                    $("#title-three").hide();
-                    $("#title-four").show();
-
-                    $("#three").hide();
-                    $("#four").show();
+                    $("#title-three, #title-four").toggleClass('inactive-title', 'active-title');
+                    $("#three, #four").toggleClass('inactive-slide', 'active-slide');
                 });
-
                 // third back link:
                 $("#back-four").click(function() {
-                    $("#title-three").show();
-                    $("#title-four").hide();
-
-                    $("#four").hide();
-                    $("#three").show();
+                    $("#title-three, #title-four").toggleClass('inactive-title', 'active-title');
+                    $("#three, #four").toggleClass('inactive-slide', 'active-slide');
                 });
+
                 // fourth next link:
                 $("#next-four").click(function() {
-                    $("#title-four").hide();
-                    $("#title-five").show();
-
-                    $("#four").hide();
-                    $("#five").show();
+                    $("#title-four, #title-five").toggleClass('inactive-title', 'active-title');
+                    $("#four, #five").toggleClass('inactive-slide', 'active-slide');
                 });
-
                 // last back link:
                 $("#back-five").click(function() {
-                    $("#title-four").show();
-                    $("#title-five").hide();
-
-                    $("#five").hide();
-                    $("#four").show();
+                    $("#title-four, #title-five").toggleClass('inactive-title', 'active-title');
+                    $("#four, #five").toggleClass('inactive-slide', 'active-slide');
                 });
 
             // fxn to insert input fields upon add bullet click:
+                // features bullets
+                var rowCount = 1;
+                var colCount = 1;
                 $(".add-bullet").click(function(e) {
                     e.preventDefault();
-                    // e.stopPropagation();
-                    var newBullet = "<input type='text' class='form-control' placeholder='Enter bullet copy...' />";
-                    // var newSelect = "<select class='form-control'></select>"
-                    $(this).closest(".w-bullet").find("input[type=text]").first().after(newBullet);
+                    var tableSlide = $(".table-create-box").find(this);
+                    var featSlide = $(".form-slide .w-bullet").find(this);
+
+                    if(tableSlide.length > 0) {
+                        if( $(this).hasClass('model-column') ){
+                            var existingRow = $(".creation-row");
+                            var newColDiv = "<div class='data-column'>"
+                            var colHead;
+                            var newCol = "<input type='text' class='model-row-input form-control' placeholder='Enter value' />";
+                            for(var j = 0; j < rowCount; j++) {
+                                if(j < 1) {
+                                    colHead = "<input type='text' class='model-header-input form-control' placeholder='Enter table header' />";
+                                    newColDiv += colHead;
+                                    newColDiv += newCol;
+                                } else {
+                                    newColDiv += newCol;
+                                }
+                            }
+                            colCount++;
+                            newColDiv += "</div>";
+                            existingRow.find('.data-column').last().after(newColDiv);
+                            var currentWidth = parseInt($("#three .buffer-div .table-create-box").css("width")) +200;
+                            if(colCount > 8) {
+                                $("#three .buffer-div .table-create-box").css("width", currentWidth);
+                            }
+                        } else if ( $(this).hasClass('model-row') ){
+                            var dataRowCheck = $(".creation-row .data-column").find('.model-row-input:last-child');
+                            var firstRowCheck = $(".creation-row .data-column .model-name-input");
+                            var newFirst = "<input type='text' class='model-header-input form-control' placeholder='Enter model'/>";
+                            firstRowCheck.after(newFirst);
+                            var newRow = "<input type='text' class='model-row-input form-control' placeholder='Enter value' />";
+                            dataRowCheck.after(newRow);
+                            rowCount += 1;
+                        }
+                    } else if(featSlide.length > 0) {
+                        var newBullet = "<input type='text' class='form-control' placeholder='Enter bullet copy...' />";
+                        var newSelect = "<select class='form-control' name='product-specification'><option value='Select...' selected disabled>Select...</option></select>";
+                        $(this).closest('.w-bullet').find('select').first().after(newSelect);
+                        $(this).closest(".w-bullet").find("input[type=text]").first().after(newBullet);
+                    }
                 });
 
                 $('#image-file').change(function() {

@@ -1183,6 +1183,16 @@ p.resource-link span img.img-fluid {
 
 /* === ADD PRODUCT: GLOBAL / DESKTOP === */
 
+.active-title,
+.active-slide {
+    display: block;
+}
+
+.inactive-title,
+.inactive-slide {
+    display: none;
+}
+
 #add-prod-form label.fileContainer,
 #cms-add-resource-main label.fileContainer {
     overflow: hidden;
@@ -1260,24 +1270,30 @@ p.resource-link span img.img-fluid {
     padding: 2% 4%;
 }
 
-#cms-edit-resource-main ::-webkit-input-placeholder,
-#cms-add-resource-main ::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+select option,
+select {
     font-size: 13px;
+    font-family: "Poppins", sans-serif;
+}
+
+::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+    font-size: 13px;
+    font-family: "Poppins", sans-serif;
   }
 
-  #cms-edit-resource-main ::-moz-placeholder,
-  #cms-add-resource-main ::-moz-placeholder { /* Firefox 19+ */
+::-moz-placeholder { /* Firefox 19+ */
     font-size: 13px;
+    font-family: "Poppins", sans-serif;
   }
 
-  #cms-edit-resource-main :-ms-input-placeholder,
-  #cms-add-resource-main :-ms-input-placeholder { /* IE 10+ */
+ :-ms-input-placeholder { /* IE 10+ */
     font-size: 13px;
+    font-family: "Poppins", sans-serif;
   }
 
-  #cms-edit-resource-main :-moz-placeholder,
-  #cms-add-resource-main :-moz-placeholder { /* Firefox 18- */
+ :-moz-placeholder { /* Firefox 18- */
     font-size: 13px;
+    font-family: "Poppins", sans-serif;
   }
 
 #cms-edit-resource-main td p,
