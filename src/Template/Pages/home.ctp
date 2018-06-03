@@ -5,7 +5,7 @@
  */
 ?>
 
-<div id="home-container" class="col-10 mx-auto">
+<div id="home-container" class="inner-main col-lg-10 col-md-12 mx-lg-auto"> 
     <div id="hero-slider" class="carousel slide" data-ride="carousel">
         <div class="carousel-inner">
             <div class="carousel-item active">
@@ -31,7 +31,7 @@
         </div>
     </div><!-- hero carousel end -->
 
-    <div id="homepage-cards" class="d-flex flex-row my-4">
+    <div id="homepage-cards" class="my-4">
         <div class="homepage-single-card card flex-column">
             <img class="card-img-top" src="/img/Products-homepage.png">
             <div class="card-body">
@@ -44,7 +44,7 @@
             <img class="card-img-top" src="/img/Manifold-homepage.png">
             <div class="card-body">
                 <p class="card-text">We design and manufacture integrated manifolds using our own cartridge products as well as standard market cartridge valves, and a full line of cartridge cavity plugs.</p>
-                <button type="button" class="btn btn-primary home-card-button"><a href="/products">See Cartridge Bodies</a></button>
+                <button type="button" class="btn btn-primary home-card-button"><a href="/products/catalog/7">See Cartridge Bodies</a></button>
             </div>
         </div>
 
@@ -52,12 +52,12 @@
             <img class="card-img-top" src="/img/Learn-more-homepage.png">
             <div class="card-body">
                 <p class="card-text">If you don’t find what you need in the online catalog, we are able to modify existing products or design new products to meet your application requirements.</p>
-                <button type="button" class="btn btn-primary home-card-button"><a href="/products">Learn More</a></button>
+                <button type="button" class="btn btn-primary home-card-button"><a href="/products/customization">Learn More</a></button>
             </div>
         </div>
     </div><!-- homepage-cards end -->
 
-    <div id="home-lower-logos" class="text-center my-4">
+    <div id="home-lower-logos" class="text-center my-md-4">
         <p>Hydraulic Innovation since 1971</p>
         <img class="d-block mx-auto my-3 img-fluid" src="/img/1971-logo.png">
 
