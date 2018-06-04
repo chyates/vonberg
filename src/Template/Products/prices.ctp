@@ -12,7 +12,7 @@
             <a class="btn btn-primary my-4" href="/general-information">Get Prices</a>
         </div>
         <div class="col-lg-4 col-sm-5">
-            <img class="img-fluid" src="/img/Product-Customization@2x.png" alt="product-map">
+            <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
         </div>
         <div class="row no-gutters">
             <div class="col-sm-6 mx-auto">
