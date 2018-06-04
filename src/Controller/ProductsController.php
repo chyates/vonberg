@@ -125,4 +125,9 @@ class ProductsController extends AppController
     {
         
     }
+
+    public function new()
+    {
+        
+    }
 }
