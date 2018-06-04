@@ -84,19 +84,22 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent20">
                 <ul class="navbar-nav mr-auto">
                     <li class="hero-text-w nav-item active">
-                        <a class="nav-link" href="/capabilities">Capabilities<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/products/new">New Products<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/philosophy">Philosophy</a>
+                        <a class="nav-link" href="/products">Products</a>
                     </li>
                     <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/careers">Careers</a>
+                        <a class="nav-link" href="/resources">Resources</a>
+                    </li>
+                    <li class="hero-text-w nav-item">
+                        <a class="nav-link" href="/about">About</a>
+                    </li>
+                    <li class="hero-text-w nav-item">
+                        <a class="nav-link" href="/find-a-distributor">Find a Distributor</a>
                     </li>
                     <li class="hero-text-w nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
-                    </li>
-                    <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/request-a-quote">Request a Quote</a>
                     </li>
                 </ul>
             </div>

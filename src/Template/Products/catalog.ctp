@@ -5,7 +5,18 @@
             <p class="product-info"><?php echo $category->description; ?> </p>
         </div>
         <div class="col-sm-5 my-lg-auto">
-            <img class="product-img-block img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg" alt="product-map">
+            <?php
+            if($category->name == "Pressure Controls") { ?>
+                <img class="product-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
+                <?php } else if ($category->name == "Flow Regulating Valves") { ?>
+                <img class="product-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
+                <?php } else if ($category->name == "Directional Valves") { ?>
+                    <img class="product-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
+                <?php } else if ($category->name == "Safety Valves") { ?>
+                    <img class="product-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
+                <?php } else if ($category->name == "Cartridge Bodies") { ?>
+                    <img class="product-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
+               <?php } ?>
         </div>
     </div><!-- single-product-header-row end -->
 
@@ -19,9 +30,11 @@
             }
             echo'<div class="prod-category-main row mx-lg-5">
                <div class="col-lg">
-               <h1 class="page-header">';
+               <h1 class="page-header">' .
+               '<a href='. '"/products/types/' . str_replace(' ', '-', strtolower($part->type->name)) .'">';
                     echo $part->type->name;
-          echo '</h1>
+          echo '</a>
+                </h1>
                 </div>
                 </div>
           <div class="prod-category-main row mx-lg-5">';

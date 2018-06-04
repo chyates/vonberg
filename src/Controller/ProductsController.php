@@ -103,6 +103,34 @@ class ProductsController extends AppController
 
     }
 
+    public function types($type = null) 
+    {
+        $spaceType = str_replace('-', ' ', $type);
+        $upperSpace = ucwords($spaceType);
+        $this->loadModel('Parts');
+        if (!empty($upperSpace)) {
+        $query =  $this->Parts->find('all',
+            [   'conditions' => ['Parts.typeID' => $upperSpace],
+                'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
+                ])
+            ->order(['typeID'=>'ASC']);
+        } else {
+        $query = $this->Parts->find('all', ['conditions' => ['Parts.typeID' => $upperSpace],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
+        }
+
+        $type2 = TableRegistry::get('Types')->get($upperSpace);
+        // $cat2 = TableRegistry::get('Categories')->get($cat);
+        // $textblocks = TableRegistry::get('TextBlocks')->find();
+        // $specs = TableRegistry::get('Specifications')->find();
+
+
+
+        $this->set('types', $type2);
+        $this->set('parts', $query);
+        // $this->set('category', $cat2);
+
+    }
+
     public function search()
     {
         $this->loadModel('Parts');
