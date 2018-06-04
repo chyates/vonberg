@@ -14,7 +14,7 @@
 </head>
 
 <body>
-<div id="site-container" class="container-fluid">
+<div id="site-container" class="outer-container container-fluid">
     <?= $this->element('nav') ?>
 
     <?= $this->fetch('content') ?>

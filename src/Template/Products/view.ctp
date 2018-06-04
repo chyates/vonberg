@@ -111,7 +111,13 @@
             <div class="right-top-links row mb-2 justify-content-between">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
                 <a data-toggle="modal" data-target="#stp-thanks-modal">View Pricing</a>
-                <a href="/pdf">Download PDF</a>
+                <?php
+                $pdf = "/img/pdfs/catalog/".(string)$part->partID.".pdf";
+                $filepath = WWW_ROOT.$pdf;
+                if (file_exists($filepath)){
+                ?>
+                <a target=_new href="<?php echo $pdf;?>">Download PDF</a>
+                <?php } ?>
             </div>
 
             <div class="right-main-content row p-4">

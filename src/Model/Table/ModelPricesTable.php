@@ -33,6 +33,23 @@ class ModelPricesTable extends Table
         $this->setTable('model_prices');
         $this->setDisplayField('model_priceID');
         $this->setPrimaryKey('model_priceID');
+        $this->addBehavior('Search.Search');
+        $this->searchManager()
+//            ->value('id')
+            ->add('q', 'Search.Like', [
+                'before' => true,
+                'after' => true,
+                'fieldMode' => 'OR',
+                'comparison' => 'LIKE',
+                'wildcardAny' => '*',
+                'wildcardOne' => '?',
+                'field' => ['model_text'],
+            ])
+            ->add('foo', 'Search.Callback', [
+                'callback' => function ($query, $args, $filter) {
+                    // Modify $query as required
+                }]);
+
     }
 
     /**

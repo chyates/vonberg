@@ -35,7 +35,7 @@ class PartsTable extends Table
         $this->belongsTo('Series')->setForeignKey('seriesID');
         $this->belongsTo('Categories')->setForeignKey('categoryID');
         $this->hasMany('TextBlocks',['sort' =>'TextBlocks.order_num ASC'])->setForeignKey('partID');
-        $this->hasOne('ModelTables')->setForeignKey('partID');
+        $this->hasOne('ModelTables',['contains' =>'ModelTableRows'])->setForeignKey('partID');
         $this->hasMany('Specifications', ['sort' =>'Specifications.order_num ASC'])->setForeignKey('partID');
         $this->setTable('parts');
         $this->setDisplayField('partID');
@@ -53,10 +53,11 @@ class PartsTable extends Table
                 'wildcardOne' => '?',
                 'field' => ['description', 'Series.name'],
             ])
-            ->add('foo', 'Search.Callback', [
+            ->add('seriesID', 'Search.Callback', [
                 'callback' => function ($query, $args, $filter) {
                     // Modify $query as required
                 }]);
+
 
     }
     /**

@@ -41,7 +41,7 @@
                         <td><?= h($part->type->name) ?></td>
                         <td><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                         <td class="actions">
-                            <?= $this->Html->link(__('View'), ['action' => 'view', $part->partID]) ?>
+                            <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                             <?= $this->Html->link(__('Edit'), ['action' => 'edit', $part->partID]) ?>
                             <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $part->partID], ['confirm' => __('Are you sure you want to delete # {0}?', $part->partID)]) ?>
                         </td>
