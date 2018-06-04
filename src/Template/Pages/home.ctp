@@ -6,30 +6,11 @@
 ?>
 
 <div id="home-container" class="inner-main col-lg-10 col-md-12 mx-lg-auto"> 
-    <div id="hero-slider" class="carousel slide" data-ride="carousel">
-        <div class="carousel-inner">
-            <div class="carousel-item active">
-                <img class="img-fluid" src="/img/Homepage-hero-1@2x-min.png" alt="hero1">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Innovative solutions for your hydraulic needs</h5>
-                </div>
-            </div>
-            <div class="carousel-item">
-                <img class="d-block img-fluid" src="/img/Homepage-hero-2@2x-min.png" alt="hero2"/>
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Innovative solutions for your hydraulic needs</h5>
-                </div>
-            </div>
-
-            <div class="carousel-item">
-                <img class="d-block img-fluid" src="/img/Homepage-hero-3@2x-min.png" alt="hero3">
-                <div class="carousel-caption d-none d-md-block">
-                    <h5>Innovative solutions for your hydraulic needs</h5>
-                </div>
-            </div>
-
+    <div class="slider-container row no-gutters">
+        <div id="hero-slider" class="col">
+            <h5 class="slider-title">Innovative<br>solutions for<br>your hydraulic<br>valve needs</h5>
         </div>
-    </div><!-- hero carousel end -->
+    </div>
 
     <div id="homepage-cards" class="my-4">
         <div class="homepage-single-card card flex-column">
