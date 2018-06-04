@@ -46,16 +46,36 @@ class ProductsController extends AppController
         $this->set('part', $part);
 
     }
+    public function pricing($id=null)
+    {
+        $this->loadModel('ModelPrices');
+        $series = TableRegistry::get('Series')->find();
+
+        $query = $this->ModelPrices
+            // Use the plugins 'search' custom finder and pass in the
+            // processed query params
+            ->find('search', ['search' => $this->request->getQueryParams()]);
+            // You can add extra things to the query if you need to
+            //->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+
+        $this->set('prices', $this->paginate($query));
+        $this->set(compact('series'));
+
+
+    }
     public function get_cat()
     {
         return TableRegistry::get('Categories')->find();
 
     }
 
-    public function new()
+    public function get_series()
     {
-        $this->viewBuilder()->setLayout('default');
+        return TableRegistry::get('Series')->find();
+
     }
+
+
     public function catalog($cat = null)
     {
         $this->viewBuilder()->setLayout('default');
@@ -89,7 +109,7 @@ class ProductsController extends AppController
         $query = $this->Parts
             // Use the plugins 'search' custom finder and pass in the
             // processed query params
-            ->find('search', ['search' => $this->request->getQueryParams()])
+            ->find('search', ['search' => $this->request->getQueryParams(),'recursive' => 2])
             // You can add extra things to the query if you need to
             ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
