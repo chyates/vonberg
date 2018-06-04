@@ -72,26 +72,41 @@
         <a class="nav-link nav-item" href="/contact">Contact</a>
     </nav><!-- main-navbar end -->
 </div> <!-- desktop-header end -->
-<!-- Mobil Header Start -->
+<!-- Mobile Header Start -->
 <div id="mobile-header">
     <div id="m-burger-nav" class="sticky-top wrapper-navbar"> <!-- Mobile Burger Menu Start -->
         <nav class="sticky-top navbar">
             <a class="navbar-brand" href="/">
                 <img class="header-image img-fluid" src="/img/vonberg-logo-white.svg" alt="Vonberg Valve, Inc">
             </a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent20" aria-controls="navbarSupportedContent20"
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-collapse" aria-controls="main-collapse"
             aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon1"><span></span><span></span><span></span></div></button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent20">
+            <div class="collapse navbar-collapse" id="main-collapse">
                 <ul class="navbar-nav mr-auto">
                     <li class="hero-text-w nav-item active">
                         <a class="nav-link" href="/products/new">New Products<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/products">Products</a>
+                        <a class="nav-link" href="/products" data-toggle="collapse" data-target="#prod-drop">Products<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
                     </li>
+                    <div id="prod-drop" class="collapse navbar-collapse">
+                        <p class="drop-header"><A HREF="/products/catalog/1">Flow Regulating Valves</A></p>
+                        <p class="drop-header"><A HREF="/products/catalog/2">Directional Valves</A></p>
+                        <p class="drop-header"><A HREF="/products/catalog/3">Safety Valves</A></p>
+                        <p class="drop-header"><A HREF="/products/catalog/5">Pressure Controls</A></p>
+                        <p class="drop-header"><A HREF="/products/catalog/7">Cartridge Bodies</A></p>
+                        <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
+                    </div>
                     <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/resources">Resources</a>
+                        <a class="nav-link" href="/resources" data-toggle="collapse" data-target="#prod-drop">Resources<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
                     </li>
+                    <div id="resource-drop" class="collapse navbar-collapse">
+                        <p class="drop-header"><A HREF="/resources">General Information</A></p>
+                        <p class="drop-header">Technical Documentation</p>
+                        <p class="drop-header">Application Information</p>
+                        <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
+                        <p class="drop-header">Download Our Catalog</p>
+                    </div>
                     <li class="hero-text-w nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
@@ -107,9 +122,9 @@
     </div><!-- #m-burger-nav end -->
 </div><!-- mobile-header end -->
 <script type="text/javascript">
-jQuery(document).ready(function($){
-    $('.animated-icon1').click(function(){
-        $(this).toggleClass('open');
-    });
-});  
+    $(document).ready(function(){
+        $('.animated-icon1').click(function(){
+            $(this).toggleClass('open');
+        });
+    });  
 </script>

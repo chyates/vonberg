@@ -5,11 +5,7 @@
         $counter=0;
         $typecount=0;
         foreach ($parts as $part):
-        if ($typecount<>$part->typeID) {
-            if ($typecount<>0) {
-                echo '</div>';
-            }
-            echo'<div class="prod-category-main row mx-lg-5">
+            echo'<div class="prod-subcat-main row mx-lg-5">
                <div class="col-lg">
                <h1 class="page-header">';
                     echo $part->type->name;
