@@ -48,34 +48,20 @@
                             <p class="my-auto text-left">*Mandatory</p>
                         </div>
                         <div class="col-6 text-right">
-                            <button type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
+                            <button id="stp-submit" type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
                         </div>
                     </div>
                 </form>
-            </div>
-        </div>
-    </div>
-</div>
 
-<div class="modal fade" id="stp-thanks-modal" tabindex="-1" role="dialog" aria-labelledby="stp-thanks-modal-label" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body col-lg-10 mx-auto text-center">
-                <h1 class="page-header">Thank you!</h1>
-                <p>You will be receiving an email with the STP files shortly.</p>
-                <button type="button" class="thanks-close btn btn-primary">Close</button>
+                <h1 class="thanks page-header">Thank you!</h1>
+                <p class="thanks">You will be receiving an email with the STP files shortly.</p>
+                <button type="button" class="thanks thanks-close btn btn-primary">Close</button>
             </div>
         </div>
     </div>
 </div>
 
 <div id="single-prod-main-container" class="col-10 mx-auto">
-
     <div id="single-prod-main" class="row mx-5 px-5">
         <div class="single-prod-left-col col-lg-8 px-3 py-5">
             <div class="left-info">
@@ -220,3 +206,13 @@
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
     </div> <!-- .legalese end -->
+
+<script type="text/javascript">
+    jQuery(document).ready(function(){
+        $("#get-stp-form").submit(function(e){
+            e.preventDefault();
+            $(this).hide();
+            $(".thanks").show();
+        })
+    })
+</script>

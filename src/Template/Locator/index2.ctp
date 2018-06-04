@@ -1,6 +1,6 @@
-<div id="find-distributor-main" class="col-lg-10 mx-auto p-5">
+<div id="find-distributor-main" class="inner-main col-lg-10 col-12 mx-auto p-sm-5 p-3">
     <div class="row">
-        <div class="col-lg-5 left-search">
+        <div class="col-lg-5 col-sm-10 mx-sm-auto left-search">
             <h1 class="page-header">Find a Distributor</h1>
             <p class="product-info">Enter Zip Code</p>
             <?= $this->Form->create('Locator', array('url' => array('action' => 'index'), 'enctype' => 'multipart/form-data'));

@@ -15,16 +15,25 @@ class ResourcesController extends AppController
   public function beforeFilter(Event $event)
     {
        // allow all action
-    $this->Auth->allow([ 'index','info']);
-    $this->viewBuilder()->setLayout('default');
-
-    }
+    $this->Auth->allow([ 'index', 'general-information', 'technical-documentation', 'application-information']);
+        }
 
     public function index()
     {
 
     }
-    public function info()
+
+    public function generalInformation()
+    {
+
+    }
+
+    public function technicalDocumentation()
+    {
+
+    }
+
+    public function applicationInformation()
     {
 
     }

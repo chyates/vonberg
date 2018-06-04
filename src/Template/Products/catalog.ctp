@@ -1,11 +1,11 @@
-<div id="category-main-container" class="col-10 mx-auto">
-    <div class="prod-category-header-row row mx-5">
-        <div class="col-lg-7 my-5 my-auto">
+<div id="category-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
+    <div class="prod-category-header-row row mx-lg-5">
+        <div class="col-sm-7 col-12 my-lg-auto">
             <h1 class="page-title"><?= h($category->name) ?></h1>
             <p class="product-info"><?php echo $category->description; ?> </p>
         </div>
-        <div class="col-lg-5 my-5">
-            <img class="product-img-block img-fluid" src="http://www.scott-sherwood.com/wp-content/uploads/2011/10/TutorialFinal.png" alt="product-map">
+        <div class="col-sm-5 my-lg-auto">
+            <img class="product-img-block img-fluid" src="http://training.npr.org/wp-content/uploads/2016/06/dreamstime_l_260891731.jpg" alt="product-map">
         </div>
     </div><!-- single-product-header-row end -->
 
@@ -17,16 +17,16 @@
             if ($typecount<>0) {
                 echo '</div>';
             }
-            echo'<div class="prod-category-main row mx-5">
+            echo'<div class="prod-category-main row mx-lg-5">
                <div class="col-lg">
                <h1 class="page-header">';
                     echo $part->type->name;
           echo '</h1>
                 </div>
                 </div>
-          <div class="prod-category-main row mx-5">';
+          <div class="prod-category-main row mx-lg-5">';
         } ?>
-            <div class="col-lg-4 my-3">
+            <div class="col-md-4 col-6 my-3">
 
                 <A HREF=<?= "/products/view/".$part->partID; ?>>
                 <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
@@ -37,9 +37,7 @@
                 </A>
             </div>
         <?php
-            if(++$counter % 3 === 0) {
-                    echo '</div><div class="prod-category-main row mx-5">';
-            }
+
             $typecount = $part->typeID;
         endforeach; ?>
 

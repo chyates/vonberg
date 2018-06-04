@@ -23,7 +23,7 @@ class ProductsController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index','catalog','view','new','search']);
+        $this->Auth->allow(['index','catalog','view','new','search', 'customization', 'prices']);
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -114,5 +114,15 @@ class ProductsController extends AppController
             ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         $this->set('parts', $this->paginate($query));
+    }
+
+    public function customization()
+    {
+        
+    }
+
+    public function prices()
+    {
+        
     }
 }

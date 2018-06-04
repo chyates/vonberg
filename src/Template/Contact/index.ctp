@@ -1,5 +1,5 @@
 <div id="contact-main-container" class="inner-main col-lg-8 col-12 mx-auto p-md-5 p-3">
-    <div class="row no-gutters px-sm-5 justify-content-sm-between">
+    <div class="row no-gutters px-md-5 justify-content-sm-between">
         <div class="col-lg-4 col-sm-5 mr-sm-5 py-2 contact-left">
             <div class="contact-block p-4">
                 <h3 class="product-name">Vonberg Valve, Inc.</h3>
@@ -14,7 +14,7 @@
                     <label>Full Name*</label>
                     <input type="text" name="customer-name" class="form-control">
                 </div>
-
+                
                 <div class="form-group">
                     <label>Company</label>
                     <input type="text" name="customer-company" class="form-control">
@@ -34,7 +34,7 @@
                     <div class="row no-gutters">
                         <label>What is your role?</label>
                     </div>
-
+                    
                     <div class="form-check form-check-inline">
                         <input type="checkbox" class="form-check-input" name="model" value="model1">
                         <label class="form-check-label">Manufacturer</label>
@@ -69,3 +69,4 @@
 
         </div><!-- .contact-right end -->
     </div>
+</div><!-- #contact-main-container end -->
