@@ -63,7 +63,7 @@
                     <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
                     <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
-                    <p class="drop-header">Download Our Catalog</p>
+                    <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" download>Download Our Catalog</a></p>
                 </div>
             </div>
         </div>
