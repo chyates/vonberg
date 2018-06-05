@@ -165,8 +165,11 @@
                 <thead>
                 <?php
                 $columns=0;
-                foreach ($part->model_table->model_table_headers as $header): ?>
-                <th class="model-table-header"><?php echo $header->model_table_text ?></th>
+                $headArray = array();
+                foreach ($part->model_table->model_table_headers as $header):
+                    array_push($headArray, $header->model_table_text); 
+                ?>
+                <th class="model-table-header"><?php echo $header->model_table_text; ?></th>
 
                 <?php
                     $columns++;
@@ -194,17 +197,34 @@
     </div><!-- .series-model-table end -->
 
     <!-- Mobile model table/dropdowns -->
-    <div id="mob-model-tables" class="">
+    <div id="mob-model-tables" class="col-12">
         <p>Model</p>
         <?php
-            $count = 1;
-            foreach ($part->model_table->model_table_rows as $row):
-                echo '<div class="mobile-table-row justify-content-between">' .
+            $rowCount = 0;
+            $headerCount = 0;
+            foreach ($part->model_table->model_table_headers as $header2):
+                $headerCount++;
+            endforeach;
+            foreach ($part->model_table->model_table_rows as $row): 
+                if($rowCount % $headerCount === 0) {
+                    echo '<div class="mobile-table-row justify-content-between">' .
                     '<p>' . $row->model_table_row_text .
                     '<a href="">View More</a></p></div>';
-                $count++;
-            endforeach;
-        ?>
+                } else { ?>
+                <div class="row no-gutters">
+                    <div class="col-6">
+                        <?php for($i = 1; $i < count($headArray); $i++) {
+                            echo '<p>' . $headArray[$i] . '</p>';
+                        } ?>
+                    </div>
+                    <div class="col-6">
+                        <?php echo '<p>' . $row->model_table_row_text . '</p>'; ?>
+                    </div>
+                </div>
+            <?php } 
+                $rowCount++; 
+                endforeach; 
+            ?>
     </div>
 
     <div class="legalese row mx-sm-5 px-sm-5 px-3 pb-sm-5 pb-3">
