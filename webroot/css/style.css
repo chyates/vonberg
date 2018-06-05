@@ -490,6 +490,7 @@ a:hover {
 }
 
 #hero-slider {
+    background-size: cover;
     padding: 10vh 5vw 10vh 20vw;
     -webkit-transition: opacity 5s ease-in;
        -moz-transition: opacity 5s ease-in;
@@ -719,7 +720,6 @@ a:hover {
     }
 }
 
-.single-prod-left-col,
 .single-prod-right-col {
     justify-content: space-between;
     display: flex;
@@ -881,7 +881,7 @@ a:hover {
     }
 
     #single-prod-main-container #mob-model-tables p.model-table-data a {
-        padding: 0 1vw;
+        padding: 0 5vw;
     }
 }
 

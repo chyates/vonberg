@@ -80,41 +80,48 @@
                 <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
             </div>
 
-            <div class="left-desc">
+            <div class="left-desc my-3">
                 <h3 class="product-name">Description</h3>
                 <p class="product-info">
                     <?php echo $part->description; ?>
                 </p>
             </div>
 
-            <div class="left-img-div">
+            <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
+            <div class="left-img-div my-4">
                 <h3 class="product-name">Product Rendering</h3>
-                <img class="product-render img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
+                <img class="my-3 product-render img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
             </div>
+            <?php } ?>
 
-            <div class="left-img-div">
+            <?php if (file_exists('img/parts/'.$part->partID.'/hydraulic_symbol.jpg')){ ?>
+            <div class="left-img-div my-4">
                 <h3 class="product-name">Schematic</h3>
-                <img  src="<?= "/img/parts/".$part->partID."/hydraulic_symbol.jpg"; ?>"/>
+                <img class="my-3 " src="<?= "/img/parts/".$part->partID."/hydraulic_symbol.jpg"; ?>"/>
             </div>
+            <?php } ?>
 
-            <div class="left-img-div">
+            <?php if (file_exists('img/parts/'.$part->partID.'/typical_performance.jpg')){ ?>
+            <div class="left-img-div my-4">
                 <h3 class="product-name">Typical Performance</h3>
-                <img class="product-performance img-fluid" src="<?= "/img/parts/".$part->partID."/typical_performance.jpg"; ?>"/>
+                <img class="my-3 product-performance img-fluid" src="<?= "/img/parts/".$part->partID."/typical_performance.jpg"; ?>" />
             </div>
+            <?php } ?>
+
         </div><!-- .single-prod-left-col end -->
 
         <div class="single-prod-right-col flex-column col-sm-5 px-lg-0 pt-4">
             <div class="right-top-links">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
                 <a href="/products/prices">View Pricing</a>
-                <a href="/pdf">Download PDF</a>
+                <a href=<?= "/img/pdfs/catalog/" . $part->partID . ".pdf"; ?> download >Download PDF</a>
             </div>
 
             <div class="right-main-content p-4">
                 <?php
                 $typecount='';
                 if ($part->text_blocks != Null ) {
-                  echo '<div class="right-main-content row p-4">';
+                  echo '<div class="row no-gutters">';
                     foreach ($part->text_blocks as $block):
                         if ($typecount <> $block->header) {
                             if ($typecount <> '') {
@@ -197,7 +204,7 @@
 
     <!-- Mobile model table/dropdowns -->
     <div id="mob-model-tables" class="col-12">
-        <div class="row no-gutters">
+        <div class="row no-gutters py-4">
             <div class="col-3">
             <?php $mobHead = 1;
             for($i = 0; $i <= ($mobCount/$columns)-1; $i++) {

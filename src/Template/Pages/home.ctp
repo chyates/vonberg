@@ -13,7 +13,7 @@
     </div>
 
     <div id="homepage-cards" class="my-4">
-        <div class="homepage-single-card card flex-column">
+        <div class="homepage-single-card card flex-column my-sm-0 my-3">
             <img class="card-img-top" src="/img/Products-homepage.png">
             <div class="card-body">
                 <p class="card-text">At Vonberg, we’re proud to design, manufacture, assemble and test a unique product line of in-line and cartridge style valves in our state-of-the-art facility.</p>
@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="homepage-single-card card flex-column">
+        <div class="homepage-single-card card flex-column my-sm-0 my-3">
             <img class="card-img-top" src="/img/Manifold-homepage.png">
             <div class="card-body">
                 <p class="card-text">We design and manufacture integrated manifolds using our own cartridge products as well as standard market cartridge valves, and a full line of cartridge cavity plugs.</p>
@@ -29,7 +29,7 @@
             </div>
         </div>
 
-        <div class="homepage-single-card card flex-column">
+        <div class="homepage-single-card card flex-column my-sm-0 my-3">
             <img class="card-img-top" src="/img/Learn-more-homepage.png">
             <div class="card-body">
                 <p class="card-text">If you don’t find what you need in the online catalog, we are able to modify existing products or design new products to meet your application requirements.</p>
@@ -39,13 +39,13 @@
     </div><!-- homepage-cards end -->
 
     <div id="home-lower-logos" class="text-center my-md-4">
-        <p>Hydraulic Innovation since 1971</p>
-        <img class="d-block mx-auto my-3 img-fluid" src="/img/1971-logo.png">
+        <p><a href="/about">Hydraulic Innovation since 1971</a></p>
+        <a href="/about"><img class="d-block mx-auto my-3 img-fluid" src="/img/1971-logo.png"></a>
 
         <div class="my-4 justify-content-center">
-            <img class="img-fluid" src="/img/nfpa-logo.png">
-            <img class="img-fluid" src="/img/IFPS-logo.png">
-            <img class="img-fluid" src="/img/NAM-logo.png">
+            <a href="http://www.nfpa.com/"><img class="img-fluid" src="/img/nfpa-logo.png"></a>
+            <a href="http://www.ifps.org/"><img class="img-fluid" src="/img/IFPS-logo.png"></a>
+            <a href="http://www.nam.org/"><img class="img-fluid" src="/img/NAM-logo.png"></a>
             <img class="img-fluid" src="/img/madeusa2.png">
             <img class="img-fluid" src="/img/mastercardvisa.png">
         </div>

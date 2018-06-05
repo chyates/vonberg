@@ -7,13 +7,13 @@
                     <h2>General Information</h2>
                     <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 1</a></p>
                     <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 2 with even longer title that wraps around to second line</a></p>
-                    <a class="btn btn-primary my-4" href="/general-information">View All</a>
+                    <a class="btn btn-primary my-4" href="/resources/general-information">View All</a>
                 </div>
                 <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
                     <h2>Technical Documentation</h2>
                     <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 1</a></p>
                     <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 2 with even longer title that wraps around to second line</a></p>
-                    <a class="btn btn-primary my-4" href="/general-information">View All</a>
+                    <a class="btn btn-primary my-4" href="/resources/technical-documentation">View All</a>
                 </div>
             </div>
             <div class="row no-gutters justify-content-center">
@@ -21,7 +21,7 @@
                     <h2>Application Information</h2>
                     <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 1</a></p>
                     <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 2 with even longer title that wraps around to second line</a></p>
-                    <a class="btn btn-primary my-4" href="/general-information">View All</a>
+                    <a class="btn btn-primary my-4" href="/resources/application-information">View All</a>
                 </div>
                 <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
                     <h2>Base Product Prices</h2>
@@ -34,7 +34,7 @@
                             <option value="<?php echo str_replace(' ', '_', $item['name']); ?>"><?php echo $item['name']; ?></option>
                         <?php } ?>
                     </select>
-                    <a class="btn btn-primary my-4" href="/general-information">Get Prices</a>
+                    <input type="submit" class="btn btn-primary my-4" href="/general-information" value="Get Prices">
                 </div>
                 <button type="button" class="btn download-btn btn-primary my-4">Download Product Catalogue</button>
             </div>

@@ -47,7 +47,7 @@
 
         function nextBackground() {
             carousel.css(
-                'background',
+                'background-image',
             backgrounds[current = ++current % backgrounds.length]);
 
             setTimeout(nextBackground, 5000);
