@@ -868,11 +868,20 @@ a:hover {
 
     #single-prod-main-container #mob-model-tables {
         display: block;
+        padding: 0;
     }
     
     #single-prod-main-container #mob-model-tables .mobile-table-row {
         display: flex;
         flex-direction: row;
+    }
+
+    #single-prod-main-container #mob-model-tables .mob-hidden {
+        display: none;
+    }
+
+    #single-prod-main-container #mob-model-tables p.model-table-data a {
+        padding: 0 1vw;
     }
 }
 
