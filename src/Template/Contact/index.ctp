@@ -9,10 +9,13 @@
         </div><!-- .contact-left end -->
         <div class="col-sm-6 contact-right">
             <h1 class="page-header">Contact Us</h1>
-            <form id="contact-form">
+            <form id="contact-form" class="needs-validation" novalidate>
                 <div class="form-group">
                     <label>Full Name*</label>
-                    <input type="text" name="customer-name" class="form-control">
+                    <input type="text" name="customer-name" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please enter your full name.
+                    </div>
                 </div>
                 
                 <div class="form-group">
@@ -21,13 +24,19 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Company</label>
-                    <input type="tel" name="customer-phone" class="form-control">
+                    <label>Phone*</label>
+                    <input type="tel" name="customer-phone" class="form-control" required>
+                    <div class="invalid-feedback">
+                        Please enter your phone number.
+                    </div>
                 </div>
 
                 <div class="form-group">
                     <label>Email Address*</label>
-                    <input type="email" class="form-control" name="customer-email">
+                    <input type="email" class="form-control" name="customer-email" required>
+                    <div class="invalid-feedback">
+                        Please enter a valid email address.
+                    </div>
                 </div>
 
                 <div class="form-group">
@@ -51,7 +60,10 @@
 
                 <div class="form-group">
                     <label>Remarks, Special Requests, or Questions*:</label>
-                    <textarea name="customer-comments" class="form-control" rows="4" cols="50"></textarea>
+                    <textarea name="customer-comments" class="form-control" rows="4" cols="50" required></textarea>
+                    <div class="invalid-feedback">
+                        Please include a message.
+                    </div>
                 </div>
 
                 <div class="g-recaptcha mb-3" data-sitekey="6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y"></div>
@@ -70,3 +82,25 @@
         </div><!-- .contact-right end -->
     </div>
 </div><!-- #contact-main-container end -->
+
+<script>
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                console.log("Hit form validation function");
+                if (form.checkValidity() === false) {
+                    console.log("Form is invalid, check");
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+  })();
+</script>

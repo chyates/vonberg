@@ -4,11 +4,13 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">
+                        <img class="modal-close-icon" src="/img/X.svg" />
+                    </span>
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
-                <form id="get-stp-form" class="">
+                <form id="get-stp-form" class="needs-validation" novalidate>
                     <h1 class="page-header">Get STP Files</h1>
                     <p>You will receive an email with the files attached.</p>
                     <p>Which model(s) are you interested in?*</p>
@@ -31,6 +33,9 @@
                     <div class="form-group">
                         <label>Full Name*</label>
                         <input type="text" name="customer-name" class="form-control">
+                        <div class="invalid-feedback">
+                            Please enter your full name.
+                        </div>
                     </div>
 
                     <div class="form-group">
@@ -41,6 +46,9 @@
                     <div class="form-group">
                         <label>Email Address*</label>
                         <input type="text" class="form-control" name="customer-email">
+                        <div class="invalid-feedback">
+                            Please provide a valid email address.
+                        </div>
                     </div>
 
                     <div class="form-group row no-gutters">
@@ -53,9 +61,11 @@
                     </div>
                 </form>
 
-                <h1 class="thanks page-header">Thank you!</h1>
-                <p class="thanks">You will be receiving an email with the STP files shortly.</p>
-                <button type="button" class="thanks thanks-close btn btn-primary" data-dismiss="modal">Close</button>
+                <div class="thanks text-center">
+                    <h1 class="page-header">Thank you!</h1>
+                    <p>You will be receiving an email with the STP files shortly.</p>
+                    <button type="button" class="thanks-close btn btn-primary" data-dismiss="modal">Close</button>
+                </div>
             </div>
         </div>
     </div>
@@ -155,8 +165,11 @@
                 <thead>
                 <?php
                 $columns=0;
-                foreach ($part->model_table->model_table_headers as $header): ?>
-                <th class="model-table-header"><?php echo $header->model_table_text ?></th>
+                $headArray = array();
+                foreach ($part->model_table->model_table_headers as $header):
+                    array_push($headArray, $header->model_table_text); 
+                ?>
+                <th class="model-table-header"><?php echo $header->model_table_text; ?></th>
 
                 <?php
                     $columns++;
@@ -183,7 +196,38 @@
 
     </div><!-- .series-model-table end -->
 
-    <div class="legalese row mx-5 px-5 pb-5">
+    <!-- Mobile model table/dropdowns -->
+    <div id="mob-model-tables" class="col-12">
+        <p>Model</p>
+        <?php
+            $rowCount = 0;
+            $headerCount = 0;
+            foreach ($part->model_table->model_table_headers as $header2):
+                $headerCount++;
+            endforeach;
+            foreach ($part->model_table->model_table_rows as $row): 
+                if($rowCount % $headerCount === 0) {
+                    echo '<div class="mobile-table-row justify-content-between">' .
+                    '<p>' . $row->model_table_row_text .
+                    '<a href="">View More</a></p></div>';
+                } else { ?>
+                <div class="row no-gutters">
+                    <div class="col-6">
+                        <?php for($i = 1; $i < count($headArray); $i++) {
+                            echo '<p>' . $headArray[$i] . '</p>';
+                        } ?>
+                    </div>
+                    <div class="col-6">
+                        <?php echo '<p>' . $row->model_table_row_text . '</p>'; ?>
+                    </div>
+                </div>
+            <?php } 
+                $rowCount++; 
+                endforeach; 
+            ?>
+    </div>
+
+    <div class="legalese row mx-sm-5 px-sm-5 px-3 pb-sm-5 pb-3">
         <p class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
@@ -191,7 +235,27 @@
 </div><!-- #single-prod-main-container end -->
 
 <script type="text/javascript">
-    jQuery(document).ready(function(){
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+            form.addEventListener('submit', function(event) {
+                console.log("Hit form validation function");
+                if (form.checkValidity() === false) {
+                    console.log("Form is invalid, check");
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    }, false);
+  })();
+
+    $(document).ready(function(){
         $("#get-stp-form").submit(function(e){
             e.preventDefault();
             $(this).hide();

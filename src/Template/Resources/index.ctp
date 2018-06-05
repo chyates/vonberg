@@ -1,10 +1,3 @@
-<?php
-/**
- * @var \App\View\AppView $this
- * @var \App\Model\Entity\Dealer[]|\Cake\Collection\CollectionInterface $dealers
- */
-?>
-
 <div id="resources-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <h1 class="page-title">Resources</h1>
     <div class="row no-gutters my-4">
@@ -37,7 +30,9 @@
                     <p class="text-center">or</p>
                     <label>Select a Series</label>
                     <select class="form-control" name="product-series">
-                        <option value="--">--</option>
+                        <?php foreach($series as $item) { ?>
+                            <option value="<?php echo str_replace(' ', '_', $item['name']); ?>"><?php echo $item['name']; ?></option>
+                        <?php } ?>
                     </select>
                     <a class="btn btn-primary my-4" href="/general-information">Get Prices</a>
                 </div>

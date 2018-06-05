@@ -7,9 +7,11 @@
             <p class="text-center">or</p>
             <label>Select a Series</label>
             <select class="form-control" name="product-series">
-                <option value="--">--</option>
+                <?php foreach($series as $item) { ?>
+                    <option value="<?php echo str_replace(' ', '_', $item['name']); ?>"><?php echo $item['name']; ?></option>
+                <?php } ?>
             </select>
-            <a class="btn btn-primary my-4" href="/general-information">Get Prices</a>
+            <input type="submit" class="btn btn-primary my-4" value="Get Prices"/>
         </div>
         <div class="col-lg-4 col-sm-5">
             <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">

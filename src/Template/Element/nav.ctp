@@ -15,7 +15,7 @@
     <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
         <!-- Products Dropdown -->
         <div id="product-dropdown" class="dropdown">
-            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/products">Products</a>
             <div class="dropdown-menu" aria-labelledby="product-dropdown">
                 <div class="row no-gutters justify-content-between">
                     <div class="col">
@@ -49,19 +49,19 @@
                     </div>
                     <div class="col last-prod-drop">
                         <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
-                        <p class="drop-header">Application Information</p>
+                        <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Resources Dropdown -->
         <div id="resources-dropdown" class="dropdown">
-            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/resources">Resources</a>
             <div class="dropdown-menu" aria-labelledby="product-dropdown">
                 <div class="row no-gutters justify-content-between">
-                    <p class="drop-header"><A HREF="/resources">General Information</A></p>
-                    <p class="drop-header">Technical Documentation</p>
-                    <p class="drop-header">Application Information</p>
+                    <p class="drop-header"><A HREF="/resources/general-information">General Information</A></p>
+                    <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
+                    <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
                     <p class="drop-header">Download Our Catalog</p>
                 </div>
@@ -73,9 +73,9 @@
     </nav><!-- main-navbar end -->
 </div> <!-- desktop-header end -->
 <!-- Mobile Header Start -->
-<div id="mobile-header">
-    <div id="m-burger-nav" class="sticky-top wrapper-navbar"> <!-- Mobile Burger Menu Start -->
-        <nav class="sticky-top navbar">
+<div id="mobile-header" class="sticky-top">
+    <div id="m-burger-nav" class=" wrapper-navbar"> <!-- Mobile Burger Menu Start -->
+        <nav class="navbar">
             <a class="navbar-brand" href="/">
                 <img class="header-image img-fluid" src="/img/vonberg-logo-white.svg" alt="Vonberg Valve, Inc">
             </a>
@@ -83,10 +83,10 @@
             aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon1"><span></span><span></span><span></span></div></button>
             <div class="collapse navbar-collapse" id="main-collapse">
                 <ul class="navbar-nav mr-auto">
-                    <li class="hero-text-w nav-item active">
+                    <li class="nav-item active">
                         <a class="nav-link" href="/products/new">New Products<span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="hero-text-w nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="/products" data-toggle="collapse" data-target="#prod-drop">Products<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
                     </li>
                     <div id="prod-drop" class="collapse navbar-collapse">
@@ -97,8 +97,8 @@
                         <p class="drop-header"><A HREF="/products/catalog/7">Cartridge Bodies</A></p>
                         <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
                     </div>
-                    <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/resources" data-toggle="collapse" data-target="#prod-drop">Resources<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/resources" data-toggle="collapse" data-target="#resource-drop">Resources<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
                     </li>
                     <div id="resource-drop" class="collapse navbar-collapse">
                         <p class="drop-header"><A HREF="/resources">General Information</A></p>
@@ -107,13 +107,13 @@
                         <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
                         <p class="drop-header">Download Our Catalog</p>
                     </div>
-                    <li class="hero-text-w nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
                     </li>
-                    <li class="hero-text-w nav-item">
-                        <a class="nav-link" href="/find-a-distributor">Find a Distributor</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/locator">Find a Distributor</a>
                     </li>
-                    <li class="hero-text-w nav-item">
+                    <li class="nav-item">
                         <a class="nav-link" href="/contact">Contact</a>
                     </li>
                 </ul>
@@ -121,10 +121,3 @@
         </nav>
     </div><!-- #m-burger-nav end -->
 </div><!-- mobile-header end -->
-<script type="text/javascript">
-    $(document).ready(function(){
-        $('.animated-icon1').click(function(){
-            $(this).toggleClass('open');
-        });
-    });  
-</script>
