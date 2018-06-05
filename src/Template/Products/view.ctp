@@ -205,12 +205,14 @@
     <!-- Mobile model table/dropdowns -->
     <div id="mob-model-tables" class="col-12">
         <div class="row no-gutters py-4">
-            <div class="col-3">
+            <div class="col-4">
             <?php $mobHead = 1;
+            $divID = 1;
             for($i = 0; $i <= ($mobCount/$columns)-1; $i++) {
                 foreach ($part->model_table->model_table_headers as $header):
+                    // echo $divID;
                     if($mobHead === 2) {
-                        echo '<div class="mob-hidden">';
+                        echo '<div class="mob-hidden ' . strval($divID) . '">';
                     }
                 ?>
                     <p class="model-table-header"><?php echo $header->model_table_text; ?></p>
@@ -219,14 +221,18 @@
                     $mobHead=0;
                 }
                 $mobHead++;
-                endforeach; 
-                } ?>
+            endforeach; 
+            $divID++;
+                } 
+            ?>
             </div>
-            <div class="col-9">
+            <div class="col-8">
             <?php $mobRow = 1;
+            $rowID = 1;
             foreach ($part->model_table->model_table_rows as $row):
                 if($mobRow === 2) {
-                    echo '<div class="mob-hidden">';
+                    echo '<div class="mob-hidden ' . $rowID . '">';
+                    $rowID++;
                 } if ($mobRow === 1) {
                     echo '<p class="model-table-data">'.$row->model_table_row_text.'<a class="drop-toggle" href="">View More</a></p>';
                 } else {
@@ -281,8 +287,11 @@
 
         $("a.drop-toggle").click(function(e) {
             e.preventDefault();
-            $(this).closest("p.model-table-data").next(".mob-hidden").show();
-            $(this).closest(".col-9").prev(".col-3").find("p.model-table-header").next(".mob-hidden").show();
+            $(this).closest("p.model-table-data").next('.mob-hidden').show();
+            var eachClass = $(this).closest("p.model-table-data").next(".mob-hidden").attr("class");
+            var res = eachClass.replace(' ', '.');
+            var leftDiv = $(this).closest(".col-8").prev(".col-4").find("div").filter('.' + res);
+            leftDiv.show();
         })
     })
 </script>
