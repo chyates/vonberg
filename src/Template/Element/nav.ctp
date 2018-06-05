@@ -15,7 +15,7 @@
     <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
         <!-- Products Dropdown -->
         <div id="product-dropdown" class="dropdown">
-            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/products">Products</a>
             <div class="dropdown-menu" aria-labelledby="product-dropdown">
                 <div class="row no-gutters justify-content-between">
                     <div class="col">
@@ -49,19 +49,19 @@
                     </div>
                     <div class="col last-prod-drop">
                         <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
-                        <p class="drop-header">Application Information</p>
+                        <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     </div>
                 </div>
             </div>
         </div>
         <!-- Resources Dropdown -->
         <div id="resources-dropdown" class="dropdown">
-            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/resources">Resources</a>
             <div class="dropdown-menu" aria-labelledby="product-dropdown">
                 <div class="row no-gutters justify-content-between">
-                    <p class="drop-header"><A HREF="/resources">General Information</A></p>
-                    <p class="drop-header">Technical Documentation</p>
-                    <p class="drop-header">Application Information</p>
+                    <p class="drop-header"><A HREF="/resources/general-information">General Information</A></p>
+                    <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
+                    <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
                     <p class="drop-header">Download Our Catalog</p>
                 </div>

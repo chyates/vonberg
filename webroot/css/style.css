@@ -327,6 +327,12 @@ a:hover {
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
+@media (max-width: 576px) {
+    .inner-main {
+        padding: 3vh 3vw;
+    }
+}
+
 /* === HEADER STYLES: GLOBAL / DESTKOP === */
 
 @media (min-width: 992px) {
@@ -335,7 +341,7 @@ a:hover {
         left: 10%;
     }
 
-    #resource-dropdown .dropdown-menu {
+    #resources-dropdown .dropdown-menu {
         width: 75%;
         left: 15%;
     }
@@ -699,10 +705,19 @@ a:hover {
     #category-main-container .prod-category-header-row .col-sm-5 {
         display: none;
     }
-
 }
 
 /* === SINGLE PRODUCT STYLES: GLOBAL / DESKTOP === */
+
+@media (min-width: 992px) {
+    #single-prod-main-container .series-model-table-row {
+        display: block;
+    }
+
+    #single-prod-main-container #mob-model-tables {
+        display: none;
+    }
+}
 
 .single-prod-left-col,
 .single-prod-right-col {
@@ -844,6 +859,23 @@ a:hover {
     padding: 10px 58px;
 }
 
+/* +++ SINGLE PRODUCT: MOBILE +++ */
+
+@media (max-width: 576px) {
+    #single-prod-main-container .series-model-table-row {
+        display: none;
+    }
+
+    #single-prod-main-container #mob-model-tables {
+        display: block;
+    }
+    
+    #single-prod-main-container #mob-model-tables .mobile-table-row {
+        display: flex;
+        flex-direction: row;
+    }
+}
+
 /* === GENERAL INFO TEMPLATE STYLES: GLOBAL / DESKTOP === */
 
 @media (min-width: 992px) {
@@ -852,11 +884,19 @@ a:hover {
 
 #gen-info-main-container .page-header,
 #gen-info-main-container .product-info,
-#gen-info-main-container .product-name {
+#gen-info-main-container .product-name, 
+#app-info-main-container .page-header,
+#app-info-main-container .product-info,
+#app-info-main-container .product-name, 
+#tech-doc-main-container .page-header,
+#tech-doc-main-container .product-info,
+#tech-doc-main-container .product-name {
     text-align: center;
 }
 
-#gen-info-main-container .resource-block {
+#gen-info-main-container .resource-block, 
+#app-info-main-container .resource-block, 
+#tech-doc-main-container .resource-block {
     border: 1px solid #DDDDDD;
     background-color: rgba(235,236,230,0.3);
 }
@@ -866,7 +906,9 @@ p.resource-link a {
     color: #017d44;
 }
 
-#gen-info-main-container .contact-us {
+#gen-info-main-container .contact-us,
+#app-info-main-container .contact-us,
+#tech-doc-main-container .contact-us {
     padding: 9px 32px;
     margin: 10px auto;
 }

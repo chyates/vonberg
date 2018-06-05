@@ -193,6 +193,20 @@
 
     </div><!-- .series-model-table end -->
 
+    <!-- Mobile model table/dropdowns -->
+    <div id="mob-model-tables" class="">
+        <p>Model</p>
+        <?php
+            $count = 1;
+            foreach ($part->model_table->model_table_rows as $row):
+                echo '<div class="mobile-table-row justify-content-between">' .
+                    '<p>' . $row->model_table_row_text .
+                    '<a href="">View More</a></p></div>';
+                $count++;
+            endforeach;
+        ?>
+    </div>
+
     <div class="legalese row mx-sm-5 px-sm-5 px-3 pb-sm-5 pb-3">
         <p class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
