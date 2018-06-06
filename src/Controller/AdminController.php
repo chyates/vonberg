@@ -15,7 +15,6 @@
     class AdminController extends AppController
     {
 
-
         public function view()
         {
             $this->viewBuilder()->setLayout('admin');
@@ -53,5 +52,82 @@
         {
             return TableRegistry::get('Categories')->find();
 
+        }
+
+        public function addProduct()
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function editProduct()
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function generatePDF()
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function modelPricing()
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('ModelPrices');
+            $series = TableRegistry::get('Series')->find();
+
+            $pricing = TableRegistry::get('ModelPrices')->find();
+
+            $this->set('prices', $pricing);
+            $this->set(compact('series'));
+        }
+
+        public function manageResources() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function editResources() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function addResource() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function editGeneralInformation() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+        
+        public function editTechnicalDocumentation() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+        
+        public function editApplicationInformation() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function generalInformation() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function technicalDocumentation() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+
+        public function applicationInformation() 
+        {
+            $this->viewBuilder()->setLayout('admin');
+        }
+        
+        public function downloadSTP()
+        {
+            $this->viewBuilder()->setLayout('admin');
         }
     }
