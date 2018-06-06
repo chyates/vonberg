@@ -725,10 +725,6 @@ a:hover {
     flex-direction: column;
 }
 
-.single-prod-right-col {
-    justify-content: space-between;
-}
-
 .single-prod-left-col .page-title {
     text-align: left;
 }
@@ -772,17 +768,27 @@ a:hover {
     background-color: #F9F9F7;
 }
 
-.spec-table td {
+.spec-table tr:not(:last-child),
+.series-model-table-row .table-responsive .model-table.table tr:not(:last-child) {
+    border-bottom: 1px solid #9B9B9B;
+    border-top: none;
+}
+
+.spec-table td, .spec-table th {
     font-size: 14px;
     text-transform: uppercase;
     font-family: "Poppins", sans-serif;
+    font-weight: normal;
+    border-top: none;
+    border-bottom: none;
 }
 
 .table-responsive .model-table.table thead th {
     border-bottom: none;
 }
 
-.table-responsive .model-table.table th {
+.table-responsive .model-table.table th,
+.table-responsive .model-table.table td {
     border-top: none;
 }
 
@@ -800,6 +806,10 @@ a:hover {
 	font-size: 14px;
     line-height: 20px;
     text-transform: uppercase;
+}
+
+#mob-bottom-links {
+    display: none;
 }
 
 .legal-title {
@@ -867,6 +877,34 @@ a:hover {
 /* +++ SINGLE PRODUCT: MOBILE +++ */
 
 @media (max-width: 576px) {
+
+    .single-prod-right-col .right-top-links {
+        display: none;
+    }
+
+    #mob-bottom-links {
+        display: block;
+        margin-bottom: 2vh;
+    }
+
+    #mob-bottom-links .center-link {
+        display: block;
+        font-family: "Poppins", sans-serif;
+        text-transform: uppercase;
+        text-decoration: underline;
+        margin-top: 1vh;
+    }
+
+    .single-prod-right-col .right-main-content {
+        background-color: #FFFFFF;
+        border: none;
+        margin-bottom: 0;
+    }
+
+    .single-prod-right-col .spec-table {
+        background-color: #FFFFFF;
+    }
+
     #single-prod-main-container .series-model-table-row {
         display: none;
     }
@@ -896,7 +934,7 @@ a:hover {
     }
 
     #mob-model-tables div.mob-hidden {
-        margin: 0 5vw;
+        margin: 0 2vw;
     }
 
     #mob-model-tables p.top-data,
