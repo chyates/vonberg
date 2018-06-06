@@ -8,7 +8,6 @@
 
     namespace App\Controller;
 
-    use App\Controller\AppController;
     use Cake\ORM\TableRegistry;
 
 
@@ -21,6 +20,13 @@
             $this->viewBuilder()->setLayout('admin');
             $cat = TableRegistry::get('Categories')->find();
             $this->set('categories', $cat);
+
+        }
+
+        public function priceFix($seriesID,$model_text)
+        {
+            $this->viewBuilder()->setLayout('admin');
+
 
         }
 
@@ -54,4 +60,17 @@
             return TableRegistry::get('Categories')->find();
 
         }
+
+        public function fixPricing()
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('Parts');
+            $prices = TableRegistry::get('ModelPrices')->find();
+            $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories','ModelTables' => ['ModelTableHeaders','ModelTableRows']]]));
+            $cat = TableRegistry::get('Categories')->find();
+            $this->set('parts', $query);
+            $this->set('categories', $cat);
+            $this->set('prices',$prices);
+        }
+
     }

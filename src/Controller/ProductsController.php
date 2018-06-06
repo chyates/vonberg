@@ -48,6 +48,11 @@ class ProductsController extends AppController
     }
     public function pricing($id=null)
     {
+        $this->loadModel('Parts');
+        $query =  $this->Parts->find('all', ['conditions' => ['Parts.seriesID' => $id], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
+        $part = $query->first();
+        $this->set('part', $part);
+
         // $this->loadModel('ModelPrices');
         // $series = TableRegistry::get('Series')->find();
 
@@ -151,18 +156,22 @@ class ProductsController extends AppController
 
     public function prices()
     {
-        $this->loadModel('ModelPrices');
-        $series = TableRegistry::get('Series')->find();
+        $seriesID = $this->request->getQuery('seriesID');
+        $q = $this->request->getQuery('q');
+        if (empty($seriesID)) {
+            $this->loadModel('ModelPrices');
+            $series = TableRegistry::get('Series')->find();
 
-        $query = $this->ModelPrices
-            // Use the plugins 'search' custom finder and pass in the
-            // processed query params
-            ->find('search', ['search' => $this->request->getQueryParams()]);
+            $query = $this->ModelPrices
+                // Use the plugins 'search' custom finder and pass in the
+                // processed query params
+                ->find('search', ['search' => $this->request->getQueryParams()]);
             // You can add extra things to the query if you need to
-            //->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+            //->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows'=>['ModelPrices']]]);
 
-        $this->set('prices', $this->paginate($query));
-        $this->set(compact('series'));
+            $this->set('prices', $this->paginate($query));
+            $this->set(compact('series'));
+        }
     }
 
     public function new()

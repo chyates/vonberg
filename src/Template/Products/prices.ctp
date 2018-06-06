@@ -1,21 +1,50 @@
 <div id="prices-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <div class="row no-gutters justify-content-lg-center justify-content-sm-between">
         <div class="col-lg-4 col-sm-6 mr-lg-3 px-lg-4">
+            <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);?>
+            <?PHP $this->Form->unlockField('q');?>
+            <?PHP $this->Form->unlockField('seriesID');?>
             <h1 class="page-header">Product Prices</h1>
             <label>Enter Model Number</label>
-            <input type="text" class="form-control" name="product-model">
+            <input type="text" class="form-control" name="q">
+
             <p class="text-center">or</p>
             <label>Select a Series</label>
-            <select class="form-control" name="product-series">
+            <select class="form-control" name="seriesID">
                 <?php foreach($series as $item) { ?>
-                    <option value="<?php echo str_replace(' ', '_', $item['name']); ?>"><?php echo $item['name']; ?></option>
+                    <option value="<?php echo $item['id']; ?>"><?php echo $item['name']; ?></option>
                 <?php } ?>
             </select>
             <input type="submit" class="btn btn-primary my-4" value="Get Prices"/>
+            <?php            echo $this->Form->end(); ?>
+
         </div>
         <div class="col-lg-4 col-sm-5">
             <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
         </div>
+
+        <?php if (!$prices->isEmpty()) { ?>
+        <!-- The following table should populate whichever data the user searched for -->
+        <div class="series-model-table-row row mx-5 px-5">
+            <div class="table-responsive">
+                <table class="model-table table">
+                    <thead>
+                    <th class="model-table-header">Model</th>
+                    <th class="model-table-header">Base Price</th>
+                    </thead>
+
+                    <tbody>
+                    <?php foreach($prices as $price) { ?>
+                    <tr>
+                        <td class="model-table-data"><?php echo $price['model_text']; ?></td>
+                        <td class="model-table-data"><?php echo $price['unit_price']; ?></td>
+                    </tr>
+                    <?php } ?>
+                    </tbody>
+                </table>
+            </div>
+        </div><!-- .series-model-table end -->
+<?php } ?>
         <div class="row no-gutters">
             <div class="col-sm-6 mx-auto">
                 <p class="text-center mb-sm-5 my-3"><a href="/contact">Contact us</a> for quantity discounts!</p>
