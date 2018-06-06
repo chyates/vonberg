@@ -72,15 +72,15 @@
 </div>
 
 <div id="single-prod-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5">
-    <div id="single-prod-main" class="row mx-lg-5 px-lg-5 py-lg-4">
-        <div class="single-prod-left-col flex-column col-sm-7 px-lg-3">
+    <div id="single-prod-main" class="row no-gutters mx-lg-5 px-lg-5 py-lg-4">
+        <div class="single-prod-left-col col-sm-7 col-12 px-lg-3">
             <div class="left-info">
                 <h1 class="page-title"><?= h($part->series->name);?></h1>
                 <h3 class="product-name"><?= h($part->category->name);?></h3>
                 <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
             </div>
 
-            <div class="left-desc my-3">
+            <div class="left-desc my-sm-3">
                 <h3 class="product-name">Description</h3>
                 <p class="product-info">
                     <?php echo $part->description; ?>
@@ -88,21 +88,21 @@
             </div>
 
             <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
-            <div class="left-img-div my-4">
+            <div class="left-img-div my-sm-4">
                 <h3 class="product-name">Product Rendering</h3>
                 <img class="my-3 product-render img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
             </div>
             <?php } ?>
 
             <?php if (file_exists('img/parts/'.$part->partID.'/hydraulic_symbol.jpg')){ ?>
-            <div class="left-img-div my-4">
+            <div class="left-img-div my-sm-4">
                 <h3 class="product-name">Schematic</h3>
                 <img class="my-3 " src="<?= "/img/parts/".$part->partID."/hydraulic_symbol.jpg"; ?>"/>
             </div>
             <?php } ?>
 
             <?php if (file_exists('img/parts/'.$part->partID.'/typical_performance.jpg')){ ?>
-            <div class="left-img-div my-4">
+            <div class="left-img-div my-sm-4">
                 <h3 class="product-name">Typical Performance</h3>
                 <img class="my-3 product-performance img-fluid" src="<?= "/img/parts/".$part->partID."/typical_performance.jpg"; ?>" />
             </div>
@@ -110,7 +110,7 @@
 
         </div><!-- .single-prod-left-col end -->
 
-        <div class="single-prod-right-col flex-column col-sm-5 px-lg-0 pt-4">
+        <div class="single-prod-right-col col-sm-5 col-12 px-lg-0 pt-4">
             <div class="right-top-links">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
                 <a href="/products/prices">View Pricing</a>
@@ -165,7 +165,7 @@
 
     </div><!-- #single-prod-main end -->
 
-    <div class="series-model-table-row row mx-lg-5 px-lg-5">
+    <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5">
         <div class="table-responsive">
             <table class="model-table table">
 
@@ -205,19 +205,20 @@
     <!-- Mobile model table/dropdowns -->
     <div id="mob-model-tables" class="col-12">
         <div class="row no-gutters py-4">
-            <div class="col-4">
+            <div class="col-3">
             <?php $mobHead = 1;
             $divID = 1;
             for($i = 0; $i <= ($mobCount/$columns)-1; $i++) {
                 foreach ($part->model_table->model_table_headers as $header):
-                    // echo $divID;
                     if($mobHead === 2) {
                         echo '<div class="mob-hidden ' . strval($divID) . '">';
-                    }
-                ?>
+                    } if($mobHead === 1) { ?>
+                    <p class="top-data model-table-header"><?php echo $header->model_table_text; ?></p>
+
+                <?php } else { ?>
                     <p class="model-table-header"><?php echo $header->model_table_text; ?></p>
-                <?php if ($mobHead >= $columns){
-                    echo '</p><p></div>';
+                <?php } if ($mobHead >= $columns){
+                    echo '</div>';
                     $mobHead=0;
                 }
                 $mobHead++;
@@ -234,12 +235,12 @@
                     echo '<div class="mob-hidden ' . $rowID . '">';
                     $rowID++;
                 } if ($mobRow === 1) {
-                    echo '<p class="model-table-data">'.$row->model_table_row_text.'<a class="drop-toggle" href="">View More</a></p>';
+                    echo '<p class="top-data model-table-data">'.$row->model_table_row_text.'<a class="drop-toggle" href="">View More</a><span class=""><img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/></span></p>';
                 } else {
                     echo '<p class="model-table-data">'.$row->model_table_row_text.'</p>';
                 }
                 if ($mobRow >= $columns){
-                    echo '</p><p></div>';
+                    echo '</div>';
                     $mobRow=0;
                 }
                 $count++;
@@ -250,7 +251,7 @@
         </div>
     </div>
 
-    <div class="legalese row mx-sm-5 px-sm-5 px-3 pb-sm-5 pb-3">
+    <div class="legalese row no-gutters mx-sm-5 px-sm-5 px-3 pb-sm-5 pb-3">
         <p class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
@@ -287,11 +288,20 @@
 
         $("a.drop-toggle").click(function(e) {
             e.preventDefault();
-            $(this).closest("p.model-table-data").next('.mob-hidden').show();
             var eachClass = $(this).closest("p.model-table-data").next(".mob-hidden").attr("class");
             var res = eachClass.replace(' ', '.');
-            var leftDiv = $(this).closest(".col-8").prev(".col-4").find("div").filter('.' + res);
-            leftDiv.show();
+            var leftDiv = $(this).closest(".col-8").prev(".col-3").find("div").filter('.' + res);
+            if(leftDiv.css('display') == "none") {
+                $(this).closest("p.model-table-data").next('.mob-hidden').show();
+                leftDiv.show();
+                $(this).text("View Less");
+                $(this).next("span").find("img.mob-arrow").attr('src', '/img/Arrow-Up.svg');
+            } else {
+                $(this).closest("p.model-table-data").next('.mob-hidden').hide();
+                leftDiv.hide();
+                $(this).text("View More");
+                $(this).next("span").find("img.mob-arrow").attr('src', '/img/Arrow-Down.svg');
+            }
         })
     })
 </script>

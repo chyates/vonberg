@@ -84,7 +84,7 @@ a:hover {
         font-weight: bold;
     }
 
-    #main-collapse img.mob-arrow {
+    img.mob-arrow {
         height: 8px;
         width: 4px;
     }
@@ -720,9 +720,13 @@ a:hover {
     }
 }
 
+.single-prod-left-col, .single-prod-right-col {
+    display: flex;
+    flex-direction: column;
+}
+
 .single-prod-right-col {
     justify-content: space-between;
-    display: flex;
 }
 
 .single-prod-left-col .page-title {
@@ -771,6 +775,7 @@ a:hover {
 .spec-table td {
     font-size: 14px;
     text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
 }
 
 .table-responsive .model-table.table thead th {
@@ -866,22 +871,54 @@ a:hover {
         display: none;
     }
 
-    #single-prod-main-container #mob-model-tables {
+    #mob-model-tables {
         display: block;
         padding: 0;
     }
     
-    #single-prod-main-container #mob-model-tables .mobile-table-row {
+    #mob-model-tables .mobile-table-row {
         display: flex;
         flex-direction: row;
     }
 
-    #single-prod-main-container #mob-model-tables .mob-hidden {
+    #mob-model-tables .mob-hidden {
         display: none;
     }
 
-    #single-prod-main-container #mob-model-tables p.model-table-data a {
-        padding: 0 5vw;
+    #mob-model-tables p.model-table-data a {
+        padding-left: 5vw;
+        text-decoration: underline;
+    }
+
+    #mob-model-tables p.model-table-data,
+    #mob-model-tables p.model-table-header {
+        margin: 0;
+    }
+
+    #mob-model-tables div.mob-hidden {
+        margin: 0 5vw;
+    }
+
+    #mob-model-tables p.top-data,
+    #mob-model-tables .mob-hidden p.model-table-data:last-child,
+    #mob-model-tables .mob-hidden p.model-table-header:last-child {
+        padding: 4px 0;
+    }
+
+    #mob-model-tables p.top-data span {
+        padding-left: 3vw;
+    }
+
+    #mob-model-tables .top-data span img.mob-arrow {
+        width: 8px;
+    }
+
+    #mob-model-tables p.top-data:not(:first-child) {
+        border-top: 1px solid #DDDDDD;
+    }
+
+    #mob-model-tables p.model-table-header {
+        font-weight: bold;
     }
 }
 
