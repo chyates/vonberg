@@ -30,11 +30,11 @@
             }
             echo'<div class="prod-category-main row mx-lg-5">
                <div class="col-lg">
-               <h1 class="page-header">' .
+               <h2 class="category-title">' .
                '<a href='. '"/products/types/' . str_replace(' ', '-', strtolower($part->type->name)) .'">';
                     echo $part->type->name;
           echo '</a>
-                </h1>
+                </h2>
                 </div>
                 </div>
           <div class="prod-category-main row mx-lg-5">';
