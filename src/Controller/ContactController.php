@@ -19,4 +19,10 @@ class ContactController extends AppController
 
 
     }
+
+    public function new() 
+    {
+        $token = $this->request->getParam('_csrfToken');
+        $this->setAction('index');
+    }
 }

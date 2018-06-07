@@ -81,6 +81,16 @@
 
         </div><!-- .contact-right end -->
     </div>
+
+    <?php 
+        $this->Form->templates([
+            'inputContainer' => '<div class="form-group">{{input}}</div>'
+        ]);
+        echo $this->Form->create('Contact', array('url' => 'new', 'id' => 'contact-form'));
+        echo $this->Form->control('Full Name', ['type' => 'text', 'class' => 'form-control']);
+        
+        echo $this->Form->end();  
+    ?>
 </div><!-- #contact-main-container end -->
 
 <script>
