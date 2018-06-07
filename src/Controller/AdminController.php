@@ -12,6 +12,7 @@
     use Cake\ORM\TableRegistry;
 
 
+
     class AdminController extends AppController
     {
 
@@ -59,9 +60,24 @@
             $this->viewBuilder()->setLayout('admin');
         }
 
-        public function editProduct()
+        public function editProduct($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('Parts');
+            $part = $this->Parts->get($id);
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+
+            $series = TableRegistry::get('Series')->find('list');
+
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            // Save logic goes here
+            $this->set('part', $part);
+            $this->set('type', $type);
+            $this->set('style', $style);
+
         }
 
         public function generatePDF()
