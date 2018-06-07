@@ -8,6 +8,16 @@ body {
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
+.inner-main, #vvi-footer {
+    max-width: 1180px;
+}
+
+@media (min-width: 1440px) {
+    .inner-main {
+        margin: 0 auto;
+    }
+}
+
 /* h1, d/t */
 .page-title,
 .page-header,
@@ -1492,10 +1502,6 @@ p.resource-link span img.img-fluid {
     padding: 4% 12%;
 }
 
-/* +++ CMS HOMEPAGE: TABLET +++ */
-
-/* +++ CMS HOMEPAGE: MOBILE +++ */
-
 /* +++ CMS PRODUCT CATEGORY: GLOBAL / DESKTOP +++ */
 
 .model-table.table-striped>tbody>tr:nth-child(even)>td, 
@@ -1506,6 +1512,11 @@ p.resource-link span img.img-fluid {
 .model-table.table-striped>tbody>tr:nth-child(odd)>td, 
 .model-table.table-striped>tbody>tr:nth-child(odd)>th {
    background-color: #FFFFFF;
+}
+
+#cms-prod-cat-table.model-table.table-striped td,
+#cms-prod-cat-table.model-table.table-striped th {
+    padding: 1vh 0;
 }
 
 .model-table.table-striped .model-table-data a {
@@ -1530,7 +1541,7 @@ p.resource-link span img.img-fluid {
     display: none;
 }
 
-#add-prod-form label.fileContainer,
+#cms-site-container label.fileContainer,
 #cms-add-resource-main label.fileContainer {
     overflow: hidden;
     position: relative;
@@ -1553,11 +1564,11 @@ p.resource-link span img.img-fluid {
     top: 0;
 }
 
-#add-prod-form .btn.btn-primary {
+#cms-site-container .btn.btn-primary {
     padding: 10px 20px;
 }
 
-#add-prod-form .back.btn.btn-primary {
+.back.btn.btn-primary {
     border: 1px solid #017D44;
     font-size: 13px;
     font-weight: bold;
@@ -1566,7 +1577,7 @@ p.resource-link span img.img-fluid {
     background-color: rgba(204,204,204,0);
 }
 
-#add-prod-form a.add-bullet {
+a.add-bullet {
 	color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
@@ -1584,8 +1595,7 @@ p.resource-link span img.img-fluid {
 
 .rsrc-table.table-responsive .table th,
 .rsrc-table.table-responsive .table td {
-    padding-left: 0;
-    padding-right: 0;
+    padding: 1vh 0;
 }
 
 .rsrc-table.table-responsive .table td {
@@ -1633,10 +1643,32 @@ select {
     font-family: "Poppins", sans-serif;
   }
 
+#cms-edit-resource-main .rsrc-table.table-responsive input[type=text] {
+    width: 90%;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive td:not(:last-child) {
+    vertical-align: middle;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive td:last-child {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
 #cms-edit-resource-main td p,
 #cms-model-price-main td p {
     display: inline-block;
     vertical-align: top;
+    margin-bottom: 0;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive p a {
+    text-decoration: underline;
+    color: #425460;
+    text-transform: uppercase;
 }
 
 #cms-add-resource-main label.fileContainer {
