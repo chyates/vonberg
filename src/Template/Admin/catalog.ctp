@@ -5,6 +5,26 @@
  */
 ?>
 <div id="cms-prod-cat-main" class="inner-main col-md-10 mx-auto p-5">
+
+    <div id="delete-check-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col">
+                        <h1 class="page-title">Delete File?</h1>
+                        <p>Are you sure you want to delete</p>
+                        <p>FPO FILE TEXT</p>
+                        <p>from the system? This action cannot be undone.</p>
+                        <div class="btn-row">
+                            <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary">Delete</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <div class="row">
         <div class="col-xs-4">
             <nav class="large-3 medium-4 columns" id="actions-sidebar">
@@ -44,7 +64,7 @@
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
-                        <?= $this->Form->postLink(__('Delete'), ['action' => 'delete', $part->partID], ['confirm' => __('Are you sure you want to delete # {0}?', $part->partID)]) ?>
+                        <a data-toggle="modal" data-target="#delete-check-modal">Delete</a>
                     </td>
                 </tr>
                 <?php endforeach; ?>

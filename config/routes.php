@@ -73,6 +73,7 @@ Router::scope('/', function (RouteBuilder $routes) {
      * You can remove these routes once you've connected the
      * routes you want in your application.
      */
+    $routes->connect('/products/types')
     $routes->fallbacks(DashedRoute::class);
 });
 
