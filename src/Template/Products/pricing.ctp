@@ -10,7 +10,7 @@
             ?>
             <p class="text-center">or</p>
             <label>Select a Series</label>
-<?php            echo $this->Form->input('seriesID',  array('label' => false,'type' => 'select','options'=> json_decode($series),'class'=>'form-control'));?>
+<?php            echo $this->Form->input('id',  array('label' => false,'type' => 'select','options'=> $series,'class'=>'form-control'));?>
 
             <!-- Once something is searched, whatever the user searched for should stay either in the text field or the select field -->
             <button class="btn my-4" type="submit">Get Prices</button>
