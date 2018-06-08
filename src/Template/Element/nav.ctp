@@ -72,6 +72,8 @@
         <a class="nav-link nav-item" href="/contact">Contact</a>
     </nav><!-- main-navbar end -->
 </div> <!-- desktop-header end -->
+
+
 <!-- Mobile Header Start -->
 <div id="mobile-header" class="sticky-top">
     <div id="m-burger-nav" class=" wrapper-navbar"> <!-- Mobile Burger Menu Start -->
@@ -87,7 +89,7 @@
                         <a class="nav-link" href="/products/new">New Products<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/products" data-toggle="collapse" data-target="#prod-drop">Products<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
+                        <a class="prod-trigger nav-link" href="/products" data-toggle="collapse" data-target="#prod-drop">Products<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
                     </li>
                     <div id="prod-drop" class="collapse navbar-collapse">
                         <p class="drop-header"><A HREF="/products/catalog/1">Flow Regulating Valves</A></p>
@@ -98,14 +100,14 @@
                         <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
                     </div>
                     <li class="nav-item">
-                        <a class="nav-link" href="/resources" data-toggle="collapse" data-target="#resource-drop">Resources<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
+                        <a class="resource-trigger nav-link" href="/resources" data-toggle="collapse" data-target="#resource-drop">Resources<span><img class="mob-arrow img-fluid" src="/img/Arrow-Right.svg"/></span></a>
                     </li>
                     <div id="resource-drop" class="collapse navbar-collapse">
-                        <p class="drop-header"><A HREF="/resources">General Information</A></p>
-                        <p class="drop-header">Technical Documentation</p>
-                        <p class="drop-header">Application Information</p>
+                        <p class="drop-header"><A HREF="/resources/general-information">General Information</A></p>
+                        <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
+                        <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                         <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
-                        <p class="drop-header">Download Our Catalog</p>
+                        <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" download>Download Our Catalog</a></p>
                     </div>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>

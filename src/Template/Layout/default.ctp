@@ -30,6 +30,27 @@
     $(function(){
         $("#geocomplete").geocomplete({ details: "form" })
     });
+
+    jQuery(document).ready(function($){
+        $('.animated-icon1').click(function(){
+            $(this).toggleClass('open');
+        });
+
+        $("a.nav-link").click(function(){
+            // var open = $(this).find("a.nav-link:not(.collapsed)");
+            // var collapsed = $(this).find("a.nav-link.collapsed");
+            if( $("#m-burger-nav #prod-drop").css('display') == 'block' ) {
+                console.log("Your dropdown is showing...");
+                var arrow = $(this).find("span").find("img.mob-arrow");
+                $(arrow).attr("src", "/img/Arrow-Down.svg");
+            }
+            // if( $(this).hasClass('collapsed') ) {
+            //     console.log("Found collapsed");
+            //     $(arrow).attr("src", "/img/Arrow-Right.svg");
+            // } else {
+            // }
+        });
+    })
 </script>
 </body>
 </html>

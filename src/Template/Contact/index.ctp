@@ -13,33 +13,18 @@
             <!-- Contact form begin -->
             <?php 
                 echo $this->Form->create('Contact', array(
-                    'url', 'new',
+                    'url', 'process',
                     'id' => 'contact-form',
                     'class' => 'needs-validation',
                     'novalidate'
                 ));
-                echo $this->Form->control('Full Name', ['type' => 'text', 'class' => 'form-control','required']); ?>
-                <div class="invalid-feedback">
-                    Please enter your full name.
-                </div>
-
-               <?php echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);
-                echo $this->Form->control('Phone Number', ['type' => 'tel', 'class' => 'form-control', 'required']); ?>
-                <div class="invalid-feedback">
-                     Please enter your phone number.
-                </div>
-
-                <?php echo $this->Form->control('Email Address', ['type' => 'email', 'class' => 'form-control','required']); ?>
-                <div class="invalid-feedback">
-                    Please enter a valid email address.
-                </div>
-
-                <?php echo $this->Form->control('What is your role?', ['type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
-
-                echo $this->Form->control('Remarks, Special Requests, or Questions:', ['type' => 'textarea', 'class' => 'form-control', 'required']); ?>
-                <div class="invalid-feedback">
-                    Please include a message.
-                </div>
+                echo $this->Form->control('Full Name', ['type' => 'text', 'class' => 'form-control','required']);
+                echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);
+                echo $this->Form->control('Phone Number', ['type' => 'tel', 'class' => 'form-control', 'required']);
+                echo $this->Form->control('Email Address', ['type' => 'email', 'class' => 'form-control','required']);
+                echo $this->Form->control('What is your role?', ['type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
+                echo $this->Form->control('Remarks, Special Requests, or Questions:', ['type' => 'textarea', 'class' => 'form-control', 'required']); 
+            ?>
 
                 <div class="row no-gutters">
                     <div class="col-6 my-auto">
@@ -74,17 +59,24 @@
     }, false);
   })();
 
-  jQuery(document).ready(function(){
-    //   var inputFeedback = $("#contact-form div.input").next('div.invalid-feedback');
-    //   inputFeedback.wrapAll('<div class="form-group" />');
-      $("#contact-form div.input").addClass('form-group');
-      $("#contact-form div.checkbox").addClass('form-check form-check-inline');
-      var rowLabel = $("#contact-form div.select").find("label").first();
-      rowLabel.next("input[type=hidden]").wrapAll('<div class="row no-gutters" />');
-      var submit = $("#contact-form div.submit");
-      submit.find('input[type=submit]').addClass('btn btn-primary');
-      submit.addClass('col-6 text-right');
-    //   var wrap = $("#contact-form2 div.col-6");
-    //   $(wrap).wrapAll('<div class="row no-gutters" />');
-  })
+jQuery(document).ready(function(){
+// add divs for bootstrap validation
+    var feedback = '<div class="invalid-feedback">This field is required.</div>';
+    $("textarea").after(feedback);
+    $("input").each(function(index) {
+        $(this).after(feedback)
+    });
+
+// add form-group class to trigger validations
+    $("#contact-form div.input").addClass('form-group');
+    $("#contact-form div.checkbox").addClass('form-check form-check-inline');
+
+// format checkboxes + submit row
+    var rowLabel = $("#contact-form div.select").find("label").first();
+    rowLabel.next("input[type=hidden]").wrapAll('<div class="row no-gutters" />');
+
+    var submit = $("#contact-form div.submit");
+    submit.addClass('col-6 text-right');
+    submit.find('input[type=submit]').addClass('btn btn-primary');
+})
 </script>

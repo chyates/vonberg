@@ -61,6 +61,21 @@
                     </div>
                 </form>
 
+                <?php 
+                    echo $this->Form->create('STP', array(
+                        'url', 'process',
+                        'id' => 'contact-form',
+                        'class' => 'needs-validation',
+                        'novalidate'
+                    ));
+                    echo $this->Form->control('Full Name', ['type' => 'text', 'class' => 'form-control','required']);
+                    echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);
+                    echo $this->Form->control('Phone Number', ['type' => 'tel', 'class' => 'form-control', 'required']);
+                    echo $this->Form->control('Email Address', ['type' => 'email', 'class' => 'form-control','required']);
+                    echo $this->Form->control('What is your role?', ['type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
+                    echo $this->Form->control('Remarks, Special Requests, or Questions:', ['type' => 'textarea', 'class' => 'form-control', 'required']); 
+                ?>
+
                 <div class="thanks text-center">
                     <h1 class="page-header">Thank you!</h1>
                     <p>You will be receiving an email with the STP files shortly.</p>
