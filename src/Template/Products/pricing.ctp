@@ -4,18 +4,17 @@
             <h1 class="page-header">Product Prices</h1>
             <label>Enter Model Number</label>
             <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'pricing']]);
-            // You'll need to populate $authors in the template from your controller
-            echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control']);
-            // Match the search param in your table configuration
+                // You'll need to populate $authors in the template from your controller
+                echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control']);
+                // Match the search param in your table configuration
             ?>
             <p class="text-center">or</p>
             <label>Select a Series</label>
-<?php            echo $this->Form->input('id',  array('label' => false,'type' => 'select','options'=> $series,'class'=>'form-control'));?>
+            <?php echo $this->Form->input('id',  array('label' => false,'type' => 'select','options'=> $series,'class'=>'form-control'));?>
 
             <!-- Once something is searched, whatever the user searched for should stay either in the text field or the select field -->
             <button class="btn my-4" type="submit">Get Prices</button>
-<?php            echo $this->Form->end(); ?>
-
+            <?php echo $this->Form->end(); ?>
         </div>
         <div class="col-lg-4">
             <img class="img-fluid" src="/img/parts/1/schematic_drawing.jpg" alt="product-map">

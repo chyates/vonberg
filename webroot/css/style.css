@@ -21,8 +21,12 @@ body {
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
-.inner-main, #vvi-footer {
-    max-width: 1180px;
+/* .outer-container {
+    max-width: 1240px;
+} */
+
+.inner-main, #vvi-footer, #destkop-header {
+    max-width: 1240px;
 }
 
 @media (max-width: 576px) {
@@ -290,7 +294,7 @@ a.btn.btn-primary {
 }
 
 .dropdown-menu.show .col {
-    padding: 1vh 1vw;
+    padding: 2vh 1vw;
 }
 
 #product-dropdown.dropdown,
@@ -402,9 +406,14 @@ a.btn.btn-primary {
         font-weight: bold;
     }
 
+    #main-collapse .nav-item a.nav-link span {
+        margin-left: 10px;
+        vertical-align: top;
+    }
+
     img.mob-arrow {
-        height: 8px;
-        width: 4px;
+        height: 10px;
+        width: 8px;
     }
 
     .sticky-top .navbar{
@@ -579,7 +588,7 @@ a.btn.btn-primary {
     display: flex;
 }
 
-#home-lower-logos p{
+#home-lower-logos p a{
     color: #666666;
     font-size: 15px;
     font-style: italic;
@@ -627,6 +636,11 @@ a.btn.btn-primary {
 
     #home-lower-logos {
         padding: 3vh 2vw;
+    }
+
+    .home-card-button {
+        display: block;
+        width: 100%;
     }
 }
 
@@ -787,6 +801,10 @@ a.btn.btn-primary {
 .single-prod-right-col .right-top-links {
     display: flex;
     justify-content: space-between;
+}
+
+.single-prod-right-col .right-top-links a:first-child:hover {
+    cursor: pointer;
 }
 
 .single-prod-right-col .right-top-links a {
@@ -1122,6 +1140,14 @@ p.resource-link a {
     background-color: #F9F9F7;
 }
 
+.form-show, .confirm-show {
+    display: block;
+}
+
+.form-hide, .confirm-hide {
+    display: none;
+}
+
 #contact-form {
     font-family: "Poppins", sans-serif;
 }
@@ -1401,6 +1427,10 @@ p.resource-link span img.img-fluid {
 
 #prices-results-main-container ul li {
     padding-left: 7px;
+}
+
+.series-model-table-row .table-responsive .model-table.table .prices-last {
+    background-color: #F9F9F7;
 }
 
 /* +++ PRODUCT PRICES: TABLET +++ */

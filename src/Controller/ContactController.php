@@ -9,7 +9,7 @@ class ContactController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index', 'new']);
+        $this->Auth->allow(['index', 'process']);
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -17,6 +17,10 @@ class ContactController extends AppController
     public function index()
     {
 
+    }
 
+    public function process() 
+    {
+        
     }
 }
