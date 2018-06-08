@@ -14,22 +14,24 @@
                     <h1 class="page-header">Get STP Files</h1>
                     <p>You will receive an email with the files attached.</p>
                     <p>Which model(s) are you interested in?*</p>
-
+                    <?php $mobRow = 1;
+                    $rowID = 1;
+                    $width = sizeof($part->model_table->model_table_headers);
+                    foreach ($part->model_table->model_table_rows as $row):
+                         if ($mobRow === 1) {
+                            echo '
                     <div class="form-check text-center">
-                        <input type="checkbox" class="form-check-input" name="model" value="model1">
-                        <label class="form-check-label">Model 1</label>
-                    </div>
-                    <div class="form-check text-center">
-                        <input type="checkbox" class="form-check-input" name="model" value="model2">
-                        <label class="form-check-label">Model 2</label>
-                    </div>
-                    <div class="form-check text-center">
-                        <input type="checkbox" class="form-check-input" name="model" value="model3">
-                        <label class="form-check-label">Model 3</label>
-                    </div>
-
+                        <input type="checkbox" class="form-check-input" name="model" value="'.$row->model_table_row_text.'">
+                        <label class="form-check-label">'.$row->model_table_row_text.'</label>
+                    </div>';
+                        }
+                        if ($mobRow >= $width){
+                            $mobRow=0;
+                        }
+                        $mobRow++;
+                    endforeach;
+                    ?>
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
-
                     <div class="form-group">
                         <label>Full Name*</label>
                         <input type="text" name="customer-name" class="form-control">
@@ -267,6 +269,14 @@
 </div><!-- #single-prod-main-container end -->
 
 <script type="text/javascript">
+    function infoAdd() {
+        var name=$("#email").val();mail+"&address="+address, function(d) {
+        var age=$("#address").val();
+        $.get('/contact/stp?email='+e
+            alert(d);
+        });
+    }
+
     (function() {
     'use strict';
     window.addEventListener('load', function() {

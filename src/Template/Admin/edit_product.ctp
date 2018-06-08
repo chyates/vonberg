@@ -88,8 +88,16 @@
             </div>
 
             <div class="form-group w-bullet">
-                <label>Operation</label>
-                <input type="text" class="form-control" name="product-operation" placeholder="Enter bullet copy...">
+
+                <div class="form-group">
+                    <?php echo $this->Form->input('text_block',
+                        [
+                            'type' => 'select',
+                            'multiple' => false,
+                            'options' => $opblock,
+                            'label' => 'Operation',
+                            'class' => 'form-control'
+                        ]);?>
                 <a class="add-bullet" href="">Add Bullet</a>
             </div>
 

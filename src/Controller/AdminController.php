@@ -63,8 +63,17 @@
         public function editProduct($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
+            $opblock = $this->TextBlocks->find('list',array(
+                'conditions' => array(
+                    'partID' => $id,
+                    'header' => 'Operation'
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
             $part = $this->Parts->get($id);
+
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
             $style = TableRegistry::get('Styles')->find('list');
@@ -77,6 +86,7 @@
             $this->set('part', $part);
             $this->set('type', $type);
             $this->set('style', $style);
+            $this->set('opblock', $opblock);
 
         }
 
@@ -145,5 +155,8 @@
         public function downloadSTP()
         {
             $this->viewBuilder()->setLayout('admin');
+            $stp_users = TableRegistry::get('StpUsers')->find()->orderDesc('last_login');
+            $this->set('stp_users', $this->paginate($stp_users));
+
         }
     }
