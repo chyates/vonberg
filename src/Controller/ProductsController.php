@@ -158,18 +158,19 @@ class ProductsController extends AppController
 
     public function prices()
     {
-        $seriesID = $this->request->getQuery('seriesID');
-        $q = $this->request->getQuery('q');
-        if (is_null($seriesID) && empty($q)) {
+        $seriesID = $this->request->query('seriesID');
+        $q = $this->request->query('q');
+        $rows=NULL;
+   /*     if (is_null($seriesID) && empty($q)) {
             // break out here
             $series = TableRegistry::get('Series')->find();
             $this->set(compact('series'));
             $rows = NULL;
-        }
+        }*/
         if ($q) {
             $conn = ConnectionManager::get('default');
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
-            $query = 'SELECT p.partID, s.name, st.name, c.name, ty.name, mp.unit_price, mp.model_text
+            $query = 'SELECT p.partID, s.name as series, st.name as style, c.name as conn, ty.name as tipe, mp.unit_price, mp.model_text
             FROM
               model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
             LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
@@ -187,23 +188,46 @@ class ProductsController extends AppController
         } elseif ($seriesID) {
             $conn = ConnectionManager::get('default');
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
-            $query = 'SELECT p.partID, s.name, st.name, c.name, ty.name, mp.unit_price, mp.model_text
-            FROM
-              model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
-            LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
-            LEFT JOIN model_prices as mp ON mp.model_text = mtr.model_table_row_text
-            LEFT JOIN series as s ON p.seriesID = s.seriesID
-            LEFT JOIN styles as st ON p.styleID = st.styleID
-            LEFT JOIN connections as c ON p.connectionID = c.connectionID
-            LEFT JOIN types as ty ON p.typeID = ty.typesID
-            WHERE
-            ' . $like_where . '
-            ORDER BY
-                mp.model_text,st.name';
+
+            $query = 'SELECT
+    p.partID,
+    s.name as series,
+    st.name as style,
+    c.name as conn,
+    ty.name as tipe,
+    mp.unit_price,
+    mp.model_text  
+FROM
+    series as s,
+    styles as st,
+    connections as c,
+    parts as p,
+    types as ty,
+    model_prices as mp,
+    model_table_rows as mtr,
+    model_tables as mt
+WHERE
+	s.seriesID = '.$seriesID.'
+AND
+	s.seriesID = p.seriesID
+AND
+	p.partID = mt.partID
+AND
+	mt.model_tableID = mtr.model_tableID
+AND
+	mtr.model_table_row_text = mp.model_text
+AND
+    p.styleID = st.styleID
+AND
+    p.connectionID  = c.connectionID
+AND
+	p.typeID = ty.typesID
+ORDER BY
+    mp.model_text,s.name';
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
         }
-        $this->set('prices', $this->paginate($rows));
+        $this->set('prices', $rows);
         $series = TableRegistry::get('Series')->find();
         $this->set(compact('series'));
     }
