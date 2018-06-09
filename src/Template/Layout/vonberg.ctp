@@ -26,7 +26,7 @@
 
 <?= $this->fetch('script') ?>
 
-<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA0lVHjz_FEwUJzVwn6rTIMEyYUTHot7EY"></script>
+<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA0lVHjz_FEwUJzVwn6rTIMEyYUTHot7EY"></script>
 
 <?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 
