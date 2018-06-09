@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <?php if (!$prices->isEmpty()) { ?>
+    <?php if (!is_null($prices)) { ?>
     <!-- The following table should populate whichever data the user searched for -->
     <div class="series-model-table-row row mx-5 px-5">
         <div class="table-responsive col-10 mx-auto">
