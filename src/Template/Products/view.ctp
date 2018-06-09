@@ -130,7 +130,7 @@
         <div class="single-prod-right-col col-sm-5 col-12 px-lg-0 pt-4">
             <div class="right-top-links">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
-                <a href="/products/prices?seriesID=<?php echo $part->seriesID; ?>">View Pricing</a>
+                <a href="/products/prices?q=&seriesID=<?php echo $part->seriesID; ?>">View Pricing</a>
                 <a href=<?= "/img/pdfs/catalog/" . $part->partID . ".pdf"; ?> download >Download PDF</a>
             </div>
 
