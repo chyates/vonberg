@@ -19,25 +19,21 @@ class ContactController extends AppController
 
     }
 
-    }
-
-
     public function stp()
     {
         $data = [];
 
-        $emp=$this->StpUsers->newEntity();
-        if($this->request->is('ajax')) {
-            $this->request->data['model']=$this->request->query['model'];
-            $this->request->data['name']=$this->request->query['name'];
-            $this->request->data['email']=$this->request->query['email'];
-            $this->request->data['company']=$this->request->query['company'];
-            $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
-            if($result=$this->StpUsers->save($emp)) {
+        $emp = $this->StpUsers->newEntity();
+        if ($this->request->is('ajax')) {
+            $this->request->data['model'] = $this->request->query['model'];
+            $this->request->data['name'] = $this->request->query['name'];
+            $this->request->data['email'] = $this->request->query['email'];
+            $this->request->data['company'] = $this->request->query['company'];
+            $emp = $this->StpUsers->patchEntity($emp, $this->request->data);
+            if ($result = $this->StpUsers->save($emp)) {
                 $data['response'] = "Success: data saved";
                 //echo $result->id;
-            }
-            else {
+            } else {
                 $data['response'] = "Error: some error";
                 //print_r($emp);
             }
@@ -45,7 +41,7 @@ class ContactController extends AppController
 
         $this->set(compact('data'));
         $this->set('_serialize', 'data');
-
+    }
     public function process()
     {
 
