@@ -5,23 +5,23 @@
             <p class="product-info">Enter Zip Code</p>
             <?= $this->Form->create('Locator', array('url' => array('action' => 'index'),'class' => 'form-inline', 'enctype' => 'multipart/form-data'));
             echo $this->Form->input('address', array('class' => 'form-control','label'=>'','type' => 'text','id' => 'geocomplete'));
-            echo $this->Form->hidden('lat');
+            echo $this->Form->hidden('lat', array('id' => 'lat'));
             $this->Form->unlockField('lat');
-            echo $this->Form->hidden('lng');
+            echo $this->Form->hidden('lng', array('id' => 'lng'));
             $this->Form->unlockField('lng');
-            echo $this->Form->hidden('lat');
-            echo $this->Form->submit();
+            echo $this->Form->submit('Find', array('class' => 'btn btn-default'));
             echo $this->Form->end();
             ?>
                 <!-- Default to this block of text if nothing has been searched -->
                 <!-- <p class="mx-auto my-auto search-text-default">Use the search bar above to find distributors in your area.</p> -->
 
                 <!-- Else, populate search results like this: -->
-            <p class="miles-text">Results within 200 miles</p>
-            <div class="search-block mt-2 p-4">
             <?php
-                if (isset($query)) {
+                if (!empty($query)) {
+            echo '<p class="miles-text">Results within 200 miles</p>
+            <div class="search-block mt-2 p-4">';
             foreach ($query as $dealer): ?>
+
                 <h4><?= h($dealer->name) ?></h4>
                 <div class="row no-gutters">
                     <div class="col-8 d-flex flex-column justify-content-between">
@@ -34,8 +34,9 @@
                         <P><?= h($dealer->distance) ?> miles away
                     </div>
                 </div>
-                <?php endforeach; } ?>
-            </div>
+                <?php endforeach;
+                echo '            </div>';
+                } ?>
         </div><!-- .left-search end -->
 
         <div class="col-lg-7 col-10 mx-sm-auto my-lg-0 my-sm-3 right-map">
@@ -43,8 +44,8 @@
             $options = [
                 'zoom' => 6,
                 'type' => 'R',
-                'lat'=> 41.8808356,
-                'lng'=> -87.633741,
+                'lat'=> $lat,
+                'lng'=> $lng,
                 'unitSystem'=> 'UnitSystem.IMPERIAL',
                 'geolocate' => true,
                 'div' => ['id' => 'someothers'],
