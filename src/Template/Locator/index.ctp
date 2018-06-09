@@ -9,6 +9,8 @@
             $this->Form->unlockField('lat');
             echo $this->Form->hidden('lng');
             $this->Form->unlockField('lng');
+            echo $this->Form->hidden('lat');
+            echo $this->Form->submit();
             echo $this->Form->end();
             ?>
                 <!-- Default to this block of text if nothing has been searched -->
@@ -41,8 +43,8 @@
             $options = [
                 'zoom' => 6,
                 'type' => 'R',
-                'lat'=> $lat,
-                'lng'=> $lng,
+                'lat'=> 41.8808356,
+                'lng'=> -87.633741,
                 'unitSystem'=> 'UnitSystem.IMPERIAL',
                 'geolocate' => true,
                 'div' => ['id' => 'someothers'],
