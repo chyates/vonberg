@@ -1,8 +1,7 @@
-<div id="new-main-container" class="col-10 mx-auto">
+<div id="search-main-container" class="inner-main col-lg-10 col-12 mx-auto">
     <div class="row no-gutters">
-        <div class="col-10 mx-auto my-5">
+        <div class="col-lg-10 col-12 mx-auto my-lg-5 my-3">
             <h1 class="page-title">Search Results</h1>
-
             <?php
             $counter=0;
             $typecount=0;
@@ -14,9 +13,9 @@
                     echo'<h1 class="page-header my-4">';
                     echo $part->type->name;
                     echo '</h1>
-          <div class="row">';
+          <div class="row no-gutters">';
                   } ?>
-                <div class="col-lg-4">
+                <div class="col-sm-4">
                     <A HREF=<?= "/products/view/".$part->partID; ?>>
                         <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
                         <div class="product-text-block my-3">
@@ -27,12 +26,12 @@
                 </div>
                 <?php
                 if(++$counter % 3 === 0) {
-                    echo '</div><div class="row">';
+                    echo '</div><div class="row no-gutters">';
                 }
                 $typecount = $part->typeID;
             endforeach; ?>
 
         </div><!-- single-product-main-row end, 2 -->
-
+        </div>
     </div>
 </div><!-- new-main-container end -->

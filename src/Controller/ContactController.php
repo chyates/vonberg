@@ -9,7 +9,7 @@ class ContactController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index', 'stp']);
+        $this->Auth->allow(['stp','index', 'process']);
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -17,6 +17,7 @@ class ContactController extends AppController
     public function index()
     {
 
+    }
 
     }
 
@@ -44,6 +45,9 @@ class ContactController extends AppController
 
         $this->set(compact('data'));
         $this->set('_serialize', 'data');
+
+    public function process()
+    {
 
     }
 }

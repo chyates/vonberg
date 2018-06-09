@@ -9,78 +9,33 @@
         </div><!-- .contact-left end -->
         <div class="col-sm-6 contact-right">
             <h1 class="page-header">Contact Us</h1>
-            <form id="contact-form" class="needs-validation" novalidate>
-                <div class="form-group">
-                    <label>Full Name*</label>
-                    <input type="text" name="customer-name" class="form-control" required>
-                    <div class="invalid-feedback">
-                        Please enter your full name.
+
+            <!-- Contact form begin -->
+            <?php 
+                echo $this->Form->create('Contact', array(
+                    'url', 'process',
+                    'id' => 'contact-form',
+                    'class' => 'needs-validation',
+                    'novalidate'
+                ));
+                echo $this->Form->control('Full Name', ['type' => 'text', 'class' => 'form-control','required']);
+                echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);
+                echo $this->Form->control('Phone Number', ['type' => 'tel', 'class' => 'form-control', 'required']);
+                echo $this->Form->control('Email Address', ['type' => 'email', 'class' => 'form-control','required']);
+                echo $this->Form->control('What is your role?', ['type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
+                echo $this->Form->control('Remarks, Special Requests, or Questions:', ['type' => 'textarea', 'class' => 'form-control', 'required']); 
+            ?>
+
+                <div class="row no-gutters">
+                    <div class="col-6 my-auto">
+                        <p class="text-left my-auto">*required fields</p>
                     </div>
+                    <?php echo $this->Form->submit(); ?>
                 </div>
                 
-                <div class="form-group">
-                    <label>Company</label>
-                    <input type="text" name="customer-company" class="form-control">
-                </div>
-
-                <div class="form-group">
-                    <label>Phone*</label>
-                    <input type="tel" name="customer-phone" class="form-control" required>
-                    <div class="invalid-feedback">
-                        Please enter your phone number.
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Email Address*</label>
-                    <input type="email" class="form-control" name="customer-email" required>
-                    <div class="invalid-feedback">
-                        Please enter a valid email address.
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <div class="row no-gutters">
-                        <label>What is your role?</label>
-                    </div>
-                    
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" name="model" value="model1">
-                        <label class="form-check-label">Manufacturer</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" name="model" value="model2">
-                        <label class="form-check-label">Distributor</label>
-                    </div>
-                    <div class="form-check form-check-inline">
-                        <input type="checkbox" class="form-check-input" name="model" value="model3">
-                        <label class="form-check-label">End user</label>
-                    </div>
-                </div>
-
-                <div class="form-group">
-                    <label>Remarks, Special Requests, or Questions*:</label>
-                    <textarea name="customer-comments" class="form-control" rows="4" cols="50" required></textarea>
-                    <div class="invalid-feedback">
-                        Please include a message.
-                    </div>
-                </div>
-
-                <div class="g-recaptcha mb-3" data-sitekey="6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y"></div>
-
-                <div class="form-group row no-gutters">
-                    <div class="col-6 my-auto">
-                        <p class="my-auto text-left">*required fields</p>
-                    </div>
-                    <div class="col-6 text-right">
-                        <button type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
-                    </div>
-                </div>
-
-            </form>
-
+               <?php echo $this->Form->end(); ?><!-- Contact form end -->
         </div><!-- .contact-right end -->
-    </div>
+    </div><!-- .row no-gutters end -->
 </div><!-- #contact-main-container end -->
 
 <script>
@@ -103,4 +58,25 @@
         });
     }, false);
   })();
+
+jQuery(document).ready(function(){
+// add divs for bootstrap validation
+    var feedback = '<div class="invalid-feedback">This field is required.</div>';
+    $("textarea").after(feedback);
+    $("input").each(function(index) {
+        $(this).after(feedback)
+    });
+
+// add form-group class to trigger validations
+    $("#contact-form div.input").addClass('form-group');
+    $("#contact-form div.checkbox").addClass('form-check form-check-inline');
+
+// format checkboxes + submit row
+    var rowLabel = $("#contact-form div.select").find("label").first();
+    rowLabel.next("input[type=hidden]").wrapAll('<div class="row no-gutters" />');
+
+    var submit = $("#contact-form div.submit");
+    submit.addClass('col-6 text-right');
+    submit.find('input[type=submit]').addClass('btn btn-primary');
+})
 </script>
