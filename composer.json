@@ -8,12 +8,13 @@
         "php": ">=5.6",
         "cakedc/users": "^6.0",
         "cakephp/cakephp": "3.5.*",
+        "cakephp/debug_kit": "3.10.4",
         "cakephp/migrations": "^1.0",
         "cakephp/plugin-installer": "^1.0",
         "chris48s/cakephp-geodistance": "^1.0.0",
         "dereuromark/cakephp-geo": "^1.2",
         "friendsofcake/bootstrap-ui": "^1.3",
-        "friendsofcake/cakephp-csvview":"~3.0",
+        "friendsofcake/cakephp-csvview": "~3.0",
         "friendsofcake/search": "^4.2",
         "josegonzalez/cakephp-upload": "^3.7",
         "josegonzalez/dotenv": "2.*",
@@ -24,7 +25,6 @@
     "require-dev": {
         "cakephp/bake": "^1.1",
         "cakephp/cakephp-codesniffer": "^3.0",
-        "cakephp/debug_kit": "^3.2",
         "psy/psysh": "@stable"
     },
     "suggest": {

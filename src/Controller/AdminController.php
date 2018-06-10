@@ -125,31 +125,58 @@
         public function editGeneralInformation() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 2]]);
+            $this->set('specs', $query);
         }
         
         public function editTechnicalDocumentation() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 1]]);
+            $this->set('specs', $query);
         }
         
         public function editApplicationInformation() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 3]]);
+            $this->set('specs', $query);
         }
 
         public function generalInformation() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 2]]);
+            $this->set('specs', $query);
+
         }
 
         public function technicalDocumentation() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 1]]);
+            $this->set('specs', $query);
+
         }
 
         public function applicationInformation() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 3]]);
+            $this->set('specs', $query);
+
         }
         
         public function downloadSTP()

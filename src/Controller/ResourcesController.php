@@ -35,15 +35,29 @@ class ResourcesController extends AppController
     public function generalInformation()
     {
 
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all',
+            [   'conditions' => ['resource' => 2]]);
+        $this->set('specs', $query);
+
+
     }
 
     public function technicalDocumentation()
     {
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all',
+            [   'conditions' => ['resource' => 1]]);
+        $this->set('specs', $query);
 
     }
 
     public function applicationInformation()
     {
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all',
+            [   'conditions' => ['resource' => 3]]);
+        $this->set('specs', $query);
 
     }
 }
