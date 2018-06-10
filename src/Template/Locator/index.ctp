@@ -2,9 +2,9 @@
     <div class="row">
         <div class="col-lg-5 col-sm-10 mx-sm-auto left-search">
             <h1 class="page-header">Find a Distributor</h1>
-            <p class="product-info">Enter Zip Code</p>
+            <p class="product-info">Enter Zip Code or Leave Empty to Use Current Location</p>
             <?= $this->Form->create('Locator', array('url' => array('action' => 'index'),'class' => 'form-inline', 'enctype' => 'multipart/form-data'));
-            echo $this->Form->input('address', array('class' => 'form-control','label'=>'','type' => 'text','id' => 'geocomplete'));
+            echo $this->Form->input('address', array('placeholder'=>"Enter Zip Code",'class' => 'form-control','label'=>'','type' => 'text','id' => 'geocomplete'));
             echo $this->Form->hidden('lat', array('id' => 'lat'));
             $this->Form->unlockField('lat');
             echo $this->Form->hidden('lng', array('id' => 'lng'));
