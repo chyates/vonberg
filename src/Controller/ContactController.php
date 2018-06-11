@@ -25,6 +25,7 @@ class ContactController extends AppController
 
         $emp = $this->StpUsers->newEntity();
         if ($this->request->is('ajax')) {
+
             $this->request->data['model'] = $this->request->query['model'];
             $this->request->data['name'] = $this->request->query['name'];
             $this->request->data['email'] = $this->request->query['email'];

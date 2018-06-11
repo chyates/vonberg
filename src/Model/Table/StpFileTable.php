@@ -17,7 +17,7 @@ use Cake\Validation\Validator;
  * @method \App\Model\Entity\Type[] patchEntities($entities, array $data, array $options = [])
  * @method \App\Model\Entity\Type findOrCreate($search, callable $callback = null, $options = [])
  */
-class StpUsersTable extends Table
+class StpFileTable extends Table
 {
 
     /**
@@ -29,10 +29,10 @@ class StpUsersTable extends Table
     public function initialize(array $config)
     {
         parent::initialize($config);
-        $this->setTable('stp_users');
-        $this->setDisplayField('email');
-        $this->hasMany('StpFile')->setForeignKey('stp_userID');
-        $this->setPrimaryKey('stp_userID');
+        $this->setTable('stp_userxstp_file');
+        $this->belongsTo('Parts')->setForeignKey('partID');
+        $this->belongsTo('ModelTableRows')->setForeignKey('modelID');
+        $this->setPrimaryKey('stp_userxstp_fileID');
     }
 
     /**
@@ -44,13 +44,8 @@ class StpUsersTable extends Table
     public function validationDefault(Validator $validator)
     {
         $validator
-            ->integer('stp_userID')
-            ->allowEmpty('stp_userID', 'create');
-
-        $validator
-            ->scalar('email')
-            ->maxLength('email', 100)
-            ->allowEmpty('email');
+            ->integer('stp_userxstp_fileID')
+            ->allowEmpty('stp_userxstp_fileID', 'create');
 
         return $validator;
     }

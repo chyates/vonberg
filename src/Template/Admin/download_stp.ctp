@@ -23,7 +23,13 @@
                         <td class="model-table-data"><?= h(date('M j Y', strtotime($user->last_login)))?></td>
 
                         <!-- If the user downloaded more than one file, they should populate with line breaks within the table data tag -->
-                        <td class="model-table-data">Model 28000-502</td>
+                        <td class="model-table-data">
+                            <UL>
+                            <?php foreach ($user->stp_file as $model): ?>
+                            <LI><?= h($model->model_table_row->model_table_row_text) ?></LI>
+                            <?php endforeach; ?>
+                            </UL>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

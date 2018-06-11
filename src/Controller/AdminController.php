@@ -183,6 +183,7 @@
         {
             $this->viewBuilder()->setLayout('admin');
             $stp_users = TableRegistry::get('StpUsers')->find()->orderDesc('last_login');
+            $stp_users->contain(['StpFile'=>['Parts','ModelTableRows']]);
             $this->set('stp_users', $this->paginate($stp_users));
 
         }
