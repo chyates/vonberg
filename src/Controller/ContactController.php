@@ -21,16 +21,18 @@ class ContactController extends AppController
 
     public function stp()
     {
-        $data = [];
-
-        $emp = $this->StpUsers->newEntity();
         if ($this->request->is('ajax')) {
+            $stp_users = TableRegistry::get('StpUsers');
+            $stp_users = $stp_users->newEntity($data, [
+                'associated' => ['stp_userxstp_file']
+            ]);
 
-            $this->request->data['model'] = $this->request->query['model'];
-            $this->request->data['name'] = $this->request->query['name'];
-            $this->request->data['email'] = $this->request->query['email'];
-            $this->request->data['company'] = $this->request->query['company'];
-            $emp = $this->StpUsers->patchEntity($emp, $this->request->data);
+            $this->request->data['model'] = $this->query['model'];
+            $this->request->data['first_name'] = $this->query['first_name'];
+            $this->request->data['last_name'] = $this->query['last_name'];
+            $this->request->data['email'] = $this->query['email'];
+            $this->request->data['company'] = $this->query['company'];
+            $emp = $stp_users->patchEntity($emp, $this->request->data);
             if ($result = $this->StpUsers->save($emp)) {
                 $data['response'] = "Success: data saved";
                 //echo $result->id;

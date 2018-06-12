@@ -10,7 +10,17 @@
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
-                <form id="get-stp-form" class="needs-validation" novalidate>
+
+                <form id="stp_form" class="needs-validation" novalidate>
+                    <?php echo $this->Form->create('stp_form', array(
+                        'id' => 'stp_form',
+                        'class' => 'needs-validation',
+                        'inputDefaults' => array(
+                            'label' => false,
+                            'div' => false
+
+                        )
+                    )); ?>
                     <h1 class="page-header">Get STP Files</h1>
                     <p>You will receive an email with the files attached.</p>
                     <p>Which model(s) are you interested in?*</p>
@@ -19,11 +29,9 @@
                     $width = sizeof($part->model_table->model_table_headers);
                     foreach ($part->model_table->model_table_rows as $row):
                          if ($mobRow === 1) {
-                            echo '
-                    <div class="form-check text-center">
-                        <input type="checkbox" class="form-check-input" name="model" value="'.$row->model_table_row_text.'">
-                        <label class="form-check-label">'.$row->model_table_row_text.'</label>
-                    </div>';
+                             echo '                    <div class="form-check text-center">';
+                        echo $this->Form->control('model', ['type' => 'checkbox','label' => $row->model_table_row_text,'value'=> $row->model_table_rowID, 'class' => 'form-control']);
+                            echo '                    </div>';
                         }
                         if ($mobRow >= $width){
                             $mobRow=0;
@@ -33,21 +41,24 @@
                     ?>
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
                     <div class="form-group">
-                        <label>Full Name*</label>
-                        <input type="text" name="customer-name" class="form-control">
+                        <?php echo $this->Form->control('First Name', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
-                            Please enter your full name.
+                            Please enter your first name.
                         </div>
+                        <?php echo $this->Form->control('Last Name', ['type' => 'text', 'class' => 'form-control']);?>
+                        <div class="invalid-feedback">
+                            Please enter your last name.
+                        </div>
+
                     </div>
 
                     <div class="form-group">
-                        <label>Company</label>
-                        <input type="text" name="customer-company" class="form-control">
+                       <?php echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);?>
+
                     </div>
 
                     <div class="form-group">
-                        <label>Email Address*</label>
-                        <input type="text" class="form-control" name="customer-email">
+                        <?php echo $this->Form->control('Email', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please provide a valid email address.
                         </div>
@@ -58,28 +69,19 @@
                             <p class="my-auto text-left">*Mandatory</p>
                         </div>
                         <div class="col-6 text-right">
-                            <button id="stp-submit" type="submit" class="btn btn-primary" name="submit">SUBMIT</button>
+                        <?php
+                        echo $this->Form->submit('SUBMIT',array(
+                            'id' => 'stp-submit',
+                            'class' => 'btn btn-primary'));
+                        ?>
                         </div>
                     </div>
-                </form>
-
-                <?php 
-                    echo $this->Form->create('STP', array(
-                        'url', 'process',
-                        'id' => 'contact-form',
-                        'class' => 'needs-validation',
-                        'novalidate'
-                    ));
-                    echo $this->Form->control('Full Name', ['type' => 'text', 'class' => 'form-control','required']);
-                    echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);
-                    echo $this->Form->control('Phone Number', ['type' => 'tel', 'class' => 'form-control', 'required']);
-                    echo $this->Form->control('Email Address', ['type' => 'email', 'class' => 'form-control','required']);
-                    echo $this->Form->control('What is your role?', ['type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
-                    echo $this->Form->control('Remarks, Special Requests, or Questions:', ['type' => 'textarea', 'class' => 'form-control', 'required']); 
-                ?>
+                    <?php
+                    echo $this->Form->end();?>
 
                 <div class="thanks text-center">
                     <h1 class="page-header">Thank you!</h1>
+                    <div class="modal_message"></div>
                     <p>You will be receiving an email with the STP files shortly.</p>
                     <button type="button" class="thanks-close btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
@@ -284,13 +286,6 @@
 </div><!-- #single-prod-main-container end -->
 
 <script type="text/javascript">
-    function infoAdd() {
-        var name=$("#email").val();mail+"&address="+address, function(d) {
-        var age=$("#address").val();
-        $.get('/contact/stp?email='+e
-            alert(d);
-        });
-    }
 
     (function() {
     'use strict';
@@ -313,8 +308,21 @@
   })();
 
     $(document).ready(function(){
-        $("#get-stp-form").submit(function(e){
+        $("#stp_form").submit(function(e){
             e.preventDefault();
+            var form = document.stp_form;
+            var dataString = $(form).serialize();
+            $.ajax({
+                type:'POST',
+                url:'/contact/stp/',
+                data: dataString,
+                success: function(data, textStatus) {
+                    $(".modal_message").html(data);
+                },
+                error: function() {
+                    alert('Not OKay');
+                }
+            });
             $(this).hide();
             $(".thanks").show();
         });

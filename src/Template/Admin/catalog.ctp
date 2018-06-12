@@ -25,21 +25,6 @@
         </div>
     </div>
 
-    <div class="row">
-        <div class="col-xs-4">
-            <nav class="large-3 medium-4 columns" id="actions-sidebar">
-                <ul class="side-nav">
-                    <li class="heading"><?= __('Actions') ?></li>
-                    <li><?= $this->Html->link(__('New Part'), ['action' => 'add']) ?></li>
-                    <LI> <?= $this->Form->create('Part', array('url' => array('action' => 'index'), 'enctype' => 'multipart/form-data'));
-                        echo $this->Form->input('upload', array('type' => 'file'));
-                        echo $this->Form->button('Upload CSV File', ['class' => 'btn btn-lg btn-success1 btn-block padding-t-b-15']);
-                        echo $this->Form->end();
-                        ?>
-                </ul>
-            </nav>
-        </div>
-    </div>
     <h1 class="page-title"><?= __($pagename) ?></h1>
     <div class="table-responsive">
         <table id="cms-prod-cat-table" class="model-table table table-striped">

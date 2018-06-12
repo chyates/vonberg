@@ -12,16 +12,16 @@
             </thead>
             <tbody>
                 <tr>
-                    <td>FileName.pdf</td>
+                    <td><A HREF="/admin/priceExport">FileName.pdf</A></td>
                     <td>2017-11-08 13:46:02</td>
                     <td class="justify-content-between">
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>
+                        <div class="form-group">
+                            <label class="sr-only" for="csv"> CSV </label>
+                            <?php echo $this->Form->input('csv', ['type'=>'file','class' => 'form-control', 'label' => false, 'placeholder' => 'csv upload',]); ?>
+                        </div>
+                        <button type="submit" class="btn btn-default"> Upload </button>
+                        <?= $this->Form->end() ?>
                     </td>
                 </tr>
             </tbody>

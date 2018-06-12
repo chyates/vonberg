@@ -9,12 +9,16 @@
     namespace App\Controller;
 
     use App\Controller\AppController;
+    use App\Controller\File;
     use Cake\ORM\TableRegistry;
+    use Cake\View\View;
+    use Cake\View\ViewBuilder;
 
 
 
     class AdminController extends AppController
     {
+
 
         public function view()
         {
@@ -95,6 +99,49 @@
             $this->viewBuilder()->setLayout('admin');
         }
 
+        public function priceExport()
+        {
+            $this->loadModel('ModelPrices');
+            $data = $this->ModelPrices->find('all')->toArray();
+
+            $_serialize = 'data';
+
+            $this->response->download('model_prices.csv'); // <= setting the file name
+            $this->viewBuilder()->className('CsvView.Csv');
+            $this->set(compact('data', '_serialize'));
+        }
+
+
+        public function priceImport() {
+            if(isset($_POST["submit"])){
+                if($_FILES['file']['csv']){
+                    $filename = explode('.', $_FILES['file']['csv']);
+                    debug($filename);
+                    if($filename[1]=='csv'){
+
+                        $handle = fopen($_FILES['file']['csv'], "r");
+                        while ($data = fgetcsv($handle)){
+                            $item1 = $data[0];
+
+                            $data = array(
+                                'fieldName' => $item1
+                            );
+                            //  $item2 = $data[1];
+                            //  $item3 = $data[2];
+                            //  $item4 = $data[3];
+                            $Applicant = $this->Applicants->newEntity($data);
+                            $this->Applicants->save($Applicant);
+                        }
+                        fclose($handle);
+                    }
+                }
+            }
+            $this->render(FALSE);
+            $this->Flash->set('Model Prices Imported');
+            return $this->redirect($this->referer());
+        }
+
+
         public function modelPricing()
         {
             $this->viewBuilder()->setLayout('admin');
@@ -120,6 +167,19 @@
         public function addResource() 
         {
             $this->viewBuilder()->setLayout('admin');
+            if ($this->request->is('post')) {
+                $specTable = TableRegistry::get('TechnicalSpecs');
+                $spec = $specTable->newEntity();
+                $spec['file'] = $this->request->data['file'];
+                $spec['resource'] = $this->request->data['resource'];
+                $spec['title'] = $this->request->data['title'];
+                if ($spec->save()) {
+                    $this ->Session -> setFlash(__('The Resource has been saved'));
+                    $this ->redirect(array('action' => 'index'));
+                } else {
+                    $this -> Session -> setFlash(__('The Resource could not be saved. Please, try again.'));
+                }
+            }
         }
 
         public function editGeneralInformation() 
@@ -178,7 +238,19 @@
             $this->set('specs', $query);
 
         }
-        
+
+        public function stpExport()
+        {
+            $data = TableRegistry::get('StpUsers')->find()->orderDesc('last_login');
+
+
+            $_serialize = 'data';
+
+            $this->response->download('stp_downloads.csv'); // <= setting the file name
+            $this->viewBuilder()->className('CsvView.Csv');
+            $this->set(compact('data', '_serialize'));
+        }
+
         public function downloadSTP()
         {
             $this->viewBuilder()->setLayout('admin');

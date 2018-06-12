@@ -10,6 +10,7 @@
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
+        <li><?= $this->Html->link(__('Export Dealers'), ['action' => 'dealerExport']) ?></li>
         <li><?= $this->Html->link(__('New Dealer'), ['action' => 'add']) ?></li>
 <LI> <?= $this->Form->create('Dealer', array('url' => array('action' => 'index'), 'enctype' => 'multipart/form-data'));
         echo $this->Form->input('upload', array('type' => 'file'));

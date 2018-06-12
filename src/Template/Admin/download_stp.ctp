@@ -1,6 +1,6 @@
 <div id="cms-stp-download-main" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">STP Download Report</h1>
-    <p class="text-center"><a class="btn btn-primary" href="/test" download>Download As XLS</a></p>
+    <p class="text-center"><a class="btn btn-primary" href="/admin/stpExport" download>Download As CSV</a></p>
 
     <div class="table-responsive">
         <table id="cms-stp-down-table" class="model-table table table-striped">

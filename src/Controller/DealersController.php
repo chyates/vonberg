@@ -131,6 +131,17 @@ $Table->connection()->transactional(function () use ($Table, $entities) {
         $this->set(compact('dealer'));
     }
 
+    public function dealerExport()
+    {
+        $data = $this->Dealers->find('all')->toArray();
+
+        $_serialize = 'data';
+
+        $this->response->download('dealers.csv'); // <= setting the file name
+        $this->viewBuilder()->className('CsvView.Csv');
+        $this->set(compact('data', '_serialize'));
+    }
+
     /**
      * Delete method
      *
