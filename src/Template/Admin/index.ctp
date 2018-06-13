@@ -26,13 +26,13 @@
                 The current file column will contain a link to existing CSVs, and the last updated column should start with the most recent first. -->
 
                 <tr>
-                    <td>ProductInformation.csv</td>
+                    <td><A HREF="/admin/priceExport">model_prices.csv</A></td>
                     <td>2017-11-08 13:46:02</td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>
                 </tr>
                 <tr>
-                    <td>DistributorInformation.csv</td>
+                    <td><?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?></td>
                     <td>2017-11-08 13:46:02</td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>

@@ -30,9 +30,11 @@
                 </tr>
             </thead>
             <tbody>
+            <?php
+            foreach ($specs as $spec): ?>
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
+                    <td><input type="text" class="form-control form-control-sm" value="<?php echo $spec->title;?>"></td>
+                    <td><?php echo $spec->file;?></td>
                     <td class="justify-content-between">
                         <label class="fileContainer">Browse
                             <input type="file" class="form-control"/>
@@ -41,37 +43,13 @@
                         <label class="update-button fileContainer">Update
                             <input type="file" class="form-control"/>
                         </label>
-                        <p><a href="">Delete</a></p>
-                    </td>
+                        <P><?php
+                            echo $this->Html->link('Delete',array('controller'=>'admin','action'=>'resourceDelete',$spec->techID),
+                                array('confirm'=>'Are you sure you want to delete the image?'));
+                            ?>                    </td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td class="justify-content-between">
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td class="justify-content-between">
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
+            <?php endforeach;?>
+
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->

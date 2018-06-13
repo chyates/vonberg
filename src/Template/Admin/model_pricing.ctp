@@ -14,8 +14,7 @@
                 <tr>
                     <td><A HREF="/admin/priceExport">model_prices.csv</A></td>
                     <td>
-                        <?php $updated = $prices->first();
-                            echo $updated->last_updated; ?>
+                       Date here
                     </td>
                     <td class="justify-content-between">
                         <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>

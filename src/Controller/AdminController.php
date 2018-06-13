@@ -146,9 +146,9 @@
         {
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('ModelPrices');
-            $series = TableRegistry::get('Series')->find();
+            $series = TableRegistry::get('Series')->find('all');
 
-            $pricing = TableRegistry::get('ModelPrices')->find();
+            $pricing = TableRegistry::get('ModelPrices')->find('all');
 
             $this->set('prices', $pricing);
             $this->set(compact('series'));
@@ -251,10 +251,20 @@
             $this->set(compact('data', '_serialize'));
         }
 
+        public function resourceDelete($id)
+        {
+            $this->loadModel('TechnicalSpecs');
+            $spec = $this->TechnicalSpecs->get($id);
+            if ($this->TechnicalSpecs->delete($spec)) {
+                $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
+                return $this->redirect($this->referer());
+            }
+        }
+
         public function downloadSTP()
         {
             $this->viewBuilder()->setLayout('admin');
-            $stp_users = TableRegistry::get('StpUsers')->find()->orderDesc('last_login');
+            $stp_users = TableRegistry::get('StpUsers')->find('all')->orderDesc('last_login');
             $stp_users->contain(['StpFile'=>['Parts','ModelTableRows']]);
             $this->set('stp_users', $this->paginate($stp_users));
 
