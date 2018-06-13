@@ -23,9 +23,9 @@
 
             <div class="row no-gutters">
                 <div class="col-sm-6">
-                    <label>Product Status</label>
+                    <label>New Product Status</label>
                     <div class="form-check">
-                        <input type="checkbox" name="new-status" class="form-check-input" value="new" checked>
+                        <?= $this->Form->checkbox('new_list');?>
                         <label class="form-check-label">Yes</label>
                     </div>
                 </div>
@@ -90,15 +90,13 @@
             <div class="form-group w-bullet">
 
                 <div class="form-group">
-                    <?php echo $this->Form->input('text_block',
-                        [
-                            'type' => 'select',
-                            'multiple' => false,
-                            'options' => $opblock,
-                            'label' => 'Operation',
-                            'class' => 'form-control'
-                        ]);?>
-                <a class="add-bullet" href="">Add Bullet</a>
+                    <label>Operations</label>
+                    <?= debug($opblock)?>
+                    <?php
+                    foreach ($opblock as $op): ?>
+                    <?= $this->Form->input($op->TextBlockBullets__bullet_text)?>">
+                    <?php endforeach;?>
+                    <a class="add-bullet" href="">Add Bullet</a>
             </div>
 
             <div class="form-group w-bullet">

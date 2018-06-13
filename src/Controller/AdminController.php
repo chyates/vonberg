@@ -62,6 +62,14 @@
         public function addProduct()
         {
             $this->viewBuilder()->setLayout('admin');
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+            $series = TableRegistry::get('Series')->find('list');
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            $this->set('type', $type);
+            $this->set('style', $style);
         }
 
         public function editProduct($id)
@@ -69,10 +77,9 @@
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
-            $opblock = $this->TextBlocks->find('list',array(
+            $opblock = $this->TextBlocks->find('all',array(
                 'conditions' => array(
                     'partID' => $id,
-                    'header' => 'Operation'
                 ),
                 'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
             ));
