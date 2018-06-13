@@ -91,10 +91,9 @@
 
                 <div class="form-group">
                     <label>Operations</label>
-                    <?= debug($opblock)?>
                     <?php
                     foreach ($opblock as $op): ?>
-                    <?= $this->Form->input($op->TextBlockBullets__bullet_text)?>">
+                    <?= $this->Form->input('test')?>
                     <?php endforeach;?>
                     <a class="add-bullet" href="">Add Bullet</a>
             </div>
