@@ -12,8 +12,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><A HREF="/admin/priceExport">FileName.pdf</A></td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td><A HREF="/admin/priceExport">model_prices.csv</A></td>
+                    <td>
+                        <?php $updated = $prices->first();
+                            echo $updated->last_updated; ?>
+                    </td>
                     <td class="justify-content-between">
                         <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>
                         <div class="form-group">
@@ -38,7 +41,8 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($prices as $price): ?>
+                <?php
+                    foreach($prices as $price): ?>
                 <tr>
                     <td class="model-table-data"><?php echo $price->model_text; ?></td>
                     <td class="model-table-data"><?php echo money_format('$%.2n', $price->unit_price); ?></td>

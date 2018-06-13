@@ -29,13 +29,12 @@
     <div class="table-responsive">
         <table id="cms-prod-cat-table" class="model-table table table-striped">
             <thead>
-                <tr>
-                    <th class="model-table-header" scope="col">Series</th>
-                    <th class="model-table-header" scope="col">Style</th>
-                    <th class="model-table-header" scope="col">Description</th>
-                    <th class="model-table-header" scope="col">Subcategory</th>
-                    <th class="model-table-header" scope="col">Last Updated</th>
-                    <th class="actions model-table-header" scope="col"><?= __('Actions') ?></th>
+            <tr>
+                <th class="model-table-header">Series</th>
+                <th class="model-table-header">Style</th>
+                <th class="model-table-header">Description</th>
+                <th class="model-table-header">Last Updated</th>
+                <th class="model-table-header">New</th>
                 </tr>
             </thead>
             <tbody>
@@ -43,12 +42,18 @@
                 <tr>
                     <td class="model-table-data"><?= h($part->series->name) ?></td>
                     <td class="model-table-data"><?= h($part->style->name) ?></td>
-                    <td class="model-table-data"><?= h($part->connection->name) ?></td>
-                    <td class="model-table-data"><?= h($part->type->name) ?></td>
+                    <td class="model-table-data"><?= h($part->description) ?></td>
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
+                    <td class="model-table-data">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="new-status" value="54days"
+                                   checked>
+                            <label class="form-check-label">54 days</label>
+                        </div>
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
+                        <a data-toggle="modal" data-target="#delete-check-modal">Duplicate</a>
                         <a data-toggle="modal" data-target="#delete-check-modal">Delete</a>
                     </td>
                 </tr>

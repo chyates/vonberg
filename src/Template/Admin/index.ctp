@@ -6,7 +6,7 @@
 ?>
 <div id="cms-main-container" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">Content Management System</h1>
-    <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-product">Add New Product</a><a class="btn btn-primary mr-4" href="/admin/generate-pdf">Generate Custom PDF</a><a class="btn btn-primary" href="/admin/manage-resources">Manage Resources</a></p>
+    <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-product" disabled>Add New Product</a><a class="btn btn-primary mr-4" href="/admin/generate-pdf" disabled>Generate Custom PDF</a><a class="btn btn-primary" href="/admin/manage-resources" disabled>Manage Resources</a></p>
     <hr>
     
     <div id="cms-home-table" class="table-responsive">
