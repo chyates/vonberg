@@ -46,7 +46,7 @@
     }
     function highlightedIcon() {
         return {
-            url: 'http://steeplemedia.com/images/markers/markerGreen.png'
+            url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
         };
     }
 
