@@ -101,6 +101,130 @@
 
         }
 
+        public function editProductOne($id)
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TextBlocks');
+            $this->loadModel('Parts');
+            $opblock = $this->TextBlocks->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
+            $part = $this->Parts->get($id);
+
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+
+            $series = TableRegistry::get('Series')->find('list');
+
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            // Save logic goes here
+            $this->set('part', $part);
+            $this->set('type', $type);
+            $this->set('style', $style);
+            $this->set('opblock', $opblock);
+
+        }
+
+        public function editProductTwo($id)
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TextBlocks');
+            $this->loadModel('Parts');
+            $opblock = $this->TextBlocks->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
+            $part = $this->Parts->get($id);
+
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+
+            $series = TableRegistry::get('Series')->find('list');
+
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            // Save logic goes here
+            $this->set('part', $part);
+            $this->set('type', $type);
+            $this->set('style', $style);
+            $this->set('opblock', $opblock);
+
+        }
+        public function editProductThree($id)
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TextBlocks');
+            $this->loadModel('ModelTables');
+            $this->loadModel('Parts');
+            $tables = $this->ModelTables->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('ModelTableHeaders', 'ModelTableRows'),
+            ));
+
+            $opblock = $this->TextBlocks->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
+            $part = $this->Parts->get($id);
+
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+
+            $series = TableRegistry::get('Series')->find('list');
+
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            // Save logic goes here
+            $this->set('part', $part);
+            $this->set('type', $type);
+            $this->set('style', $style);
+            $this->set('opblock', $opblock);
+            $this->set('table', $tables);
+
+        }
+        public function editProductFour($id)
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TextBlocks');
+            $this->loadModel('Parts');
+            $opblock = $this->TextBlocks->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
+            $part = $this->Parts->get($id);
+
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+
+            $series = TableRegistry::get('Series')->find('list');
+
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            // Save logic goes here
+            $this->set('part', $part);
+            $this->set('type', $type);
+            $this->set('style', $style);
+            $this->set('opblock', $opblock);
+
+        }
+
+
         public function generatePDF()
         {
             $this->viewBuilder()->setLayout('admin');
