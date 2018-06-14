@@ -60,7 +60,7 @@
                             <?php
                             $directions_url = 'https://www.google.com/maps/dir/?api=1&origin='.$lat.','.$lng.'&destination='.$dealer->lat.','.$dealer->lng;
                             ?>
-                        <br><a class="results-link" href="<?= $directions_url ?>">Get directions ></a></br>
+                        <br><a class="results-link" href="<?= $directions_url ?>" target="_new">Get directions ></a></br>
                         <br><?= h($dealer->distance) ?> miles away
                         </p>
                     </div>
