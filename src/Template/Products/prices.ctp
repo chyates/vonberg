@@ -13,6 +13,7 @@
             <div class="form-group">
                 <label>Select a Series</label>
                 <select class="form-control" name="seriesID">
+                    <option value="" selected="selected">Select from dropdown...</option>
                     <?php foreach($series as $item) { ?>
                         <option value="<?php echo $item['seriesID']; ?>"><?php echo $item['name']; ?></option>
                         <?php } ?>
