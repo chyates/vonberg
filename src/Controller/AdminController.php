@@ -62,6 +62,16 @@
         public function addProduct()
         {
             $this->viewBuilder()->setLayout('admin');
+            if ($this->request->is('post')) {
+                $this->loadModel('Parts');
+                $part = $this->Parts->newEntity();
+                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part->last_updated = date("Y-m-d H:i:s");
+                if($this->Parts->save($part)){
+                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                    $this->redirect(array('action' => 'editProductTwo',$part->partID));
+                }
+            }
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
             $style = TableRegistry::get('Styles')->find('list');
@@ -104,6 +114,16 @@
         public function editProductOne($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            if ($this->request->is('post')) {
+                $this->loadModel('Parts');
+                $part = $this->Parts->get($id);
+                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part->last_updated = date("Y-m-d H:i:s");
+                if($this->Parts->save($part)){
+                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                    $this->redirect(array('action' => 'editProductTwo',$part->partID));
+                }
+            }
             $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
             $opblock = $this->TextBlocks->find('all',array(
@@ -133,6 +153,17 @@
         public function editProductTwo($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            if ($this->request->is('post')) {
+                $this->loadModel('Parts');
+                $part = $this->Parts->get($id);
+                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part->last_updated = date("Y-m-d H:i:s");
+                if($this->Parts->save($part)){
+                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                    $this->redirect(array('action' => 'editProductThree',$part->partID));
+                }
+            }
+
             $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
             $opblock = $this->TextBlocks->find('all',array(
@@ -161,43 +192,41 @@
         public function editProductThree($id)
         {
             $this->viewBuilder()->setLayout('admin');
-            $this->loadModel('TextBlocks');
+            if ($this->request->is('post')) {
+                $this->loadModel('Parts');
+                $part = $this->Parts->get($id);
+                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part->last_updated = date("Y-m-d H:i:s");
+                if($this->Parts->save($part)){
+                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                    $this->redirect(array('action' => 'editProductFour',$part->partID));
+                }
+            }
+
             $this->loadModel('ModelTables');
-            $this->loadModel('Parts');
             $tables = $this->ModelTables->find('all',array(
                 'conditions' => array(
                     'partID' => $id,
                 ),
                 'contain' => array('ModelTableHeaders', 'ModelTableRows'),
-            ));
-
-            $opblock = $this->TextBlocks->find('all',array(
-                'conditions' => array(
-                    'partID' => $id,
-                ),
-                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
-            ));
-            $part = $this->Parts->get($id);
-
-            $cat = TableRegistry::get('Categories')->find('list');
-            $type = TableRegistry::get('Types')->find('list');
-            $style = TableRegistry::get('Styles')->find('list');
-
-            $series = TableRegistry::get('Series')->find('list');
-
-            $this->set('cat', $cat);
-            $this->set(compact('series'));
-            // Save logic goes here
-            $this->set('part', $part);
-            $this->set('type', $type);
-            $this->set('style', $style);
-            $this->set('opblock', $opblock);
+            ))->first();
             $this->set('table', $tables);
 
         }
         public function editProductFour($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            if ($this->request->is('post')) {
+                $this->loadModel('Parts');
+                $part = $this->Parts->get($id);
+                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part->last_updated = date("Y-m-d H:i:s");
+                if($this->Parts->save($part)){
+                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                    $this->redirect(array('action' => 'editProductFive',$part->partID));
+                }
+            }
+
             $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
             $opblock = $this->TextBlocks->find('all',array(
@@ -223,7 +252,45 @@
             $this->set('opblock', $opblock);
 
         }
+        public function editProductFive($id)
+        {
+            $this->viewBuilder()->setLayout('admin');
+            if ($this->request->is('post')) {
+                $this->loadModel('Parts');
+                $part = $this->Parts->get($id);
+                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part->last_updated = date("Y-m-d H:i:s");
+                if($this->Parts->save($part)){
+                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                    $this->redirect(array('action' => 'index'));
+                }
+            }
 
+            $this->loadModel('TextBlocks');
+            $this->loadModel('Parts');
+            $opblock = $this->TextBlocks->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
+            $part = $this->Parts->get($id);
+
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+
+            $series = TableRegistry::get('Series')->find('list');
+
+            $this->set('cat', $cat);
+            $this->set(compact('series'));
+            // Save logic goes here
+            $this->set('part', $part);
+            $this->set('type', $type);
+            $this->set('style', $style);
+            $this->set('opblock', $opblock);
+
+        }
 
         public function generatePDF()
         {

@@ -68,7 +68,7 @@
             </div>
 
             <p class="text-right">
-            <?= $this->Form->submit('Next');?>
+            <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
 
             </p>
         </div><!-- #one end -->

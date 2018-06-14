@@ -69,13 +69,8 @@
 
             </div>
 
-            <div class="form-group">
-                <label>Short Description</label>
-                <select class="form-control" name="product-short-description">
-                    <option value="Select..." selected disabled>Select...</option>
-                </select>
-            </div>
-            <p class="text-right">          <?= $this->Form->submit('Next');?>
+
+            <p class="text-right">          <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
 
             </p>
         </div><!-- #one end -->
