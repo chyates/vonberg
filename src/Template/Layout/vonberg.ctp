@@ -46,7 +46,7 @@
     }
     function highlightedIcon() {
         return {
-            url: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            url: '/img/favicon-32x32.png'
         };
     }
 
