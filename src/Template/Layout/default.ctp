@@ -31,6 +31,21 @@
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');
         });
+        $('#markers_info .marker').hover(
+            // mouse in
+            function () {
+                // first we need to know which <div class="marker"></div> we hovered
+                var index = $('#markers_info .marker').index(this);
+                markers[index].setIcon(highlightedIcon());
+            },
+            // mouse out
+            function () {
+                // first we need to know which <div class="marker"></div> we hovered
+                var index = $('#markers_info .marker').index(this);
+                markers[index].setIcon(normalIcon());
+            }
+
+        );
 
         $("a.nav-link").click(function(){
             // var open = $(this).find("a.nav-link:not(.collapsed)");
