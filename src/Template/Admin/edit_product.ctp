@@ -90,17 +90,30 @@
             <div class="form-group w-bullet">
 
                 <div class="form-group">
-                    <label>Operations</label>
+                    <label>Operation</label>
                     <?php
-                    foreach ($opblock as $op): ?>
-                    <?= $this->Form->input('test')?>
-                    <?php endforeach;?>
+                    foreach ($opblock as $op):
+                        foreach ($op->text_block_bullets as $line):
+                            if ($op->header == "Operation") {
+                                echo $this->Form->input('feature_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                            }
+                            endforeach;
+                    endforeach;
+                    ?>
                     <a class="add-bullet" href="">Add Bullet</a>
             </div>
 
             <div class="form-group w-bullet">
                 <label>Features</label>
-                <input type="text" class="form-control" name="product-features" placeholder="Enter bullet copy...">
+                <?php
+                foreach ($opblock as $op):
+                    foreach ($op->text_block_bullets as $line):
+                        if ($op->header == "Features") {
+                            echo $this->Form->input('feature_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                        }
+                    endforeach;
+                endforeach;
+                ?>
                 <a class="add-bullet" href="">Add Bullet</a>
             </div>
 
