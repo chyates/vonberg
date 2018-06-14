@@ -1,6 +1,6 @@
 <div id="cms-manage-resources-main" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">Manage Resources</h1>
-    <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/admin/add-resource">Add New Resource</a><a class="btn btn-primary mr-4" href="/admin/edit-resources">Edit or Delete Resources</a></p>
+    <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-resource">Add New Resource</a><a class="btn btn-primary mr-4" href="/admin/edit-resources">Edit or Delete Resources</a></p>
     <hr>
     
     <!-- This content should be replaced with database logic.
@@ -18,22 +18,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-            </tbody>
+                <?php
+                foreach ($generals as $spec): ?>
+                    <tr>
+                        <td><?php echo $spec->file;?></td>
+                        <td><?php echo $spec->title;?></td>
+                        <td><?php echo $spec->last_updated;?></td>
+                    </tr>
+                <?php endforeach;?>            </tbody>
         </table>
     </div><!-- .rsrc-table end -->
 
@@ -48,21 +40,14 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
+                <?php
+                foreach ($technicals as $spec): ?>
+                    <tr>
+                        <td><?php echo $spec->file;?></td>
+                        <td><?php echo $spec->title;?></td>
+                        <td><?php echo $spec->last_updated;?></td>
+                    </tr>
+                <?php endforeach;?>
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->
@@ -78,21 +63,15 @@
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
+                <?php
+                foreach ($applications as $spec): ?>
+                    <tr>
+                        <td><?php echo $spec->file;?></td>
+                        <td><?php echo $spec->title;?></td>
+                        <td><?php echo $spec->last_updated;?></td>
+                    </tr>
+                <?php endforeach;?>
+
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->

@@ -19,8 +19,8 @@
             <?php
                 if (!empty($query)) {
             echo '<p class="miles-text">Results within 200 miles</p>
-            <div class="search-block mt-2 p-4">
-            <div class="markers_info">
+            <div class="search-block mt-2 p-4" style="height: 300px; overflow-y : auto;">
+            <div id="markers_info">
             ';
             foreach ($query as $dealer): ?>
                 <div class="marker">
@@ -100,3 +100,4 @@
         </div>
     </div>
 </div><!-- #find-distributor-main end -->
+

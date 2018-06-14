@@ -7,6 +7,12 @@
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.png">
     <title>Vonberg Valve, Inc.</title>
+    <style>
+        #markers_info .marker {
+            height: auto;
+            cursor: pointer;
+        }
+    </style>
 
 </head>
 
@@ -32,6 +38,18 @@
 <?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 
 <script>
+    // functions that return icons.  Make or find your own markers.
+    function normalIcon() {
+        return {
+            url: 'http://1.bp.blogspot.com/_GZzKwf6g1o8/S6xwK6CSghI/AAAAAAAAA98/_iA3r4Ehclk/s1600/marker-green.png'
+        };
+    }
+    function highlightedIcon() {
+        return {
+            url: 'http://steeplemedia.com/images/markers/markerGreen.png'
+        };
+    }
+
      $(function(){
          $("#geocomplete").geocomplete({ details: "form" })
      });
@@ -68,7 +86,22 @@
             // }
         });
 
+        // Marker hover for locator map
+        $('#markers_info .marker').hover(
+            // mouse in
+            function () {
+                // first we need to know which <div class="marker"></div> we hovered
+                var index = $('#markers_info .marker').index(this);
+                gMarkers0[index].setIcon(highlightedIcon());
+            },
+            // mouse out
+            function () {
+                // first we need to know which <div class="marker"></div> we hovered
+                var index = $('#markers_info .marker').index(this);
+                gMarkers0[index].setIcon(normalIcon());
+            }
 
+        );
 
         $("#contact-submit").click(function(e){
           e.preventDefault();

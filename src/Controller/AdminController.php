@@ -353,11 +353,34 @@
         public function manageResources() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 2]]);
+            $this->set('generals', $query);
+            $query2 =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 1]]);
+            $this->set('technicals', $query2);
+            $query3 =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 3]]);
+            $this->set('applications', $query3);
         }
 
         public function editResources() 
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->viewBuilder()->setLayout('admin');
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('TechnicalSpecs');
+            $query =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 2]]);
+            $this->set('generals', $query);
+            $query2 =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 1]]);
+            $this->set('technicals', $query2);
+            $query3 =  $this->TechnicalSpecs->find('all',
+                [   'conditions' => ['resource' => 3]]);
+            $this->set('applications', $query3);
         }
 
         public function addResource() 
