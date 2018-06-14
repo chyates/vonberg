@@ -228,7 +228,13 @@ ORDER BY
             $rows = $stmt->fetchAll('assoc');
         }
         $this->set('prices', $rows);
-        $series = TableRegistry::get('Series')->find();
+        $this->loadModel('Series');
+        $matchingTasks= $this->Series->association('Parts')->find()
+            ->select(['seriesID'])// id of product in Tasks Table
+            ->distinct();
+
+        $series = $this->Series->find()
+            ->where(['seriesID IN' => $matchingTasks]);
         $this->set(compact('series'));
     }
 
