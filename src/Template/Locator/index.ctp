@@ -25,13 +25,42 @@
                 <h4><?= h($dealer->name) ?></h4>
                 <div class="row no-gutters">
                     <div class="col-8 d-flex flex-column justify-content-between">
-                        <p><?= h($dealer->address) ?><BR><?= h($dealer->address1) ?><BR><?= h($dealer->address2) ?><br><?= h($dealer->city) ?>, <?= h($dealer->state) ?> <?= h($dealer->zip) ?></p>
-                        <p><a class="results-link" href="/test">URL HERE</a></p>
+                        <p><?= h($dealer->address) ?>
+                            <?php
+                            if ($dealer->address1):
+                                echo '<br> '.$dealer->address1.'</br>';
+                            endif;
+                            ?>
+                            <?php
+                            if ($dealer->address2):
+                                echo '<br>'.$dealer->address2.'</br>';
+                            endif;
+                            ?>
+                            <br><?= h($dealer->city) ?>, <?= h($dealer->state) ?> <?= h($dealer->zip) ?></p>
+                        <?php
+                        if ($dealer->website):
+                            echo '<p><a class="results-link" href="'.$dealer->website.'">'.$dealer->website.'</a></p>';
+                        endif;
+                        ?>
                     </div>
                     <div class="col-4 d-flex flex-column justify-content-between">
-                        <p>P: <?= h($dealer->telephone) ?> <br> F: <?= h($dealer->fax) ?></p>
-                        <p><a class="results-link" href="/test">Get directions ></a></p>
-                        <P><?= h($dealer->distance) ?> miles away
+                        <p>
+                            <?php
+                            if ($dealer->telephone):
+                                echo '<p>P: '.$dealer->telephone.'</p>';
+                            endif;
+                            ?>
+                            <?php
+                            if ($dealer->fax):
+                                echo '<br>'.$dealer->fax.'</p>';
+                            endif;
+                            ?>
+                            <?php
+                            $directions_url = 'https://www.google.com/maps/dir/?api=1&origin='.$lat.','.$lng.'&destination='.$dealer->lat.','.$dealer->lng;
+                            ?>
+                        <br><a class="results-link" href="<?= $directions_url ?>">Get directions ></a></br>
+                        <br><?= h($dealer->distance) ?> miles away
+                        </p>
                     </div>
                 </div>
                 <?php endforeach;

@@ -25,11 +25,7 @@
 </div><!-- site-container end -->
 
 <?= $this->fetch('script') ?>
-<?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 <script>
-    $(function(){
-        $("#geocomplete").geocomplete({ details: "form" })
-    });
 
     jQuery(document).ready(function($){
         $('.animated-icon1').click(function(){

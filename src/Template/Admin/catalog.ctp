@@ -3,6 +3,7 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Dealer[]|\Cake\Collection\CollectionInterface $dealers
  */
+use Cake\Routing\Router;
 ?>
 <div id="cms-prod-cat-main" class="inner-main col-md-10 mx-auto p-5">
 
@@ -13,11 +14,17 @@
                     <div class="col">
                         <h1 class="page-title">Delete File?</h1>
                         <p>Are you sure you want to delete</p>
-                        <p>FPO FILE TEXT</p>
+                        <div id="partname"><P>FPO FILE TEXT</div>
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary">Delete</button>
+                            <?php
+                            echo $this->Form->postLink(
+                                'Delete',
+                                array('action' => 'partDelete'),
+                                array('id'=>'delete-confirm','class' => 'btn btn-primary'),
+                                false);
+        ?>
                         </div>
                     </div>
                 </div>
@@ -54,7 +61,21 @@
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
                         <a data-toggle="modal" data-target="#delete-check-modal">Duplicate</a>
-                        <a data-toggle="modal" data-target="#delete-check-modal">Delete</a>
+                        <?php
+                        echo $this->Html->link(
+                            $this->Html->tag('delete', 'Delete'),
+                            '#',
+                            array(
+                                'id'=>'btn-confirm',
+                                'data-toggle'=> 'modal',
+                                'data-file'=> $part->series->name,
+                                'data-target' => '#delete-check-modal',
+                                'data-action'=> Router::url(
+                                    array('action'=>'deletePart',$part->partID)
+                                ),
+                                'escape' => false),
+                            false);
+                        ?>
                     </td>
                 </tr>
                 <?php endforeach; ?>

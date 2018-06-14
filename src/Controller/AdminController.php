@@ -18,8 +18,6 @@
 
     class AdminController extends AppController
     {
-
-
         public function view()
         {
             $this->viewBuilder()->setLayout('admin');
@@ -455,6 +453,17 @@
             $spec = $this->TechnicalSpecs->get($id);
             if ($this->TechnicalSpecs->delete($spec)) {
                 $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
+                return $this->redirect($this->referer());
+            }
+        }
+
+        public function partDelete($id)
+        {
+            $this->loadModel('Parts');
+            $this->Security->validatePost = false;
+            $part = $this->Parts->get($id);
+            if ($this->Parts->delete($part)) {
+                $this->Flash->success(__('The part with id: {0} has been deleted.', h($id)));
                 return $this->redirect($this->referer());
             }
         }
