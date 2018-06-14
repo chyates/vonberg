@@ -68,7 +68,6 @@ class DealersController extends AppController
         $uploadData = '';
         if ($this->request->is('post')) {
             if(!empty($this->request->data['upload']['name'])){
-                $fileName = $this->request->data['upload']['name'];
                 $options = array(
                     // Refer to php.net fgetcsv for more information
                     'length' => 0,
@@ -77,12 +76,21 @@ class DealersController extends AppController
                     'escape' => '\\',
                     // Generates a Model.field headings row from the csv file
                     'headers' => true,
+                    // If true, String $content is the data, not a path to the file
+                    'text' => false,
                 );
                 $uploadPath = WWW_ROOT.'/csv/';
-                $uploadFile = $uploadPath.$fileName;
+                $uploadFile = $uploadPath.$this->request->data['upload']['name'];
                 move_uploaded_file($this->request->data['upload']['tmp_name'], WWW_ROOT . 'csv' .DS. $this->request->data['upload']['name']);
-                $uploadData = $this->Dealers->importCsv($uploadFile, $options);
-                $this->Flash->success(__('The dealers have been saved.'));
+                $uploadData = $this->Dealers->importCsv($uploadFile,array('Dealers.id', 'Dealers.name', 'Dealers.address', 'Dealers.address1', 'Dealers.address2', 'Dealers.city', 'Dealers.state', 'Dealers.zip', 'Dealers.country', 'Dealers.telephone','Dealers.fax','Dealers.lat','Dealers.lng','Dealers.website'), $options);
+                $entities = $this->Dealers->newEntities($uploadData);
+                $Table = $this->Dealers;
+                $Table->connection()->transactional(function () use ($Table, $entities) {
+                    foreach ($entities as $entity) {
+                        $Table->save($entity, ['atomic' => false]);
+                    }
+                });
+                $this->Flash->success(__('The dealers have been saved. '));
                 //return $this->redirect($this->referer());
                 //return $this->redirect(['action' => 'index']);
             }else{
