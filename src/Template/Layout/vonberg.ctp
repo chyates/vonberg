@@ -41,12 +41,12 @@
     // functions that return icons.  Make or find your own markers.
     function normalIcon() {
         return {
-            url: 'http://1.bp.blogspot.com/_GZzKwf6g1o8/S6xwK6CSghI/AAAAAAAAA98/_iA3r4Ehclk/s1600/marker-green.png'
+            url: '/img/pin-unselected.png'
         };
     }
     function highlightedIcon() {
         return {
-            url: '/img/favicon-32x32.png'
+            url: '/img/pin-selected.png'
         };
     }
 

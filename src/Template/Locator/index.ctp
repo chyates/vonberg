@@ -91,7 +91,7 @@
             // Let's add some markers
             if (isset($query)) {
                 foreach ($query as $dealer):
-                    $this->GoogleMap->addMarker(['lat' => $dealer->lat, 'lng' => $dealer->lng, 'title' => $dealer->name, 'content' => $dealer->address, 'icon' => $this->GoogleMap->iconSet('green', $dealer->id )]);
+                    $this->GoogleMap->addMarker(['lat' => $dealer->lat, 'lng' => $dealer->lng, 'title' => $dealer->name, 'content' => $dealer->address, 'icon' => '/img/pin-unselected.png']);
 
                 endforeach;
             }
