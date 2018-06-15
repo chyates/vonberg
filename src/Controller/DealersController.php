@@ -84,10 +84,10 @@ class DealersController extends AppController
                 move_uploaded_file($this->request->data['upload']['tmp_name'], WWW_ROOT . 'csv' .DS. $this->request->data['upload']['name']);
                 $uploadData = $this->Dealers->importCsv($uploadFile,array('Dealers.id', 'Dealers.name', 'Dealers.address', 'Dealers.address1', 'Dealers.address2', 'Dealers.city', 'Dealers.state', 'Dealers.zip', 'Dealers.country', 'Dealers.telephone','Dealers.fax','Dealers.lat','Dealers.lng','Dealers.website'), $options);
                 $entities = $this->Dealers->newEntities($uploadData);
-                $Table = $this->Dealers;
-                $Table->connection()->transactional(function () use ($Table, $entities) {
+                $table = $this->Dealers;
+                $results = $table->getConnection()->transactional(function () use ($table, $entities) {
                     foreach ($entities as $entity) {
-                        $Table->save($entity, ['atomic' => false]);
+                        $table->save($entity, ['atomic' => false]);
                     }
                 });
                 $this->Flash->success(__('The dealers have been saved. '));
