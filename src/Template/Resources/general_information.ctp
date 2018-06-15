@@ -15,6 +15,6 @@
         </div>
         
         <h3 class="product-name">Don't see what you're looking for?</h3>
-        <button type="button" class="d-block mx-auto btn btn-primary contact-us"><a href="/contact">Contact Us</a></button>
+        <a href="/contact"><button type="button" class="d-block mx-auto btn btn-primary contact-us">Contact Us</button></a>
     </div>
 </div><!-- #gen-info-main-container end -->

@@ -222,16 +222,16 @@ return [
             'className' => 'Cake\Database\Connection',
             'driver' => 'Cake\Database\Driver\Mysql',
             'persistent' => false,
-            'host' => 'localhost',
+            'host' => 'mysql.impactpreview.com',
             /**
              * CakePHP will use the default DB port based on the driver selected
              * MySQL on MAMP uses port 8889, MAMP users will want to uncomment
              * the following line and set the port accordingly
              */
             //'port' => 'non_standard_port_number',
-            'username' => 'root',
-            'password' => 'hepcat69',
-            'database' => 'vonberg',
+            'username' => 'impact_vvi',
+            'password' => 'SpaceGhost4#',
+            'database' => 'vvi_dev',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

@@ -8,6 +8,7 @@
             <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'search']]);
             // You'll need to populate $authors in the template from your controller
             echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control', 'placeholder'=>'Search by product number or keyword','aria-label'=>'Search']);
+            echo $this->Form->button('', ['class'=>'form-button']);
             // Match the search param in your table configuration
             echo $this->Form->end(); ?>
         </div>

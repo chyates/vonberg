@@ -7,15 +7,15 @@
         <div class="col-sm-5 my-lg-auto">
             <?php
             if($category->name == "Pressure Controls") { ?>
-                <img class="product-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
+                <img class="img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
                 <?php } else if ($category->name == "Flow Regulating Valves") { ?>
-                <img class="product-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
+                <img class="img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
                 <?php } else if ($category->name == "Directional Valves") { ?>
-                    <img class="product-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
+                    <img class="img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
                 <?php } else if ($category->name == "Safety Valves") { ?>
-                    <img class="product-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
+                    <img class="img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
                 <?php } else if ($category->name == "Cartridge Bodies") { ?>
-                    <img class="product-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
+                    <img class="img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
                <?php } ?>
         </div>
     </div><!-- single-product-header-row end -->
@@ -31,7 +31,7 @@
             echo'<div class="prod-category-main row mx-lg-5">
                <div class="col-lg">
                <h2 class="category-title">' .
-               '<a href='. '"/products/type/' . $part->typeID .'">';
+               '<a href='. '"/products/types/' . str_replace(' ', '-', strtolower($part->type->name)) .'">';
                     echo $part->type->name;
           echo '</a>
                 </h2>
@@ -41,8 +41,10 @@
         } ?>
             <div class="col-md-4 col-6 my-3">
 
-                <A HREF=<?= "/products/view/".$part->partID; ?>>
-                <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
+                <a href<?= "../type/".$part->partID; ?>>
+                <div class="product-img-block-container">
+                    <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
+                </div>
                 <div class="product-text-block my-3">
                     <h3 class="product-name"><?= h($part->series->name) ?></h3>
                     <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>

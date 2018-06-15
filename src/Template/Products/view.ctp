@@ -29,8 +29,8 @@
                     $width = sizeof($part->model_table->model_table_headers);
                     foreach ($part->model_table->model_table_rows as $row):
                          if ($mobRow === 1) {
-                             echo '                    <div class="form-check text-center">';
-                        echo $this->Form->control('model', ['type' => 'checkbox','label' => $row->model_table_row_text,'value'=> $row->model_table_rowID, 'class' => 'form-control']);
+                             echo '                    <div class="form-check text-center checkbox-form-check">';
+                        echo $this->Form->control('model', ['type' => 'checkbox','label' => $row->model_table_row_text,'value'=> $row->model_table_rowID, 'class' => 'checkbox-form-control']);
                             echo '                    </div>';
                         }
                         if ($mobRow >= $width){
@@ -133,7 +133,7 @@
             <div class="right-top-links">
                 <a data-toggle="modal" data-target="#get-stp-modal">Get STP File</a>
                 <a href="/products/prices?q=&seriesID=<?php echo $part->seriesID; ?>">View Pricing</a>
-                <a href=<?= "/img/pdfs/catalog/" . $part->partID . ".pdf"; ?> download >Download PDF</a>
+                <a href=<?= "/img/pdfs/catalog/" . $part->partID . ".pdf"; ?> target="_blank" >Download PDF</a>
             </div>
 
             <div class="right-main-content mt-sm-3 p-sm-4">
