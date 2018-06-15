@@ -110,7 +110,7 @@ class ProductsController extends AppController
 
     }
 
-    public function types($type = null) 
+    public function type($type = null)
     {
         $spaceType = str_replace('-', ' ', $type);
         $upperSpace = ucwords($spaceType);
@@ -126,8 +126,9 @@ class ProductsController extends AppController
         }
 
         $type2 = TableRegistry::get('Types')->get($upperSpace);
-        // $cat2 = TableRegistry::get('Categories')->get($cat);
-        // $textblocks = TableRegistry::get('TextBlocks')->find();
+        $cat = TableRegistry::get('Categories')->find();
+        $this->set('category', $cat);
+// $textblocks = TableRegistry::get('TextBlocks')->find();
         // $specs = TableRegistry::get('Specifications')->find();
 
 

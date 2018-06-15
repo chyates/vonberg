@@ -1,19 +1,12 @@
 <div id="subcat-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
-    <h1 class="page-title"><?= h($category->name) ?></h1>
+    <h1 class="page-title"><?= h($types->name) ?></h1>
 
     <?php
         $counter=0;
         $typecount=0;
+    echo'<div class="prod-category-main row mx-lg-5">';
         foreach ($parts as $part):
-            echo'<div class="prod-subcat-main row mx-lg-5">
-               <div class="col-lg">
-               <h1 class="page-header">';
-                    echo $part->type->name;
-          echo '</h1>
-                </div>
-                </div>
-          <div class="prod-category-main row mx-lg-5">';
-        } ?>
+         ?>
             <div class="col-md-4 col-6 my-3">
 
                 <A HREF=<?= "/products/view/".$part->partID; ?>>
