@@ -25,7 +25,7 @@ class ProductsController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index','catalog','view','new','search', 'customization', 'prices']);
+        $this->Auth->allow(['index','catalog','view','new','search', 'customization', 'prices','type']);
         $this->viewBuilder()->setLayout('default');
 
     }
