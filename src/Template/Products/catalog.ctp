@@ -50,9 +50,7 @@
                 </A>
             </div>
         <?php
-
             $typecount = $part->typeID;
         endforeach; ?>
-
     </div><!-- single-product-main-row end, 2 -->
 </div><!-- single-main-container end -->
