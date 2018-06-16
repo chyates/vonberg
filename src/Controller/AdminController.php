@@ -56,25 +56,95 @@
             return TableRegistry::get('Categories')->find();
 
         }
-
-        public function addProduct()
+        public $components=array('RequestHandler');
+        public function catAdd() {
+            $this->loadModel('Categories');
+            $cat=$this->Categories->newEntity();
+            if($this->request->is('ajax')) {
+                $this->autoRender=false;
+                $this->request->data['name']=$this->request->query['name'];
+                $cat=$this->Categories->patchEntity($cat,$this->request->data);
+                if($result=$this->Categories->save($cat)) {
+                    echo $result->id;
+                }
+                else {
+                    echo "Error: some error";
+                    //print_r($emp);
+                }
+            }
+        }
+        public function typeAdd()
         {
-            $this->viewBuilder()->setLayout('admin');
-            if ($this->request->is('post')) {
+            $this->loadModel('Types');
+            $cat = $this->Types->newEntity();
+            if ($this->request->is('ajax')) {
+                $this->autoRender = false;
+                $this->request->data['name'] = $this->request->query['name'];
+                $cat = $this->Types->patchEntity($cat, $this->request->data);
+                if ($result = $this->Types->save($cat)) {
+                    echo $result->id;
+                } else {
+                    echo "Error: some error";
+                    //print_r($emp);
+                }
+            }
+        }
+        public function seriesAdd() {
+        $this->loadModel('Series');
+        $cat=$this->Series->newEntity();
+        if($this->request->is('ajax')) {
+            $this->autoRender=false;
+            $this->request->data['name']=$this->request->query['name'];
+            $cat=$this->Series->patchEntity($cat,$this->request->data);
+            if($result=$this->Series->save($cat)) {
+                echo $result->id;
+            }
+            else {
+                echo "Error: some error";
+                //print_r($emp);
+                }
+            }
+        }
+        public function connAdd() {
+        $this->loadModel('Connections');
+        $cat=$this->Connections->newEntity();
+        if($this->request->is('ajax')) {
+            $this->autoRender=false;
+            $this->request->data['name']=$this->request->query['name'];
+            $cat=$this->Connectionss->patchEntity($cat,$this->request->data);
+            if($result=$this->Connections->save($cat)) {
+                echo $result->id;
+            }
+            else {
+                echo "Error: some error";
+                //print_r($emp);
+                }
+            }
+        }
+        public function partAdd() {
+            $this->loadModel('Parts');
+            $cat=$this->Connections->newEntity();
+            if($this->request->is('ajax')) {
                 $this->loadModel('Parts');
                 $part = $this->Parts->newEntity();
                 $part = $this->Parts->patchEntity($part, $this->request->data);
                 $part->last_updated = date("Y-m-d H:i:s");
                 if($this->Parts->save($part)){
-                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
                     $this->redirect(array('action' => 'editProductTwo',$part->partID));
                 }
             }
+        }
+
+        public function addProduct()
+        {
+            $this->viewBuilder()->setLayout('admin');
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
             $style = TableRegistry::get('Styles')->find('list');
             $series = TableRegistry::get('Series')->find('list');
+            $conn = TableRegistry::get('Connections')->find('list');
             $this->set('cat', $cat);
+            $this->set('conn', $conn);
             $this->set(compact('series'));
             $this->set('type', $type);
             $this->set('style', $style);
@@ -295,6 +365,13 @@
             $this->viewBuilder()->setLayout('admin');
         }
 
+        public function new()
+        {
+            $this->viewBuilder()->setLayout('admin');
+
+        }
+
+
         public function priceExport()
         {
             $this->loadModel('ModelPrices');
@@ -470,6 +547,18 @@
             $this->set(compact('data', '_serialize'));
         }
 
+        public function contactExport()
+        {
+            $data = TableRegistry::get('Contacts')->find()->orderDesc('date_submitted');
+
+
+            $_serialize = 'data';
+
+            $this->response->download('contacts.csv'); // <= setting the file name
+            $this->viewBuilder()->className('CsvView.Csv');
+            $this->set(compact('data', '_serialize'));
+        }
+
         public function resourceDelete($id)
         {
             $this->loadModel('TechnicalSpecs');
@@ -491,6 +580,14 @@
             }
         }
 
+
+        public function contacts()
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $contacts = TableRegistry::get('Contacts')->find('all')->orderDesc('date_submitted');
+            $this->set('contacts', $this->paginate($contacts));
+
+        }
         public function downloadSTP()
         {
             $this->viewBuilder()->setLayout('admin');
