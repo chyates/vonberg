@@ -11,7 +11,6 @@
             </div>
             <div class="modal-body col-lg-10 mx-auto">
 
-                <form id="stp_form" class="needs-validation" novalidate>
                     <?php echo $this->Form->create('stp_form', array(
                         'id' => 'stp_form',
                         'class' => 'needs-validation',
@@ -41,11 +40,11 @@
                     ?>
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
                     <div class="form-group">
-                        <?php echo $this->Form->control('First Name', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('first Name', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please enter your first name.
                         </div>
-                        <?php echo $this->Form->control('Last Name', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('last Name', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please enter your last name.
                         </div>
@@ -53,12 +52,12 @@
                     </div>
 
                     <div class="form-group">
-                       <?php echo $this->Form->control('Company', ['type' => 'text', 'class' => 'form-control']);?>
+                       <?php echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);?>
 
                     </div>
 
                     <div class="form-group">
-                        <?php echo $this->Form->control('Email', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('email', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please provide a valid email address.
                         </div>
@@ -320,7 +319,7 @@
                     $(".modal_message").html(data);
                 },
                 error: function() {
-                    alert('Not OKay');
+                    alert(dataString);
                 }
             });
             $(this).hide();

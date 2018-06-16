@@ -41,11 +41,113 @@ $cakeDescription = 'Vonberg Dev Site';
     <?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 
     <script>
-    // $(function(){
+
+        function catAdd() {
+            var name=$("#name").val();
+            $.get('/admin/catadd?name='+name, function(d) {
+/*
+                $('#categoryid').prepend($('<option selected="selected">', {
+                    value: 1,
+                    text: name,
+
+                }));
+*/
+                location.reload(false);
+
+            });
+        }
+        function typeAdd() {
+            var name=$("#name").val();
+            $.get('/admin/typeadd?name='+name, function(d) {
+                $('#typeid').append($('<option selected="selected">', {
+                    value: 1,
+                    text: name
+                }));
+                location.reload(false);
+
+            });
+        }
+        function seriesAdd() {
+            var name=$("#name").val();
+            $.get('/admin/seriesadd?name='+name, function(d) {
+                $('#seriesid').append($('<option selected="selected">', {
+                    value: 1,
+                    text: name
+                }));
+                location.reload(false);
+
+            });
+        }
+        function connAdd() {
+            var name=$("#name").val();
+            $.get('/admin/connadd?name='+name, function(d) {
+                $('#connectionid').append($('<option selected="selected">', {
+                    value: 1,
+                    text: name
+                }));
+                location.reload(false);
+
+            });
+        }
+        function partAdd() {
+            var name=$("#name").val();
+            $.get('/admin/partadd, function(d) {
+            });
+        }
+
+
+        // $(function(){
     // $("#geocomplete").geocomplete({ details: "form" })
     // });
     jQuery(document).ready(function($) {
-    // fxn to flip through form slides
+        // add "add series" to select
+        $('#seriesid').append($('<option>', {
+            value: 0,
+            text: 'Add new series...'
+        }));
+        $('#categoryid').append($('<option>', {
+            value: 0,
+            text: 'Add new category...'
+        }));
+        $('#typeid').append($('<option>', {
+            value: 0,
+            text: 'Add new type...'
+        }));
+        $('#connectionid').append($('<option>', {
+            value: 0,
+            text: 'Add new short description...'
+        }));
+
+        // if add series is clicked do this.
+        $("#seriesid").on("change", function () {
+            $modal = $('#add-series-modal');
+            if($(this).val() === '0'){
+                $modal.modal('show');
+            }
+        });
+        // if add type is clicked do this.
+        $("#typeid").on("change", function () {
+            $modal = $('#add-type-modal');
+            if($(this).val() === '0'){
+                $modal.modal('show');
+            }
+        });
+        // if add category is clicked do this.
+        $("#categoryid").on("change", function () {
+            $modal = $('#add-cat-modal');
+            if($(this).val() === '0'){
+                $modal.modal('show');
+            }
+        });
+        // if add series is clicked do this.
+        $("#connectionid").on("change", function () {
+            $modal = $('#add-conn-modal');
+            if($(this).val() === '0'){
+                $modal.modal('show');
+            }
+        });
+
+        // fxn to flip through form slides
         // first next link:
         $("#next-one").click(function() {
             $("#title-one, #title-two").toggleClass('inactive-title', 'active-title');
@@ -98,6 +200,7 @@ $cakeDescription = 'Vonberg Dev Site';
         $('#delete-check-modal').on('show.bs.modal', function(event) {
             $("#partname").val($(event.relatedTarget).data('file'));
         });
+
 
         // features bullets
         var rowCount = 1;
