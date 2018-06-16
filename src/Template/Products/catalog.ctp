@@ -31,7 +31,7 @@
             echo'<div class="prod-category-main row mx-lg-5">
                <div class="col-lg">
                <h2 class="category-title">' .
-               '<a href='. '"/products/types/' . str_replace(' ', '-', strtolower($part->type->name)) .'">';
+               '<a href='. '"/products/type/' . $part->typeID .'">';
                     echo $part->type->name;
           echo '</a>
                 </h2>
@@ -41,7 +41,7 @@
         } ?>
             <div class="col-md-4 col-6 my-3">
 
-                <a href<?= "../type/".$part->partID; ?>>
+                <A HREF=<?= "/products/view/".$part->partID; ?>>
                 <div class="product-img-block-container">
                     <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
                 </div>

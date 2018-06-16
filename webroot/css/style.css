@@ -191,6 +191,7 @@ a:hover {
     border-top: 1px solid #ced4da; 
     border-right: 1px solid #ced4da; 
     border-bottom: 1px solid #ced4da; 
+    border-radius: .25rem;
     border-left: 0px;
     padding: 0px!important;
     background-image: url(../img/search-button.svg);
@@ -305,7 +306,14 @@ a.btn.btn-primary {
         left: 15%;
     }
 }
-
+#product-dropdown:hover .dropdown-menu,
+#resources-dropdown:hover .dropdown-menu {
+    display: block;
+}
+#product-dropdown:hover .col,
+#resources-dropdown:hover .col {
+    padding: 2vh 1vw;
+}
 #home-top-header {
     background-color: #FFFFFF;
 }
@@ -338,9 +346,7 @@ a.btn.btn-primary {
     padding: 3vh 3vw;
 }
 
-.dropdown-menu.show .col {
-    padding: 2vh 1vw;
-}
+
 
 #product-dropdown.dropdown,
 #resources-dropdown.dropdown { 

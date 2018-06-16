@@ -109,7 +109,7 @@
             <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
             <div class="left-img-div mt-sm-4">
                 <h3 class="product-name">Product Rendering</h3>
-                <img class="my-3 product-render img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
+                <img class="my-3 img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
             </div>
             <?php } ?>
 
