@@ -49,6 +49,8 @@
             $cat = TableRegistry::get('Categories')->find();
             $this->set('parts', $query);
             $this->set('categories', $cat);
+            $this->set('dealer_time',filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
+            $this->set('catalog_time',filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
 
         }
         public function get_cat()
@@ -463,19 +465,19 @@
         public function addResource() 
         {
             $this->viewBuilder()->setLayout('admin');
-            if ($this->request->is('post')) {
-                $specTable = TableRegistry::get('TechnicalSpecs');
-                $spec = $specTable->newEntity();
-                $spec['file'] = $this->request->data['file'];
-                $spec['resource'] = $this->request->data['resource'];
-                $spec['title'] = $this->request->data['title'];
-                if ($spec->save()) {
-                    $this ->Session -> setFlash(__('The Resource has been saved'));
-                    $this ->redirect(array('action' => 'index'));
-                } else {
-                    $this -> Session -> setFlash(__('The Resource could not be saved. Please, try again.'));
+                $this->loadModel('TechnicalSpecs');
+                if($this->request->is('post')) {
+                    $spec = $this->TechnicalSpecs->newEntity();
+                    $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
+                    $spec->last_updated = date("Y-m-d H:i:s");
+                    if ($this->TechnicalSpecs->save($spec)) {
+                        $this->Flash->success(__('The resource has been saved.'));
+                        $this ->redirect(array('action' => 'index'));
+                    } else {
+                        $this->Flash->error(__('The resource with could not be saved.'));
+                    }
                 }
-            }
+
         }
 
         public function editGeneralInformation() 

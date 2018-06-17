@@ -3,23 +3,21 @@
     
     <div class="col-6 mx-auto">
 
-        <?= $this->Form->create('add-rsrc-form', array('type' => 'file','url' => array('action' => 'add-resource')));
-        $this->Form->unlockField('title');
-        $this->Form->unlockField('resource');
+        <?= $this->Form->create('add-rsrc-form', array('url' => array('action' => 'add-resource'),'enctype' => 'multipart/form-data'));
         ?>
         <div class="form-group">
-            <label>Select Page</label>
-            <select class="form-control" name="resource">
-                <option value="Select..." selected disabled>Choose resources page...</option>
-                <option value="2">General Information</option>
-                <option value="1">Technical Documentation</option>
-                <option value="3">Application Information</option>
-            </select>
+            <?=  $this->Form->select(
+            'resource',
+            [
+            ['value' => '2', 'text' => 'General Information'],
+            ['value' => '1', 'text' => 'Technical Documentation'],
+            ['value' => '3', 'text' => 'Application Information'],
+            ],['class'=>'form-control']
+            );?>
         </div>
 
         <div class="form-group">
-            <label>File Title</label>
-            <input type="text" class="form-control" name="title" placeholder="Enter title copy...">
+            <?php echo $this->Form->input('title', ['class'=>'form-control']);?>
         </div>
 
         <div class="form-group">

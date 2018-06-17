@@ -33,13 +33,13 @@
                 </tr>
                 <tr>
                     <td><?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?></td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td><?= date('m/d/Y', $dealer_time);?></td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>
                 </tr>
                 <tr>
                     <td>VonbergCatalogue.pdf</td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td><?= date('m/d/Y', $catalog_time);?></td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>
                 </tr>

@@ -6,10 +6,20 @@ use Cake\Event\Event;
 
 class ContactController extends AppController
 {
+    public function initialize()
+    {
+        parent::initialize();
+        $this->loadComponent('Security');
+    }
+
     public function beforeFilter(Event $event)
     {
         // allow all action
         $this->Auth->allow(['stp','index', 'process']);
+        $this->Security->setConfig('unlockedActions', ['stp']);
+        if ($this->request->param('action') === 'stp') {
+            $this->eventManager()->off($this->Csrf);
+        }
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -31,25 +41,25 @@ class ContactController extends AppController
 
     public function stp()
     {
-        if ($this->request->is('ajax')) {
-            $stp_users = TableRegistry::get('StpUsers');
-            $stp_users = $stp_users->newEntity();
-            $this->request->data['first_name'] = $this->query['first_name'];
-            $this->request->data['last_name'] = $this->query['last_name'];
-            $this->request->data['email'] = $this->query['email'];
-            $this->request->data['company'] = $this->query['company'];
-            $emp = $stp_users->patchEntity($emp, $this->request->data);
-            if ($result = $this->StpUsers->save($emp)) {
+
+        $data = [];
+        $this->loadModel('StpUsers');
+        $emp=$this->StpUsers->newEntity();
+        if($this->request->is('post')) {
+            $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
+            if($result=$this->StpUsers->save($emp)) {
                 $data['response'] = "Success: data saved";
                 //echo $result->id;
-            } else {
+            }
+            else {
                 $data['response'] = "Error: some error";
-                print_r($emp);
+                //print_r($emp);
             }
         }
 
         $this->set(compact('data'));
         $this->set('_serialize', 'data');
+
     }
     public function process()
     {

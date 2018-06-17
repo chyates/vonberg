@@ -10,7 +10,6 @@
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
-
                     <?php echo $this->Form->create('stp_form', array(
                         'id' => 'stp_form',
                         'class' => 'needs-validation',
@@ -40,11 +39,11 @@
                     ?>
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
                     <div class="form-group">
-                        <?php echo $this->Form->control('first Name', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('first_name', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please enter your first name.
                         </div>
-                        <?php echo $this->Form->control('last Name', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('last_name', ['type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please enter your last name.
                         </div>
@@ -309,17 +308,31 @@
     $(document).ready(function(){
         $("#stp_form").submit(function(e){
             e.preventDefault();
-            var form = document.stp_form;
-            var dataString = $(form).serialize();
+            var myform = $("#stp_form");
+            var fd = myform.serialize();
             $.ajax({
-                type:'POST',
+                type: 'POST',
+                encoding:"UTF-8",
                 url:'/contact/stp/',
-                data: dataString,
-                success: function(data, textStatus) {
-                    $(".modal_message").html(data);
+                data: fd,
+                cache: false,
+                error: function (xhr, ajaxOptions, thrownError) {
+                    //alert(xhr.responseText);
+                    alert("Error: "+thrownError);
                 },
-                error: function() {
-                    alert(dataString);
+                xhr: function () {
+                    var xhr = new window.XMLHttpRequest();
+                    return xhr;
+                },
+                beforeSend: function () {
+                    //do sth
+                  //  xhr.setRequestHeader('X-CSRF-Token', <?= json_encode($this->request->param('_csrfToken')); ?>);
+                },
+                complete: function () {
+                    //do sth
+                },
+                success: function (response) {
+                    $(".modal_message").html(data);
                 }
             });
             $(this).hide();
