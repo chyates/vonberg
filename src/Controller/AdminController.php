@@ -8,16 +8,26 @@
 
     namespace App\Controller;
 
-    use App\Controller\AppController;
     use App\Controller\File;
     use Cake\ORM\TableRegistry;
-    use Cake\View\View;
-    use Cake\View\ViewBuilder;
-
+    use Cake\Event\Event;
 
 
     class AdminController extends AppController
     {
+        public function initialize()
+        {
+            parent::initialize();
+            $this->loadComponent('Security');
+        }
+
+        public function beforeFilter(Event $event)
+        {
+            // allow all action
+            $this->Security->setConfig('unlockedActions', ['partAdd']);
+
+        }
+
         public function view()
         {
             $this->viewBuilder()->setLayout('admin');
@@ -59,6 +69,7 @@
 
         }
         public $components=array('RequestHandler');
+
         public function catAdd() {
             $this->loadModel('Categories');
             $cat=$this->Categories->newEntity();
@@ -81,7 +92,7 @@
             $cat = $this->Types->newEntity();
             if ($this->request->is('ajax')) {
                 $this->autoRender = false;
-                $this->request->data['name'] = $this->request->query['name'];
+                $this->request->data['name']=$this->request->query['name'];
                 $cat = $this->Types->patchEntity($cat, $this->request->data);
                 if ($result = $this->Types->save($cat)) {
                     echo $result->id;
@@ -124,22 +135,43 @@
             }
         }
         public function partAdd() {
-            $this->loadModel('Parts');
-            $cat=$this->Connections->newEntity();
-            if($this->request->is('ajax')) {
+
+            if($this->request->is('post')) {
+                $data = [];
                 $this->loadModel('Parts');
-                $part = $this->Parts->newEntity();
-                $part = $this->Parts->patchEntity($part, $this->request->data);
-                $part->last_updated = date("Y-m-d H:i:s");
-                if($this->Parts->save($part)){
-                    $this->redirect(array('action' => 'editProductTwo',$part->partID));
+                $part=$this->Parts->newEntity();
+                $part=$this->Parts->patchEntity($part,$this->request->data);
+                if($result=$this->Parts->save($part)) {
+                    $data['response'] = "Success: data saved";
                 }
+                else {
+                    $data['response'] = "Error: some error";
+                    //print_r($emp);
+                }
+                $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
             }
+
+
         }
+
 
         public function addProduct()
         {
             $this->viewBuilder()->setLayout('admin');
+            if($this->request->is('post')) {
+                $data = [];
+                $this->loadModel('Parts');
+                $part=$this->Parts->newEntity();
+                $part=$this->Parts->patchEntity($part,$this->request->data);
+                if($result=$this->Parts->save($part)) {
+                    $data['response'] = "Success: data saved";
+                }
+                else {
+                    $data['response'] = "Error: some error";
+                    //print_r($emp);
+                }
+                $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
+            }
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
             $style = TableRegistry::get('Styles')->find('list');

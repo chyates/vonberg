@@ -5,7 +5,7 @@
                 <div class="col">
                     <h1 class="page-title">Add New Category</h1>
                     <?= $this->Form->create('', ['id' => "add-cat-form"]) ?>
-                    <?php echo $this->Form->control('name',['cols'=>25, 'rows'=>1,'class'=>'form-control','label'=>'Category Name']);?>
+                    <?php echo $this->Form->text('cat',['class'=>'form-control','label'=>'Category Name','id' => "cat"]);?>
                     <div class="btn-row">
                         <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
                         <?= $this->Form->submit('Add',array('id'=>'add-category','class'=>'btn btn-primary','onclick'=>'catAdd();'));?>
@@ -23,7 +23,7 @@
                 <div class="col">
                     <h1 class="page-title">Add New Type</h1>
                     <?= $this->Form->create('', ['id' => "add-cat-form"]) ?>
-                    <?php echo $this->Form->control('name',['cols'=>25, 'rows'=>1,'class'=>'form-control','label'=>'Type Name']);?>
+                    <?php echo $this->Form->text('type',['class'=>'form-control','label'=>'Type Name','id' => "type"]);?>
                     <div class="btn-row">
                         <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
                         <?= $this->Form->submit('Add',array('id'=>'add-type','class'=>'btn btn-primary','onclick'=>'typeAdd();'));?>
@@ -41,7 +41,7 @@
                 <div class="col">
                     <h1 class="page-title">Add New Series</h1>
                     <?= $this->Form->create('', ['id' => "add-cat-form"]) ?>
-                    <?php echo $this->Form->control('name',['cols'=>25, 'rows'=>1,'class'=>'form-control','label'=>'Series Name']);?>
+                    <?php echo $this->Form->text('series',['class'=>'form-control','label'=>'Series Name','id' => "series"]);?>
                     <div class="btn-row">
                         <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
                         <?= $this->Form->submit('Add',array('id'=>'add-series','class'=>'btn btn-primary','onclick'=>'seriesAdd();'));?>
@@ -59,7 +59,7 @@
                 <div class="col">
                     <h1 class="page-title">Add New Short Description</h1>
                     <?= $this->Form->create('', ['id' => "add-cat-form"]) ?>
-                    <?php echo $this->Form->control('name',['cols'=>25, 'rows'=>1,'class'=>'form-control','label'=>'Short Description']);?>
+                    <?php echo $this->Form->text('conn',['class'=>'form-control','label'=>'Short Description','id' => "conn"]);?>
                     <div class="btn-row">
                         <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
                         <?= $this->Form->submit('Add',array('id'=>'add-connection','class'=>'btn btn-primary','onclick'=>'connAdd();'));?>
@@ -99,9 +99,12 @@
                 </div>
                 <div class="col-sm-6">
                     <label>Expiration</label>
-                    <select class="form-control" name="product-expiration">
-                        <option value="Select..." selected disabled>Select...</option>
-                    </select>
+                    <?= $this->Form->select(
+                    'expires',
+                    [10,20,30,40,50,60], ['label' => 'Expiration',
+                        'class' => 'form-control']
+                    );?>
+
                 </div>
             </div>
 
@@ -152,7 +155,7 @@
             </div>
 
             <p class="text-right">
-            <?= $this->Form->submit('Next',array('class'=>'btn btn-primary','onclick'=>'partAdd();'));?>
+            <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
 
             </p>
         </div><!-- #one end -->

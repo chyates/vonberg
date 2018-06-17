@@ -43,21 +43,20 @@ $cakeDescription = 'Vonberg Dev Site';
     <script>
 
         function catAdd() {
-            var name=$("#name").val();
+            var name=$("#cat").val();
             $.get('/admin/catadd?name='+name, function(d) {
-/*
                 $('#categoryid').prepend($('<option selected="selected">', {
                     value: 1,
                     text: name,
 
                 }));
-*/
                 location.reload(false);
 
             });
         }
+
         function typeAdd() {
-            var name=$("#name").val();
+            var name=$("#type").val();
             $.get('/admin/typeadd?name='+name, function(d) {
                 $('#typeid').append($('<option selected="selected">', {
                     value: 1,
@@ -67,35 +66,65 @@ $cakeDescription = 'Vonberg Dev Site';
 
             });
         }
+
         function seriesAdd() {
-            var name=$("#name").val();
+            var name=$("#series").val();
             $.get('/admin/seriesadd?name='+name, function(d) {
                 $('#seriesid').append($('<option selected="selected">', {
                     value: 1,
                     text: name
                 }));
                 location.reload(false);
-
             });
         }
+
         function connAdd() {
-            var name=$("#name").val();
+            var name=$("#conn").val();
             $.get('/admin/connadd?name='+name, function(d) {
                 $('#connectionid').append($('<option selected="selected">', {
                     value: 1,
                     text: name
                 }));
                 location.reload(false);
-
             });
         }
+
         function partAdd() {
-            var name=$("#name").val();
-            $.get('/admin/partadd, function(d) {
+            $.ajax({
+                url: '/admin/part_add',
+                type:"POST",
+                data:$('#add-prod-form').serialize(),
+                success:function(response) {
+                    //document.getElementById("total_items").value=response;
+                    //alert("good");
+                    alert("success:  "+response);
+                    location.reload(false);
+                },
+                error: function (jqXHR,exception) {
+
+                    console.log(jqXHR);
+                    var msg = '';
+                    if (jqXHR.status === 0) {
+                        msg = 'Not connect.\n Verify Network.'+jqXHR.statusText;
+                    } else if (jqXHR.status == 404) {
+                        msg = 'Requested page not found. [404]';
+                    } else if (jqXHR.status == 500) {
+                        msg = 'Internal Server Error [500].';
+                    } else if (exception === 'parsererror') {
+                        msg = 'Requested JSON parse failed.';
+                    } else if (exception === 'timeout') {
+                        msg = 'Time out error.';
+                    } else if (exception === 'abort') {
+                        msg = 'Ajax request aborted.';
+                    } else {
+                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                    }
+
+                    alert(msg);
+                }
             });
+            location.reload(false);
         }
-
-
         // $(function(){
     // $("#geocomplete").geocomplete({ details: "form" })
     // });
@@ -146,7 +175,6 @@ $cakeDescription = 'Vonberg Dev Site';
                 $modal.modal('show');
             }
         });
-
         // fxn to flip through form slides
         // first next link:
         $("#next-one").click(function() {
