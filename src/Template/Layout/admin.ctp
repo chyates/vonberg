@@ -177,48 +177,7 @@ $cakeDescription = 'Vonberg Dev Site';
         });
         // fxn to flip through form slides
         // first next link:
-        $("#next-one").click(function() {
-            $("#title-one, #title-two").toggleClass('inactive-title', 'active-title');
-            $("#one, #two").toggleClass('inactive-slide', 'active-slide');
-        });
         // first back link:
-        $("#back-two").click(function() {
-            $("#title-one, #title-two").toggleClass('inactive-title', 'active-title');
-            $("#one, #two").toggleClass('inactive-slide', 'active-slide');
-        });
-
-        // second next link:
-        $("#next-two").click(function() {
-            $("#title-two, #title-three").toggleClass('inactive-title', 'active-title');
-            $("#two, #three").toggleClass('inactive-slide', 'active-slide');
-        });
-        // second back link:
-        $("#back-three").click(function() {
-            $("#title-two, #title-three").toggleClass('inactive-title', 'active-title');
-            $("#two, #three").toggleClass('inactive-slide', 'active-slide');
-        });
-
-        // third next link:
-        $("#next-three").click(function() {
-            $("#title-three, #title-four").toggleClass('inactive-title', 'active-title');
-            $("#three, #four").toggleClass('inactive-slide', 'active-slide');
-        });
-        // third back link:
-        $("#back-four").click(function() {
-            $("#title-three, #title-four").toggleClass('inactive-title', 'active-title');
-            $("#three, #four").toggleClass('inactive-slide', 'active-slide');
-        });
-
-        // fourth next link:
-        $("#next-four").click(function() {
-            $("#title-four, #title-five").toggleClass('inactive-title', 'active-title');
-            $("#four, #five").toggleClass('inactive-slide', 'active-slide');
-        });
-        // last back link:
-        $("#back-five").click(function() {
-            $("#title-four, #title-five").toggleClass('inactive-title', 'active-title');
-            $("#four, #five").toggleClass('inactive-slide', 'active-slide');
-        });
         // last back link:
         // define the function within the global scope
         $('#delete-check-modal').on('show.bs.modal', function(e) {

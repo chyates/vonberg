@@ -24,7 +24,7 @@
         public function beforeFilter(Event $event)
         {
             // allow all action
-            $this->Security->setConfig('unlockedActions', ['partAdd']);
+            $this->Security->setConfig('unlockedActions', ['partAdd','editProductFour','editProductFive']);
 
         }
 
@@ -262,7 +262,7 @@
                 $part->last_updated = date("Y-m-d H:i:s");
                 if($this->Parts->save($part)){
                     $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
-                    $this->redirect(array('action' => 'editProductThree',$part->partID));
+                    $this->redirect(array('action' => 'editProductFour',$part->partID));
                 }
             }
 
@@ -317,27 +317,90 @@
         }
         public function editProductFour($id)
         {
+            if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
+                mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
+            }
+            $this->loadModel('Parts');
+            $part = $this->Parts->get($id, [
+                'contain' => ['Series']
+            ]);
             $this->viewBuilder()->setLayout('admin');
             if ($this->request->is('post')) {
-                $this->loadModel('Parts');
-                $part = $this->Parts->get($id);
-                $part = $this->Parts->patchEntity($part, $this->request->data);
-                $part->last_updated = date("Y-m-d H:i:s");
-                if($this->Parts->save($part)){
-                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
-                    $this->redirect(array('action' => 'editProductFive',$part->partID));
+                if(!empty($this->request->data['schematic']['name']))
+                {
+                    $file = $this->request->data['schematic']; //put the data into a var for easy use
+
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                    $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                    //only process if the extension is valid
+                    if(in_array($ext, $arr_ext))
+                    {
+                        //do the actual uploading of the file. First arg is the tmp name, second arg is
+                        //where we are putting it
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.jpg');
+                        $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
+                    }
                 }
+                if(!empty($this->request->data['performance']['name']))
+                {
+                    $file = $this->request->data['performance']; //put the data into a var for easy use
+
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                    $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                    //only process if the extension is valid
+                    if(in_array($ext, $arr_ext))
+                    {
+                        //do the actual uploading of the file. First arg is the tmp name, second arg is
+                        //where we are putting it
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.jpg');
+                        $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
+                    }
+                }
+                if(!empty($this->request->data['hydraulic']['name']))
+                {
+                    $file = $this->request->data['hydraulic']; //put the data into a var for easy use
+
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                    $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                    //only process if the extension is valid
+                    if(in_array($ext, $arr_ext))
+                    {
+                        //do the actual uploading of the file. First arg is the tmp name, second arg is
+                        //where we are putting it
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/hydraulic_symbol.jpg');
+                        $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
+                    }
+                }
+                if(!empty($this->request->data['ordering']['name']))
+                {
+                    $file = $this->request->data['ordering']; //put the data into a var for easy use
+
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                    $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                    //only process if the extension is valid
+                    if(in_array($ext, $arr_ext))
+                    {
+                        //do the actual uploading of the file. First arg is the tmp name, second arg is
+                        //where we are putting it
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.jpg');
+                        $this->Flash->success(__('The file ORDERING_INFORMATION.JPG was saved.', h($part->partid)));
+                    }
+                }
+
+                $this->redirect(array('action' => 'editProductFive',$part->partID));
             }
 
             $this->loadModel('TextBlocks');
-            $this->loadModel('Parts');
             $opblock = $this->TextBlocks->find('all',array(
                 'conditions' => array(
                     'partID' => $id,
                 ),
                 'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
             ));
-            $part = $this->Parts->get($id);
 
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
@@ -356,41 +419,46 @@
         }
         public function editProductFive($id)
         {
+            $count=0;
+            $this->viewBuilder()->setLayout('admin');
+            if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
+                mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
+            }
+            $this->loadModel('Parts');
+            $part = $this->Parts->get($id, [
+                'contain' => ['Series']
+            ]);
             $this->viewBuilder()->setLayout('admin');
             if ($this->request->is('post')) {
-                $this->loadModel('Parts');
-                $part = $this->Parts->get($id);
-                $part = $this->Parts->patchEntity($part, $this->request->data);
-                $part->last_updated = date("Y-m-d H:i:s");
-                if($this->Parts->save($part)){
-                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
-                    $this->redirect(array('action' => 'index'));
+                $files = $this->request->data['stp_files'];
+                foreach ($files as $file){
+                    $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                    $arr_ext = array('stp'); //set allowed extensions
+                    if(in_array($ext, $arr_ext))
+                    {
+                        //do the actual uploading of the file. First arg is the tmp name, second arg is
+                        //where we are putting it
+                        move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($part->partID).'/'.strval($this->request->data['filename'][$count]).'.stp');
+                        $this->Flash->success(__('The STP file  was saved.', h($part->partid)));
+                    }
+                    ++$count;
                 }
-            }
 
-            $this->loadModel('TextBlocks');
+                $this->redirect(array('action' => 'category',$part->catID));
+            }
+            $this->loadModel('ModelTables');
             $this->loadModel('Parts');
-            $opblock = $this->TextBlocks->find('all',array(
+            $table = $this->ModelTables->find('all',array(
                 'conditions' => array(
                     'partID' => $id,
                 ),
-                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
-            ));
+                'contain' => array('ModelTableHeaders', 'ModelTableRows'),
+            ))->first();
             $part = $this->Parts->get($id);
 
-            $cat = TableRegistry::get('Categories')->find('list');
-            $type = TableRegistry::get('Types')->find('list');
-            $style = TableRegistry::get('Styles')->find('list');
-
-            $series = TableRegistry::get('Series')->find('list');
-
-            $this->set('cat', $cat);
-            $this->set(compact('series'));
             // Save logic goes here
             $this->set('part', $part);
-            $this->set('type', $type);
-            $this->set('style', $style);
-            $this->set('opblock', $opblock);
+            $this->set('table', $table);
 
         }
 
