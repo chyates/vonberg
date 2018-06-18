@@ -17,6 +17,7 @@
                     'class' => 'needs-validation',
                     'novalidate'
                 ));
+                
                 echo $this->Form->control('name', ['type' => 'text', 'class' => 'form-control','required']);
                 echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
                 echo $this->Form->control('phone', ['type' => 'tel', 'class' => 'form-control', 'required']);

@@ -35,7 +35,6 @@ class ContactController extends AppController
             }
             else {
                 echo "Error: some error";
-                //print_r($emp);
             }
         }    }
 
