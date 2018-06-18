@@ -8,33 +8,9 @@
             </div>
         </div><!-- .contact-left end -->
         <div class="col-sm-6 contact-right">
-            <h1 class="page-header">Contact Us</h1>
+            <h1 class="page-header">Thank You!</h1>
+<P>We've received your message. Someone will contact you as soon as possible.</P>
 
-            <!-- Contact form begin -->
-            <?php 
-                echo $this->Form->create('Contact', array(
-                    'id' => 'contact-form',
-                    'class' => 'needs-validation',
-                    'novalidate'
-                ));
-                echo $this->Form->control('name', ['type' => 'text', 'class' => 'form-control','required']);
-                echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
-                echo $this->Form->control('phone', ['type' => 'tel', 'class' => 'form-control', 'required']);
-                echo $this->Form->control('email', ['type' => 'email', 'class' => 'form-control','required']);
-                echo $this->Form->control('manufacturer', ['value' => 'Manufacturer','type' => 'checkbox', 'class' => 'form-inline']);
-                echo $this->Form->control('distributor', ['value' => 'Distributor','type' => 'checkbox', 'class' => 'form-inline']);
-                echo $this->Form->control('enduser', ['value' => 'End User','type' => 'checkbox', 'class' => 'form-inline']);
-                echo $this->Form->control('contactme', ['type' => 'textarea', 'class' => 'form-control', 'required']);
-            ?>
-
-                <div class="row no-gutters">
-                    <div class="col-6 my-auto">
-                        <p class="text-left my-auto">*required fields</p>
-                    </div>
-                    <?php echo $this->Form->submit(); ?>
-                </div>
-                
-               <?php echo $this->Form->end(); ?><!-- Contact form end -->
         </div><!-- .contact-right end -->
     </div><!-- .row no-gutters end -->
 </div><!-- #contact-main-container end -->

@@ -24,17 +24,26 @@
                     <a class="btn btn-primary my-4" href="/resources/application-information">View All</a>
                 </div>
                 <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
-                    <h2>Base Product Prices</h2>
-                    <label>Enter Model Number</label>
-                    <input type="text" class="form-control" name="product-model">
+                    <?php echo $this->Form->create(null, ['type' => 'get','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);?>
+                    <?PHP $this->Form->unlockField('q');?>
+                    <?PHP $this->Form->unlockField('seriesID');?>
+                    <h1 class="page-header">Product Prices</h1>
+                    <div class="form-group">
+                        <label>Enter Model Number</label>
+                        <input type="text" class="form-control" name="q">
+                    </div>
                     <p class="text-center">or</p>
-                    <label>Select a Series</label>
-                    <select class="form-control" name="product-series">
-                        <?php foreach($series as $item) { ?>
-                            <option value="<?php echo str_replace(' ', '_', $item['name']); ?>"><?php echo $item['name']; ?></option>
-                        <?php } ?>
-                    </select>
-                    <input type="submit" class="btn btn-primary my-4" href="/general-information" value="Get Prices">
+                    <div class="form-group">
+                        <label>Select a Series</label>
+                        <select class="form-control" name="seriesID">
+                            <option value="" selected="selected">Select from dropdown...</option>
+                            <?php foreach($series as $item) { ?>
+                                <option value="<?php echo $item['seriesID']; ?>"><?php echo $item['name']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
+                    <input type="submit" class="btn btn-primary my-4" value="Get Prices"/>
+                    <?php echo $this->Form->end(); ?>
                 </div>
                 <button type="button" class="btn download-btn btn-primary my-4">Download Product Catalogue</button>
             </div>

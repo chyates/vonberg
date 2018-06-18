@@ -304,13 +304,47 @@
         {
             $this->viewBuilder()->setLayout('admin');
             if ($this->request->is('post')) {
-                $this->loadModel('Parts');
-                $part = $this->Parts->get($id);
-                $part = $this->Parts->patchEntity($part, $this->request->data);
-                $part->last_updated = date("Y-m-d H:i:s");
-                if($this->Parts->save($part)){
-                    $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
-                    $this->redirect(array('action' => 'editProductFour',$part->partID));
+                $this->loadModel('ModelTables');
+                $headerTable = TableRegistry::get('ModelTableHeaders');
+                $rowsTable = TableRegistry::get('ModelTableRows');
+                $table = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
+                // delete headers and rows to put them back in
+                $headerTable->deleteAll(['model_tableID' => $table->model_tableID]);
+                $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
+                $headerCounter = 0;
+                foreach ($this->request->data['header'] as $header) {
+                    $headerCounter++;
+                    $top = $headerTable->newEntity();
+                    $top->model_tableID = $table->model_tableID;
+                    $top->model_table_text = $header;
+                    $top->order_num = $headerCounter;
+                    if ($headerTable->save($top)) {
+                        // The variable entity contains the id now
+                        $model_table_header_id = $top->model_table_headerID;
+                        $debug = debug($top);
+                        $this->set('debug', $debug);
+                        } else {
+
+                }
+
+            }
+                $order_num = 0;
+
+                foreach ($this->request->data['table'] as $row ) {   # allow for empty cells EXCEPT in the first column
+                    foreach ($row as $cell) {
+                        $order_num++;
+
+                            $new = $rowsTable->newEntity();
+                            $new->model_tableID = $table->model_tableID;
+                            $new->model_table_text = $cell;
+                            $new->order_num = $order_num;
+                            if ($rowsTable->save($new)) {
+                                // The variable entity contains the id now
+                                $model_table_header_id = $new->model_table_headerID;
+                            } else {
+                                $debug = debug($new);
+                            }
+                    }
                 }
             }
 

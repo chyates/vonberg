@@ -31,7 +31,7 @@ class ContactController extends AppController
         if($this->request->is('post')) {
             $cat=$this->Contacts->patchEntity($cat,$this->request->data);
             if($result=$this->Contacts->save($cat)) {
-                echo $result->id;
+                $this->redirect(array('action' => 'success'));
             }
             else {
                 echo "Error: some error";
@@ -62,6 +62,10 @@ class ContactController extends AppController
 
     }
     public function process()
+    {
+
+    }
+    public function success()
     {
 
     }
