@@ -38,7 +38,7 @@
                 <th class="model-table-header">Series</th>
                 <th class="model-table-header">Style</th>
                 <th class="model-table-header">Connections</th>
-                <th class="model-table-header">Base Price</th>
+                <th class="model-table-header prices-last">Base Price</th>
                 </thead>
 
                 <tbody>

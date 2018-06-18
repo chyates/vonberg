@@ -27,9 +27,9 @@
                     $width = sizeof($part->model_table->model_table_headers);
                     foreach ($part->model_table->model_table_rows as $row):
                          if ($mobRow === 1) {
-                             echo '                    <div class="form-check text-center checkbox-form-check">';
-                        echo $this->Form->control('model', ['type' => 'checkbox','label' => $row->model_table_row_text,'value'=> $row->model_table_rowID, 'class' => 'checkbox-form-control']);
-                            echo '                    </div>';
+                            echo '<div class="form-check form-check-inline">';
+                            echo $this->Form->control('model', ['type' => 'checkbox', 'value'=> $row->model_table_rowID, 'class' => 'form-check-input', 'label' => ['text' => $row->model_table_row_text, 'class' => 'form-check-label'], 'id' => $row->model_table_rowID]);
+                            echo '</div>';
                         }
                         if ($mobRow >= $width){
                             $mobRow=0;
@@ -39,15 +39,17 @@
                     ?>
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
                     <div class="form-group">
-                        <?php echo $this->Form->control('first_name', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('first_name', ['label' => 'First Name*', 'type' => 'text', 'class' => 'form-control']); ?>
                         <div class="invalid-feedback">
                             Please enter your first name.
                         </div>
-                        <?php echo $this->Form->control('last_name', ['type' => 'text', 'class' => 'form-control']);?>
+                    </div>
+
+                    <div class="form-group">
+                        <?php echo $this->Form->control('last_name', ['label' => 'Last Name*', 'type' => 'text', 'class' => 'form-control']); ?>
                         <div class="invalid-feedback">
                             Please enter your last name.
                         </div>
-
                     </div>
 
                     <div class="form-group">
@@ -56,7 +58,7 @@
                     </div>
 
                     <div class="form-group">
-                        <?php echo $this->Form->control('email', ['type' => 'text', 'class' => 'form-control']);?>
+                        <?php echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'text', 'class' => 'form-control']);?>
                         <div class="invalid-feedback">
                             Please provide a valid email address.
                         </div>
@@ -64,7 +66,7 @@
 
                     <div class="form-group row no-gutters">
                         <div class="col-6 my-auto">
-                            <p class="my-auto text-left">*Mandatory</p>
+                            <p class="my-auto req-text text-left">*Mandatory</p>
                         </div>
                         <div class="col-6 text-right">
                         <?php

@@ -196,10 +196,11 @@ a:hover {
     border-top: 1px solid #ced4da; 
     border-right: 1px solid #ced4da; 
     border-bottom: 1px solid #ced4da; 
-    border-radius: .25rem;
+    border-radius: 0;
     border-left: 0px;
     padding: 0px!important;
     background-image: url(../img/search-button.svg);
+    background-color: #FFFFFF;
     background-size: 90%;
     background-position: left;
     background-repeat: no-repeat;
@@ -210,14 +211,17 @@ a:hover {
     outline: none;
     box-shadow: none;
   }
+
   .btn:active:focus {
     outline: none;
     box-shadow: none;
   }
+
   button:focus {
     outline: none;
     box-shadow: none;
   }
+
   button:active:focus {
     outline: none;
     box-shadow: none;
@@ -329,6 +333,7 @@ a.btn.btn-primary {
 
 #desktop-header #home-top-header div.input.search .form-control {
     width: 280px!important;
+    border-radius: 0;
 }
 
 .header-image {
@@ -1473,13 +1478,11 @@ p.resource-link span img.img-fluid {
 /* === PRODUCT PRICES + RESULTS: GLOBAL / DESKTOP === */
 
 #prices-main-container .btn {
-    /* line-height: 18px; */
     padding: 10px 20px;
 }
 
 #prices-main-container img {
     box-sizing: border-box;
-    /* height: 282px; */
     width: 382px;
 }
 
@@ -1508,13 +1511,11 @@ p.resource-link span img.img-fluid {
 }
 
 #prices-results-main-container .btn {
-    /* line-height: 18px; */
     padding: 10px 20px;
 }
 
 #prices-results-main-container img {
     box-sizing: border-box;
-    /* height: 282px; */
     width: 382px;
     border: 1px solid #CCCCCC;
 }
@@ -1545,6 +1546,7 @@ p.resource-link span img.img-fluid {
 
 .series-model-table-row .table-responsive .model-table.table .prices-last {
     background-color: #F9F9F7;
+    text-align: center;
 }
 
 /* +++ PRODUCT PRICES: TABLET +++ */
@@ -1552,7 +1554,6 @@ p.resource-link span img.img-fluid {
 @media (max-width: 991px) {
     #prices-main-container.inner-main .col-lg-4 img.img-fluid {
         width: auto;
-        /* height: auto; */
     }
 }
 

@@ -14,20 +14,22 @@
             <?php 
                 echo $this->Form->create('Contact', array(
                     'id' => 'contact-form',
-                    'class' => 'needs-validation',
+                    'class' => 'needs-validation col-10',
                     'novalidate'
                 ));
-                echo $this->Form->control('name', ['type' => 'text', 'class' => 'form-control','required']);
+                echo $this->Form->control('name', ['label' => 'Full Name*', 'type' => 'text', 'class' => 'form-control','required']);
                 echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
-                echo $this->Form->control('phone', ['type' => 'tel', 'class' => 'form-control', 'required']);
-                echo $this->Form->control('email', ['type' => 'email', 'class' => 'form-control','required']);
-                echo $this->Form->control('role', ['type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
-                echo $this->Form->control('contactme', ['type' => 'textarea', 'class' => 'form-control', 'required']);
+                echo $this->Form->control('phone', ['label' => 'Phone*', 'type' => 'tel', 'class' => 'form-control', 'required']);
+                echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'email', 'class' => 'form-control','required']);
+                echo $this->Form->control('role', ['label' => 'What is your role?', 'type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
+                echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']);
             ?>
 
+                <p class="text-left req-text my-auto">Character limit: 50</p>
+                <div class="g-recaptcha mb-3" data-sitekey="6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y"></div>
                 <div class="row no-gutters">
                     <div class="col-6 my-auto">
-                        <p class="text-left my-auto">*required fields</p>
+                        <p class="text-left req-text my-auto">*required fields</p>
                     </div>
                     <?php echo $this->Form->submit(); ?>
                 </div>
