@@ -34,7 +34,9 @@
                     </div>
                 </div>
                 <?php endforeach;
-                }	 ?>
+                } else { ?>
+                    <p class="mx-auto my-auto search-text-default">Use the search bar above to find distributors in your area.</p>
+                <?php } ?>
             </div>
         </div><!-- .left-search end -->
 

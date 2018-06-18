@@ -5,7 +5,7 @@
     <div class="d-flex flex-row justify-content-end">
         <a class="header-link nav-link" href="/admin/new">New Products</a>
         <p class="cms-top-nav mx-2 my-auto"><a href="/admin/add-product">Add New Product</a></p>
-        <p class="cms-top-nav mx-2 my-auto"><a disabled>Generate Custom PDF</a></p>
+        <p class="cms-top-nav mx-2 my-auto"><a href="/admin/generate-pdf">Generate Custom PDF</a></p>
         <p class="cms-top-nav mx-2 my-auto"><a href="/admin/model-pricing">Model Pricing</a></p>
         <p class="cms-top-nav mx-2 my-auto"><a href="/admin/download-stp">STP Download Report</a></p>
     </div>

@@ -170,19 +170,24 @@ a:hover {
 .form-control:focus {
     box-shadow: none;
 }
-.form-control {
-    width: 280px!important;
-}
+
 .checkbox-form-control {
     margin-right: 10px;
 }
+
 .checkbox-form-check {
     display: inline-block!important;
     width: calc(100% / 5)!important;
 }
+
 #someothers {
     height: 725px!important;
 }
+
+.req-text {
+    font-size: 11px;
+}
+
 .form-button {
     width: 40px;
     position: relative;
@@ -191,15 +196,17 @@ a:hover {
     border-top: 1px solid #ced4da; 
     border-right: 1px solid #ced4da; 
     border-bottom: 1px solid #ced4da; 
-    border-radius: .25rem;
+    border-radius: 0;
     border-left: 0px;
     padding: 0px!important;
     background-image: url(../img/search-button.svg);
+    background-color: #FFFFFF;
     background-size: 90%;
     background-position: left;
     background-repeat: no-repeat;
     cursor: pointer;
 }
+
 .btn:focus {
     outline: none;
     box-shadow: none;
@@ -288,6 +295,20 @@ a.btn.btn-primary {
 #mobile-header {
     display: none !important;
 }
+.mobile-hidden {
+    display: none !important;
+}
+.mobile-search-button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 70px;
+    cursor: pointer;
+    top: 31px;
+}
+.mobile-search-bar input {
+    width: 50vw!important;
+}
 
 /* ************************* */
 /* ** MAIN WEBSITE STYLES ** */
@@ -306,16 +327,24 @@ a.btn.btn-primary {
         left: 15%;
     }
 }
+
 #product-dropdown:hover .dropdown-menu,
 #resources-dropdown:hover .dropdown-menu {
     display: block;
 }
+
 #product-dropdown:hover .col,
 #resources-dropdown:hover .col {
     padding: 2vh 1vw;
 }
+
 #home-top-header {
     background-color: #FFFFFF;
+}
+
+#desktop-header #home-top-header div.input.search .form-control {
+    width: 280px!important;
+    border-radius: 0;
 }
 
 .header-image {
@@ -345,8 +374,6 @@ a.btn.btn-primary {
 #resources-dropdown .dropdown-menu {
     padding: 3vh 3vw;
 }
-
-
 
 #product-dropdown.dropdown,
 #resources-dropdown.dropdown { 
@@ -470,10 +497,10 @@ a.btn.btn-primary {
 
     .sticky-top .navbar{
         padding: 0px;
+        height: 90px;
     }
 
     .navbar-brand{
-        top: .5rem;
         left: 1rem;
         position: relative;
     }
@@ -1138,17 +1165,43 @@ p.resource-link a {
 @media (min-width: 992px) {
 
 }
+
 #find-distributor-main {
     height: 800px;
 }
+
 #find-distributor-main .left-search .search-block {
     height: 550px!important;
     padding: 0!important;
-}
-.marker {
+    display: flex;
     background-color: #F9F9F7;
     border: 1px solid #DDDDDD;
-    margin: 10px 0px;
+}
+
+#markers_info, .marker {
+    width: 100%;
+}
+
+.marker {
+    background-color: #F9F9F7;
+    border-bottom: 1px solid #DDDDDD;
+    /* margin: 10px 0px; */
+    padding: 2vh;
+    min-height: 160px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.marker .col-8, .marker .col-4 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.marker .col-8 p, .marker .col-4 p {
+    text-transform: capitalize;
+    margin-bottom: 0;
 }
 
 #find-distributor-main .left-search .product-info {
@@ -1167,6 +1220,10 @@ p.resource-link a {
     margin-top: 20px;
 }
 
+#find-distributor-main .left-search .search-block .empty-query {
+    padding: 0 4vw;
+}
+
 #find-distributor-main .left-search .search-block .search-text-default {
     color: #017D44;
     font-weight: 500;
@@ -1181,6 +1238,8 @@ p.resource-link a {
 #find-distributor-main .left-search .search-block .results-link {
     color: #017D44;
     text-decoration: underline;
+    font-family: "Poppins", sans-serif;
+    font-size: 14px;
 }
 
 /* +++ FIND A DISTRIBUTOR: TABLET +++ */
@@ -1218,6 +1277,7 @@ p.resource-link a {
 
 #contact-form {
     font-family: "Poppins", sans-serif;
+    padding: 0;
 }
 
 #contact-form .form-group .col-6 p {
