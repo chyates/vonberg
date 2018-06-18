@@ -7,7 +7,7 @@
             <?php
             foreach ($specs as $spec): ?>
                 <p class="resource-link"><span class="pr-3">
-                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->file;?> target="_blank""><?php echo $spec->title;?></a></p>
+                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->file;?>" target="_blank"><?php echo $spec->title;?></a></p>
             <?php endforeach;?>
         </div>
         

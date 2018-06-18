@@ -18,7 +18,7 @@
                     foreach ($opblock as $op):
                         foreach ($op->text_block_bullets as $line):
                             if ($op->header == "Operation") {
-                                echo $this->Form->input('feature_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                                echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
                             }
                             endforeach;
                     endforeach;
@@ -32,7 +32,8 @@
                 foreach ($opblock as $op):
                     foreach ($op->text_block_bullets as $line):
                         if ($op->header == "Features") {
-                            echo $this->Form->input('feature_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                            echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+
                         }
                     endforeach;
                 endforeach;
@@ -41,17 +42,25 @@
             </div>
 
             <div class="form-group row no-gutters align-items-center w-bullet">
+                <label>Specifications</label>
+                <?php foreach ($specs as $spec){ ?>
+                <div class="row">
                 <div class="col-sm-4">
-                    <label>Specifications</label>
-                    <select class="form-control" name="product-specification">
-                        <option value="Select..." selected disabled>Select...</option>
-                    </select>
-                <a class="add-bullet" href="">Add Bullet</a>
+                    <?php echo $this->Form->select(
+                    'specifications.spec_name',
+                    [$spec->spec_name,'CLOSING FLOW TOLERANCE', 'DIVIDE / COMBINE RATIO', 'FLOW ADJUSTMENT RANGE', 'FLOW TOLERANCE', 'INTERNAL LEAKAGE','MAX. PRESSURE DIFFERENTIAL "1" TO "2"','OPERATING PRESSURE','PRESSURE RANGE','RELIEF ADJUSTMENT RANGE','RELIEF SETTING RANGE','RELIEF TOLERANCE','REOPENING DIFFERENTIAL','STANDARD CRACK PRESSURE','TEMPERATURE RANGE',],
+                    ['value' => $spec->spec_name]
+                    );?>
                 </div>
                 <div class="col-sm-8">
-                    <input type="text" name="product-spec-detail" class="form-control" placeholder="Enter value...">
+               <?= $this->Form->input('specifications.spec_value', array('class' => 'form-control','label'=> False, 'value' => $spec->spec_value));?>
+
                 </div>
+                </div>
+                <?php } ?>
             </div>
+                <a class="add-bullet" href="">Add Bullet</a>
+
             <div class="row no-gutters justify-content-between">
                 <a href="/admin/edit-product-one/<?= $part->partID ?>" class="back btn btn-primary">Back</a>
                 <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>

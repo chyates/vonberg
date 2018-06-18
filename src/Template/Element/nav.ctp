@@ -64,7 +64,7 @@
                     <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
                     <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
-                    <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" download>Download Our Catalog</a></p>
+                    <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" target="_blank">Download Our Catalog</a></p>
                 </div>
             </div>
         </div>
@@ -79,9 +79,35 @@
 <div id="mobile-header" class="sticky-top">
     <div id="m-burger-nav" class=" wrapper-navbar"> <!-- Mobile Burger Menu Start -->
         <nav class="navbar">
-            <a class="navbar-brand" href="/">
-                <img class="header-image img-fluid" src="/img/vonberg-logo-white.svg" alt="Vonberg Valve, Inc">
-            </a>
+            <div class="navbar-brand" href="/">
+                <a href="/">
+                    <img class="header-image img-fluid" src="/img/vonberg-logo-white.svg" alt="Vonberg Valve, Inc" id="mobileLogo">
+                </a>
+                <div class="mobile-search-bar mobile-hidden d-flex flex-row justify-content-end" id="mobileSearchBar">
+                    <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'search']]);
+                    // You'll need to populate $authors in the template from your controller
+                    echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control', 'placeholder'=>'Search by product number or keyword','aria-label'=>'Search']);
+                    echo $this->Form->button('', ['class'=>'form-button']);
+                    // Match the search param in your table configuration
+                    echo $this->Form->end(); ?>
+                </div>
+                </div>
+            
+            <div class="mobile-search-button">
+                <img src="/img/Search-icon.svg" onclick="searchHide(); titleHide()">
+            </div>
+
+            <script>
+                function searchHide() {
+                    var element = document.getElementById("mobileSearchBar");
+                    element.classList.remove("mobile-hidden");
+                }
+                function titleHide() {
+                    var element = document.getElementById("mobileLogo");
+                    element.classList.add("mobile-hidden");
+                }
+            </script>
+
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-collapse" aria-controls="main-collapse"
             aria-expanded="false" aria-label="Toggle navigation"><div class="animated-icon1"><span></span><span></span><span></span></div></button>
             <div class="collapse navbar-collapse" id="main-collapse">

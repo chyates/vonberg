@@ -8,34 +8,72 @@
 
         <div id="three" class="active-slide form-slide">
             <div class="buffer-div">
-                <div class="table-create-box p-3">
-                    <div class="creation-row row no-gutters">
-                            <?php $count = count($table->model_table_headers);
+                <div class="table-create-box p-3" style="overflow-x: scroll;">
+                    <table style="border: 0"id="formdata" border="2">
+                        <tr>
+                            <?php $headCount = count($table->model_table_headers);?>
+                            <?php $headerCounter = 0; ?>
+                            <?php foreach ($table->model_table_headers as $h): ?>
+                            <?php $header = 'header['.$headerCounter.']'; ?>
+                            <td data-row="-1" data-col="<?= $headerCounter ?>">
+                                <input id="<?= $header ?>" name="<?= $header ?>" class="header-element" type="text" value="<?= $h->model_table_text?>">
+                            </td>
+                            <?php $headerCounter++;
                             ?>
-                            <?php foreach ($table->model_table_headers as $header):
-                                $index = -1;
-                                ?>
-                            <div class="data-column">
-                            <?php echo $this->Form->input('table_header', array('class' => 'model-header-input form-control','label'=> False, 'value' => $header->model_table_text));?>
-                            <?php foreach ($table->model_table_rows as $row):
-                                ++$index;
-                                $debug = ($header->order_num+($index*$count));
-                                if ($row->order_num == $debug) {
-                                    echo $this->Form->input('table_header', array('class' => 'model-header-input form-control', 'label' => False, 'value' => $row->order_num));
-                                }
-                            endforeach; ?>
-                            </div>
-                            <?php endforeach;
-                                ?>
-                        <div class="add-column">
-                            <a class="model-column add-bullet" href="">Add Column</a>
-                        </div>
-                    </div>
-                    <div class="row no-gutters">
-                        <div class="col">
-                            <a class="model-row add-bullet" href="">Add Row</a>
-                        </div>
-                    </div>
+                            <?php endforeach; ?>
+                            <td data-row="-1" data-col="<?= $headerCounter?>">
+                                <?php $header = 'header['.$headerCounter.']'; ?>
+                                <span class="addnewheader">Add New Header:</span><br>
+                                <input id="<?= $header ?>" name="<?= $header ?>" class="header-element" type="text" value="">
+                            </td>
+                        </tr>
+                        <?php
+                        $rowCount  = 0;
+                        $colCount  = 0;
+                        $open  = "<tr>";
+                        $close = "</tr>";
+                        ?>
+
+                <?php foreach ($table->model_table_rows as $r):
+                        $tablename = 'table['.$rowCount.']['.$colCount.']';
+
+                        if ($colCount == '0'){
+                        echo $open;
+                        }
+                        ?>
+                        <td data-row="<?= $rowCount ?>" data-col="<?= $colCount ?>">
+                            <input id="<?= $tablename ?>" class="table-element" name="<?= $tablename ?>" type="text" value="<?= $r->model_table_row_text?>">
+                        </td>
+
+                        <?php $colCount++;
+
+                        if ($colCount == $headCount) {
+                        echo $close;
+                        }
+
+                        if ($colCount == $headCount) {
+                        $rowCount++;
+                        $colCount = 0;
+                        }
+
+                        endforeach; ?>
+
+<?php $rowCount++; ?>
+<?php $colCount = 0; ?>
+                        <tr>
+                            <?php foreach (range(0, ($headerCounter-1)) as $i):
+                            $tablename = 'table['.$rowCount.']['.$colCount.']';?>
+                            <td data-row="<?= $rowCount?>" data-col="<?=$colCount?>">
+                                <input id="<?= $tablename?>" class="table-element" name="<?=$tablename?>" type="text" value="">
+                            </td>
+                            <?php $colCount++; ?>
+	<?php endforeach; ?>
+                        </tr>
+
+
+
+                    </table>
+
                 </div>
             </div>
             <div class="row no-gutters justify-content-between">

@@ -43,9 +43,9 @@
         <a href="/about"><img class="d-block mx-auto my-3 img-fluid" src="/img/1971-logo.png"></a>
 
         <div class="my-4 justify-content-center">
-            <a href="http://www.nfpa.com/"><img class="img-fluid" src="/img/nfpa-logo.png"></a>
-            <a href="http://www.ifps.org/"><img class="img-fluid" src="/img/IFPS-logo.png"></a>
-            <a href="http://www.nam.org/"><img class="img-fluid" src="/img/NAM-logo.png"></a>
+            <a href="http://www.nfpa.com/" target="_blank"><img class="img-fluid" src="/img/nfpa-logo.png"></a>
+            <a href="http://www.ifps.org/" target="_blank"><img class="img-fluid" src="/img/IFPS-logo.png"></a>
+            <a href="http://www.nam.org/" target="_blank"><img class="img-fluid" src="/img/NAM-logo.png"></a>
             <img class="img-fluid" src="/img/madeusa2.png">
             <img class="img-fluid" src="/img/mastercardvisa.png">
         </div>

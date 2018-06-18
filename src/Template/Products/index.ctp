@@ -4,34 +4,44 @@
                 <h1 class="page-title">Our products</h1>
                 <div class="landing-list-row row">
                     <div class="col-md-4 col-sm-6 col-12">
-                        <img class="landing-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="text-center"><a class="product-name" href="/products/catalog/1">Flow Regulating Valves</a></h3>
-                        </div>
+                        <a class="product-name" href="/products/catalog/1">
+                            <img class="landing-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
+                            <div class="product-text-block my-3">
+                                <h3 class="text-center">Flow Regulating Valves</h3>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-4 col-sm-6 col-12">
-                        <img class="landing-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="text-center"><a class="product-name" href="/products/catalog/2">Directional Valves</a></h3>
-                        </div>
+                        <a class="product-name" href="/products/catalog/2">
+                            <img class="landing-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
+                            <div class="product-text-block my-3">
+                                <h3 class="text-center">Directional Valves</h3>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-4 col-sm-6 col-12">
-                        <img class="landing-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="text-center"><a class="product-name" href="/products/catalog/3">Safety Valves</a></h3>
-                        </div>
+                        <a class="product-name" href="/products/catalog/3">
+                            <img class="landing-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
+                            <div class="product-text-block my-3">
+                                <h3 class="text-center">Safety Valves</h3>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-4 col-sm-6 col-12">
-                        <img class="landing-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="text-center"><a class="product-name" href="/products/catalog/5">Pressure Controls</a></h3>
-                        </div>
+                        <a class="product-name" href="/products/catalog/5">
+                            <img class="landing-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
+                            <div class="product-text-block my-3">
+                                <h3 class="text-center">Pressure Controls</h3>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-4 col-sm-6 col-12">
-                        <img class="landing-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
-                        <div class="product-text-block my-3">
-                            <h3 class="text-center"><a class="product-name" href="/products/catalog/7">Cartridge Bodies</a></h3>
-                        </div>
+                        <a class="product-name" href="/products/catalog/7">
+                            <img class="landing-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
+                            <div class="product-text-block my-3">
+                                <h3 class="text-center">Cartridge Bodies</h3>
+                            </div>
+                        </a>
                     </div>
                     <div class="col-md-4 col-sm-6 col-12 text-center">
                         <div class="learn-more-block">

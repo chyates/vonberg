@@ -268,6 +268,14 @@
 
             $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
+            $this->loadModel('Specifications');
+
+            $specs = $this->Specifications->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+            ));
+
             $opblock = $this->TextBlocks->find('all',array(
                 'conditions' => array(
                     'partID' => $id,
@@ -286,6 +294,7 @@
             $this->set(compact('series'));
             // Save logic goes here
             $this->set('part', $part);
+            $this->set('specs', $specs);
             $this->set('type', $type);
             $this->set('style', $style);
             $this->set('opblock', $opblock);
@@ -426,8 +435,9 @@
             }
             $this->loadModel('Parts');
             $part = $this->Parts->get($id, [
-                'contain' => ['Series']
+                'contain' => ['Series','Specifcations','TextBlocks' => ['TextBlockBullets']]
             ]);
+//           full contain for reference ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]
             $this->viewBuilder()->setLayout('admin');
             if ($this->request->is('post')) {
                 $files = $this->request->data['stp_files'];
@@ -470,6 +480,10 @@
         public function new()
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('Parts');
+            $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.new_list'=>True],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+            $this->set('parts', $query);
+            $this->set('pagename', 'New Products');
 
         }
 

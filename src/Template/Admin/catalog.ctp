@@ -49,7 +49,7 @@ use Cake\Routing\Router;
                 <tr>
                     <td class="model-table-data"><?= h($part->series->name) ?></td>
                     <td class="model-table-data"><?= h($part->style->name) ?></td>
-                    <td class="model-table-data"><?= h($part->description) ?></td>
+                    <td class="model-table-data"><?= h($part->connection->name) ?></td>
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                     <td class="model-table-data">
                         <div class="form-check form-check-inline">
