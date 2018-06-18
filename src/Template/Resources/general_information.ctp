@@ -10,11 +10,11 @@
             <?php
             foreach ($specs as $spec): ?>
                 <p class="resource-link"><span class="pr-3">
-                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->file;?>"><?php echo $spec->title;?></a></p>
+                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->file;?>" target="_blank"><?php echo $spec->title;?></a></p>
             <?php endforeach;?>
         </div>
         
         <h3 class="product-name">Don't see what you're looking for?</h3>
-        <a href="/contact"><button type="button" class="d-block mx-auto btn btn-primary contact-us">Contact Us</button></a>
+        <button type="button" class="d-block mx-auto btn btn-primary contact-us"><a href="/contact">Contact Us</a></button>
     </div>
 </div><!-- #gen-info-main-container end -->

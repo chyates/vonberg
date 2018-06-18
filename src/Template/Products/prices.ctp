@@ -38,7 +38,7 @@
                 <th class="model-table-header">Series</th>
                 <th class="model-table-header">Style</th>
                 <th class="model-table-header">Connections</th>
-                <th class="model-table-header">Base Price</th>
+                <th class="model-table-header prices-last">Base Price</th>
                 </thead>
 
                 <tbody>
@@ -55,7 +55,7 @@
             </table>
         </div>
     </div><!-- .series-model-table end -->
-    <?php } else { }?>
+    <?php } ?>
 
     <div class="row no-gutters">
         <div class="col-sm-6 mx-auto">

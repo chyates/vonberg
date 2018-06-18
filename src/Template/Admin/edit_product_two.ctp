@@ -33,6 +33,7 @@
                     foreach ($op->text_block_bullets as $line):
                         if ($op->header == "Features") {
                             echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+
                         }
                     endforeach;
                 endforeach;

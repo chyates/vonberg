@@ -242,7 +242,7 @@ ORDER BY
     public function new()
     {
         $this->loadModel('Parts');
-        $query = $this->Parts->find('all', array('limit'=>10, 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+        $query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         $this->set('parts',$query);
     }
