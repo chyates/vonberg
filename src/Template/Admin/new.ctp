@@ -3,13 +3,38 @@
  * @var \App\View\AppView $this
  * @var \App\Model\Entity\Dealer[]|\Cake\Collection\CollectionInterface $dealers
  */
+use Cake\Routing\Router;
 ?>
-<div id="cms-new-prod-main" class="inner-main col-md-10 mx-auto p-5">
-    <h1 class="page-title">Flow Regulating Valves</h1>
-    <h2 class="category-title">Flow Regulators</h2>
+<div id="cms-prod-cat-main" class="inner-main col-md-10 mx-auto p-5">
 
+    <div id="delete-check-modal" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="col">
+                        <h1 class="page-title">Delete File?</h1>
+                        <p>Are you sure you want to delete</p>
+                        <div id="partname"><P>FPO FILE TEXT</div>
+                        <p>from the system? This action cannot be undone.</p>
+                        <div class="btn-row">
+                            <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
+                            <?php
+                            echo $this->Form->postLink(
+                                'Delete',
+                                array('action' => 'partDelete'),
+                                array('id'=>'delete-confirm','class' => 'btn btn-primary'),
+                                false);
+        ?>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h1 class="page-title"><?= __($pagename) ?></h1>
     <div class="table-responsive">
-        <table id="cms-new-prod-table" class="model-table table table-striped">
+        <table id="cms-prod-cat-table" class="model-table table table-striped">
             <thead>
             <tr>
                 <th class="model-table-header">Series</th>
@@ -17,43 +42,55 @@
                 <th class="model-table-header">Description</th>
                 <th class="model-table-header">Last Updated</th>
                 <th class="model-table-header">New</th>
-            </tr>
+                </tr>
             </thead>
             <tbody>
-            <!-- This content should be replaced with products from the database that are tagged as new. For each category that the products have, the table headers should repeat -->
-            <tr>
-                <td class="model-table-data">1300 Series</td>
-                <td class="model-table-data">Inline</td>
-                <td class="model-table-data">Female NPTF Ports</td>
-                <td class="model-table-data">2017-11-13 11:55:09</td>
-
-                <!-- If the product is new, the checkbox should be checked and should show the time it has remaining to be new -->
-                <td class="model-table-data">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="new-status" value="54days"
-                               checked>
-                        <label class="form-check-label">54 days</label>
-                    </div>
-                </td>
-
-                <td class="model-table-data"><a href="">View</a><a href="">Edit</a><a href="/admin/edit-product">Duplicate</a><a href="">Delete</a></td>
-            </tr>
-            <tr>
-                <td class="model-table-data">1300 Series</td>
-                <td class="model-table-data">Inline</td>
-                <td class="model-table-data">Female NPTF Ports</td>
-                <td class="model-table-data">2017-11-13 11:55:09</td>
-                <td class="model-table-data">
-                    <div class="form-check form-check-inline">
-                        <input class="form-check-input" type="checkbox" name="new-status" value="54days"
-                               checked>
-                        <label class="form-check-label">54 days</label>
-                    </div>
-                </td>
-
-                <td class="model-table-data"><a href="">View</a><a href="/admin/edit-product">Edit</a><a href="">Duplicate</a><a href="">Delete</a></td>
-            </tr>
+                <?php foreach ($parts as $part): ?>
+                <tr>
+                    <td class="model-table-data"><?= h($part->series->name) ?></td>
+                    <td class="model-table-data"><?= h($part->style->name) ?></td>
+                    <td class="model-table-data"><?= h($part->connection->name) ?></td>
+                    <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
+                    <td class="model-table-data">
+                        <div class="form-check form-check-inline">
+                            <input class="form-check-input" type="checkbox" name="new-status" value="54days"
+                                   checked>
+                            <label class="form-check-label">54 days</label>
+                        </div>
+                    <td class="model-table-data actions">
+                        <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
+                        <a data-toggle="modal" data-target="#delete-check-modal">Duplicate</a>
+                        <?php
+                        echo $this->Html->link(
+                            $this->Html->tag('delete', 'Delete'),
+                            '#',
+                            array(
+                                'id'=>'btn-confirm',
+                                'data-toggle'=> 'modal',
+                                'data-file'=> $part->series->name,
+                                'data-target' => '#delete-check-modal',
+                                'data-action'=> Router::url(
+                                    array('action'=>'deletePart',$part->partID)
+                                ),
+                                'escape' => false),
+                            false);
+                        ?>
+                    </td>
+                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
+    </div><!-- .table-responsive end -->
+    <div class="paginator">
+        <ul class="pagination">
+            <?= $this->Paginator->first('<< ' . __('first')) ?>
+            <?= $this->Paginator->prev('< ' . __('previous')) ?>
+            <?= $this->Paginator->numbers() ?>
+            <?= $this->Paginator->next(__('next') . ' >') ?>
+            <?= $this->Paginator->last(__('last') . ' >>') ?>
+        </ul>
+        <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
-</div><!-- #cms-new-prod-main end -->
+</div>
+

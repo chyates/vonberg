@@ -55,7 +55,7 @@
             </table>
         </div>
     </div><!-- .series-model-table end -->
-    <?php } ?>
+    <?php } else { }?>
 
     <div class="row no-gutters">
         <div class="col-sm-6 mx-auto">
