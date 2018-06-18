@@ -1,8 +1,5 @@
 <?php
 namespace App\Model\Table;
-
-use Cake\ORM\Query;
-use Cake\ORM\RulesChecker;
 use Cake\ORM\Table;
 use Cake\Validation\Validator;
 
@@ -30,9 +27,18 @@ class TechnicalSpecsTable extends Table
     {
         parent::initialize($config);
 
-        $this->setTable('technical_specs');
-        $this->setDisplayField('title');
-        $this->setPrimaryKey('techID');
+        $this->table('technical_specs');
+        $this->displayField('title');
+        $this->primaryKey('techID');
+        $this->addBehavior('Josegonzalez/Upload.Upload', [
+            // You can configure as many upload fields as possible,
+            // where the pattern is `field` => `config`
+            //
+            // Keep in mind that while this plugin does not have any limits in terms of
+            // number of files uploaded per request, you should keep this down in order
+            // to decrease the ability of your users to block other requests.
+            'file' => []
+        ]);
     }
 
     /**
@@ -51,11 +57,6 @@ class TechnicalSpecsTable extends Table
             ->scalar('title')
             ->maxLength('title', 255)
             ->allowEmpty('title');
-
-        $validator
-            ->scalar('file')
-            ->maxLength('file', 255)
-            ->allowEmpty('file');
 
         return $validator;
     }

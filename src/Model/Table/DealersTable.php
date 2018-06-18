@@ -38,8 +38,6 @@ $options = array(
 	'escape' => '\\',
 	// Generates a Model.field headings row from the csv file
 	'headers' => true,
-	// If true, String $content is the data, not a path to the file
-	'text' => false,
 );
 
         $this->setTable('dealers');
@@ -134,4 +132,5 @@ $options = array(
 
         return $validator;
     }
+
 }

@@ -4,8 +4,8 @@
     </a>
     <div class="d-flex flex-row justify-content-end">
         <a class="header-link nav-link" href="/admin/new">New Products</a>
-        <p class="cms-top-nav mx-2 my-auto"><a href="/admin/admin/add-product">Add New Product</a></p>
-        <p class="cms-top-nav mx-2 my-auto"><a href="/admin/admin/generate-pdf">Generate Custom PDF</a></p>
+        <p class="cms-top-nav mx-2 my-auto"><a href="/admin/add-product">Add New Product</a></p>
+        <p class="cms-top-nav mx-2 my-auto"><a disabled>Generate Custom PDF</a></p>
         <p class="cms-top-nav mx-2 my-auto"><a href="/admin/model-pricing">Model Pricing</a></p>
         <p class="cms-top-nav mx-2 my-auto"><a href="/admin/download-stp">STP Download Report</a></p>
     </div>
@@ -69,6 +69,6 @@
     </div><!-- #resources-dropdown end -->
 
     <a class="cms-greyed nav-link nav-item" disabled>About</a>
-    <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
-    <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
+    <a class="cms-greyed nav-link nav-item" href="/dealers/">Find a Distributor</a>
+    <a class="cms-greyed nav-link nav-item" href="/admin/contacts/">Contact</a>
 </nav><!-- main-navbar end -->

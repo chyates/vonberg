@@ -1,7 +1,7 @@
 <div id="prices-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <div class="row no-gutters justify-content-lg-center justify-content-sm-between">
         <div class="col-lg-4 col-sm-6 mr-lg-3 px-lg-4">
-            <?php echo $this->Form->create(null, ['valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);?>
+            <?php echo $this->Form->create(null, ['type' => 'get','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);?>
             <?PHP $this->Form->unlockField('q');?>
             <?PHP $this->Form->unlockField('seriesID');?>
             <h1 class="page-header">Product Prices</h1>
@@ -13,8 +13,9 @@
             <div class="form-group">
                 <label>Select a Series</label>
                 <select class="form-control" name="seriesID">
+                    <option value="" selected="selected">Select from dropdown...</option>
                     <?php foreach($series as $item) { ?>
-                        <option value="<?php echo $item['id']; ?>"><?php echo $item['name']; ?></option>
+                        <option value="<?php echo $item['seriesID']; ?>"><?php echo $item['name']; ?></option>
                         <?php } ?>
                     </select>
                 </div>
@@ -27,7 +28,7 @@
         </div>
     </div>
 
-    <?php if (!$prices->isEmpty()) { ?>
+    <?php if (!empty($prices)) { ?>
     <!-- The following table should populate whichever data the user searched for -->
     <div class="series-model-table-row row mx-5 px-5">
         <div class="table-responsive col-10 mx-auto">
@@ -44,9 +45,9 @@
                 <?php foreach($prices as $price) { ?>
                 <tr>
                     <td class="model-table-data"><?php echo $price['model_text']; ?></td>
-                    <td class="model-table-data">FPO TEXT</td>
-                    <td class="model-table-data">FPO TEXT</td>
-                    <td class="model-table-data">FPO TEXT</td>
+                    <td class="model-table-data"><?php echo $price['series']; ?></td>
+                    <td class="model-table-data"><?php echo $price['style']; ?></td>
+                    <td class="model-table-data"><?php echo $price['conn']; ?></td>
                     <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $price['unit_price']); ?></td>
                 </tr>
                 <?php } ?>

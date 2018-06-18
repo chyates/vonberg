@@ -8,6 +8,7 @@
             <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'search']]);
             // You'll need to populate $authors in the template from your controller
             echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control', 'placeholder'=>'Search by product number or keyword','aria-label'=>'Search']);
+            echo $this->Form->button('', ['class'=>'form-button']);
             // Match the search param in your table configuration
             echo $this->Form->end(); ?>
         </div>
@@ -15,36 +16,36 @@
     <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
         <!-- Products Dropdown -->
         <div id="product-dropdown" class="dropdown">
-            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/products">Products</a>
+            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" href="/products">Products</a>
             <div class="dropdown-menu" aria-labelledby="product-dropdown">
                 <div class="row no-gutters justify-content-between">
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/1">Flow Regulating Valves</A></p>
-                        <p class="drop-content">Flow Regulators</p>
-                        <p class="drop-content">Flow Dividers & Combiners</p>
+                        <p class="drop-content"><a href="/products/type/6">Flow Regulators</a></p>
+                        <p class="drop-content"><a href="/products/type/8">Flow Dividers & Combiners</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/2">Directional Valves</A></p>
-                        <p class="drop-content">Check Valves - Poppet</p>
-                        <p class="drop-content">Check Valves - Ball</p>
-                        <p class="drop-content">Shuttle Valves</p>
+                        <p class="drop-content"><a href="/products/type/7">Check Valves - Poppet</a></p>
+                        <p class="drop-content"><a href="/products/type/9">Check Valves - Ball</a></p>
+                        <p class="drop-content"><a href="/products/type/10">Shuttle Valves</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/3">Safety Valves</A></p>
-                        <p class="drop-content">Velocity Fuses</p>
-                        <p class="drop-content">Flow Limiters</p>
+                        <p class="drop-content"><a href="/products/type/11">Velocity Fuses</a></p>
+                        <p class="drop-content"><a href="/products/type/12">Flow Limiters</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/5">Pressure Controls</A></p>
-                        <p class="drop-content">Counterbalance Valves</p>
-                        <p class="drop-content">Relief Valves - Direct Acting</p>
-                        <p class="drop-content">Relief Valves - Differential Area</p>
+                        <p class="drop-content"><a href="/products/type/15">Counterbalance Valves</a></p>
+                        <p class="drop-content"><a href="/products/type/13">Relief Valves - Direct Acting</a></p>
+                        <p class="drop-content"><a href="/products/type/14">Relief Valves - Differential Area</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/7">Cartridge Bodies</A></p>
-                        <p class="drop-content">2-Way Manifolds</p>
-                        <p class="drop-content">3-Way Manifolds</p>
-                        <p class="drop-content">3-Way T-Series Manifolds</p>
+                        <p class="drop-content"><a href="/products/type/24">2-Way Manifolds</a></p>
+                        <p class="drop-content"><a href="/products/type/22">3-Way Manifolds</a></p>
+                        <p class="drop-content"><a href="/products/type/19">3-Way T-Series Manifolds</a></p>
                         <p class="drop-content">Cavity Plugs</p>
                     </div>
                     <div class="col last-prod-drop">
@@ -56,7 +57,7 @@
         </div>
         <!-- Resources Dropdown -->
         <div id="resources-dropdown" class="dropdown">
-            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="/resources">Resources</a>
+            <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" href="/resources">Resources</a>
             <div class="dropdown-menu" aria-labelledby="product-dropdown">
                 <div class="row no-gutters justify-content-between">
                     <p class="drop-header"><A HREF="/resources/general-information">General Information</A></p>

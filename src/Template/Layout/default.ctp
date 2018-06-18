@@ -25,16 +25,28 @@
 </div><!-- site-container end -->
 
 <?= $this->fetch('script') ?>
-<?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 <script>
-    $(function(){
-        $("#geocomplete").geocomplete({ details: "form" })
-    });
+
 
     jQuery(document).ready(function($){
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');
         });
+        $('#markers_info .marker').hover(
+            // mouse in
+            function () {
+                // first we need to know which <div class="marker"></div> we hovered
+                var index = $('#markers_info .marker').index(this);
+                window.gMarkers[index].setIcon(highlightedIcon());
+            },
+            // mouse out
+            function () {
+                // first we need to know which <div class="marker"></div> we hovered
+                var index = $('#markers_info .marker').index(this);
+                window.gMarkers[index].setIcon(normalIcon());
+            }
+
+        );
 
         $("a.nav-link").click(function(){
             // var open = $(this).find("a.nav-link:not(.collapsed)");
@@ -51,6 +63,7 @@
             // }
         });
     })
+
 </script>
 </body>
 </html>

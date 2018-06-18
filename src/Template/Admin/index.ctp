@@ -6,7 +6,7 @@
 ?>
 <div id="cms-main-container" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">Content Management System</h1>
-    <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-product">Add New Product</a><a class="btn btn-primary mr-4" href="/admin/generate-pdf">Generate Custom PDF</a><a class="btn btn-primary" href="/admin/manage-resources">Manage Resources</a></p>
+    <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-product" disabled>Add New Product</a><a class="btn btn-primary mr-4" href="/admin/generate-pdf" disabled>Generate Custom PDF</a><a class="btn btn-primary" href="/admin/manage-resources" disabled>Manage Resources</a></p>
     <hr>
     
     <div id="cms-home-table" class="table-responsive">
@@ -26,20 +26,20 @@
                 The current file column will contain a link to existing CSVs, and the last updated column should start with the most recent first. -->
 
                 <tr>
-                    <td>ProductInformation.csv</td>
+                    <td><A HREF="/admin/priceExport">model_prices.csv</A></td>
                     <td>2017-11-08 13:46:02</td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>
                 </tr>
                 <tr>
-                    <td>DistributorInformation.csv</td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td><?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?></td>
+                    <td><?= date('m/d/Y', $dealer_time);?></td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>
                 </tr>
                 <tr>
                     <td>VonbergCatalogue.pdf</td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td><?= date('m/d/Y', $catalog_time);?></td>
                     <td><button type="button" class="btn btn-primary">Browse</button></td>
                     <td>No file chosen</td>
                 </tr>

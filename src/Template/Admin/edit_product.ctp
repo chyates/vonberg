@@ -1,8 +1,8 @@
 <div id="cms-edit-prod-main" class="inner-main col-md-10 mx-auto p-5">
     <!-- This page acts almost identically to the add product page except the 
     information for the current product should be auto-populated in each field. -->
-
-    <form id="edit-prod-form">
+    <?= $this->Form->create($part, ['id' => "edit-prod-form"]) ?>
+<!--    <form id="edit-prod-form">-->
         <h1 id="title-one" class="active-title page-title">Edit Product</h1>
         <h1 id="title-two" class="inactive-title page-title">Edit Product: Description and Features</h1>
         <h1 id="title-three" class="inactive-title page-title">Edit Product: Series Table</h1>
@@ -11,17 +11,21 @@
 
         <div id="one" class="active-slide form-slide col-md-5 mx-auto">
             <div class="form-group">
-                <label>Category</label>
-                <select class="form-control" name="product-category">
-                    <option value="Select..." selected disabled>Select...</option>
-                </select>
+                <?php echo $this->Form->input('categoryID',
+                    [
+                        'type' => 'select',
+                        'multiple' => false,
+                        'options' => $cat,
+                        'label' => 'Category',
+                        'class' => 'form-control'
+                    ]);?>
             </div>
 
             <div class="row no-gutters">
                 <div class="col-sm-6">
-                    <label>Product Status</label>
+                    <label>New Product Status</label>
                     <div class="form-check">
-                        <input type="checkbox" name="new-status" class="form-check-input" value="new" checked>
+                        <?= $this->Form->checkbox('new_list');?>
                         <label class="form-check-label">Yes</label>
                     </div>
                 </div>
@@ -35,28 +39,38 @@
 
             <label>Style</label>
             <div class="form-group">
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="product-style" class="form-check-input" value="inline">
-                    <label class="form-check-label">Inline</label>
-                </div>
-                <div class="form-check form-check-inline">
-                    <input type="radio" name="product-style" class="form-check-input" value="cartridge">
-                    <label class="form-check-label">Cartridge</label>
-                </div>
+                <?php echo $this->Form->control('styleID',
+                    [
+                        'templates'  =>[ 'inputContainer' => '<div class="input form-check form-check-inline {{type}}{{required}}">{{content}}</div>'],
+                        'type' => 'radio',
+                        'multiple' => false,
+                        'options' => $style,
+                        'label' => False,
+                        'class' => 'form-check-input'
+                    ]);?>
             </div>
 
             <div class="form-group">
-                <label>Type</label>
-                <select class="form-control" name="product-type">
-                    <option value="Select..." selected disabled>Select...</option>
-                </select>
+                <?php echo $this->Form->input('typeID',
+                    [
+                        'type' => 'select',
+                        'multiple' => false,
+                        'options' => $type,
+                        'label' => 'Series',
+                        'class' => 'form-control'
+                    ]);?>
             </div>
 
             <div class="form-group">
-                <label>Series</label>
-                <select class="form-control" name="product-series">
-                    <option value="Select..." selected disabled>Select...</option>
-                </select>
+                <?php echo $this->Form->input('seriesID',
+                    [
+                        'type' => 'select',
+                        'multiple' => false,
+                        'options' => $series,
+                        'label' => 'Series',
+                        'class' => 'form-control'
+                    ]);?>
+
             </div>
 
             <div class="form-group">
@@ -70,19 +84,36 @@
 
         <div id="two" class="inactive-slide form-slide col-md-5 mx-auto">
             <div class="form-group">
-                <label>Detail Description:</label>
-                <textarea class="form-control" name="product-detail-description" cols="50" rows="6"></textarea>
+                <?php echo $this->Form->control('description',['cols'=>50, 'rows'=>6,'class'=>'form-control','label'=>'Detail Description:']);?>
             </div>
 
             <div class="form-group w-bullet">
-                <label>Operation</label>
-                <input type="text" class="form-control" name="product-operation" placeholder="Enter bullet copy...">
-                <a class="add-bullet" href="">Add Bullet</a>
+
+                <div class="form-group">
+                    <label>Operation</label>
+                    <?php
+                    foreach ($opblock as $op):
+                        foreach ($op->text_block_bullets as $line):
+                            if ($op->header == "Operation") {
+                                echo $this->Form->input('feature_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                            }
+                            endforeach;
+                    endforeach;
+                    ?>
+                    <a class="add-bullet" href="">Add Bullet</a>
             </div>
 
             <div class="form-group w-bullet">
                 <label>Features</label>
-                <input type="text" class="form-control" name="product-features" placeholder="Enter bullet copy...">
+                <?php
+                foreach ($opblock as $op):
+                    foreach ($op->text_block_bullets as $line):
+                        if ($op->header == "Features") {
+                            echo $this->Form->input('feature_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                        }
+                    endforeach;
+                endforeach;
+                ?>
                 <a class="add-bullet" href="">Add Bullet</a>
             </div>
 

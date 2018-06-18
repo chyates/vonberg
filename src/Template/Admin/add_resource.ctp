@@ -3,34 +3,32 @@
     
     <div class="col-6 mx-auto">
 
-        <form id="add-rsrc-form">
-            <div class="form-group">
-                <label>Select Page</label>
-                <select class="form-control" name="rsrc-page">
-                    <option value="Select..." selected disabled>Choose resources page...</option>
-                    <option value="generalInformation">General Information</option>
-                    <option value="technicalDocumentation">Technical Documentation</option>
-                    <option value="applicationInformation">Application Information</option>
-                </select>
-            </div>
-            
-            <div class="form-group">
-                <label>File Title</label>
-                <input type="text" class="form-control" name="product-operation" placeholder="Enter title copy...">
-            </div>
-            
-            <div class="form-group">
-                <label id="up-label-addrsrc">Upload File</label>
-                <label class="fileContainer">Browse
-                    <input id="add-rsrc-file" type="file" class="form-control"/>
-                </label>
-                <p>No file chosen</p>
-            </div>
-            
-            <div class="form-group text-right">
-                <label class="sr-only">Submit</label>
-                <input id="add-rsrc-submit" type="submit" class="btn btn-primary" value="Add Resource">
-            </div>
-        </form>
+        <?= $this->Form->create('add-rsrc-form', array('url' => array('action' => 'add-resource'),'enctype' => 'multipart/form-data'));
+        ?>
+        <div class="form-group">
+            <?=  $this->Form->select(
+            'resource',
+            [
+            ['value' => '2', 'text' => 'General Information'],
+            ['value' => '1', 'text' => 'Technical Documentation'],
+            ['value' => '3', 'text' => 'Application Information'],
+            ],['class'=>'form-control']
+            );?>
+        </div>
+
+        <div class="form-group">
+            <?php echo $this->Form->input('title', ['class'=>'form-control']);?>
+        </div>
+
+        <div class="form-group">
+            <label id="up-label-addrsrc">Upload File</label>
+            <label class="fileContainer">Browse
+                <?php echo $this->Form->input('file', ['type' => 'file', 'class'=>'form-control']);?>
+            </label>
+        </div>
+<?php
+        echo $this->Form->button('Upload CSV File', ['class' => 'form-control btn btn-lg btn-success1 btn-block padding-t-b-15']);
+        echo $this->Form->end();?>
+
     </div>
 </div><!-- #cms-manage-resources-main end -->

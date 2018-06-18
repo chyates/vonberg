@@ -16,21 +16,14 @@
                 </tr>
             </thead>
             <tbody>
+            <?php
+            foreach ($specs as $spec): ?>
                 <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td><?php echo $spec->file;?></td>
+                    <td><?php echo $spec->title;?></td>
+                    <td><?php echo $spec->last_updated;?></td>
                 </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
-                <tr>
-                    <td>FileName.pdf</td>
-                    <td>File Title Displayed on Site</td>
-                    <td>2017-11-08 13:46:02</td>
-                </tr>
+            <?php endforeach;?>
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->

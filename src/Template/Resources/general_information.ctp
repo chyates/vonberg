@@ -7,8 +7,11 @@
         <p class="product-info">Vonberg understands that each application has its own unique requirements. See how our products are designed and tuned for these specific applications.</p> -->
         
         <div class="resource-block p-sm-4 p-3 my-4">
-            <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 1</a></p>
-            <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 2 with even longer title that wraps around to second line</a></p>
+            <?php
+            foreach ($specs as $spec): ?>
+                <p class="resource-link"><span class="pr-3">
+                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->file;?> target="_blank""><?php echo $spec->title;?></a></p>
+            <?php endforeach;?>
         </div>
         
         <h3 class="product-name">Don't see what you're looking for?</h3>

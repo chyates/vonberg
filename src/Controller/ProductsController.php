@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Cake\Datasource\ConnectionManager;
+
 
 
 class ProductsController extends AppController
@@ -23,7 +25,7 @@ class ProductsController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['index','catalog','view','new','search', 'customization', 'prices']);
+        $this->Auth->allow(['index','catalog','view','new','search', 'customization', 'prices','type']);
         $this->viewBuilder()->setLayout('default');
 
     }
@@ -108,7 +110,7 @@ class ProductsController extends AppController
 
     }
 
-    public function types($type = null) 
+    public function type($type = null)
     {
         $spaceType = str_replace('-', ' ', $type);
         $upperSpace = ucwords($spaceType);
@@ -124,8 +126,9 @@ class ProductsController extends AppController
         }
 
         $type2 = TableRegistry::get('Types')->get($upperSpace);
-        // $cat2 = TableRegistry::get('Categories')->get($cat);
-        // $textblocks = TableRegistry::get('TextBlocks')->find();
+        $cat = TableRegistry::get('Categories')->find();
+        $this->set('category', $cat);
+// $textblocks = TableRegistry::get('TextBlocks')->find();
         // $specs = TableRegistry::get('Specifications')->find();
 
 
@@ -156,26 +159,91 @@ class ProductsController extends AppController
 
     public function prices()
     {
-        $seriesID = $this->request->getQuery('seriesID');
-        $q = $this->request->getQuery('q');
-        if (empty($seriesID)) {
-            $this->loadModel('ModelPrices');
+        $seriesID = $this->request->query('seriesID');
+        $q = $this->request->query('q');
+        $rows=NULL;
+   /*     if (is_null($seriesID) && empty($q)) {
+            // break out here
             $series = TableRegistry::get('Series')->find();
-
-            $query = $this->ModelPrices
-                // Use the plugins 'search' custom finder and pass in the
-                // processed query params
-                ->find('search', ['search' => $this->request->getQueryParams()]);
-            // You can add extra things to the query if you need to
-            //->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows'=>['ModelPrices']]]);
-
-            $this->set('prices', $this->paginate($query));
             $this->set(compact('series'));
+            $rows = NULL;
+        }*/
+        if ($q) {
+            $conn = ConnectionManager::get('default');
+            $like_where = 'mp.model_text LIKE "%' . $q . '%"';
+            $query = 'SELECT p.partID, s.name as series, st.name as style, c.name as conn, ty.name as tipe, mp.unit_price, mp.model_text
+            FROM
+              model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
+            LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
+            LEFT JOIN model_prices as mp ON mp.model_text = mtr.model_table_row_text
+            LEFT JOIN series as s ON p.seriesID = s.seriesID
+            LEFT JOIN styles as st ON p.styleID = st.styleID
+            LEFT JOIN connections as c ON p.connectionID = c.connectionID
+            LEFT JOIN types as ty ON p.typeID = ty.typesID
+            WHERE
+            ' . $like_where . '
+            ORDER BY
+                mp.model_text,st.name';
+            $stmt = $conn->execute($query);
+            $rows = $stmt->fetchAll('assoc');
+        } elseif ($seriesID) {
+            $conn = ConnectionManager::get('default');
+            $like_where = 'mp.model_text LIKE "%' . $q . '%"';
+
+            $query = 'SELECT
+    p.partID,
+    s.name as series,
+    st.name as style,
+    c.name as conn,
+    ty.name as tipe,
+    mp.unit_price,
+    mp.model_text  
+FROM
+    series as s,
+    styles as st,
+    connections as c,
+    parts as p,
+    types as ty,
+    model_prices as mp,
+    model_table_rows as mtr,
+    model_tables as mt
+WHERE
+	s.seriesID = '.$seriesID.'
+AND
+	s.seriesID = p.seriesID
+AND
+	p.partID = mt.partID
+AND
+	mt.model_tableID = mtr.model_tableID
+AND
+	mtr.model_table_row_text = mp.model_text
+AND
+    p.styleID = st.styleID
+AND
+    p.connectionID  = c.connectionID
+AND
+	p.typeID = ty.typesID
+ORDER BY
+    mp.model_text,s.name';
+            $stmt = $conn->execute($query);
+            $rows = $stmt->fetchAll('assoc');
         }
+        $this->set('prices', $rows);
+        $this->loadModel('Series');
+        $matchingTasks= $this->Series->association('Parts')->find()
+            ->select(['seriesID'])// id of product in Tasks Table
+            ->distinct();
+
+        $series = $this->Series->find()
+            ->where(['seriesID IN' => $matchingTasks]);
+        $this->set(compact('series'));
     }
 
     public function new()
     {
-        
+        $this->loadModel('Parts');
+        $query = $this->Parts->find('all', array('limit'=>10, 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+
+        $this->set('parts',$query);
     }
 }
