@@ -481,7 +481,13 @@
         {
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('Parts');
-            $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.new_list'=>True],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+            $query =  $this->paginate($this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
+
+            // $query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+
+            // $this->loadModel('Parts');
+            // $this->set('parts',$query);
+
             $this->set('parts', $query);
             $this->set('pagename', 'New Products');
 

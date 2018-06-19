@@ -86,6 +86,10 @@
             // }
         });
 
+        var form = $("#find-distributor-main .form-inline");
+        form.find("div.input.text").addClass('col-8');
+        form.find("div.submit").addClass('col-4');
+
         // Marker hover for locator map
         $('#markers_info .marker').hover(
             // mouse in

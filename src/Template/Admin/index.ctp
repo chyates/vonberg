@@ -9,7 +9,7 @@
     <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-product" disabled>Add New Product</a><a class="btn btn-primary mr-4" href="/admin/generate-pdf" disabled>Generate Custom PDF</a><a class="btn btn-primary" href="/admin/manage-resources" disabled>Manage Resources</a></p>
     <hr>
     
-    <div id="cms-home-table" class="table-responsive">
+    <div id="cms-home-table" class="table-responsive rsrc-table col-md-10 mx-auto">
         <h2 class="category-title">CSV and Catalogue Files</h2>
         <table class="table">
             <thead>
@@ -21,27 +21,38 @@
             </thead>
 
             <tbody>
-                <!-- This content should be replaced with database logic.
-                
-                The current file column will contain a link to existing CSVs, and the last updated column should start with the most recent first. -->
-
                 <tr>
-                    <td><A HREF="/admin/priceExport">model_prices.csv</A></td>
+                    <td><a href="/admin/priceExport">model_prices.csv</a></td>
                     <td>2017-11-08 13:46:02</td>
-                    <td><button type="button" class="btn btn-primary">Browse</button></td>
-                    <td>No file chosen</td>
+                    <td>
+                        <label class="fileContainer">Browse
+                            <input type="file" class="form-control">
+                        </label>
+                        <p class="file-text">No file chosen</p>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
+                    </td>
                 </tr>
                 <tr>
                     <td><?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?></td>
                     <td><?= date('m/d/Y', $dealer_time);?></td>
-                    <td><button type="button" class="btn btn-primary">Browse</button></td>
-                    <td>No file chosen</td>
+                    <td>
+                        <label class="fileContainer">Browse
+                            <input type="file" class="form-control">
+                        </label>
+                        <p class="file-text">No file chosen</p>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
+                    </td>
                 </tr>
                 <tr>
-                    <td>VonbergCatalogue.pdf</td>
+                    <td><a href="/img/pdfs/VONBERG-Product_Catalog.pdf" target="_blank">VonbergCatalogue.pdf</a></td>
                     <td><?= date('m/d/Y', $catalog_time);?></td>
-                    <td><button type="button" class="btn btn-primary">Browse</button></td>
-                    <td>No file chosen</td>
+                    <td>
+                        <label class="fileContainer">Browse
+                            <input type="file" class="form-control">
+                        </label>
+                        <p class="file-text">No file chosen</p>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
+                    </td>
                 </tr>
             </tbody>
         </table>

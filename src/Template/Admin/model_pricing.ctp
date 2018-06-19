@@ -20,9 +20,12 @@
                         <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>
                         <div class="form-group">
                             <label class="sr-only" for="csv"> CSV </label>
-                            <?php echo $this->Form->input('csv', ['type'=>'file','class' => 'form-control', 'label' => false, 'placeholder' => 'csv upload',]); ?>
+                            <label class="fileContainer">Browse
+                                <?php echo $this->Form->input('csv', ['type'=>'file','class' => 'form-control', 'label' => false]); ?>
+                            </label>
                         </div>
-                        <button type="submit" class="btn btn-default"> Upload </button>
+                        <p class="file-text">No file chosen</p>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <?= $this->Form->end() ?>
                     </td>
                 </tr>
