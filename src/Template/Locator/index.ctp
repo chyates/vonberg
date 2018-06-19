@@ -9,7 +9,7 @@
             $this->Form->unlockField('lat');
             echo $this->Form->hidden('lng', array('id' => 'lng'));
             $this->Form->unlockField('lng');
-            echo $this->Form->submit('Find', array('class' => 'btn btn-default'));
+            echo $this->Form->submit('Search', array('class' => 'btn btn-primary'));
             echo $this->Form->end();
             ?>
             <p class="miles-text">Results within 200 miles</p>

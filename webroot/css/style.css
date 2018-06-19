@@ -1284,6 +1284,10 @@ p.resource-link a {
     font-size: 11px;
 }
 
+#contact-form #user-role {
+    display: block;
+}
+
 #contact-form button {
     padding: 10px 58px;
 }
@@ -1559,6 +1563,7 @@ p.resource-link span img.img-fluid {
 
 .series-model-table-row .table-responsive .model-table.table .prices-last {
     background-color: #F9F9F7;
+    text-align: center;
 }
 
 /* +++ PRODUCT PRICES: TABLET +++ */

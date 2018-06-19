@@ -8,33 +8,9 @@
             </div>
         </div><!-- .contact-left end -->
         <div class="col-sm-6 contact-right">
-            <h1 class="page-header">Contact Us</h1>
+            <h1 class="page-header">Thank You!</h1>
+<P>We've received your message. Someone will contact you as soon as possible.</P>
 
-            <!-- Contact form begin -->
-            <?php 
-                echo $this->Form->create('Contact', array(
-                    'id' => 'contact-form',
-                    'class' => 'needs-validation col-10',
-                    'novalidate'
-                ));
-                echo $this->Form->control('name', ['label' => 'Full Name*', 'type' => 'text', 'class' => 'form-control','required']);
-                echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
-                echo $this->Form->control('phone', ['label' => 'Phone*', 'type' => 'tel', 'class' => 'form-control', 'required']);
-                echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'email', 'class' => 'form-control','required']);
-                echo $this->Form->control('role', ['label' => 'What is your role?', 'type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
-                echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']);
-            ?>
-
-                <p class="text-left req-text my-auto">Character limit: 50</p>
-                <div class="g-recaptcha mb-3" data-sitekey="6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y"></div>
-                <div class="row no-gutters">
-                    <div class="col-6 my-auto">
-                        <p class="text-left req-text my-auto">*required fields</p>
-                    </div>
-                    <?php echo $this->Form->submit(); ?>
-                </div>
-                
-               <?php echo $this->Form->end(); ?><!-- Contact form end -->
         </div><!-- .contact-right end -->
     </div><!-- .row no-gutters end -->
 </div><!-- #contact-main-container end -->
@@ -69,7 +45,7 @@ jQuery(document).ready(function(){
     });
 
 // add form-group class to trigger validations
-    $("#contact-form div.input:not(div.input.checkbox)").addClass('form-group');
+    $("#contact-form div.input").addClass('form-group');
     $("#contact-form div.checkbox").addClass('form-check form-check-inline');
 
 // format checkboxes + submit row
