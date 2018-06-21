@@ -1,5 +1,6 @@
 <div id="contact-main-container" class="inner-main col-lg-8 col-12 mx-auto p-md-5 p-3">
     <div class="row no-gutters px-md-5">
+        <h1 id="m-header" class="page-header">Contact Us</h1>
         <div class="col-lg-3 col-sm-5 mr-sm-5 py-2 contact-left">
             <div class="contact-block p-4">
                 <h3 class="product-name">Vonberg Valve, Inc.</h3>
@@ -8,7 +9,7 @@
             </div>
         </div><!-- .contact-left end -->
         <div class="col-sm-5 contact-right">
-            <h1 class="page-header">Contact Us</h1>
+            <h1 id="dt-header" class="page-header">Contact Us</h1>
 
             <!-- Contact form begin -->
             <?php 

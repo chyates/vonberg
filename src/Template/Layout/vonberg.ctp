@@ -59,6 +59,16 @@
             $(this).toggleClass('open');
         });
 
+        if($("#find-distributor-main").find(".left-search .search-block").find(".empty-query").css('display') == 'block') {
+            $(this).css('background-color', '#F9F9F7');
+        } else {
+            $(this).css('background-color', '#FFFFFF');
+        }
+
+        $(".marker").click(function(){
+            $(this).toggleClass('marker-unselected', 'marker-selected');
+        })
+
         $("a.prod-trigger.nav-link").click(function(){
             var arrow = $(this).find("span").find("img.mob-arrow");
             if( !$("#prod-drop").hasClass('show') ) {

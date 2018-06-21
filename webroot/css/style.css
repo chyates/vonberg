@@ -167,6 +167,10 @@ a:hover {
 
 /* === FORM ELEMENTS: GLOBAL / DESKTOP === */
 
+form {
+    font-family: "Poppins", sans-serif;
+}
+
 .form-control:focus {
     box-shadow: none;
 }
@@ -703,6 +707,12 @@ a.btn.btn-primary {
 
 /* +++ HOMEPAGE: MOBILE +++ */
 
+@media (min-width: 740px) {
+    #homepage-cards #second {
+        margin: 0 30px;
+    }
+}
+
 @media (max-width: 739px){
 
     #hero-slider {
@@ -771,7 +781,6 @@ a.btn.btn-primary {
 
 .landing-img-block {
     width: 361px;
-    /* height: 241px; */
 }
 
 .landing-list-row {
@@ -781,7 +790,7 @@ a.btn.btn-primary {
 #landing-main-container .learn-more-block {
     width: auto;
     padding: 3px;
-    height: 241px;
+    height: 217px;
     border: 1px solid #DDDDDD;
     background-color: rgba(235, 236, 230, 0.5)
 }
@@ -792,7 +801,6 @@ a.btn.btn-primary {
 
 .learn-more-block .btn.btn-primary {
     padding: 6px 30px;
-    margin: 10px auto;
 }
 
 /* +++ PRODUCTS LANDING PAGE: TABLET +++ */
@@ -853,7 +861,7 @@ a.btn.btn-primary {
 
 /* === SINGLE PRODUCT STYLES: GLOBAL / DESKTOP === */
 
-@media (min-width: 992px) {
+@media (min-width: 740px) {
     #single-prod-main-container .series-model-table-row {
         display: block;
     }
@@ -1190,7 +1198,6 @@ p.resource-link a {
     height: 550px!important;
     padding: 0!important;
     display: flex;
-    background-color: #F9F9F7;
     border: 1px solid #DDDDDD;
 }
 
@@ -1198,8 +1205,16 @@ p.resource-link a {
     width: 100%;
 }
 
-.marker {
+.marker-selected {
+    background-color: #FFFFFF;
+}
+
+.marker-unselected {
     background-color: #F9F9F7;
+}
+
+.marker {
+    background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
     /* margin: 10px 0px; */
     padding: 2vh;
@@ -1332,7 +1347,27 @@ p.resource-link a {
 /* +++ CONTACT: MOBILE +++ */
 
 @media (max-width: 739px) {
+    #contact-main-container #m-header {
+        display: block;
+    }
 
+    #contact-main-container #dt-header {
+        display: none;
+    }
+
+    #contact-main-container .contact-left .contact-block {
+        margin: 0 auto;
+    }
+}
+
+@media (min-width: 740px) {
+    #contact-main-container #m-header {
+        display: none;
+    }
+
+    #contact-main-container #dt-header {
+        display: block;
+    }
 }
 
 /* === ABOUT: GLOBAL / DESKTOP === */
@@ -1521,6 +1556,16 @@ p.resource-link span img.img-fluid {
 
 /* === PRODUCT PRICES + RESULTS: GLOBAL / DESKTOP === */
 
+@media (min-width: 740px) {
+    #prices-main-container .series-model-table-row {
+        display: block;
+    }
+    
+    #prices-main-container #mob-prices-tables {
+        display: none;
+    }
+}
+
 #prices-main-container .btn {
     /* line-height: 18px; */
     padding: 10px 20px;
@@ -1603,6 +1648,64 @@ p.resource-link span img.img-fluid {
     #prices-main-container.inner-main .col-lg-4 img.img-fluid {
         width: auto;
         /* height: auto; */
+    }
+}
+
+/* +++ PRODUCT PRICES: MOBILE +++ */
+
+@media (max-width: 739px) {
+    #prices-main-container .series-model-table-row {
+        display: none;
+    }
+
+    #mob-prices-tables {
+        display: block;
+        padding: 0;
+    }
+    
+    #mob-prices-tables .mobile-table-row {
+        display: flex;
+        flex-direction: row;
+    }
+
+    #mob-prices-tables .mob-hidden {
+        display: none;
+    }
+
+    #mob-prices-tables p.model-table-data a {
+        padding-left: 5vw;
+        text-decoration: underline;
+    }
+
+    #mob-prices-tables p.model-table-data,
+    #mob-prices-tables p.model-table-header {
+        margin: 0;
+    }
+
+    #mob-prices-tables div.mob-hidden {
+        margin: 0 2vw;
+    }
+
+    #mob-prices-tables p.top-data,
+    #mob-prices-tables .mob-hidden p.model-table-data:last-child,
+    #mob-prices-tables .mob-hidden p.model-table-header:last-child {
+        padding: 4px 0;
+    }
+
+    #mob-prices-tables p.top-data span {
+        padding-left: 3vw;
+    }
+
+    #mob-prices-tables .top-data span img.mob-arrow {
+        width: 8px;
+    }
+
+    #mob-prices-tables p.top-data:not(:first-child) {
+        border-top: 1px solid #DDDDDD;
+    }
+
+    #mob-prices-tables p.model-table-header {
+        font-weight: bold;
     }
 }
 

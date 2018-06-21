@@ -19,7 +19,7 @@
             echo '<div id="markers_info">
             ';
             foreach ($query as $dealer): ?>
-                <div class="marker">
+                <div class="marker marker-unselected">
                 <h4><?= h($dealer->name) ?></h4>
                 <div class="row no-gutters">
                     <div class="col-8">
@@ -98,3 +98,9 @@
         </div>
     </div>
 </div><!-- #find-distributor-main end -->
+
+<script type="text/javascript">
+    // jQuery(document).ready(function() {
+        
+    // })
+</script>

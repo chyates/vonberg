@@ -21,7 +21,7 @@
             </div>
         </div>
 
-        <div class="homepage-single-card card flex-column my-sm-0 my-3">
+        <div id="second" class="homepage-single-card card flex-column my-sm-0 my-3">
             <img class="card-img-top" src="/img/Manifold-homepage.png">
             <div class="card-body">
                 <p class="card-text">We design and manufacture integrated manifolds using our own cartridge products as well as standard market cartridge valves, and a full line of cartridge cavity plugs.</p>

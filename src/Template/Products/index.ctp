@@ -1,6 +1,6 @@
 <div id="landing-main-container" class="inner-main col-lg-10 col-md-12 mx-auto">
         <div class="row no-gutters">
-            <div class="col-lg-10 col-12 mx-lg-auto my-lg-5 my-md-3">
+            <div class="col-lg-11 col-12 mx-lg-auto my-lg-5 my-md-3">
                 <h1 class="page-title">Our products</h1>
                 <div class="landing-list-row row">
                     <div class="col-md-4 col-sm-6 col-12">

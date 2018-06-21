@@ -49,12 +49,6 @@ class ContactController extends AppController
         $this->loadModel('StpFile');
         $this->loadModel('Parts');
 
-        $file_table = TableRegistry::get('StpFile');
-
-        // instantiate empty STP user and STP file objects:
-        $emp=$this->StpUsers->newEntity();
-        $association = $this->StpFile->newEntity();
-
         // extract part id from url:
         $part_id = '';
         $curr_url = $this->request->here;
@@ -65,41 +59,58 @@ class ContactController extends AppController
                 }
             }
         }
+        $final_id = (int)$part_id;
+
+        $query =  $this->Parts->find('all', ['conditions' => ['Parts.partID' => $final_id], 'contain' => ['ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]])->toList();
+        // $results = $query->all();
+        // $models = $results->toList();
+        $id_array = array();
+        $file_array = array();
+        $file_path = '/img/parts/' . $part_id . '/';
+
+        foreach($query->model_tables->model_table_rows as $file_id) {
+            if($file_id->order_num == 1) {
+                array_push($id_array, $file_id->model_table_rowID);
+            }
+        }
+
+        for($x = 0; $x < count($id_array); $x++) {
+            $file_path .= $id_array[$x];
+            $file_path .= '.stp';
+            array_push($file_array, $file_path);
+        }
+
+        $file_table = TableRegistry::get('StpFile');
+
+        // instantiate empty STP user and STP file objects:
+        $emp=$this->StpUsers->newEntity();
+        // $association = $this->StpFile->newEntity();
 
         if($this->request->is('post')) {
             // update STP user object
             $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
-            $model_count = 0;
 
             if($result=$this->StpUsers->save($emp)) {
                 $data['response'] = "Success: data saved";
-                // for($i = 0; $i < $this->request->data.length; $i++) {
-                //     if($this->request->data[$i]['model'] !== '0') {
-                //         $association->set(
-
-                //         )
-                //     }
-                // }
                 //echo $result->id;
                 // Send email to client:
-                // $attachment = 
-                // $email = new Email();
-                // $email->setFrom(['cyates@trunkclub.com' => 'My Site'])
-                //     ->setTo('chyatesil@gmail.com')
-                //     ->setSubject('Testing STP email functionality')
-                //     ->attachments()
-                //     ->send('Example message');
+                // $attachments = $file_array;
+                $email = new Email('default');
+                $email->from(['cyates@trunkclub.com' => 'Carolyn Yates'])
+                    ->to('chyatesil@gmail.com')
+                    ->subject('STP: Dummy4 attachment')
+                    ->attachments([
+                            'stp.stp' => [
+                            'file' => 'vvi.impactpreview.com/img/parts/14/10923.STP',
+                            'mimetype' => 'application/step'
+                            ]
+                        ])
+                    ->send();
             }
             else {
                 $data['response'] = "Error: some error";
                 //print_r($emp);
             }
-            $association->set([
-                'stp_userID' => $emp->$stp_userID,
-                'partID' => $part_id,
-                'modelID' => 67140
-            ]);
-            $file_table->save($association);
         }
 
         $this->set(compact('data'));
