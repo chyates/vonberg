@@ -12,7 +12,11 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><A HREF="/admin/priceExport">model_prices.csv</A></td>
+                    <td>
+                        <span class="pr-2">
+                            <img class="img-fluid" src="/img/download.svg"/>
+                        </span>
+                        <A HREF="/admin/priceExport">model_prices.csv</A></td>
                     <td>
                        Date here
                     </td>

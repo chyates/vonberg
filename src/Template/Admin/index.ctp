@@ -22,7 +22,12 @@
 
             <tbody>
                 <tr>
-                    <td><a href="/admin/priceExport">model_prices.csv</a></td>
+                    <td>
+                        <span class="pr-2">
+                            <img class="img-fluid" src="/img/download.svg"/>
+                        </span>
+                        <a href="/admin/priceExport">model_prices.csv</a>
+                    </td>
                     <td>2017-11-08 13:46:02</td>
                     <td>
                         <label class="fileContainer">Browse
@@ -33,7 +38,12 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?></td>
+                    <td>
+                        <span class="pr-2">
+                            <img class="img-fluid" src="/img/download.svg"/>
+                        </span>    
+                        <?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?>
+                    </td>
                     <td><?= date('m/d/Y', $dealer_time);?></td>
                     <td>
                         <label class="fileContainer">Browse
@@ -44,7 +54,11 @@
                     </td>
                 </tr>
                 <tr>
-                    <td><a href="/img/pdfs/VONBERG-Product_Catalog.pdf" target="_blank">VonbergCatalogue.pdf</a></td>
+                    <td>
+                        <span class="pr-2">
+                            <img class="img-fluid" src="/img/download.svg"/>
+                        </span>    
+                        <a href="/img/pdfs/VONBERG-Product_Catalog.pdf" target="_blank">VonbergCatalogue.pdf</a></td>
                     <td><?= date('m/d/Y', $catalog_time);?></td>
                     <td>
                         <label class="fileContainer">Browse

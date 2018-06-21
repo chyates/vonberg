@@ -10,9 +10,10 @@
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
-                    <?php echo $this->Form->create('stp_form', array(
-                        'id' => 'stp_form',
+                    <?php echo $this->Form->create('get-stp-form', array(
+                        'id' => 'get-stp-form',
                         'class' => 'needs-validation',
+                        'novalidate',
                         'inputDefaults' => array(
                             'label' => false,
                             'div' => false
@@ -24,45 +25,35 @@
                     <p>Which model(s) are you interested in?*</p>
                     <?php $mobRow = 1;
                     $rowID = 1;
-                    $width = sizeof($part->model_table->model_table_headers);
-                    foreach ($part->model_table->model_table_rows as $row):
+                    $width = sizeof($part->model_table->model_table_headers); ?>
+                    <div id="check-container">
+                        <?php foreach ($part->model_table->model_table_rows as $row):
                          if ($mobRow === 1) {
-                            echo '<div class="form-check form-check-inline">';
-                            echo $this->Form->control('model', ['type' => 'checkbox', 'value'=> $row->model_table_rowID, 'class' => 'form-check-input', 'label' => ['text' => $row->model_table_row_text, 'class' => 'form-check-label'], 'id' => $row->model_table_rowID]);
-                            echo '</div>';
-                        }
-                        if ($mobRow >= $width){
-                            $mobRow=0;
-                        }
-                        $mobRow++;
-                    endforeach;
-                    ?>
+                             echo '<div class="form-check check-req">';
+                             echo $this->Form->control('model', ['type' => 'checkbox', 'value'=> $row->model_table_rowID, 'class' => 'form-check-input', 'label' => ['text' => 'Model ' . $row->model_table_row_text, 'class' => 'form-check-label'], 'id' => $row->model_table_rowID]);
+                             echo '</div>';
+                            }
+                            if ($mobRow >= $width){
+                                $mobRow=0;
+                            }
+                            $mobRow++;
+                        endforeach;
+                        ?>
+                    </div>
+                    <p id="check-validity" class="invalid-feedback" style="display: none;">
+                        Please select at least one model file.
+                    </p>
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
-                    <div class="form-group">
-                        <?php echo $this->Form->control('first_name', ['label' => 'First Name*', 'type' => 'text', 'class' => 'form-control']); ?>
-                        <div class="invalid-feedback">
-                            Please enter your first name.
-                        </div>
-                    </div>
 
-                    <div class="form-group">
-                        <?php echo $this->Form->control('last_name', ['label' => 'Last Name*', 'type' => 'text', 'class' => 'form-control']); ?>
-                        <div class="invalid-feedback">
-                            Please enter your last name.
-                        </div>
-                    </div>
+                        <?php echo $this->Form->control('first_name', ['label' => 'First Name*', 'type' => 'text', 'class' => 'form-control', 'required']); ?>
 
-                    <div class="form-group">
+                        <?php echo $this->Form->control('last_name', ['label' => 'Last Name*', 'type' => 'text', 'class' => 'form-control', 'required']); ?>
+
                        <?php echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);?>
 
-                    </div>
 
-                    <div class="form-group">
-                        <?php echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'text', 'class' => 'form-control']);?>
-                        <div class="invalid-feedback">
-                            Please provide a valid email address.
-                        </div>
-                    </div>
+                        <?php echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'text', 'class' => 'form-control', 'required']);?>
+
 
                     <div class="form-group row no-gutters">
                         <div class="col-6 my-auto">
@@ -92,6 +83,18 @@
 
 <div id="single-prod-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5">
     <div id="single-prod-main" class="row no-gutters mx-lg-5 px-lg-5 py-lg-4">
+        <?php 
+            $curr_url = $this->request->here;
+            $seg = '';
+            for($q = 0; $q < strlen($curr_url); $q++) {
+                if($curr_url[$q] === 'w') {
+                    for($x = $q + 2; $x < strlen($curr_url); $x++) {
+                        $seg .= $curr_url[$x];
+                    }
+                }
+            }
+            // echo $seg;
+        ?>
         <div class="single-prod-left-col col-sm-7 col-12 px-lg-3">
             <div class="left-info">
                 <h1 class="page-title"><?= h($part->series->name);?></h1>
@@ -278,7 +281,7 @@
         </div>
     </div>
 
-    <div class="legalese row no-gutters mx-sm-5 px-sm-5 px-3 pb-sm-5 pb-3">
+    <div class="legalese row no-gutters mx-sm-5 px-sm-5 ;px-3 pb-sm-5 pb-3">
         <p class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
@@ -292,12 +295,35 @@
     window.addEventListener('load', function() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName('needs-validation');
+        var checkboxes = document.querySelectorAll('.check-req');
+        var checkStatus = [];
+        var showDiv = document.getElementById('check-validity');
+        
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
                 console.log("Hit form validation function");
                 if (form.checkValidity() === false) {
                     console.log("Form is invalid, check");
+                    // loop through checkboxes to find if any have been selected
+                    for(var i = 0; i < checkboxes.length; i++) {
+                        var divs = checkboxes[i].children;
+                        for(var j = 0; j < divs.length; j++) {
+                            var labels = divs[j].children;
+                            for(var k = 0; k < labels.length; k++) {
+                                var inputs = labels[k].children;
+                                for(var m = 0; m < inputs.length; m++) {
+                                    if(inputs[m].checked) {
+                                        checkStatus.push(inputs[m].checked);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    if (checkStatus.length < 1) {
+                        showDiv.style.display = 'block';
+                    }
                     event.preventDefault();
                     event.stopPropagation();
                 }
@@ -308,10 +334,15 @@
   })();
 
     $(document).ready(function(){
-        $("#stp_form").submit(function(e){
+        var feedback = '<p class="invalid-feedback">This field is required.</p>';
+        $("input:not(input[type=hidden])").each(function(index) {
+            $(this).after(feedback)
+        });
+        $("#get-stp-form .input").not("#get-stp-form .input.checkbox").addClass('form-group');
+        $("#get-stp-form").submit(function(e){
             e.preventDefault();
-            var myform = $("#stp_form");
-            var fd = myform.serialize();
+            var myform = $("#get-stp-form");
+            var fd = myform.serializeArray();
             $.ajax({
                 type: 'POST',
                 encoding:"UTF-8",
@@ -334,6 +365,7 @@
                     //do sth
                 },
                 success: function (response) {
+                    // console.log("Model information");
                     $(".modal_message").html(data);
                 }
             });

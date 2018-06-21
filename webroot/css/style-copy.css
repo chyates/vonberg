@@ -211,17 +211,14 @@ a:hover {
     outline: none;
     box-shadow: none;
   }
-
   .btn:active:focus {
     outline: none;
     box-shadow: none;
   }
-
   button:focus {
     outline: none;
     box-shadow: none;
   }
-
   button:active:focus {
     outline: none;
     box-shadow: none;
@@ -297,6 +294,20 @@ a.btn.btn-primary {
 
 #mobile-header {
     display: none !important;
+}
+.mobile-hidden {
+    display: none !important;
+}
+.mobile-search-button {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 70px;
+    cursor: pointer;
+    top: 31px;
+}
+.mobile-search-bar input {
+    width: 50vw!important;
 }
 
 /* ************************* */
@@ -486,10 +497,10 @@ a.btn.btn-primary {
 
     .sticky-top .navbar{
         padding: 0px;
+        height: 90px;
     }
 
     .navbar-brand{
-        top: .5rem;
         left: 1rem;
         position: relative;
     }
@@ -1201,6 +1212,14 @@ p.resource-link a {
     padding: 10px 14px;
 }
 
+#find-distributor-main .form-inline .col-8 {
+    padding: 0;
+}
+
+#find-distributor-main .form-inline .col-8 .form-control {
+    width: 100%;
+}
+
 #find-distributor-main .left-search .miles-text {
     font-size: 15px;
     color: #017D44;
@@ -1251,9 +1270,16 @@ p.resource-link a {
 
 }
 
+#contact-main-container .row.no-gutters.px-md-5 {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 .contact-left .contact-block {
     border: 1px solid #DDDDDD;
     background-color: #F9F9F7;
+    max-width: 270px;
 }
 
 .form-show, .confirm-show {
@@ -1271,6 +1297,10 @@ p.resource-link a {
 
 #contact-form .form-group .col-6 p {
     font-size: 11px;
+}
+
+#contact-form #user-role {
+    display: block;
 }
 
 #contact-form button {
@@ -1476,11 +1506,13 @@ p.resource-link span img.img-fluid {
 /* === PRODUCT PRICES + RESULTS: GLOBAL / DESKTOP === */
 
 #prices-main-container .btn {
+    /* line-height: 18px; */
     padding: 10px 20px;
 }
 
 #prices-main-container img {
     box-sizing: border-box;
+    /* height: 282px; */
     width: 382px;
 }
 
@@ -1509,11 +1541,13 @@ p.resource-link span img.img-fluid {
 }
 
 #prices-results-main-container .btn {
+    /* line-height: 18px; */
     padding: 10px 20px;
 }
 
 #prices-results-main-container img {
     box-sizing: border-box;
+    /* height: 282px; */
     width: 382px;
     border: 1px solid #CCCCCC;
 }
@@ -1552,6 +1586,7 @@ p.resource-link span img.img-fluid {
 @media (max-width: 991px) {
     #prices-main-container.inner-main .col-lg-4 img.img-fluid {
         width: auto;
+        /* height: auto; */
     }
 }
 
@@ -1601,75 +1636,9 @@ p.resource-link span img.img-fluid {
 /* ** CMS SITE STYLES ** */
 /* ********************* */
 
-/* === CMS HOMEPAGE: GLOBAL / DESKTOP === */
+/* === TABLE STYLES: GLOBAL / DESKTOP === */
 
-#cms-site-container .btn.btn-primary {
-    padding: 10px 20px;
-}
-
-.cms-top-nav a {
-    color: #425460;
-}
-
-.cms-top-nav a:hover {
-    color: #425460;
-    text-decoration: underline;
-}
-
-#main-navbar .cms-greyed {
-    color: #7FBDA1;
-}
-
-#cms-main-container .btn.btn-primary {
-    padding: 1% 4%;
-}
-
-#cms-main-container p {
-    margin: 3% 0;
-}
-
-#cms-main-container hr {
-    width: 750px;
-    background-color: #979797;
-}
-
-#cms-main-container h2,
-#cms-home-table th,
-.rsrc-table.table-responsive {
-    text-transform: uppercase;
-}
-
-#cms-home-table th, #cms-home-table td {
-    padding-left: 0;
-    padding-right: 0;
-}
-
-#cms-home-table th,
-.rsrc-table.table-responsive .table th {
-    color: #017D44;
-    font-size: 16px;
-    font-weight: 600;
-    line-height: 18px;
-    text-transform: uppercase;
-    border: none;
-}
-
-#cms-home-table td,
-.rsrc-table.table-responsive .table td {
-	color: #425460;
-	font-family: Poppins;
-	font-size: 14px;
-    line-height: 21px;
-    border-top: none;
-    border-bottom: #979797;
-}
-
-#cms-home-table .btn.btn-primary {
-    padding: 4% 12%;
-}
-
-/* +++ CMS PRODUCT CATEGORY: GLOBAL / DESKTOP +++ */
-
+/* Model Table */
 .model-table.table-striped>tbody>tr:nth-child(even)>td, 
 .model-table.table-striped>tbody>tr:nth-child(even)>th {
    background-color: #F9F9F7;
@@ -1695,29 +1664,107 @@ p.resource-link span img.img-fluid {
     text-decoration: underline;
 }
 
-/* === ADD / EDIT PRODUCT: GLOBAL / DESKTOP === */
-
-.active-title,
-.active-slide {
-    display: block;
+/* Resource Table */
+.rsrc-table.table-responsive .table th,
+.rsrc-table.table-responsive .table td {
+    padding: 1vh 0;
 }
 
-.inactive-title,
-.inactive-slide {
-    display: none;
+#cms-manage-resources-main .rsrc-table.table-responsive .table td {
+    padding: 3vh 0;
+}
+
+.rsrc-table.table-responsive .table th {
+    color: #017D44;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 18px;
+    text-transform: uppercase;
+    border: none;
+}
+
+.rsrc-table.table-responsive .table td {
+	color: #425460;
+	font-family: Poppins;
+	font-size: 14px;
+    line-height: 21px;
+    border-top: none;
+    border-bottom: #979797;
+    text-transform: none;
+    vertical-align: middle;
+}
+
+.rsrc-table.table-responsive .table tbody tr:not(:last-child) {
+    border-bottom: 1px solid #979797;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive input[type=text] {
+    width: 90%;
+}
+
+#cms-edit-resource-main > .rsrc-table.table-responsive > .table > tbody > tr > td:not(:last-child),
+#cms-main-container #cms-home-table.rsrc-table.table-responsive > .table > tbody > tr > td:not(:last-child) {
+    vertical-align: middle;
+}
+
+#cms-edit-resource-main > .rsrc-table.table-responsive > .table > tbody > tr > td:last-child,
+#cms-main-container #cms-home-table.rsrc-table.table-responsive > .table > tbody > tr > td:last-child, {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive .table td p,
+#cms-main-container #cms-home-table.rsrc-table.table-responsive .table td p.file-text {
+    display: inline-block;
+    vertical-align: top;
+    margin-bottom: 0;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive .table p a {
+    text-transform: uppercase;
+}
+
+#cms-edit-resource-main .rsrc-table.table-responsive .table p a,
+#cms-home-table.rsrc-table.table-responsive .table td a,
+.rsrc-table.table-responsive .table td a {
+    text-decoration: underline;
+    color: #425460;
+}
+
+/* STP Table */
+#cms-stp-down-table .model-table-data p {
+    margin-bottom: 0;
+}
+
+.table-responsive #cms-stp-down-table.model-table td.model-table-data{
+    border-bottom: 1px solid #979797;
+}
+
+/* === FILE UPLOAD BUTTON: GLOBAL / DESKTOP === */
+
+label.fileContainer {
+    overflow: hidden;
+    position: relative;
+    font-size: 13px;
+    font-weight: bold;
+    border-radius: 3px;
+    padding: 1.5vh 2vw;
+    text-transform: uppercase;
 }
 
 #cms-site-container label.fileContainer,
 #cms-add-resource-main label.fileContainer {
-    overflow: hidden;
-    position: relative;
     border: 1px solid #017D44;
-    font-size: 13px;
-    font-weight: bold;
     color: #017D44;
-    border-radius: 3px;
-    padding: 4% 10%;
     background-color: rgba(204,204,204,0);
+}
+
+#cms-edit-resource-main label.fileContainer,
+#cms-model-price-main label.fileContainer {
+    color: #FFFFFF;
+    background-color: #017D44;
 }
 
 .fileContainer input[type=file] {
@@ -1728,6 +1775,66 @@ p.resource-link span img.img-fluid {
     right: 0;
     text-align: center;
     top: 0;
+}
+
+/* === CMS NAVIGATION: GLOBAL / DESKTOP === */
+
+.cms-top-nav a {
+    color: #425460;
+}
+
+.cms-top-nav a:hover {
+    color: #425460;
+    text-decoration: underline;
+}
+
+#main-navbar .cms-greyed {
+    color: #7FBDA1;
+}
+
+/* === CMS HOMEPAGE: GLOBAL / DESKTOP === */
+
+#cms-site-container .btn.btn-primary {
+    padding: 10px 20px;
+}
+
+#cms-main-container .btn.btn-primary {
+    padding: 1% 4%;
+}
+
+#cms-main-container p.text-center {
+    margin: 5vh 0;
+}
+
+#cms-main-container hr {
+    width: 750px;
+    background-color: #979797;
+    margin-bottom: 3vh;
+}
+
+#cms-main-container h2 {
+    text-transform: uppercase;
+}
+
+/* === CMS PRODUCT CATEGORY: GLOBAL / DESKTOP === */
+
+
+/* === CMS STP DOWNLOAD: GLOBAL / DESKTOP === */
+
+#cms-stp-download-main.inner-main {
+    padding: 6vh 6vw;
+}
+
+/* === ADD / EDIT PRODUCT: GLOBAL / DESKTOP === */
+
+.active-title,
+.active-slide {
+    display: block;
+}
+
+.inactive-title,
+.inactive-slide {
+    display: none;
 }
 
 .back.btn.btn-primary {
@@ -1747,65 +1854,13 @@ a.add-bullet {
     text-decoration: underline;
 }
 
+/* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
+
 #cms-manage-resources-main p.text-center a.btn.btn-primary {
     padding: 1% 4%;
 }
 
-.rsrc-table.table-responsive .table tbody tr:not(:last-child) {
-    border-bottom: 1px solid #979797;
-}
-
-.rsrc-table.table-responsive .table th,
-.rsrc-table.table-responsive .table td {
-    padding: 1vh 0;
-}
-
-.rsrc-table.table-responsive .table td {
-    text-transform: none;
-}
-
 /* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
-
-#cms-edit-resource-main label.fileContainer,
-#cms-model-price-main label.fileContainer {
-    overflow: hidden;
-    position: relative;
-    font-size: 13px;
-    font-weight: bold;
-    text-transform: uppercase;
-    color: #FFFFFF;
-    background-color: #017D44;
-    border-radius: 3px;
-    padding: 2% 4%;
-}
-
-#cms-edit-resource-main .rsrc-table.table-responsive input[type=text] {
-    width: 90%;
-}
-
-#cms-edit-resource-main .rsrc-table.table-responsive td:not(:last-child) {
-    vertical-align: middle;
-}
-
-#cms-edit-resource-main .rsrc-table.table-responsive td:last-child {
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#cms-edit-resource-main td p,
-#cms-model-price-main td p {
-    display: inline-block;
-    vertical-align: top;
-    margin-bottom: 0;
-}
-
-#cms-edit-resource-main .rsrc-table.table-responsive p a {
-    text-decoration: underline;
-    color: #425460;
-    text-transform: uppercase;
-}
 
 #cms-add-resource-main label.fileContainer {
     text-transform: uppercase;
@@ -1825,7 +1880,13 @@ a.add-bullet {
     padding: 10px 22px;
 }
 
-/* +++ DELETE MODAL: GLOBAL / DESKTOP +++ */
+/* === MODEL PRICING: GLOBAL / DESKTOP === */
+
+#cms-model-price-main .form-inline div.form-group {
+    margin-right: 1vw;
+}
+
+/* === DELETE MODAL: GLOBAL / DESKTOP === */
 
 #delete-check-modal .modal-content {
     padding: 3vh 3vw;

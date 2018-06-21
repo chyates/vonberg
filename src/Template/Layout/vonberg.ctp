@@ -107,17 +107,6 @@
 
         );
 
-        $("#contact-submit").click(function(e){
-          e.preventDefault();
-          $.ajax({
-            type: 'POST',
-            url: '/contact/new',
-            data: $('#contact-form').serialize()
-          }).done(function(data){
-              console.log(data);
-          });
-      })
-
         var carousel = $('#hero-slider');
         var backgrounds = [
         'url(/img/Homepage-hero-1@2x-min.png)', 

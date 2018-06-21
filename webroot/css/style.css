@@ -1002,6 +1002,22 @@ a.btn.btn-primary {
     text-align: center;
 }
 
+#get-stp-form p + p {
+    margin: 0;
+}
+
+#get-stp-form #check-container {
+    padding-left: 8vw;
+}
+
+#get-stp-form div.form-check {
+    margin: 2vh 0;
+}
+
+#get-stp-form p.invalid-feedback {
+    text-align: left;
+}
+
 #get-stp-form p a {
     font-size: 14px;
     line-height: 18px;
@@ -1638,6 +1654,11 @@ p.resource-link span img.img-fluid {
 
 /* === TABLE STYLES: GLOBAL / DESKTOP === */
 
+/* Shared Styles */
+td span img.img-fluid {
+    width: 15px;
+}
+
 /* Model Table */
 .model-table.table-striped>tbody>tr:nth-child(even)>td, 
 .model-table.table-striped>tbody>tr:nth-child(even)>th {
@@ -1874,6 +1895,10 @@ a.add-bullet {
 #add-rsrc-form .form-group p {
     display: inline-block;
     vertical-align: top;
+}
+
+#add-rsrc-form div.submit {
+    text-align: right;
 }
 
 #add-rsrc-form #add-rsrc-submit {

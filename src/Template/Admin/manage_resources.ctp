@@ -21,7 +21,11 @@
                 <?php
                 foreach ($generals as $spec): ?>
                     <tr>
-                        <td><a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
+                        <td>
+                            <span class="pr-2">
+                                <img class="img-fluid" src="/img/download.svg"/>
+                            </span>
+                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
                         <td><?php echo $spec->title;?></td>
                         <td><?php echo $spec->last_updated;?></td>
                     </tr>
@@ -43,7 +47,11 @@
                 <?php
                 foreach ($technicals as $spec): ?>
                     <tr>
-                        <td><a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
+                        <td>
+                            <span class="pr-2">
+                                <img class="img-fluid" src="/img/download.svg"/>
+                            </span>
+                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
                         <td><?php echo $spec->title;?></td>
                         <td><?php echo $spec->last_updated;?></td>
                     </tr>
@@ -66,7 +74,11 @@
                 <?php
                 foreach ($applications as $spec): ?>
                     <tr>
-                        <td><a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
+                        <td>
+                            <span class="pr-2">
+                                <img class="img-fluid" src="/img/download.svg"/>
+                            </span>
+                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
                         <td><?php echo $spec->title;?></td>
                         <td><?php echo $spec->last_updated;?></td>
                     </tr>

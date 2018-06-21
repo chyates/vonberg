@@ -268,6 +268,11 @@ $cakeDescription = 'Vonberg Dev Site';
                 $(homeUpdate).show();
             }
         });
+
+        $(".rsrc-table").find("input[type=text].form-control.form-control-sm").keypress(function() {
+            console.log("Title has been changed");
+            $(this).parent().siblings("td").find(".update-button").show();
+        })
     });
     </script>
 

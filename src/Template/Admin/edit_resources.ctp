@@ -48,9 +48,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
                     </td>
                 </tr>
@@ -62,9 +60,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
                     </td>
                 </tr>
@@ -76,9 +72,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
                     </td>
                 </tr>
@@ -105,9 +99,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
@@ -119,9 +111,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
@@ -133,9 +123,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
@@ -162,9 +150,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
@@ -176,10 +162,8 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="">Delete</a></p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
                     </td>
                 </tr>
                 <tr>
@@ -190,9 +174,7 @@
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
