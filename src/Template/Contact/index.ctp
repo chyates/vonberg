@@ -39,11 +39,12 @@
                     </div>
                 </div>
                 <?php echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']);
+
             ?>
 
                 <div class="row no-gutters">
                     <div class="col-6 my-auto">
-                        <p class="text-left req-text my-auto">*required fields</p>
+                        <p class="text-left my-auto">*required fields</p>
                     </div>
                     <?php echo $this->Form->submit(); ?>
                 </div>

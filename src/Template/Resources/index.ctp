@@ -5,7 +5,8 @@
             <div class="row no-gutters justify-content-center">
                 <!-- <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
                     <h2>General Information</h2>
-                    <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/Vonberg_Product_Tech_Bulletin_Check-Valve.pdf" target="_blank">Technical Bulletin - Check Valve</a></p>
+                    <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 1</a></p>
+                    <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/pdf">Downloadable PDF 2 with even longer title that wraps around to second line</a></p>
                     <a class="btn btn-primary my-4" href="/resources/general-information">View All</a>
                 </div> -->
                 <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
@@ -32,6 +33,7 @@
                     <a class="btn btn-primary my-4" href="/resources/application-information">View All</a>
                 </div>
 
+
                 <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
                     <h2>Base Product Prices</h2>
                     <?php echo $this->Form->create(null, ['type' => 'get','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);?>
@@ -40,13 +42,15 @@
                     <label>Enter Model Number</label>
                     <input type="text" class="form-control" name="product-model">
                     <p class="text-center">or</p>
-                    <label>Select a Series</label>
-                    <select class="form-control" name="product-series">
-                        <option value="" selected="selected">Select from dropdown...</option>
-                        <?php foreach($series as $item) { ?>
-                            <option value="<?php echo $item['seriesID']; ?>"><?php echo $item['name']; ?></option>
-                        <?php } ?>
-                    </select>
+                    <div class="form-group">
+                        <label>Select a Series</label>
+                        <select class="form-control" name="seriesID">
+                            <option value="" selected="selected">Select from dropdown...</option>
+                            <?php foreach($series as $item) { ?>
+                                <option value="<?php echo $item['seriesID']; ?>"><?php echo $item['name']; ?></option>
+                            <?php } ?>
+                        </select>
+                    </div>
                     <input type="submit" class="btn btn-primary my-4" value="Get Prices"/>
                     <?php echo $this->Form->end(); ?>
                 </div>
