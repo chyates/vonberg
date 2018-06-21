@@ -24,14 +24,18 @@
         </div>
 
         <div class="col-lg-4 col-sm-5">
+        <?php if(!empty($prices)) { ?>
+            <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
+        <?php } else { ?>
             <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
+        <?php } ?>
         </div>
     </div>
 
     <?php if (!empty($prices)) { ?>
     <!-- The following table should populate whichever data the user searched for -->
-    <div class="series-model-table-row row mx-5 px-5">
-        <div class="table-responsive col-10 mx-auto">
+    <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
+        <div class="table-responsive col-lg-10 col-12 mx-auto">
             <table class="model-table table">
                 <thead>
                 <th class="model-table-header">Model</th>
@@ -57,9 +61,35 @@
     </div><!-- .series-model-table end -->
     <?php } ?>
 
+    <!-- Mobile model table/dropdowns -->
+    <div id="mob-prices-tables" class="col-12 my-3">
+        <?php foreach($prices as $mob_price): ?>
+        <div class="row no-gutters">
+            <div class="col-4">
+                <p class="top-data model-table-header">Model</p>
+                <div class="mob-hidden">
+                    <p class="model-table-header">Series</p>
+                    <p class="model-table-header">Style</p>
+                    <p class="model-table-header">Connections</p>
+                    <p class="model-table-header">Base Price</p>
+                </div>
+            </div>
+            <div class="col-8">
+                <p class="top-data model-table-data"><?php echo $mob_price['model_text']; ?><a class="drop-toggle" href="">View More</a><span class=""><img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/></span></p>
+                <div class="mob-hidden">
+                    <p class="model-table-data"><?php echo $mob_price['series']; ?></p>
+                    <p class="model-table-data"><?php echo $mob_price['style']?></p>
+                    <p class="model-table-data"><?php echo $mob_price['conn']; ?></p>
+                    <p class="model-table-data"><?php echo money_format('$%.2n', $mob_price['unit_price']); ?></p>
+                </div>
+            </div>
+        </div>
+        <?php endforeach; ?>
+    </div>
+
     <div class="row no-gutters">
         <div class="col-sm-6 mx-auto">
-            <p class="text-center mb-sm-5 my-3"><a href="/contact">Contact us</a> for quantity discounts!</p>
+            <p class="text-center mb-sm-5"><a href="/contact">Contact us</a> for quantity discounts!</p>
             <h3 class="product-name text-center">Terms and Conditions</h3>
             <ul>
                 <li class="mb-2">Base prices shown are for standard catalog products only, without any optional features. For pricing involving valve with optional features, please contact Vonberg</li>
@@ -73,3 +103,25 @@
         </div>
     </div>
 </div><!-- #prices-main end -->
+
+<script>
+    jQuery(document).ready(function($) {
+        $("a.drop-toggle").click(function(e) {
+            e.preventDefault();
+            var eachClass = $(this).closest("p.model-table-data").next(".mob-hidden").attr("class");
+            var res = eachClass.replace(' ', '.');
+            var leftDiv = $(this).closest(".col-8").prev(".col-4").find("div").filter('.' + res);
+            if(leftDiv.css('display') == "none") {
+                $(this).closest("p.model-table-data").next('.mob-hidden').show();
+                leftDiv.show();
+                $(this).text("View Less");
+                $(this).next("span").find("img.mob-arrow").attr('src', '/img/Arrow-Up.svg');
+            } else {
+                $(this).closest("p.model-table-data").next('.mob-hidden').hide();
+                leftDiv.hide();
+                $(this).text("View More");
+                $(this).next("span").find("img.mob-arrow").attr('src', '/img/Arrow-Down.svg');
+            }
+        });
+    })
+</script>

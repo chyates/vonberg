@@ -22,7 +22,7 @@ $cakeDescription = 'Vonberg Dev Site';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
-
+    <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.png">
 
     <title>Vonberg Valve, Inc.</title>
 </head>
@@ -247,14 +247,32 @@ $cakeDescription = 'Vonberg Dev Site';
         });
 
         $(".update-button").hide();
-        $(".fileContainer input[type=file]").change(function() {
+        $(".fileContainer").find("input[type=file]").change(function() {
             var filename = $(this).val();
-            var toChange = $(this).closest('td').children('.file-text');
-            var nextUpdate = $(this).closest('td').children('.update-button');
 
-            $(toChange).html(filename);
-            $(nextUpdate).show();
+            var toChange = $(this).closest('.form-group').next('p.file-text');
+            var homeChange = $(this).closest('.fileContainer').next('p.file-text');
+            console.log("Found home change", homeChange.html());
+
+            var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
+            var homeUpdate = $(this).closest('.fileContainer').siblings('.update-button');
+            console.log("Found home update", homeUpdate.html());
+
+            if(toChange.length > 0) {
+                console.log("Inside first if check");
+                $(toChange).html(filename);
+                $(nextUpdate).show();
+            } else if(homeChange) {
+                console.log("Inside else check");
+                $(homeChange).html(filename);
+                $(homeUpdate).show();
+            }
         });
+
+        $(".rsrc-table").find("input[type=text].form-control.form-control-sm").keypress(function() {
+            console.log("Title has been changed");
+            $(this).parent().siblings("td").find(".update-button").show();
+        })
     });
     </script>
 

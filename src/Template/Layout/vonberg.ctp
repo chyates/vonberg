@@ -59,6 +59,16 @@
             $(this).toggleClass('open');
         });
 
+        if($("#find-distributor-main").find(".left-search .search-block").find(".empty-query").css('display') == 'block') {
+            $(this).css('background-color', '#F9F9F7');
+        } else {
+            $(this).css('background-color', '#FFFFFF');
+        }
+
+        $(".marker").click(function(){
+            $(this).toggleClass('marker-unselected', 'marker-selected');
+        })
+
         $("a.prod-trigger.nav-link").click(function(){
             var arrow = $(this).find("span").find("img.mob-arrow");
             if( !$("#prod-drop").hasClass('show') ) {
@@ -86,6 +96,10 @@
             // }
         });
 
+        var form = $("#find-distributor-main .form-inline");
+        form.find("div.input.text").addClass('col-8');
+        form.find("div.submit").addClass('col-4');
+
         // Marker hover for locator map
         $('#markers_info .marker').hover(
             // mouse in
@@ -102,17 +116,6 @@
             }
 
         );
-
-        $("#contact-submit").click(function(e){
-          e.preventDefault();
-          $.ajax({
-            type: 'POST',
-            url: '/contact/new',
-            data: $('#contact-form').serialize()
-          }).done(function(data){
-              console.log(data);
-          });
-      })
 
         var carousel = $('#hero-slider');
         var backgrounds = [

@@ -9,21 +9,17 @@
             $this->Form->unlockField('lat');
             echo $this->Form->hidden('lng', array('id' => 'lng'));
             $this->Form->unlockField('lng');
-            echo $this->Form->submit('Find', array('class' => 'btn btn-default'));
+            echo $this->Form->submit('Search', array('class' => 'btn btn-primary'));
             echo $this->Form->end();
             ?>
             <p class="miles-text">Results within 200 miles</p>
             <div class="search-block mt-2 p-4 d-flex" style="height: 300px; overflow-y : scroll;">
-                <!-- Default to this block of text if nothing has been searched -->
-                <!-- <p class="mx-auto my-auto search-text-default">Use the search bar above to find distributors in your area.</p> -->
-
-                <!-- Else, populate search results like this: -->
             <?php
                 if (!empty($query)) {
             echo '<div id="markers_info">
             ';
             foreach ($query as $dealer): ?>
-                <div class="marker">
+                <div class="marker marker-unselected">
                 <h4><?= h($dealer->name) ?></h4>
                 <div class="row no-gutters">
                     <div class="col-8">
@@ -103,3 +99,8 @@
     </div>
 </div><!-- #find-distributor-main end -->
 
+<script type="text/javascript">
+    // jQuery(document).ready(function() {
+        
+    // })
+</script>

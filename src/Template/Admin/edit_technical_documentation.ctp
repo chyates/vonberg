@@ -35,15 +35,17 @@
                 <tr>
                 <tr>
                     <td><input type="text" class="form-control form-control-sm" value="<?php echo $spec->title;?>"></td>
-                    <td><?php echo $spec->file;?></td>
+                    <td>
+                        <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank">
+                            <?php echo $spec->file;?>
+                        </a>
+                    </td>
                     <td class="justify-content-between">
                         <label class="fileContainer">Browse
                             <input type="file" class="form-control"/>
                         </label>
                         <p class="file-text">No file chosen</p>
-                        <label class="update-button fileContainer">Update
-                            <input type="file" class="form-control"/>
-                        </label>
+                        <button type="submit" class="btn btn-primary update-button">Replace</button>
                         <P><?php
                             echo $this->Html->link('Delete',array('controller'=>'admin','action'=>'resourceDelete',$spec->techID),
                                 array('confirm'=>'Are you sure you want to delete the image?'));
