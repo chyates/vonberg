@@ -3,31 +3,33 @@
     
     <div class="col-6 mx-auto">
 
-        <?= $this->Form->create('add-rsrc-form', array('url' => array('action' => 'add-resource'),'enctype' => 'multipart/form-data'));
+        <?= $this->Form->create('add-rsrc-form', array('url' => array('action' => 'add-resource'),'enctype' => 'multipart/form-data', 'id' => 'add-rsrc-form'));
         ?>
         <div class="form-group">
+            <label>Select Page</label>
             <?=  $this->Form->select(
             'resource',
             [
-            ['value' => '2', 'text' => 'General Information'],
-            ['value' => '1', 'text' => 'Technical Documentation'],
-            ['value' => '3', 'text' => 'Application Information'],
+                ['value' => '2', 'text' => 'General Information'],
+                ['value' => '1', 'text' => 'Technical Documentation'],
+                ['value' => '3', 'text' => 'Application Information'],
             ],['class'=>'form-control']
             );?>
         </div>
 
         <div class="form-group">
-            <?php echo $this->Form->input('title', ['class'=>'form-control']);?>
+            <?php echo $this->Form->input('title', ['label' => ['text' => 'File Title'], 'class'=>'form-control']);?>
         </div>
 
         <div class="form-group">
             <label id="up-label-addrsrc">Upload File</label>
             <label class="fileContainer">Browse
-                <?php echo $this->Form->input('file', ['type' => 'file', 'class'=>'form-control']);?>
+                <?php echo $this->Form->input('file', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
             </label>
+            <p class="file-text">No file chosen</p>
         </div>
 <?php
-        echo $this->Form->button('Upload CSV File', ['class' => 'form-control btn btn-lg btn-success1 btn-block padding-t-b-15']);
+        echo $this->Form->submit('Add Resource', ['class' => 'btn btn-primary', 'id' => 'add-rsrc-submit']);
         echo $this->Form->end();?>
 
     </div>

@@ -41,35 +41,22 @@ class ProductsController extends AppController
         $this->set('category', $cat);
 
     }
+
     public function view($id=null)
     {
         $this->loadModel('Parts');
         $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
         $this->set('part', $part);
-
     }
+
     public function pricing($id=null)
     {
         $this->loadModel('Parts');
         $query =  $this->Parts->find('all', ['conditions' => ['Parts.seriesID' => $id], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
         $part = $query->first();
         $this->set('part', $part);
-
-        // $this->loadModel('ModelPrices');
-        // $series = TableRegistry::get('Series')->find();
-
-        // $query = $this->ModelPrices
-            // Use the plugins 'search' custom finder and pass in the
-            // processed query params
-            // ->find('search', ['search' => $this->request->getQueryParams()]);
-            // You can add extra things to the query if you need to
-            //->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
-
-        // $this->set('prices', $this->paginate($query));
-        // $this->set(compact('series'));
-
-
     }
+
     public function get_cat()
     {
         return TableRegistry::get('Categories')->find();
@@ -81,7 +68,6 @@ class ProductsController extends AppController
         return TableRegistry::get('Series')->find();
 
     }
-
 
     public function catalog($cat = null)
     {

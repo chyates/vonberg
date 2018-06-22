@@ -1,4 +1,4 @@
-<div id="cms-stp-download-main" class="inner-main col-md-10 mx-auto p-5">
+<div id="cms-stp-download-main" class="inner-main col-md-10 mx-auto">
     <h1 class="page-title">STP Download Report</h1>
     <p class="text-center"><a class="btn btn-primary" href="/admin/stpExport" download>Download As CSV</a></p>
 
@@ -9,13 +9,14 @@
                     <th class="model-table-header">Name</th>
                     <th class="model-table-header">Email</th>
                     <th class="model-table-header">Company</th>
-                    <th class="model-table-header">Requested</th>
+                    <th class="model-table-header">Last Login</th>
                     <th class="model-table-header">Files Acquired</th>
                 </tr>
             </thead>
             <tbody>
                 <!-- This content should be replaced with dynamically generated content from the database. -->
-                <?php foreach ($stp_users as $user): ?>
+                <?php foreach ($stp_users as $user): 
+                    if( $user->first_name !== '') { ?>
                     <tr>
                         <td class="model-table-data"><?= h($user->first_name) ?> <?= h($user->last_name) ?></td>
                         <td class="model-table-data"><?= h($user->email) ?></td>
@@ -24,14 +25,15 @@
 
                         <!-- If the user downloaded more than one file, they should populate with line breaks within the table data tag -->
                         <td class="model-table-data">
-                            <UL>
-                            <?php foreach ($user->stp_file as $model): ?>
-                            <LI><?= h($model->model_table_row->model_table_row_text) ?></LI>
-                            <?php endforeach; ?>
-                            </UL>
+                            <?php foreach ($user->stp_file as $model): 
+                                if(isset($model->model_table_row->model_table_row_text)) { ?>
+                                    <p>MODEL <?= h($model->model_table_row->model_table_row_text) ?></p>
+                                <?php }
+                            endforeach; ?>
                         </td>
                     </tr>
-                <?php endforeach; ?>
+                <?php } 
+                endforeach; ?>
             </tbody>
         </table>
         <div class="paginator">
