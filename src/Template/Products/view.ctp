@@ -10,6 +10,7 @@
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
+                <h1 class="page-header">Get STP Files</h1>
                     <?php echo $this->Form->create('get-stp-form', array(
                         'id' => 'get-stp-form',
                         'class' => 'needs-validation',
@@ -20,7 +21,6 @@
 
                         )
                     )); ?>
-                    <h1 class="page-header">Get STP Files</h1>
                     <p>You will receive an email with the files attached.</p>
                     <p>Which model(s) are you interested in?*</p>
                     <?php $mobRow = 1;

@@ -11,7 +11,7 @@
                         <a class="btn btn-primary" href="/contact">Contact Us Today</a>
                     </div>
                 </div>
-                <div class="customize-right col-lg-4 col-sm-5 col-8 mx-sm-0 mx-auto my-sm-0 my-4">
+                <div class="customize-right col-lg-4 col-sm-5 col-10 mx-sm-0 mx-auto my-sm-0 my-4">
                     <div class="example-block">
                         <h3 class="product-name">Examples</h3>
                         <ul>
