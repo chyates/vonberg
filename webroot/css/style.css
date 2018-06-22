@@ -598,9 +598,6 @@ a.btn.btn-primary {
 /* === HOMEPAGE STYLES: GLOBAL / DESKTOP === */
 
 @media (min-width: 992px){
-    #home-container {
-        padding: 30px 40px;
-    }
 
     #hero-slider {
         height: 420px;
@@ -614,6 +611,7 @@ a.btn.btn-primary {
 #home-container {
     background-color: #ffffff;
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
+    padding: 30px 40px;
 }
 
 .slider-container {
@@ -1205,16 +1203,15 @@ p.resource-link a {
     width: 100%;
 }
 
-.marker-selected {
+.marker-unselected {
     background-color: #FFFFFF;
 }
 
-.marker-unselected {
+.marker-selected {
     background-color: #F9F9F7;
 }
 
 .marker {
-    background-color: #FFFFFF;
     border-bottom: 1px solid #DDDDDD;
     /* margin: 10px 0px; */
     padding: 2vh;
@@ -1297,8 +1294,14 @@ p.resource-link a {
 
 /* === CONTACT: GLOBAL / DESKTOP === */
 
-@media (min-width: 992px) {
+@media (min-width: 740px) and (max-width: 1050px) {
+    #contact-main-container .row.no-gutters.px-md-5 {
+        justify-content: space-between;
+    }
 
+    #contact-main-container .contact-left {
+        margin-right: 20px;
+    }
 }
 
 #contact-main-container .row.no-gutters.px-md-5 {

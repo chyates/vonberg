@@ -55,24 +55,37 @@
      });
 
     jQuery(document).ready(function($){
+        // jQuery for mobile hamburger menu
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');
         });
 
-        if($("#find-distributor-main").find(".left-search .search-block").find(".empty-query").css('display') == 'block') {
-            $(this).css('background-color', '#F9F9F7');
+        // jQuery for distributor page
+        var emptyBlock = $("#find-distributor-main .left-search .search-block .empty-query");
+        if(emptyBlock.css('display') == 'block') {
+            emptyBlock.parent().css('background-color', '#F9F9F7');
         } else {
-            $(this).css('background-color', '#FFFFFF');
+            emptyBlock.parent().css('background-color', '#FFFFFF');
         }
 
-        $(".marker").click(function(){
-            $(this).toggleClass('marker-unselected', 'marker-selected');
-        })
+        $("div.marker").click(function(){
+            var index = $('#markers_info .marker').index(this);
+            gMarkers0[index].setIcon(highlightedIcon());
+            $(this).toggleClass('marker-unselected').toggleClass('marker-selected');
+            var toggleDivs = $("div.marker.marker-selected").not(this);
+            var togglePins = $('#markers_info .marker.marker-selected').not(this).index();
+            toggleDivs.toggleClass('marker-selected').toggleClass('marker-unselected');
+            gMarkers0[togglePins].setIcon(normalIcon());
+        });
 
+        var form = $("#find-distributor-main .form-inline");
+        form.find("div.input.text").addClass('col-8');
+        form.find("div.submit").addClass('col-4');
+
+        // jQuery for product + resources submenus in hamburger
         $("a.prod-trigger.nav-link").click(function(){
             var arrow = $(this).find("span").find("img.mob-arrow");
             if( !$("#prod-drop").hasClass('show') ) {
-                console.log("Your dropdown is showing...");
                 $(arrow).attr("src", "/img/Arrow-Down.svg");
             } else {
                 $(arrow).attr("src", "/img/Arrow-Right.svg");
@@ -82,41 +95,13 @@
         $("a.resource-trigger.nav-link").click(function(){
             var arrow = $(this).find("span").find("img.mob-arrow");
             if( !$("#resource-drop").hasClass('show') ) {
-                console.log("Your dropdown is showing...");
                 $(arrow).attr("src", "/img/Arrow-Down.svg");
             } else {
                 $(arrow).attr("src", "/img/Arrow-Right.svg");
             }
-
-            // if( $("#m-burger-nav #resource-drop").css('display') !== 'block' ) {
-            //     console.log("Your dropdown is showing...");
-            //     $(arrow).attr("src", "/img/Arrow-Down.svg");
-            // } else {
-            //     $(arrow).attr("src", "/img/Arrow-Right.svg");
-            // }
         });
 
-        var form = $("#find-distributor-main .form-inline");
-        form.find("div.input.text").addClass('col-8');
-        form.find("div.submit").addClass('col-4');
-
-        // Marker hover for locator map
-        $('#markers_info .marker').hover(
-            // mouse in
-            function () {
-                // first we need to know which <div class="marker"></div> we hovered
-                var index = $('#markers_info .marker').index(this);
-                gMarkers0[index].setIcon(highlightedIcon());
-            },
-            // mouse out
-            function () {
-                // first we need to know which <div class="marker"></div> we hovered
-                var index = $('#markers_info .marker').index(this);
-                gMarkers0[index].setIcon(normalIcon());
-            }
-
-        );
-
+        // jQuery to cycle through home hero images
         var carousel = $('#hero-slider');
         var backgrounds = [
         'url(/img/Homepage-hero-1@2x-min.png)', 
