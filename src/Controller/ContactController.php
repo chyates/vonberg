@@ -3,6 +3,8 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
+
 
 class ContactController extends AppController
 {
@@ -47,6 +49,14 @@ class ContactController extends AppController
         if($this->request->is('post')) {
             $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
             if($result=$this->StpUsers->save($emp)) {
+                $email = new Email('default');
+                $email->from(['info@vonberg.com' => 'Vonberg Valve'])
+                    ->to('darren.mckeeman@gmail.com')
+                    ->template('default', 'default')
+                    ->viewVars(['data'=> $result])
+                    ->subject('File Request from an End User')
+                    ->send();
+
                 $data['response'] = "Success: data saved";
                 //echo $result->id;
             }

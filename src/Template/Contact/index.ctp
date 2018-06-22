@@ -17,14 +17,17 @@
                     'class' => 'needs-validation',
                     'novalidate'
                 ));
-                
+
                 echo $this->Form->control('name', ['type' => 'text', 'class' => 'form-control','required']);
                 echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
                 echo $this->Form->control('phone', ['type' => 'tel', 'class' => 'form-control', 'required']);
                 echo $this->Form->control('email', ['type' => 'email', 'class' => 'form-control','required']);
-                echo $this->Form->control('manufacturer', ['value' => 'Manufacturer','type' => 'checkbox', 'class' => 'form-inline']);
-                echo $this->Form->control('distributor', ['value' => 'Distributor','type' => 'checkbox', 'class' => 'form-inline']);
-                echo $this->Form->control('enduser', ['value' => 'End User','type' => 'checkbox', 'class' => 'form-inline']);
+            echo $this->Form->control('manufacturer', ['value' => Null,'type' => 'hidden', 'class' => 'form-inline']);
+            echo $this->Form->control('manufacturer', ['value' => 'Manufacturer','type' => 'checkbox', 'class' => 'form-inline']);
+            echo $this->Form->control('distributor', ['value' => Null,'type' => 'hidden', 'class' => 'form-inline']);
+            echo $this->Form->control('distributor', ['value' => 'Distributor','type' => 'checkbox', 'class' => 'form-inline']);
+            echo $this->Form->control('enduser', ['value' => Null,'type' => 'hidden', 'class' => 'form-inline']);
+            echo $this->Form->control('enduser', ['value' => 'End User','type' => 'checkbox', 'class' => 'form-inline']);
                 echo $this->Form->control('contactme', ['type' => 'textarea', 'class' => 'form-control', 'required']);
             ?>
 
