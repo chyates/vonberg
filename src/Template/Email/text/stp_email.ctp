@@ -5,7 +5,7 @@
 <P>
 <?php foreach ($models as $model){
     echo "Model number: ".$model->model_table_row_text;
-echo "filename -- : ".$model->model_table_row_text.".stp";
+echo "    Filename: ".$model->model_table_row_text.".stp";
 echo "<BR>";
 }?>
 </p>
