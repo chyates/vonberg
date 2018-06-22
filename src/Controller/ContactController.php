@@ -110,7 +110,7 @@ class ContactController extends AppController
                 // Send email to client:
                 // $attachments = $file_array;
                 $email = new Email('default');
-                $email->from(['cyates@trunkclub.com' => 'Carolyn Yates'])
+                $email->from(['do-not-reply@vonberg.com', 'VVI STP Request'])
                     ->to('darren.mckeeman@gmail.com')
                     ->subject('File Request from '.$this->request->data['email'])
                     ->viewVars(['data'=> $result, 'models' => $models])

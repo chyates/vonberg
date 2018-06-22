@@ -10,7 +10,7 @@
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
-                <h1 class="page-header">Get STP Files</h1>
+                <h1 class="get-header page-header">Get STP Files</h1>
                     <?php echo $this->Form->create('get-stp-form', array(
                         'id' => 'get-stp-form',
                         'class' => 'needs-validation',
@@ -370,6 +370,7 @@
                 }
             });
             $(this).hide();
+            $(".get-header").hide();
             $(".thanks").show();
         });
 
