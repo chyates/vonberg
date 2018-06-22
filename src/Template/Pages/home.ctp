@@ -50,6 +50,6 @@
             <img class="img-fluid" src="/img/mastercardvisa.png">
         </div>
 
-        <p class="home-lower-cert">ISO 9001:2008 CERTIFIED</p>
+        <p class="home-lower-cert pb-md-0 pb-sm-4">ISO 9001:2008 CERTIFIED</p>
     </div><!-- home-lower-logos end -->
 </div><!-- home-container end -->
