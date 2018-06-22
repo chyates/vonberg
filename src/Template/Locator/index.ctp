@@ -1,10 +1,10 @@
 <div id="find-distributor-main" class="inner-main col-lg-10 col-12 mx-auto p-sm-5 p-3">
     <div class="row">
-        <div class="col-lg-5 col-sm-10 mx-sm-auto left-search">
+        <div class="col-md-5 col-sm-10 mx-sm-auto left-search">
             <h1 class="page-header">Find a Distributor</h1>
             <p class="product-info">Enter Zip Code</p>
             <?= $this->Form->create('Locator', array('url' => array('action' => 'index'),'class' => 'form-inline', 'enctype' => 'multipart/form-data'));
-            echo $this->Form->input('address', array('placeholder'=>"Enter Zip Code",'class' => 'form-control','label'=>'','type' => 'text','id' => 'geocomplete'));
+            echo $this->Form->input('address', array('class' => 'form-control','label'=>'','type' => 'text','id' => 'geocomplete'));
             echo $this->Form->hidden('lat', array('id' => 'lat'));
             $this->Form->unlockField('lat');
             echo $this->Form->hidden('lng', array('id' => 'lng'));
@@ -69,7 +69,7 @@
             </div>
         </div><!-- .left-search end -->
 
-        <div class="col-lg-7 col-10 mx-sm-auto my-lg-0 my-sm-3 right-map">
+        <div class="col-md-7 col-10 mx-sm-auto my-lg-0 my-sm-3 right-map">
             <?php
             $options = [
                 'zoom' => 6,
