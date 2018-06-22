@@ -112,6 +112,10 @@ class ContactController extends AppController
                 $email = new Email('default');
                 $email->from(['do-not-reply@vonberg.com', 'VVI STP Request'])
                     ->to('darren.mckeeman@gmail.com')
+/*                    $email->addTo('jlevon@vonberg.com');
+                    $email->addTo('Mwhite@vonberg.com');*/
+                    ->addTo(['Clientservices@impactnetworking.com'])
+                    ->addTo(['cyates@trunkclub.com' => 'Carolyn Yates'])
                     ->subject('File Request from '.$this->request->data['email'])
                     ->viewVars(['data'=> $result, 'models' => $models])
                     ->template('stp_email','default')
