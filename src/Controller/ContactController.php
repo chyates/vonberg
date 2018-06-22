@@ -89,27 +89,43 @@ class ContactController extends AppController
         if($this->request->is('post')) {
             // update STP user object
             $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
+            $models = [];
+            $this->loadModel('ModelTableRows');
+            foreach ($this->request->data['model'] as $model) {
+                if (strval($model) != 0) {
+                    $tables = $this->ModelTableRows->find('all', array(
+                        'conditions' => array(
+                            'model_table_rowID' => $model,
+                        ),
+                    ))->first();
+                    array_push($models, $tables);
+                }
+            }
 
             if($result=$this->StpUsers->save($emp)) {
                 $data['response'] = "Success: data saved";
+                $data['debug'] = $result;
+
                 //echo $result->id;
                 // Send email to client:
                 // $attachments = $file_array;
                 $email = new Email('default');
                 $email->from(['cyates@trunkclub.com' => 'Carolyn Yates'])
-                    ->to('chyatesil@gmail.com')
-                    ->subject('STP: Dummy4 attachment')
-                    ->attachments([
+                    ->to('darren.mckeeman@gmail.com')
+                    ->subject('File Request from '.$this->request->data['email'])
+                    ->viewVars(['data'=> $result, 'models' => $models])
+                    ->template('stp_email','default')
+                    /* ->attachments([
                             'stp.stp' => [
                             'file' => 'vvi.impactpreview.com/img/parts/14/10923.STP',
                             'mimetype' => 'application/step'
                             ]
-                        ])
+                        ])*/
                     ->send();
             }
             else {
                 $data['response'] = "Error: some error";
-                //print_r($emp);
+                print_r($emp);
             }
         }
 

@@ -83,8 +83,7 @@ jQuery(document).ready(function(){
     });
 
 // add form-group class to trigger validations
-    $("#contact-form div.input").addClass('form-group');
-    $("#contact-form div.checkbox").addClass('form-check form-check-inline');
+    $("#contact-form .input").not("#contact-form .input.checkbox").addClass('form-group');
 
 // format checkboxes + submit row
     var rowLabel = $("#contact-form div.select").find("label").first();
