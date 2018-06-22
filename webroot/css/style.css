@@ -646,10 +646,6 @@ a.btn.btn-primary {
     width: calc(100% /3);
 }
 
-.homepage-single-card.card img {
-    /* height: 230px; */
-}
-
 .homepage-single-card.card .card-body {
     border-radius: 0;
     height: 100%;
@@ -686,10 +682,6 @@ a.btn.btn-primary {
     font-style: normal;
 }
 
-#home-lower-logos .my-4 img {
-    margin: 0 24px;
-}
-
 /* +++ HOMEPAGE: TABLET +++ */
 
 @media (max-width: 991px) {
@@ -708,6 +700,10 @@ a.btn.btn-primary {
 @media (min-width: 740px) {
     #homepage-cards #second {
         margin: 0 30px;
+    }
+
+    #home-lower-logos .my-4 img {
+        margin: 0 24px;
     }
 }
 
@@ -1003,21 +999,19 @@ a.btn.btn-primary {
     background-color: #017D44;
 }
 
-#get-stp-form .page-header,
+#get-stp-modal .page-header,
 #get-stp-form p {
     text-align: center;
 }
 
-#get-stp-form p + p {
+#get-stp-form p:not(:last-of-type) {
     margin: 0;
 }
 
-#get-stp-form #check-container {
-    padding-left: 8vw;
-}
-
-#get-stp-form div.form-check {
+#get-stp-form div.check-req {
     margin: 2vh 0;
+    display: flex;
+    justify-content: center;
 }
 
 #get-stp-form p.invalid-feedback {
@@ -1284,11 +1278,19 @@ p.resource-link a {
 
 }
 
+@media (min-width: 740px) {
+}
+
 /* +++ FIND A DISTRIBUTOR: MOBILE +++ */
 
 @media (max-width: 739px) {
     #find-distributor-main .right-map {
         display: none;
+    }
+
+    #find-distributor-main .left-search form.form-inline div.input.text {
+        justify-content: flex-start;
+        display: flex;
     }
 }
 
