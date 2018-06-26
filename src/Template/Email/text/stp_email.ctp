@@ -1,12 +1,6 @@
-<p>New contact form entry from </p>
-<p>
-    Requesting the following files:
+New STP file request from: <?php echo $this->request->data['first_name'] . $this->request->data['last_name']; ?>
+Requesting the following files:
 
-<P>
 <?php foreach ($models as $model){
-    echo "Model number: ".$model->model_table_row_text;
-echo "    Filename: ".$model->model_table_row_text.".stp";
-echo "<BR>";
+    echo "Model number: ". $model->model_table_row_text . "\t Filename: " . $model->model_table_row_text . ".stp";
 }?>
-</p>
-<p>

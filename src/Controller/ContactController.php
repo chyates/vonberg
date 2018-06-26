@@ -116,7 +116,7 @@ class ContactController extends AppController
                     $email->addTo('Mwhite@vonberg.com');*/
                     ->addTo(['Clientservices@impactnetworking.com'])
                     ->addTo(['cyates@trunkclub.com' => 'Carolyn Yates'])
-                    ->subject('File Request from '.$this->request->data['email'])
+                    ->subject('File Request from '.$this->request->data['first_name'])
                     ->viewVars(['data'=> $result, 'models' => $models])
                     ->template('stp_email','default')
                     /* ->attachments([
