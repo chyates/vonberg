@@ -1,7 +1,6 @@
-<p>New contact form entry from </p>
+<p>New contact form entry from Sample Name</p>
 <p>
     Requesting the following files:
-
 <P>
 <?php foreach ($models as $model){
     echo "Model number: ".$model->model_table_row_text;

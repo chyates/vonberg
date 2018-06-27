@@ -3,17 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="DCnLvQCdBvmiO6P7IrbPsh9uWkoH2BRh-IBnIxKwqDA" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.png">
-    <title>Vonberg Valve, Inc.</title>
     <style>
         #markers_info .marker {
             height: auto;
             cursor: pointer;
         }
     </style>
+    <?php 
+        // SEO implementation:
+        $description = $this->fetch('description');
+        if(empty($description)) {
+            echo $this->Html->meta('description', 'Choose the highest-quality hydraulic valves. Vonberg is proud to design, manufacture, assemble and test hydraulic valves, cartridge style valves, integrated manifolds, cartridge bodies and more. We’ve been a family owned company dedicated to hydraulic innovation since 1971.');
+        }
+        echo $description;
 
+        $keywords = $this->fetch('keywords');
+        if(empty($keywords)) {
+            echo $this->Html->meta(
+                'keywords', 
+                'Vonberg Valve');
+        }
+        echo $keywords;
+
+        $title = $this->fetch('title');
+        if(empty($title)) {
+            echo '<title>Vonberg Valve, Inc</title>';
+        }
+        echo '<title>' . $title . '</title>';
+    ?>
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121418676-1"></script>
+
+    <script type="text/javascript">
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'UA-121418676-1');
+    </script>
 </head>
 
 <body onLoad="initGeolocation();">

@@ -5,6 +5,15 @@
  */
 ?>
 
+<?php 
+    $this->assign('title', 'Vonberg Valve, Inc. | Hydraulic Innovation');
+    $this->assign('keywords', $this->Html->meta(
+        'keywords',
+        'Vonberg Hydraulic Innovation, Hydraulic valve, cartridge style valves, integrated manifolds, hydraulic valve specialists, cartridge bodies, hydraulic innovation'
+    ));
+    $this->assign('description', $this->Html->meta('description', 'Choose the highest-quality hydraulic valves. Vonberg is proud to design, manufacture, assemble and test hydraulic valves, cartridge style valves, integrated manifolds, cartridge bodies and more. We’ve been a family owned company dedicated to hydraulic innovation since 1971.')); 
+?>
+
 <div id="home-container" class="inner-main col-lg-10 col-md-12 mx-lg-auto"> 
     <div class="slider-container row no-gutters">
         <div id="hero-slider" class="col">
