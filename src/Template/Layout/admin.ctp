@@ -87,6 +87,7 @@ $cakeDescription = 'Vonberg Dev Site';
         function connAdd() {
             var curr = $("#add-prod-form").find('#connectionid').children('option').last().attr('value');
             var last = parseInt(curr) + 1;
+            // var modal = $('#add-conn-modal');
             var name=$("#conn").val();
             $.get('/admin/connadd?name='+name, function(d) {
                 $('#connectionid').append($('<option selected="selected">', {
