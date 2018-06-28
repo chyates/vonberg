@@ -187,10 +187,10 @@
         public function editProduct($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('Parts');
+            $part=$this->Parts->get($id);
             if($this->request->is('post')) {
                 $data = [];
-                $this->loadModel('Parts');
-                $part=$this->Parts->get($id);
                 $part=$this->Parts->patchEntity($part,$this->request->data);
                 if($result=$part->save($part)) {
                     $data['response'] = "Success: data saved";
@@ -203,14 +203,12 @@
             }
 
             $this->loadModel('TextBlocks');
-            $this->loadModel('Parts');
             $opblock = $this->TextBlocks->find('all',array(
                 'conditions' => array(
                     'partID' => $id,
                 ),
                 'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
             ));
-            $part = $this->Parts->get($id);
 
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
