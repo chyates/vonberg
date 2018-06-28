@@ -189,8 +189,8 @@
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('Parts');
             $part=$this->Parts->get($id);
+            $data = [];
             if($this->request->is('post')) {
-                $data = [];
                 $part=$this->Parts->patchEntity($part,$this->request->data);
                 if($result=$part->save($part)) {
                     $data['response'] = "Success: data saved";
@@ -216,6 +216,7 @@
             $series = TableRegistry::get('Series')->find('list');
             $conn = TableRegistry::get('Connections')->find('list');
             $this->set('cat', $cat);
+            $this->set('data', $data);
             $this->set('conn', $conn);
             // required
             $this->set(compact('series'));
