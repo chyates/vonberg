@@ -96,10 +96,10 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <label>Expiration</label>
+                    <label>Expiration (days)</label>
                     <?= $this->Form->select(
                     'expires',
-                    [10,20,30,40,50,60], ['label' => 'Expiration',
+                    [30, 60, 90], ['label' => 'Expiration',
                         'class' => 'form-control']
                     );?>
 

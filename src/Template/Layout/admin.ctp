@@ -43,10 +43,12 @@ $cakeDescription = 'Vonberg Dev Site';
     <script>
 
         function catAdd() {
+            var curr = $("#add-prod-form").find('#categoryid').children('option').last().attr('value');
+            var last = parseInt(curr) + 1;
             var name=$("#cat").val();
             $.get('/admin/catadd?name='+name, function(d) {
                 $('#categoryid').prepend($('<option selected="selected">', {
-                    value: 1,
+                    value: last,
                     text: name,
 
                 }));
@@ -56,10 +58,12 @@ $cakeDescription = 'Vonberg Dev Site';
         }
 
         function typeAdd() {
+            var curr = $("#add-prod-form").find('#typeid').children('option').last().attr('value');
+            var last = parseInt(curr) + 1;
             var name=$("#type").val();
             $.get('/admin/typeadd?name='+name, function(d) {
                 $('#typeid').append($('<option selected="selected">', {
-                    value: 1,
+                    value: last,
                     text: name
                 }));
                 location.reload(false);
@@ -68,10 +72,12 @@ $cakeDescription = 'Vonberg Dev Site';
         }
 
         function seriesAdd() {
+            var curr = $("#add-prod-form").find('#seriesid').children('option').last().attr('value');
+            var last = parseInt(curr) + 1;
             var name=$("#series").val();
             $.get('/admin/seriesadd?name='+name, function(d) {
                 $('#seriesid').append($('<option selected="selected">', {
-                    value: 1,
+                    value: last,
                     text: name
                 }));
                 location.reload(false);
@@ -79,11 +85,13 @@ $cakeDescription = 'Vonberg Dev Site';
         }
 
         function connAdd() {
+            var curr = $("#add-prod-form").find('#connectionid').children('option').last().attr('value');
+            var last = parseInt(curr) + 1;
             // var modal = $('#add-conn-modal');
             var name=$("#conn").val();
             $.get('/admin/connadd?name='+name, function(d) {
                 $('#connectionid').append($('<option selected="selected">', {
-                    value: 1,
+                    value: last,
                     text: name
                 }));
                 location.reload(false);
@@ -131,19 +139,19 @@ $cakeDescription = 'Vonberg Dev Site';
     // });
     jQuery(document).ready(function($) {
         // add "add series" to select
-        $('#seriesid').append($('<option>', {
+        $('#seriesid').prepend($('<option>', {
             value: 0,
             text: 'Add new series...'
         }));
-        $('#categoryid').append($('<option>', {
+        $('#categoryid').prepend($('<option>', {
             value: 0,
             text: 'Add new category...'
         }));
-        $('#typeid').append($('<option>', {
+        $('#typeid').prepend($('<option>', {
             value: 0,
             text: 'Add new type...'
         }));
-        $('#connectionid').append($('<option>', {
+        $('#connectionid').prepend($('<option>', {
             value: 0,
             text: 'Add new short description...',
             id: 'testID'
