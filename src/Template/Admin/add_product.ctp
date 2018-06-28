@@ -58,11 +58,11 @@
             <div class="modal-body">
                 <div class="col">
                     <h1 class="page-title">Add New Short Description</h1>
-                    <?= $this->Form->create('', ['id' => "add-cat-form"]) ?>
+                    <?= $this->Form->create('', ['id' => "add-cat-form", 'url' => false]) ?>
                     <?php echo $this->Form->text('conn',['class'=>'form-control','label'=>'Short Description','id' => "conn"]);?>
                     <div class="btn-row">
                         <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                        <?= $this->Form->submit('Add',array('id'=>'add-connection','class'=>'btn btn-primary','onclick'=>'connAdd();'));?>
+                        <?= $this->Form->submit('Add',array('id'=>'add-connection','class'=>'btn btn-primary','onclick'=>'connAdd()'));?>
                         <?= $this->Form->end(); ?>
                     </div>
                 </div>
@@ -72,10 +72,8 @@
 </div>
 
 <div id="cms-add-prod-main" class="inner-main col-md-10 mx-auto p-5">
-    <!-- I believe the dropdowns should be populated from the database, ie. the select elements
-    for category, type, series, short description, and specifications. -->
+    <h1 id="title-one" class="active-title page-title">Add New Product</h1>
     <?= $this->Form->create('', ['id' => "add-prod-form"]) ?>
-        <h1 id="title-one" class="active-title page-title">Add New Product</h1>
 
         <div id="one" class="active-slide form-slide col-md-5 mx-auto">
             <div class="form-group">
@@ -98,10 +96,10 @@
                     </div>
                 </div>
                 <div class="col-sm-6">
-                    <label>Expiration</label>
+                    <label>Expiration (days)</label>
                     <?= $this->Form->select(
                     'expires',
-                    [10,20,30,40,50,60], ['label' => 'Expiration',
+                    [30, 60, 90], ['label' => 'Expiration',
                         'class' => 'form-control']
                     );?>
 
