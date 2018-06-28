@@ -124,7 +124,7 @@
         if($this->request->is('ajax')) {
             $this->autoRender=false;
             $this->request->data['name']=$this->request->query['name'];
-            $cat=$this->Connectionss->patchEntity($cat,$this->request->data);
+            $cat=$this->Connections->patchEntity($cat,$this->request->data);
             if($result=$this->Connections->save($cat)) {
                 echo $result->id;
             }
@@ -255,6 +255,33 @@
         public function editProductTwo($id)
         {
             $this->viewBuilder()->setLayout('admin');
+
+            // first call: load appropriate variables--existing text blocks + specs, part data:
+            $this->loadModel('TextBlocks');
+            $this->loadModel('Parts');
+            $this->loadModel('Specifications');
+
+            $opblock = $this->TextBlocks->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            ));
+
+            $specs = $this->Specifications->find('all',array(
+                'conditions' => array(
+                    'partID' => $id,
+                ),
+            ));
+
+            $part = $this->Parts->get($id);
+
+            $cat = TableRegistry::get('Categories')->find('list');
+            $type = TableRegistry::get('Types')->find('list');
+            $style = TableRegistry::get('Styles')->find('list');
+            $series = TableRegistry::get('Series')->find('list');
+
+            // second call: user has filled out the form--submit the data
             if ($this->request->is('post')) {
                 $this->loadModel('Parts');
                 $part = $this->Parts->get($id);
@@ -265,30 +292,6 @@
                     $this->redirect(array('action' => 'editProductFour',$part->partID));
                 }
             }
-
-            $this->loadModel('TextBlocks');
-            $this->loadModel('Parts');
-            $this->loadModel('Specifications');
-
-            $specs = $this->Specifications->find('all',array(
-                'conditions' => array(
-                    'partID' => $id,
-                ),
-            ));
-
-            $opblock = $this->TextBlocks->find('all',array(
-                'conditions' => array(
-                    'partID' => $id,
-                ),
-                'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
-            ));
-            $part = $this->Parts->get($id);
-
-            $cat = TableRegistry::get('Categories')->find('list');
-            $type = TableRegistry::get('Types')->find('list');
-            $style = TableRegistry::get('Styles')->find('list');
-
-            $series = TableRegistry::get('Series')->find('list');
 
             $this->set('cat', $cat);
             $this->set(compact('series'));
@@ -323,11 +326,10 @@
                         $model_table_header_id = $top->model_table_headerID;
                         $debug = debug($top);
                         $this->set('debug', $debug);
-                        } else {
+                    } else {
 
+                    }
                 }
-
-            }
                 $order_num = 0;
 
                 foreach ($this->request->data['table'] as $row ) {   # allow for empty cells EXCEPT in the first column

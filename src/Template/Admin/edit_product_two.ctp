@@ -1,9 +1,9 @@
 <div id="cms-edit-prod-main" class="inner-main col-md-10 mx-auto p-5">
     <!-- This page acts almost identically to the add product page except the 
     information for the current product should be auto-populated in each field. -->
+    <h1 id="title-two" class="active-title page-title">Edit Product: Description and Features</h1>
     <?= $this->Form->create($part, ['id' => "edit-prod-form"]) ?>
 <!--    <form id="edit-prod-form">-->
-        <h1 id="title-two" class="active-title page-title">Edit Product: Description and Features</h1>
 
         <div id="two" class="active-slide form-slide col-md-5 mx-auto">
             <div class="form-group">
@@ -14,14 +14,20 @@
 
                 <div class="form-group">
                     <label>Operation</label>
-                    <?php
-                    foreach ($opblock as $op):
-                        foreach ($op->text_block_bullets as $line):
-                            if ($op->header == "Operation") {
-                                echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
-                            }
+                    <?php 
+                    $count = 1;
+                    if(count($opblock) < 2) {
+                        echo $this->Form->input('new_bullet_text', array('class' => 'form-control', 'label' => false, 'id' => 'bullet' . $count));
+                    } else {
+                        foreach ($opblock as $op):
+                            foreach ($op->text_block_bullets as $line):
+                                if ($op->header == "Operation") {
+                                    echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => 'bullet' . $count));
+                                    $count++;
+                                }
                             endforeach;
-                    endforeach;
+                        endforeach;
+                    }
                     ?>
                     <a class="add-bullet" href="">Add Bullet</a>
             </div>

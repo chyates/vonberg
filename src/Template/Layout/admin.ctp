@@ -79,6 +79,7 @@ $cakeDescription = 'Vonberg Dev Site';
         }
 
         function connAdd() {
+            // var modal = $('#add-conn-modal');
             var name=$("#conn").val();
             $.get('/admin/connadd?name='+name, function(d) {
                 $('#connectionid').append($('<option selected="selected">', {
@@ -144,7 +145,8 @@ $cakeDescription = 'Vonberg Dev Site';
         }));
         $('#connectionid').append($('<option>', {
             value: 0,
-            text: 'Add new short description...'
+            text: 'Add new short description...',
+            id: 'testID'
         }));
 
         // if add series is clicked do this.
