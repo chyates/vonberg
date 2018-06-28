@@ -213,7 +213,6 @@
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
             $style = TableRegistry::get('Styles')->find('list');
-
             $series = TableRegistry::get('Series')->find('list');
             $conn = TableRegistry::get('Connections')->find('list');
             $this->set('cat', $cat);
