@@ -24,7 +24,7 @@
         public function beforeFilter(Event $event)
         {
             // allow all action
-            $this->Security->setConfig('unlockedActions', ['partAdd','editProductFour','editProductFive']);
+            $this->Security->setConfig('unlockedActions', ['partAdd','editProduct','editProductFour','editProductFive']);
 
         }
 
