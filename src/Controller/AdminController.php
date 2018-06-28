@@ -220,6 +220,7 @@
             $conn = TableRegistry::get('Connections')->find('list');
             $this->set('cat', $cat);
             $this->set('conn', $conn);
+            // required
             $this->set(compact('series'));
             // Save logic goes here
             $this->set('part', $part);
