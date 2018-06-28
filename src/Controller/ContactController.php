@@ -80,7 +80,6 @@ class ContactController extends AppController
             array_push($file_array, $file_path);
         }
 
-        $file_table = TableRegistry::get('StpFile');
 
         // instantiate empty STP user and STP file objects:
         $emp=$this->StpUsers->newEntity();
@@ -89,24 +88,30 @@ class ContactController extends AppController
         if($this->request->is('post')) {
             // update STP user object
             $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
-            $models = [];
-            $this->loadModel('ModelTableRows');
-            foreach ($this->request->data['model'] as $model) {
-                if (strval($model) != 0) {
-                    $tables = $this->ModelTableRows->find('all', array(
-                        'conditions' => array(
-                            'model_table_rowID' => $model,
-                        ),
-                    ))->first();
-                    array_push($models, $tables);
-                }
-            }
+
 
             if($result=$this->StpUsers->save($emp)) {
                 $data['response'] = "Success: data saved";
                 $data['debug'] = $result;
+                $models = [];
+                $this->Flash->success(__('The request has been saved.'));
+                $this->loadModel('ModelTableRows');
+                foreach ($this->request->data['model'] as $model) {
+                    $files=$this->StpFile->newEntity();
+                    $files->stp_userID = $result->stp_userID;
+                    $files->partID = $final_id;
+                    $files->modelID = $model;
+                    $files = $this->StpFile->save($files);
 
-                //echo $result->id;
+                    if (strval($model) != 0) {
+                        $tables = $this->ModelTableRows->find('all', array(
+                            'conditions' => array(
+                                'model_table_rowID' => $model,
+                            ),
+                        ))->first();
+                        array_push($models, $tables);
+                    }
+                }
                 // Send email to client:
                 // $attachments = $file_array;
                 $email = new Email('default');
@@ -117,7 +122,7 @@ class ContactController extends AppController
                     ->addTo(['Clientservices@impactnetworking.com'])
                     ->addTo(['cyates@trunkclub.com' => 'Carolyn Yates'])
                     ->subject('File Request from '.$this->request->data['first_name'])
-                    ->viewVars(['data'=> $result, 'models' => $models])
+/*                    ->viewVars(['data'=> $result, 'models' => $models])*/
                     ->template('stp_email','default')
                     /* ->attachments([
                             'stp.stp' => [
@@ -130,6 +135,8 @@ class ContactController extends AppController
             else {
                 $data['response'] = "Error: some error";
                 print_r($emp);
+                $this->Flash->success(__('The request has not been saved.'));
+
             }
         }
 

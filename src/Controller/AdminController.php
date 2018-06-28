@@ -187,6 +187,21 @@
         public function editProduct($id)
         {
             $this->viewBuilder()->setLayout('admin');
+            if($this->request->is('post')) {
+                $data = [];
+                $this->loadModel('Parts');
+                $part=$this->Parts->get($id);
+                $part=$this->Parts->patchEntity($part,$this->request->data);
+                if($result=$part->save($part)) {
+                    $data['response'] = "Success: data saved";
+                }
+                else {
+                    $data['response'] = "Error: some error";
+                    //print_r($emp);
+                }
+                $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
+            }
+
             $this->loadModel('TextBlocks');
             $this->loadModel('Parts');
             $opblock = $this->TextBlocks->find('all',array(
@@ -202,14 +217,16 @@
             $style = TableRegistry::get('Styles')->find('list');
 
             $series = TableRegistry::get('Series')->find('list');
-
+            $conn = TableRegistry::get('Connections')->find('list');
             $this->set('cat', $cat);
+            $this->set('conn', $conn);
             $this->set(compact('series'));
             // Save logic goes here
             $this->set('part', $part);
             $this->set('type', $type);
             $this->set('style', $style);
             $this->set('opblock', $opblock);
+
 
         }
 
@@ -241,7 +258,8 @@
             $style = TableRegistry::get('Styles')->find('list');
 
             $series = TableRegistry::get('Series')->find('list');
-
+            $conn = TableRegistry::get('Connections')->find('list');
+            $this->set('conn', $conn);
             $this->set('cat', $cat);
             $this->set(compact('series'));
             // Save logic goes here
