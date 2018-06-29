@@ -309,7 +309,7 @@
             if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('Parts');
                 $part = $this->Parts->get($id);
-                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part = $this->Parts->patchEntity($part, $this->request->data,['associated' => ['Textblocks'=> ['TextBlockBullets' ]]]);
                 $part->last_updated = date("Y-m-d H:i:s");
                 if($this->Parts->save($part)){
                     $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
