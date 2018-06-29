@@ -22,7 +22,7 @@
                         foreach ($opblock as $op):
                             foreach ($op->text_block_bullets as $line):
                                 if ($op->header == "Operation") {
-                                    echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => 'bullet' . $count));
+                                    echo $this->Form->input('text_block_bullets.'.$count.'.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => 'bullet' . $count));
                                     $count++;
                                 }
                             endforeach;
@@ -38,11 +38,12 @@
                 foreach ($opblock as $op):
                     foreach ($op->text_block_bullets as $line):
                         if ($op->header == "Features") {
-                            echo $this->Form->input('text_block_bullets.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                            echo $this->Form->input('text_block_bullets.'.$count.'.bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
 
                         }
                     endforeach;
                 endforeach;
+                $index = 0;
                 ?>
                 <a class="add-bullet" href="">Add Bullet</a>
             </div>
@@ -53,17 +54,19 @@
                 <div class="row">
                 <div class="col-sm-4">
                     <?php echo $this->Form->select(
-                    'specifications.spec_name',
+                    'specifications.'.$index.'.spec_name',
                     [$spec->spec_name,'CLOSING FLOW TOLERANCE', 'DIVIDE / COMBINE RATIO', 'FLOW ADJUSTMENT RANGE', 'FLOW TOLERANCE', 'INTERNAL LEAKAGE','MAX. PRESSURE DIFFERENTIAL "1" TO "2"','OPERATING PRESSURE','PRESSURE RANGE','RELIEF ADJUSTMENT RANGE','RELIEF SETTING RANGE','RELIEF TOLERANCE','REOPENING DIFFERENTIAL','STANDARD CRACK PRESSURE','TEMPERATURE RANGE',],
                     ['value' => $spec->spec_name]
                     );?>
                 </div>
                 <div class="col-sm-8">
-               <?= $this->Form->input('specifications.spec_value', array('class' => 'form-control','label'=> False, 'value' => $spec->spec_value));?>
+               <?= $this->Form->input('specifications.'.$index.'.spec_value', array('class' => 'form-control','label'=> False, 'value' => $spec->spec_value));?>
 
                 </div>
                 </div>
-                <?php } ?>
+                <?php
+                ++$index;
+                } ?>
             </div>
                 <a class="add-bullet" href="">Add Bullet</a>
 

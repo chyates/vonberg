@@ -24,7 +24,7 @@
         public function beforeFilter(Event $event)
         {
             // allow all action
-            $this->Security->setConfig('unlockedActions', ['partAdd','editProduct','editProductFour','editProductFive']);
+            $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive']);
 
         }
 
@@ -167,7 +167,7 @@
         public function addProduct()
         {
             $this->viewBuilder()->setLayout('admin');
-            if($this->request->is('post')) {
+            if($this->request->is('post') || $this->request->is('put'))  {
                 $data = [];
                 $this->loadModel('Parts');
                 $part=$this->Parts->newEntity();
@@ -199,9 +199,10 @@
             $this->loadModel('Parts');
             $part=$this->Parts->get($id);
             $data = [];
-            if($this->request->is('post')) {
+            if($this->request->is('post') || $this->request->is('put'))  {
+                $data['debug'] = "passing post";
                 $part=$this->Parts->patchEntity($part,$this->request->data);
-                if($result=$part->save($part)) {
+                if($result=$this->Parts->save($part)) {
                     $data['response'] = "Success: data saved";
                 }
                 else {
@@ -222,7 +223,6 @@
             $cat = TableRegistry::get('Categories')->find('list');
             $type = TableRegistry::get('Types')->find('list');
             $style = TableRegistry::get('Styles')->find('list');
-            $conn = TableRegistry::get('Connections')->find('list');
             $series = TableRegistry::get('Series')->find('list');
             $conn = TableRegistry::get('Connections')->find('list');
             $this->set('cat', $cat);
@@ -243,7 +243,7 @@
         public function editProductOne($id)
         {
             $this->viewBuilder()->setLayout('admin');
-            if ($this->request->is('post')) {
+            if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('Parts');
                 $part = $this->Parts->get($id);
                 $part = $this->Parts->patchEntity($part, $this->request->data);
@@ -315,10 +315,10 @@
             ), 'list');
 
             // second call: user has filled out the form--submit the data
-            if ($this->request->is('post')) {
+            if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('Parts');
                 $part = $this->Parts->get($id);
-                $part = $this->Parts->patchEntity($part, $this->request->data);
+                $part = $this->Parts->patchEntity($part, $this->request->data,['associated' => ['Textblocks'=> ['TextBlockBullets' ]]]);
                 $part->last_updated = date("Y-m-d H:i:s");
                 if($this->Parts->save($part)){
                     $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
@@ -340,7 +340,7 @@
         public function editProductThree($id)
         {
             $this->viewBuilder()->setLayout('admin');
-            if ($this->request->is('post')) {
+            if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('ModelTables');
                 $headerTable = TableRegistry::get('ModelTableHeaders');
                 $rowsTable = TableRegistry::get('ModelTableRows');
@@ -554,7 +554,7 @@
             $this->viewBuilder()->setLayout('admin');
         }
 
-        public function new()
+        public function newparts()
         {
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('Parts');
