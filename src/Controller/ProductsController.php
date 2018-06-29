@@ -78,7 +78,7 @@ class ProductsController extends AppController
             [   'conditions' => ['Parts.categoryID' => $cat],
                 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
                 ])
-            ->order(['typeID'=>'ASC']);
+            ->order(['Series.name'=>'ASC']);
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }
@@ -106,7 +106,7 @@ class ProductsController extends AppController
             [   'conditions' => ['Parts.typeID' => $upperSpace],
                 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
                 ])
-            ->order(['typeID'=>'ASC']);
+            ->order(['Series.name'=>'ASC']);
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.typeID' => $upperSpace],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }
@@ -169,7 +169,7 @@ class ProductsController extends AppController
             WHERE
             ' . $like_where . '
             ORDER BY
-                mp.model_text,st.name';
+                mp.model_text';
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
         } elseif ($seriesID) {
@@ -210,7 +210,7 @@ AND
 AND
 	p.typeID = ty.typesID
 ORDER BY
-    mp.model_text,s.name';
+    mp.model_text';
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
         }
@@ -221,7 +221,7 @@ ORDER BY
             ->distinct();
 
         $series = $this->Series->find()
-            ->where(['seriesID IN' => $matchingTasks]);
+            ->where(['seriesID IN' => $matchingTasks])->orderAsc('name');
         $this->set(compact('series'));
     }
 

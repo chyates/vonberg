@@ -19,7 +19,7 @@
             <div class="row no-gutters justify-content-between">
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/1">Flow Regulating Valves</a></p>
-                    <p class="drop-content">Flow Regulators</p>
+                    <p class="drop-content"><a href="/admin/catalog/type/6">Flow Regulators</a></p>
                     <p class="drop-content">Flow Dividers & Combiners</p>
                 </div>
                 <div class="col">
