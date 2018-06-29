@@ -24,7 +24,7 @@
         public function beforeFilter(Event $event)
         {
             // allow all action
-            $this->Security->setConfig('unlockedActions', ['partAdd','editProduct','editProductFour','editProductFive']);
+            $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive']);
 
         }
 
@@ -191,6 +191,7 @@
             $part=$this->Parts->get($id);
             $data = [];
             if($this->request->is('post')) {
+                $data['debug'] = "passing post";
                 $part=$this->Parts->patchEntity($part,$this->request->data);
                 if($result=$part->save($part)) {
                     $data['response'] = "Success: data saved";
