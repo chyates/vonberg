@@ -158,7 +158,7 @@
         public function addProduct()
         {
             $this->viewBuilder()->setLayout('admin');
-            if($this->request->is('post')) {
+            if($this->request->is('post') || $this->request->is('put'))  {
                 $data = [];
                 $this->loadModel('Parts');
                 $part=$this->Parts->newEntity();
@@ -190,10 +190,10 @@
             $this->loadModel('Parts');
             $part=$this->Parts->get($id);
             $data = [];
-            if($this->request->is('post')) {
+            if($this->request->is('post') || $this->request->is('put'))  {
                 $data['debug'] = "passing post";
                 $part=$this->Parts->patchEntity($part,$this->request->data);
-                if($result=$part->save($part)) {
+                if($result=$this->Parts->save($part)) {
                     $data['response'] = "Success: data saved";
                 }
                 else {
@@ -234,7 +234,7 @@
         public function editProductOne($id)
         {
             $this->viewBuilder()->setLayout('admin');
-            if ($this->request->is('post')) {
+            if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('Parts');
                 $part = $this->Parts->get($id);
                 $part = $this->Parts->patchEntity($part, $this->request->data);
@@ -306,7 +306,7 @@
             ), 'list');
 
             // second call: user has filled out the form--submit the data
-            if ($this->request->is('post')) {
+            if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('Parts');
                 $part = $this->Parts->get($id);
                 $part = $this->Parts->patchEntity($part, $this->request->data);
@@ -331,7 +331,7 @@
         public function editProductThree($id)
         {
             $this->viewBuilder()->setLayout('admin');
-            if ($this->request->is('post')) {
+            if ($this->request->is('post') || $this->request->is('put'))  {
                 $this->loadModel('ModelTables');
                 $headerTable = TableRegistry::get('ModelTableHeaders');
                 $rowsTable = TableRegistry::get('ModelTableRows');
@@ -538,7 +538,7 @@
             $this->viewBuilder()->setLayout('admin');
         }
 
-        public function new()
+        public function newparts()
         {
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('Parts');
