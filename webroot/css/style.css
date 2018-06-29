@@ -1921,6 +1921,11 @@ label.fileContainer {
     color: #7FBDA1;
 }
 
+/* === CMS PAGINATION: GLOBAL / DESKTOP === */
+ul.pagination li {
+    padding-right: 10px;
+}
+
 /* === CMS HOMEPAGE: GLOBAL / DESKTOP === */
 
 #cms-site-container .btn.btn-primary {
