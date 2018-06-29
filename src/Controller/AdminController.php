@@ -343,28 +343,35 @@
                     foreach ($row as $cell) {
                         $order_num++;
 
-                            $new = $rowsTable->newEntity();
-                            $new->model_tableID = $table->model_tableID;
-                            $new->model_table_text = $cell;
-                            $new->order_num = $order_num;
-                            if ($rowsTable->save($new)) {
-                                // The variable entity contains the id now
-                                $model_table_header_id = $new->model_table_headerID;
-                            } else {
-                                $debug = debug($new);
-                            }
+                        $new = $rowsTable->newEntity();
+                        $new->model_tableID = $table->model_tableID;
+                        $new->model_table_text = $cell;
+                        $new->order_num = $order_num;
+                        if ($rowsTable->save($new)) {
+                            // The variable entity contains the id now
+                            $model_table_header_id = $new->model_table_headerID;
+                        } else {
+                            $debug = debug($new);
+                        }
                     }
                 }
+            } else {
+                
+                $this->loadModel('ModelTables');
+                $tables = $this->ModelTables->find('all',array(
+                    'conditions' => array(
+                        'partID' => $id ),
+                    'contain' => array(
+                        'ModelTableHeaders',
+                        'ModelTableRows'),
+                ))->first();
+                
+                if(count($tables) < 1) {
+                    // echo "No current tables found";
+                } else {
+                    $this->set('table', $tables);
+                }
             }
-
-            $this->loadModel('ModelTables');
-            $tables = $this->ModelTables->find('all',array(
-                'conditions' => array(
-                    'partID' => $id,
-                ),
-                'contain' => array('ModelTableHeaders', 'ModelTableRows'),
-            ))->first();
-            $this->set('table', $tables);
 
         }
         public function editProductFour($id)
