@@ -19,31 +19,31 @@
             <div class="row no-gutters justify-content-between">
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/1">Flow Regulating Valves</a></p>
-                    <p class="drop-content"><a href="/admin/catalog/type/6">Flow Regulators</a></p>
-                    <p class="drop-content">Flow Dividers & Combiners</p>
+                    <p class="drop-content"><a href="/admin/type/6">Flow Regulators</a></p>
+                    <p class="drop-content"><a href="/admin/type/8">Flow Dividers & Combiners</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/2">Directional Valves</a></p>
-                    <p class="drop-content">Check Valves - Poppet</p>
-                    <p class="drop-content">Check Valves - Ball</p>
-                    <p class="drop-content">Shuttle Valves</p>
+                    <p class="drop-content"><a href="/admin/type/7">Check Valves - Poppet</a></p>
+                    <p class="drop-content"><a href="/admin/type/9">Check Valves - Ball</a></p>
+                    <p class="drop-content"><a href="/admin/type/10">Shuttle Valves</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/3">Safety Valves</a></p>
-                    <p class="drop-content">Velocity Fuses</p>
-                    <p class="drop-content">Flow Limiters</p>
+                    <p class="drop-content"><a href="/admin/type/11">Velocity Fuses</a></p>
+                    <p class="drop-content"><a href="/admin/type/12">Flow Limiters</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/5">Pressure Controls</a></p>
-                    <p class="drop-content">Counterbalance Valves</p>
-                    <p class="drop-content">Relief Valves - Direct Acting</p>
-                    <p class="drop-content">Relief Valves - Differential Area</p>
+                    <p class="drop-content"><a href="/admin/type/15">Counterbalance Valves</a></p>
+                    <p class="drop-content"><a href="/admin/type/13">Relief Valves - Direct Acting</a></p>
+                    <p class="drop-content"><a href="/admin/type/14">Relief Valves - Differential Area</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/7">Cartridge Bodies</a></p>
-                    <p class="drop-content">2-Way Manifolds</p>
-                    <p class="drop-content">3-Way Manifolds</p>
-                    <p class="drop-content">3-Way T-Series Manifolds</p>
+                    <p class="drop-content"><a href="/admin/type/24">2-Way Manifolds</a></p>
+                    <p class="drop-content"><a href="/admin/type/22">3-Way Manifolds</a></p>
+                    <p class="drop-content"><a href="/admin/type/19">3-Way T-Series Manifolds</a></p>
                     <p class="drop-content">Cavity Plugs</p>
                 </div>
                 <div class="col last-prod-drop">

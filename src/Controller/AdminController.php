@@ -36,27 +36,33 @@
 
         }
 
-        public function catalog($id)
+        public function catalog($id = null)
         {
             $this->viewBuilder()->setLayout('admin');
             $this->loadModel('Parts');
             // query for main categories:
-            $cat_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
-            
-            // query for types:
-            $type_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.typeID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+            $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
 
-            if(count($cat_query) > 1) {
                 $cat = TableRegistry::get('Categories')->find();
                 $this->set('parts', $query);
                 $this->set('id', $id);
                 $cat1 = TableRegistry::get('Categories')->find()->where(['categoryID' => $id])->first();
                 $this->set('categories', $cat);
-                $this->set('pagename', $cat1->name);
-            } else if(count($type_query) > 1) {
-                
-            }
-            
+                $this->set('pagename', $cat1->name);            
+        }
+
+        public function type($id)
+        {
+            $this->viewBuilder()->setLayout('admin');
+            $this->loadModel('Parts');
+
+            $type_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.typeID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+            $subcat = TableRegistry::get('Types')->find();
+            $this->set('parts', $type_query);
+            $this->set('id', $id);
+            $subcat1 = TableRegistry::get('Types')->find()->where(['typesID' => $id])->first();
+            $this->set('subcats', $subcat);
+            $this->set('pagename', $subcat1->name);
         }
 
 
