@@ -299,9 +299,11 @@ a.btn.btn-primary {
 #mobile-header {
     display: none !important;
 }
+
 .mobile-hidden {
     display: none !important;
 }
+
 .mobile-search-button {
     width: 30px;
     height: 30px;
@@ -310,6 +312,7 @@ a.btn.btn-primary {
     cursor: pointer;
     top: 31px;
 }
+
 .mobile-search-bar input {
     width: 50vw!important;
 }
@@ -1924,6 +1927,17 @@ label.fileContainer {
 /* === CMS PAGINATION: GLOBAL / DESKTOP === */
 ul.pagination li {
     padding-right: 10px;
+}
+
+/* === CMS LOGIN + REGISTER SCREENS: GLOBAL / DESKTOP === */
+
+#site-container div.users.form form legend {
+    color: #017D44;
+}
+
+#site-container div.users.form form a {
+    display: inline-block;
+    margin: 10px 0;
 }
 
 /* === CMS HOMEPAGE: GLOBAL / DESKTOP === */

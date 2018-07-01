@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="DCnLvQCdBvmiO6P7IrbPsh9uWkoH2BRh-IBnIxKwqDA" />
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
-    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.png">
     <style>
         #markers_info .marker {
@@ -85,6 +85,19 @@
      });
 
     jQuery(document).ready(function($){
+        // jQuery for CMS login + register screens
+        var logForm = $("#site-container div.users.form");
+        logForm.addClass('inner-main col-lg-8 col-12 mx-auto p-md-5 p-3');
+        logForm.find('form').addClass('col-6 mx-auto');
+        var notChecks = logForm.find('div.input:not(.checkbox)');
+        notChecks.addClass('form-group');
+        notChecks.find('input').addClass('form-control');
+        var checks = logForm.find('div.checkbox');
+        checks.addClass('form-check');
+        checks.find('label').addClass('form-check-label');
+        checks.find('input').addClass('form-check-input');
+        logForm.find('button').addClass('btn btn-primary');
+
         // jQuery for mobile hamburger menu
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');
