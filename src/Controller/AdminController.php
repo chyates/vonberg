@@ -191,11 +191,11 @@ class AdminController extends AppController
             }
             $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
         }
-        $cat = TableRegistry::get('Categories')->find('list');
-        $type = TableRegistry::get('Types')->find('list');
-        $style = TableRegistry::get('Styles')->find('list');
-        $series = TableRegistry::get('Series')->find('list');
-        $conn = TableRegistry::get('Connections')->find('list');
+        $cat = TableRegistry::get('Categories')->find('list')->orderAsc('name');
+        $type = TableRegistry::get('Types')->find('list')->orderAsc('name');
+        $style = TableRegistry::get('Styles')->find('list')->orderAsc('name');
+        $series = TableRegistry::get('Series')->find('list')->orderAsc('name');
+        $conn = TableRegistry::get('Connections')->find('list')->orderAsc('name');
         $this->set('cat', $cat);
         $this->set('conn', $conn);
         $this->set(compact('series'));

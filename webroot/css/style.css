@@ -2002,6 +2002,16 @@ a.add-bullet {
     text-decoration: underline;
 }
 
+#add-prod-form .col-sm-6 div.form-check {
+    padding: 0;
+}
+
+#add-prod-form .form-check-inline.radio label {
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
 /* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
 
 #cms-manage-resources-main p.text-center a.btn.btn-primary {

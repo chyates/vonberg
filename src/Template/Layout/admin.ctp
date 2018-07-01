@@ -42,28 +42,45 @@ $cakeDescription = 'Vonberg Dev Site';
 
     <script>
 
-        function catAdd() {
-            var curr = $("#add-prod-form").find('#categoryid').children('option').last().attr('value');
-            var last = parseInt(curr) + 1;
-            var name=$("#cat").val();
-            $.get('/admin/catadd?name='+name, function(d) {
-                $('#categoryid').prepend($('<option selected="selected">', {
-                    value: last,
-                    text: name,
+        var idArr = [];
 
+        function createArr(sel) {
+            sel.find('option')
+            .each(function(index) {
+                var idInt = parseInt($(this).attr('value'));
+                idArr.push(idInt);
+            });
+            var max = idArr[0];
+            for(var i = 1; i < idArr.length; i++) {
+                if (idArr[i] > max) {
+                    max = idArr[i];
+                }
+            }
+            return max;
+        }
+
+        function catAdd() {
+            var select = $("#add-prod-form").find('#categoryid');
+            var last = createArr(select);
+            var added = last + 1;
+            var name = $("#cat").val();
+            $.get('/admin/catadd?name='+name, function(d) {
+                $('#categoryid').prepend($('<option selected>', {
+                    value: added,
+                    text: name,
                 }));
                 location.reload(false);
-
             });
         }
 
         function typeAdd() {
-            var curr = $("#add-prod-form").find('#typeid').children('option').last().attr('value');
-            var last = parseInt(curr) + 1;
+            var select = $("#add-prod-form").find('#typeid');
+            var last = createArr(select);
+            var added = last + 1;
             var name=$("#type").val();
             $.get('/admin/typeadd?name='+name, function(d) {
                 $('#typeid').append($('<option selected="selected">', {
-                    value: last,
+                    value: added,
                     text: name
                 }));
                 location.reload(false);
@@ -72,12 +89,13 @@ $cakeDescription = 'Vonberg Dev Site';
         }
 
         function seriesAdd() {
-            var curr = $("#add-prod-form").find('#seriesid').children('option').last().attr('value');
-            var last = parseInt(curr) + 1;
+            var select = $("#add-prod-form").find('#seriesid');
+            var last = createArr(select);
+            var added = last + 1;
             var name=$("#series").val();
             $.get('/admin/seriesadd?name='+name, function(d) {
                 $('#seriesid').append($('<option selected="selected">', {
-                    value: last,
+                    value: added,
                     text: name
                 }));
                 location.reload(false);
@@ -85,13 +103,13 @@ $cakeDescription = 'Vonberg Dev Site';
         }
 
         function connAdd() {
-            var curr = $("#add-prod-form").find('#connectionid').children('option').last().attr('value');
-            var last = parseInt(curr) + 1;
-            // var modal = $('#add-conn-modal');
+            var select = $("#add-prod-form").find('#connectionid');
+            var last = createArr(select);
+            var added = last + 1;
             var name=$("#conn").val();
             $.get('/admin/connadd?name='+name, function(d) {
                 $('#connectionid').append($('<option selected="selected">', {
-                    value: last,
+                    value: added,
                     text: name
                 }));
                 location.reload(false);
@@ -199,7 +217,6 @@ $cakeDescription = 'Vonberg Dev Site';
         });
 
         var lastA = $('.admin-nav').find('.cms-greyed');
-        console.log("Last link: ", lastA);
         lastA.next().addClass('nav-link').addClass('nav-item');
 
 
