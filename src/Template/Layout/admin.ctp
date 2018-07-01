@@ -198,6 +198,10 @@ $cakeDescription = 'Vonberg Dev Site';
             $("#partname").val($(event.relatedTarget).data('file'));
         });
 
+        var lastA = $('.admin-nav').find('.cms-greyed');
+        console.log("Last link: ", lastA);
+        lastA.next().addClass('nav-link').addClass('nav-item');
+
 
         // features bullets
         var rowCount = 1;

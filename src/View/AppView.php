@@ -37,8 +37,9 @@ class AppView extends View
     public function initialize()
     {
     	$config = [
-	'autoScript' => true,
-];
-$this->loadHelper('Geo.GoogleMap', $config);
+            'autoScript' => true,
+        ];
+        $this->loadHelper('Geo.GoogleMap', $config);
+        $this->loadHelper('CakeDC/Users.User');
 	}
 }

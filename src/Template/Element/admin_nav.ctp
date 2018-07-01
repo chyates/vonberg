@@ -11,7 +11,7 @@
     </div>
 </nav><!-- home-top-header end -->
 
-<nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">
+<nav id="main-navbar" class="admin-nav navbar navbar-expand-lg justify-content-end">
     <!-- Products Dropdown -->
     <div id="product-dropdown" class="dropdown">
         <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
@@ -71,4 +71,5 @@
     <a class="cms-greyed nav-link nav-item" disabled>About</a>
     <a class="cms-greyed nav-link nav-item" href="/dealers/">Find a Distributor</a>
     <a class="cms-greyed nav-link nav-item" href="/admin/contacts/">Contact</a>
+    <?= $this->User->logout(); ?>
 </nav><!-- main-navbar end -->
