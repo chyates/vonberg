@@ -325,11 +325,12 @@ class AdminController extends AppController
         if ($this->request->is('post') || $this->request->is('put'))  {
             $this->loadModel('Parts');
             $part = $this->Parts->get($id);
-            $part = $this->Parts->patchEntity($part, $this->request->data,['associated' => ['Textblocks'=> ['TextBlockBullets' ]]]);
+            $associated = ['TextBlocks', 'TextBlockBullets'];
+            $part = $this->Parts->patchEntity($part, $this->request->data, ['associated' => ['TextBlocks' => 'TextBlockBullets']]);
             $part->last_updated = date("Y-m-d H:i:s");
             if($this->Parts->save($part)){
                 $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
-                $this->redirect(array('action' => 'editProductFour',$part->partID));
+                $this->redirect(array('action' => 'editProductThree', $part->partID));
             }
         }
 
@@ -348,6 +349,10 @@ class AdminController extends AppController
     public function editProductThree($id)
     {
         $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Parts');
+        $part = $this->Parts->get($id);
+        $this->set('part', $part);
+
         if ($this->request->is('post') || $this->request->is('put'))  {
             $this->loadModel('ModelTables');
             $headerTable = TableRegistry::get('ModelTableHeaders');
@@ -357,7 +362,10 @@ class AdminController extends AppController
             $headerTable->deleteAll(['model_tableID' => $table->model_tableID]);
             $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
             $headerCounter = 0;
-            foreach ($this->request->data['header'] as $header) {
+            foreach (array_filter($this->request->data, function($key) {
+                $header = strpos($key, 'table_header');
+                return ($header === 0);
+            }, 2) as $header) {
                 $headerCounter++;
                 $top = $headerTable->newEntity();
                 $top->model_tableID = $table->model_tableID;
@@ -366,21 +374,35 @@ class AdminController extends AppController
                 if ($headerTable->save($top)) {
                     // The variable entity contains the id now
                     $model_table_header_id = $top->model_table_headerID;
-                    $debug = debug($top);
-                    $this->set('debug', $debug);
+//                    $debug = debug($top);
+//                    $this->set('debug', $debug);
                 } else {
 
                 }
             }
             $order_num = 0;
-
-            foreach ($this->request->data['table'] as $row ) {   # allow for empty cells EXCEPT in the first column
+            $rows = array_filter($this->request->data, function($key) {
+                return (strpos($key, 'model_name') === 0);
+            }, 2);
+            $cells = Array();
+            foreach ($rows as $name => $val) {
+                $n = substr($name, 11);
+                $x = strpos($n, '-');
+                $rowNum = substr($name, 11, $x);
+                $arr = array_filter($this->request->data, function($key){
+                    global $rowNum;
+                    return (strpos($key, 'table_row_' . $rowNum));
+                }, 2);
+                $arr[$name] = $val;
+                array_push($cells, $arr);
+            }
+            foreach ($cells as $row ) {   # allow for empty cells EXCEPT in the first column
                 foreach ($row as $cell) {
                     $order_num++;
 
                     $new = $rowsTable->newEntity();
                     $new->model_tableID = $table->model_tableID;
-                    $new->model_table_text = $cell;
+                    $new->model_table_row_text = $cell;
                     $new->order_num = $order_num;
                     if ($rowsTable->save($new)) {
                         // The variable entity contains the id now

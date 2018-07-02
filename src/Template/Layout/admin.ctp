@@ -40,272 +40,276 @@ $cakeDescription = 'Vonberg Dev Site';
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
     <?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 
-    <script>
+<script>
 
-        var idArr = [];
+    var idArr = [];
 
-        function createArr(sel) {
-            sel.find('option')
-            .each(function(index) {
-                var idInt = parseInt($(this).attr('value'));
-                idArr.push(idInt);
-            });
-            var max = idArr[0];
-            for(var i = 1; i < idArr.length; i++) {
-                if (idArr[i] > max) {
-                    max = idArr[i];
-                }
+    function createArr(sel) {
+        sel.find('option')
+        .each(function(index) {
+            var idInt = parseInt($(this).attr('value'));
+            idArr.push(idInt);
+        });
+        var max = idArr[0];
+        for(var i = 1; i < idArr.length; i++) {
+            if (idArr[i] > max) {
+                max = idArr[i];
             }
-            return max;
         }
+        return max;
+    }
 
-        function catAdd() {
-            var select = $("#add-prod-form").find('#categoryid');
-            var last = createArr(select);
-            var added = last + 1;
-            var name = $("#cat").val();
-            $.get('/admin/catadd?name='+name, function(d) {
-                $('#categoryid').prepend($('<option selected>', {
-                    value: added,
-                    text: name,
-                }));
-                location.reload(false);
-            });
-        }
-
-        function typeAdd() {
-            var select = $("#add-prod-form").find('#typeid');
-            var last = createArr(select);
-            var added = last + 1;
-            var name=$("#type").val();
-            $.get('/admin/typeadd?name='+name, function(d) {
-                $('#typeid').append($('<option selected="selected">', {
-                    value: added,
-                    text: name
-                }));
-                location.reload(false);
-
-            });
-        }
-
-        function seriesAdd() {
-            var select = $("#add-prod-form").find('#seriesid');
-            var last = createArr(select);
-            var added = last + 1;
-            var name=$("#series").val();
-            $.get('/admin/seriesadd?name='+name, function(d) {
-                $('#seriesid').append($('<option selected="selected">', {
-                    value: added,
-                    text: name
-                }));
-                location.reload(false);
-            });
-        }
-
-        function connAdd() {
-            var select = $("#add-prod-form").find('#connectionid');
-            var last = createArr(select);
-            var added = last + 1;
-            var name=$("#conn").val();
-            $.get('/admin/connadd?name='+name, function(d) {
-                $('#connectionid').append($('<option selected="selected">', {
-                    value: added,
-                    text: name
-                }));
-                location.reload(false);
-            });
-        }
-
-        function partAdd() {
-            $.ajax({
-                url: '/admin/part_add',
-                type:"POST",
-                data:$('#add-prod-form').serialize(),
-                success:function(response) {
-                    //document.getElementById("total_items").value=response;
-                    //alert("good");
-                    alert("success:  "+response);
-                    location.reload(false);
-                },
-                error: function (jqXHR,exception) {
-
-                    console.log(jqXHR);
-                    var msg = '';
-                    if (jqXHR.status === 0) {
-                        msg = 'Not connect.\n Verify Network.'+jqXHR.statusText;
-                    } else if (jqXHR.status == 404) {
-                        msg = 'Requested page not found. [404]';
-                    } else if (jqXHR.status == 500) {
-                        msg = 'Internal Server Error [500].';
-                    } else if (exception === 'parsererror') {
-                        msg = 'Requested JSON parse failed.';
-                    } else if (exception === 'timeout') {
-                        msg = 'Time out error.';
-                    } else if (exception === 'abort') {
-                        msg = 'Ajax request aborted.';
-                    } else {
-                        msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                    }
-
-                    alert(msg);
-                }
-            });
+    function catAdd() {
+        var select = $("#add-prod-form").find('#categoryid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name = $("#cat").val();
+        $.get('/admin/catadd?name='+name, function(d) {
+            $('#categoryid').prepend($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
             location.reload(false);
-        }
-        // $(function(){
-    // $("#geocomplete").geocomplete({ details: "form" })
-    // });
-    jQuery(document).ready(function($) {
-        // add "add series" to select
-        $('#seriesid').prepend($('<option>', {
-            value: 0,
-            text: 'Add new series...'
-        }));
-        $('#categoryid').prepend($('<option>', {
-            value: 0,
-            text: 'Add new category...'
-        }));
-        $('#typeid').prepend($('<option>', {
-            value: 0,
-            text: 'Add new type...'
-        }));
-        $('#connectionid').prepend($('<option>', {
-            value: 0,
-            text: 'Add new short description...',
-            id: 'testID'
-        }));
-
-        // if add series is clicked do this.
-        $("#seriesid").on("change", function () {
-            $modal = $('#add-series-modal');
-            if($(this).val() === '0'){
-                $modal.modal('show');
-            }
         });
-        // if add type is clicked do this.
-        $("#typeid").on("change", function () {
-            $modal = $('#add-type-modal');
-            if($(this).val() === '0'){
-                $modal.modal('show');
-            }
-        });
-        // if add category is clicked do this.
-        $("#categoryid").on("change", function () {
-            $modal = $('#add-cat-modal');
-            if($(this).val() === '0'){
-                $modal.modal('show');
-            }
-        });
-        // if add series is clicked do this.
-        $("#connectionid").on("change", function () {
-            $modal = $('#add-conn-modal');
-            if($(this).val() === '0'){
-                $modal.modal('show');
-            }
-        });
-        // fxn to flip through form slides
-        // first next link:
-        // first back link:
-        // last back link:
-        // define the function within the global scope
-        $('#delete-check-modal').on('show.bs.modal', function(e) {
-            $(this).find('form').attr('action', $(e.relatedTarget).data('action'));
-        });
+    }
 
-        $('#delete-check-modal').on('show.bs.modal', function(event) {
-            $("#partname").val($(event.relatedTarget).data('file'));
+    function typeAdd() {
+        var select = $("#add-prod-form").find('#typeid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name=$("#type").val();
+        $.get('/admin/typeadd?name='+name, function(d) {
+            $('#typeid').append($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+
         });
+    }
 
-        var lastA = $('.admin-nav').find('.cms-greyed');
-        lastA.next().addClass('nav-link').addClass('nav-item');
+    function seriesAdd() {
+        var select = $("#add-prod-form").find('#seriesid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name=$("#series").val();
+        $.get('/admin/seriesadd?name='+name, function(d) {
+            $('#seriesid').append($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+        });
+    }
 
+    function connAdd() {
+        var select = $("#add-prod-form").find('#connectionid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name=$("#conn").val();
+        $.get('/admin/connadd?name='+name, function(d) {
+            $('#connectionid').append($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+        });
+    }
 
-        // features bullets
-        var rowCount = 1;
-        var colCount = 1;
-        $(".add-bullet").click(function(e) {
-            e.preventDefault();
-            var tableSlide = $(".table-create-box").find(this);
-            var featSlide = $(".form-slide .w-bullet").find(this);
+    function partAdd() {
+        $.ajax({
+            url: '/admin/part_add',
+            type:"POST",
+            data:$('#add-prod-form').serialize(),
+            success:function(response) {
+                //document.getElementById("total_items").value=response;
+                //alert("good");
+                alert("success:  "+response);
+                location.reload(false);
+            },
+            error: function (jqXHR,exception) {
 
-            if(tableSlide.length > 0) {
-                if( $(this).hasClass('model-column') ){
-                    var existingRow = $(".creation-row");
-                    var newColDiv = "<div class='data-column'>"
-                    var colHead;
-                    var newCol = "<input type='text' class='model-row-input form-control' placeholder='Enter value' />";
-                    for(var j = 0; j < rowCount; j++) {
-                        if(j < 1) {
-                            colHead = "<input type='text' class='model-header-input form-control' placeholder='Enter table header' />";
-                            newColDiv += colHead;
-                            newColDiv += newCol;
-                        } else {
-                            newColDiv += newCol;
-                        }
-                    }
-                    colCount++;
-                    newColDiv += "</div>";
-                    existingRow.find('.data-column').last().after(newColDiv);
-                    var currentWidth = parseInt($("#three .buffer-div .table-create-box").css("width")) +200;
-                    if(colCount > 8) {
-                        $("#three .buffer-div .table-create-box").css("width", currentWidth);
-                    }
-                } else if ( $(this).hasClass('model-row') ){
-                    var dataRowCheck = $(".creation-row .data-column").find('.model-row-input:last-child');
-                    var firstRowCheck = $(".creation-row .data-column .model-name-input");
-                    var newFirst = "<input type='text' class='model-header-input form-control' placeholder='Enter model'/>";
-                    firstRowCheck.after(newFirst);
-                    var newRow = "<input type='text' class='model-row-input form-control' placeholder='Enter value' />";
-                    dataRowCheck.after(newRow);
-                    rowCount += 1;
+                console.log(jqXHR);
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.'+jqXHR.statusText;
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
                 }
-            } else if(featSlide.length > 0) {
-                var newBullet = "<input type='text' class='form-control' placeholder='Enter bullet copy...' />";
-                var newSelect = "<select class='form-control' name='product-specification'><option value='Select...' selected disabled>Select...</option></select>";
-                $(this).closest('.w-bullet').find('select').first().after(newSelect);
-                $(this).closest(".w-bullet").find("input[type=text]").first().after(newBullet);
+
+                alert(msg);
             }
         });
+        location.reload(false);
+    }
+    // $(function(){
+// $("#geocomplete").geocomplete({ details: "form" })
+// });
+jQuery(document).ready(function($) {
+    // add "add series" to select
+    $('#seriesid').prepend($('<option>', {
+        value: 0,
+        text: 'Add new series...'
+    }));
+    $('#categoryid').prepend($('<option>', {
+        value: 0,
+        text: 'Add new category...'
+    }));
+    $('#typeid').prepend($('<option>', {
+        value: 0,
+        text: 'Add new type...'
+    }));
+    $('#connectionid').prepend($('<option>', {
+        value: 0,
+        text: 'Add new short description...',
+        id: 'testID'
+    }));
 
-        $('#image-file').change(function() {
-            var filename = $('#image-file').val();
-            $('#file-test').html(filename);
-        });
-
-        $('#stp-file').change(function() {
-            var filename = $('#stp-file').val();
-            $('#file-test-2').html(filename);
-        });
-
-        $(".update-button").hide();
-        $(".fileContainer").find("input[type=file]").change(function() {
-            var filename = $(this).val();
-
-            var toChange = $(this).closest('.form-group').next('p.file-text');
-            var homeChange = $(this).closest('.fileContainer').next('p.file-text');
-            console.log("Found home change", homeChange.html());
-
-            var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
-            var homeUpdate = $(this).closest('.fileContainer').siblings('.update-button');
-            console.log("Found home update", homeUpdate.html());
-
-            if(toChange.length > 0) {
-                console.log("Inside first if check");
-                $(toChange).html(filename);
-                $(nextUpdate).show();
-            } else if(homeChange) {
-                console.log("Inside else check");
-                $(homeChange).html(filename);
-                $(homeUpdate).show();
-            }
-        });
-
-        $(".rsrc-table").find("input[type=text].form-control.form-control-sm").keypress(function() {
-            console.log("Title has been changed");
-            $(this).parent().siblings("td").find(".update-button").show();
-        })
+    // if add series is clicked do this.
+    $("#seriesid").on("change", function () {
+        $modal = $('#add-series-modal');
+        if($(this).val() === '0'){
+            $modal.modal('show');
+        }
     });
-    </script>
+    // if add type is clicked do this.
+    $("#typeid").on("change", function () {
+        $modal = $('#add-type-modal');
+        if($(this).val() === '0'){
+            $modal.modal('show');
+        }
+    });
+    // if add category is clicked do this.
+    $("#categoryid").on("change", function () {
+        $modal = $('#add-cat-modal');
+        if($(this).val() === '0'){
+            $modal.modal('show');
+        }
+    });
+    // if add series is clicked do this.
+    $("#connectionid").on("change", function () {
+        $modal = $('#add-conn-modal');
+        if($(this).val() === '0'){
+            $modal.modal('show');
+        }
+    });
+
+// fxn to insert input fields upon add bullet click:
+    // features bullets
+    var rowCount = 1;
+    var colCount = 1;
+    var nameCount = 0;
+    var headCount = 0;
+    $(".add-bullet").click(function(e) {
+        e.preventDefault();
+        var tableSlide = $(".table-create-box").find(this);
+        var featSlide = $(".form-slide .w-bullet").find(this);
+
+        if(tableSlide.length > 0) {
+            if( $(this).hasClass('model-column') ){
+                colCount += 1;
+                var existingRow = $(".creation-row");
+                var newColDiv = "<div class='data-column'>"
+                var colHead;
+                for(var j = 0; j < rowCount; j++) {
+                    var newCol = "<input type='text' class='model-row-input form-control' name ='table_row_" +(j+1)+ "-" +colCount+ "'placeholder='Enter value' />";
+                    if(j < 1) {
+                        colHead = "<input type='text' class='model-header-input form-control' name ='table_header_" +headCount+ "-" +colCount+ "' placeholder='Enter table header' />";
+                        newColDiv += colHead;
+                        newColDiv += newCol;
+                    } else {
+                        newColDiv += newCol;
+                    }
+                }
+                newColDiv += "</div>";
+                existingRow.find('.data-column').last().after(newColDiv);
+                var currentWidth = parseInt($("#three .buffer-div .table-create-box").css("width")) +200;
+                if(colCount > 8) {
+                    $("#three .buffer-div .table-create-box").css("width", currentWidth);
+                }
+            } else if ( $(this).hasClass('model-row') ){
+                rowCount += 1;
+                var dataRowCheck = $(".creation-row .data-column").find('.model-row-input:last-child');
+                var firstRowCheck = $(".creation-row .data-column .model-name-input:last-child");
+                var newFirst = "<input type='text' class='model-name-input form-control' name ='model_name_" +rowCount+ "-1' placeholder='Enter model'/>";
+            
+                firstRowCheck.after(newFirst);
+                var newRow = "<input type='text' class='model-row-input form-control' name ='table_row_" +rowCount+ "-" +colCount+ "' placeholder='Enter value' />";
+                dataRowCheck.after(newRow);
+            }
+        } else if(featSlide.length > 0) {
+            var newBullet = "<input type='text' class='form-control' placeholder='Enter bullet copy...' />";
+            var newSelect = "<select class='form-control' name='product-specification'><option value='Select...' selected disabled>Select...</option></select>";
+            $(this).closest('.w-bullet').find('select').first().after(newSelect);
+            $(this).closest(".w-bullet").find("input[type=text]").first().after(newBullet);
+        }
+    });
+
+    // define the function within the global scope
+    $('#delete-check-modal').on('show.bs.modal', function(e) {
+        $(this).find('form').attr('action', $(e.relatedTarget).data('action'));
+    });
+
+    $('#delete-check-modal').on('show.bs.modal', function(event) {
+        $("#partname").val($(event.relatedTarget).data('file'));
+    });
+
+    var lastA = $('.admin-nav').find('.cms-greyed');
+    lastA.next().addClass('nav-link').addClass('nav-item');
+
+    $('#image-file').change(function() {
+        var filename = $('#image-file').val();
+        $('#file-test').html(filename);
+    });
+
+    $('#stp-file').change(function() {
+        var filename = $('#stp-file').val();
+        $('#file-test-2').html(filename);
+    });
+
+    $(".update-button").hide();
+    $(".fileContainer").find("input[type=file]").change(function() {
+        var filename = $(this).val();
+
+        var toChange = $(this).closest('.form-group').next('p.file-text');
+        var homeChange = $(this).closest('.fileContainer').next('p.file-text');
+        console.log("Found home change", homeChange.html());
+
+        var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
+        var homeUpdate = $(this).closest('.fileContainer').siblings('.update-button');
+        console.log("Found home update", homeUpdate.html());
+
+        if(toChange.length > 0) {
+            console.log("Inside first if check");
+            $(toChange).html(filename);
+            $(nextUpdate).show();
+        } else if(homeChange) {
+            console.log("Inside else check");
+            $(homeChange).html(filename);
+            $(homeUpdate).show();
+        }
+    });
+
+    $(".rsrc-table").find("input[type=text].form-control.form-control-sm").keypress(function() {
+        console.log("Title has been changed");
+        $(this).parent().siblings("td").find(".update-button").show();
+    })
+});
+</script>
 
 </body>
 </html>

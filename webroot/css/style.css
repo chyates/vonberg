@@ -2012,6 +2012,17 @@ a.add-bullet {
     margin-right: 15px;
 }
 
+#three .buffer-div {
+    overflow: scroll;
+    width: 1000px;
+    height: 800px;
+    margin: 0 auto;
+}
+
+#three .buffer-div .table-create-box {
+    width: 2000px;
+}
+
 /* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
 
 #cms-manage-resources-main p.text-center a.btn.btn-primary {
