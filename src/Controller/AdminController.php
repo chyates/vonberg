@@ -348,16 +348,20 @@ class AdminController extends AppController
 
     public function editProductThree($id)
     {
+        // load appropriate variables
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         $part = $this->Parts->get($id);
         $this->set('part', $part);
 
+        // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
+            // load vars for model tables
             $this->loadModel('ModelTables');
             $headerTable = TableRegistry::get('ModelTableHeaders');
             $rowsTable = TableRegistry::get('ModelTableRows');
             $table = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
+
             // delete headers and rows to put them back in
             $headerTable->deleteAll(['model_tableID' => $table->model_tableID]);
             $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
@@ -384,7 +388,9 @@ class AdminController extends AppController
             $rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'model_name') === 0);
             }, 2);
-            $cells = Array();
+
+            $cells = array();
+
             foreach ($rows as $name => $val) {
                 $n = substr($name, 11);
                 $x = strpos($n, '-');
@@ -396,6 +402,7 @@ class AdminController extends AppController
                 $arr[$name] = $val;
                 array_push($cells, $arr);
             }
+
             foreach ($cells as $row ) {   # allow for empty cells EXCEPT in the first column
                 foreach ($row as $cell) {
                     $order_num++;
