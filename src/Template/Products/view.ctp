@@ -334,6 +334,13 @@
   })();
 
     $(document).ready(function(){
+        // var stp = $("#get-stp-modal #get-stp-form input.form-check-input[name=model]");
+        // console.log("Amount of model checkboxes", stp.length);
+        // console.log("STP: ", stp);
+        // for (var x = 0; x < stp.length; x++) {
+        //     console.log("This: ", $(stp[x]).val());
+        //     // console.log("Each value: ", sIndex.attr('id'));
+        // }
         var feedback = '<p class="invalid-feedback">This field is required.</p>';
         $("input:not(input[type=hidden])").each(function(index) {
             $(this).after(feedback)
