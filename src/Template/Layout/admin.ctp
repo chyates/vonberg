@@ -214,6 +214,9 @@ jQuery(document).ready(function($) {
     var colCount = 1;
     var nameCount = 0;
     var headCount = 0;
+    var extraID;
+    var textID; 
+
     $(".add-bullet").click(function(e) {
         e.preventDefault();
         var tableSlide = $(".table-create-box").find(this);
@@ -255,37 +258,62 @@ jQuery(document).ready(function($) {
             var parentDiv = $(this).parents('.w-bullet');
             var newBullet;
 
-            var firstID = parseInt(parentDiv.find('input[name="op_bullet_text_1"]').attr('id'));
-            var secID = opID + 1;
-            var extraID;
-            // ops + feats bullets
-            if($(this).prev().hasClass('input text')) {
-                if(parentDiv.hasClass('operation')) {
-                    if(!parentDiv.find('input#2')) {
-                        newBullet = "<input type='text' name='op_bullet_text_"+secID+"' class='form-control' placeholder='Enter bullet copy...' />";
-                    } else {
+            var opID = parseInt(parentDiv.find('input[name="op_bullet_text_1"]').attr('id'));
+            var secOp = parseInt(opID) + 1;
 
+            var featID = parseInt(parentDiv.find('input[name="feat_bullet_text_1"]').attr('id'));
+            var secFeat = parseInt(featID) + 1;
+
+            if($(this).prev().hasClass('input text')) {
+                // ops + feats bullets
+                if(parentDiv.hasClass('operation')) {
+                    if(!parentDiv.find('input[name="op_bullet_text_2"]').length) {
+                        newBullet = "<input type='text' name='op_bullet_text_"+secOp+"' class='form-control' placeholder='Enter bullet copy...' id='"+secOp+"' />";
+                        $(parentDiv).find('input[name="op_bullet_text_1"]').after(newBullet);
+                        extraID = secOp + 1;
+                    } else {
+                        newBullet = "<input type='text' name='op_bullet_text_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"' />";
+                        extraID++;
+                        $(parentDiv).find('input[type=text]').last().after(newBullet);
                     }
                 } else if(parentDiv.hasClass('features')) {
-                    newBullet = "<input type='text' name='feat_bullet_text'  class='form-control' placeholder='Enter bullet copy...' />";
+                    if(!parentDiv.find('input[name="feat_bullet_text_2"]').length) {
+                        newBullet = "<input type='text' name='feat_bullet_text_"+secFeat+"' class='form-control' placeholder='Enter bullet copy...' id='"+secFeat+"' />";
+                        $(parentDiv).find('input[name="feat_bullet_text_1"]').after(newBullet);
+                        extraID = secFeat + 1;
+                    } else {
+                        newBullet = "<input type='text' name='feat_bullet_text_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"' />";
+                        extraID++;
+                        $(parentDiv).find('input[type=text]').last().after(newBullet);
+                    }
                 }
             }  else if ($(this).prev().hasClass('specifications')) {
-                // specs
-                var lastSelect = parentDiv.find('select[name="spec_name"]').last();
-                var selectID = parseInt(parentDiv.find('select[name="spec_name"]').last().attr('id'));
-                var sID = selectID + 1;
+                // specs bullets
+                var firstSelect = parentDiv.find('select[name="spec_name_1"]');
+                var lastSelect = parentDiv.find('div.specifications select').last();
+                var firstPair = parentDiv.find('input[name="spec_value_1"]');
+                var lastPair = parentDiv.find('.specifications').find('input[type=text]').last();
+                var specID = parseInt(parentDiv.find('select[name="spec_name_1"]').attr('id'));
+                var sID = parseInt(specID) + 1;
+                var newSelect = firstSelect.clone();
+                var newPair;
                 
-                var selectPair = parentDiv.find('.specifications').find('input[name="spec_value"]').last();
-                var textID = parseInt(selectPair.attr('id'));
-                tID = textID + 1;
-                var newSelect = lastSelect.clone();
-                newSelect.attr('id', sID);
-                lastSelect.after(newSelect);
-                
-                var newPair = "<input type='text' name='spec_value'  class='form-control' placeholder='Enter bullet copy...' id='"+tID+"'/>";
-                selectPair.after(newPair);
+                if(!$(this).prev().find('select[name="spec_name_2"]').length) {
+                    console.log("Hit spec_name_2 not found");
+                    newSelect.attr('id', sID).attr('name', 'spec_name_'+sID);
+                    firstSelect.after(newSelect);
+                    var firstPair = parentDiv.find('.specifications').find('input[name="spec_value_1"]');
+                    newPair = "<input type='text' name='spec_value_"+sID+"' class='form-control' placeholder='Enter bullet copy...' id='"+sID+"'/>";
+                    firstPair.after(newPair);
+                    extraID = sID + 1;
+                } else {
+                    $(newSelect).attr('id', extraID).attr('name', "spec_name_"+extraID);
+                    lastSelect.after(newSelect);
+                    newPair = "<input type='text' name='spec_value_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"'/>";
+                    extraID++;
+                    lastPair.after(newPair);
+                }                
             }          
-            $(this).closest(".w-bullet").find("input[type=text]").last().after(newBullet);
         }
     });
 

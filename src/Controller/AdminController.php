@@ -310,7 +310,6 @@ class AdminController extends AppController
         $this->loadModel('Parts');
         $this->loadModel('Specifications');
         $part = $this->Parts->get($id);
-
         $cat = TableRegistry::get('Categories')->find('list');
         $type = TableRegistry::get('Types')->find('list');
         $style = TableRegistry::get('Styles')->find('list');
@@ -341,9 +340,7 @@ class AdminController extends AppController
 
         // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
-            // $part = $this->Parts->patchEntity($part, $this->request->data, ['associated' => ['TextBlocks' => 'TextBlockBullets']]);
             // manual part creation:
-                // create arrays of operation + features text blocks, + spec entities
             $operations = array();
             $features = array();
             $specifications = array();
@@ -352,81 +349,83 @@ class AdminController extends AppController
 
             $ops_rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'op_bullet_text') !== false);
-            }, ARRAY_FILTER_USE_KEY);
-
+            }, 2);
             foreach($ops_rows as $op_name => $name_text) {
                 array_push($operations, $name_text);
             }
-            
-            // foreach(array_filter($this->request->data, function($key) {
-            //     return (strpos($key, 'feat_bullet_text') === 0);
-            // }, 2) as $feat_text) {
-            //     array_push($features, $feat_text);
-            // }
 
-            // foreach($this->request->data['spec_name'] as $name_text) {
-            //     array_push($spec_names, $name_text);
-            // }
-            
-            // foreach($this->request->data['spec_value'] as $value_text) {
-            //     array_push($spec_vals, $value_text);
-            // }
+            $feat_rows = array_filter($this->request->data, function($key) {
+                return (strpos($key, 'feat_bullet_text') !== false);
+            }, 2);
+            foreach($feat_rows as $feat_name => $name_text) {
+                array_push($features, $name_text);
+            }
 
-            // $name_index = 0;
-            // for($h = 0; $h < count($spec_names); $h++) {
-            //     $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
-            // }
+            $names_rows = array_filter($this->request->data, function($key) {
+                return (strpos($key, 'spec_name') !== false);
+            }, 2);
+            foreach($names_rows as $specif_name => $name_text) {
+                array_push($spec_names, $name_text);
+            }
+
+            $vals_rows = array_filter($this->request->data, function($key) {
+                return (strpos($key, 'spec_value') !== false);
+            }, 2);
+            foreach($vals_rows as $val_name => $name_text) {
+                array_push($spec_vals, $name_text);
+            }
+
+            $name_index = 0;
+            for($h = 0; $h < count($spec_names); $h++) {
+                $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
+            }
             // new operations + features + specs objects:
             $new_ops = $this->TextBlocks->newEntity();
             $new_ops->partID = $part->partID;
             $new_ops->order_num = 1;
             $new_ops->header = "Operation";
 
-            // $new_feats = $this->TextBlocks->newEntity();
-            // $new_feat->partID = $part->partID;
-            // $new_feat->order_num = 2;
-            // $new_feat->header = "Features";
+            $new_feats = $this->TextBlocks->newEntity();
+            $new_feats->partID = $part->partID;
+            $new_feats->order_num = 2;
+            $new_feats->header = "Features";
 
-            if($this->TextBlocks->save($new_ops)) {
+            if($this->TextBlocks->save($new_ops) && $this->TextBlocks->save($new_feats)) {
                 $this->Flash->success(__('Operations array: {0}', $operations));
-                // $this->Flash->success(__('Operations count from data var {0}', count($this->request->data['op_bullet_text'])));
                 // create new text block bullet associations w/ newly created objects
-                for($i = 0; $i <= count($operations); $i++) {
+                for($i = 0; $i < count($operations); $i++) {
                     $op_bullet = $this->TextBlockBullets->newEntity();
                     $op_bullet->text_blockID = $new_ops->text_blockID;
-                    if($i > count($operations)) {
-                        $op_bullet->bullet_text = $operations[$i-1];
-                    } else {
-                        $op_bullet->bullet_text = $operations[$i];
-                    }
+                    $op_bullet->bullet_text = $operations[$i];
                     $op_bullet->order_num = $i+1;
                     if($this->TextBlockBullets->save($op_bullet)) {
                         $this->Flash->success(__('The new operation bullets have been saved')); 
                     }
                 }
 
-                // for($j = 0; $j < count($features); $j++) {
-                //     $feat_bullet = $this->TextBlockBullets->newEntity();
-                //     $feat_bullet->text_blockID = $new_feats->text_blockID;
-                //     $bullet_text = $features[$j];
-                //     if($this->TextBlockBullets->save($feat_bullet)) {
-                //         $this->Flash->success(__('The new feature bullets have been saved'));
-                //     }
-                // }
+                for($j = 0; $j < count($features); $j++) {
+                    $feat_bullet = $this->TextBlockBullets->newEntity();
+                    $feat_bullet->text_blockID = $new_feats->text_blockID;
+                    $feat_bullet->bullet_text = $features[$j];
+                    $feat_bullet->order_num = $j + 1;
+                    if($this->TextBlockBullets->save($feat_bullet)) {
+                        $this->Flash->success(__('The new feature bullets have been saved'));
+                    }
+                }
             }
 
-            // $spec_order = 1;
-            // for($k = 0; $k < count($specifications); $k++) {
-            //     $new_spec = $this->Specifications->newEntity();
-            //     $new_spec->partID = $part->partID;
-            //     $new_spec->spec_name = key($specifications[$k]);
-            //     $new_spec->spec_value = $specifications[$k][$new_spec->spec_name];
-            //     $new_spec->order_num = $spec_order;
-            //     $spec_order++;
-            //     if($this->Specifications->save($new_spec)) {
-            //         $this->Flash->success(__('The new specifications have been saved'));
-            //     }
-            // }
+            $spec_order = 1;
+            for($k = 0; $k < count($specifications); $k++) {
+                $new_spec = $this->Specifications->newEntity();
+                $new_spec->partID = $part->partID;
+                $new_spec->spec_name = key($specifications[$k]);
+                $new_spec->spec_value = $specifications[$k][$new_spec->spec_name];
+                $new_spec->order_num = $spec_order;
+                $spec_order++;
+                if($this->Specifications->save($new_spec)) {
+                    $this->Flash->success(__('The new specifications have been saved'));
+                }
+            }
 
             // update part with description and timestamp
             $part->description = $this->request->data['description'];

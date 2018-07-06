@@ -33,12 +33,12 @@
             <?php
             $feat_count = 1;
             if(count($opblock) < 2) {
-                echo $this->Form->input('feat_bullet_text', array('class' => 'form-control', 'label' => false, 'id' => 'bullet' . $feat_count));
+                echo $this->Form->input('feat_bullet_text_1', array('class' => 'form-control', 'label' => false, 'id' => '1'));
             } else {
                 foreach ($opblock as $op):
                     foreach ($op->text_block_bullets as $line):
                         if ($op->header == "Features") {
-                            echo $this->Form->input('feat_bullet_text', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text));
+                            echo $this->Form->input('feat_bullet_text_1', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => '1'));
 
                         }
                     endforeach;
@@ -71,23 +71,19 @@
                 }
             } else {
                 $spec_array = [];
+                $options = [];
                 foreach($all_specs as $each_spec) {
-                    array_push($spec_array, $each_spec->spec_name); 
-                } ?>
+                    array_push($spec_array, $each_spec->spec_name);
+                } 
+                for($x = 0; $x < count($spec_array); $x++) {
+                    $options[$x] = ['text' => $spec_array[$x], 'value' => $spec_array[$x]];
+                }?>
                     <div class="row specifications">
                         <div class="col-sm-6">
-                        <?php echo $this->Form->input('spec_name',
-                        [
-                            'type' => 'select',
-                            'multiple' => false,
-                            'options' => $spec_array,
-                            'label' => false,
-                            'class' => 'form-control',
-                            'id' => '1'
-                        ]);?>
+                        <?php echo $this->Form->select('spec_name_1', $options, ['class' => 'form-control', 'label' => false, 'id' => '1']);?>
                         </div>
                         <div class="col-sm-6">
-                            <?= $this->Form->input('spec_value', array('class' => 'form-control','label'=> False, 'id' => '1'));?>
+                            <?= $this->Form->input('spec_value_1', array('class' => 'form-control','label'=> False, 'id' => '1'));?>
                         </div>
                     </div>
                     <a class="add-bullet" href="">Add Bullet</a>
