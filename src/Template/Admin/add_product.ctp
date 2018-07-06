@@ -114,16 +114,24 @@
                 <div class="col-sm-6">
                     <label>Product Status</label>
                     <div class="form-check">
-                        <?= $this->Form->checkbox('new_list');?>
+                        <?= $this->Form->checkbox('new_list', ['checked' => true]);?>
                         <label class="form-check-label">New</label>
                     </div>
                 </div>
                 <div class="col-sm-6">
                     <label>Expiration (days)</label>
-                    <?= $this->Form->select(
-                    'expires',
-                    [30, 60, 90], ['label' => 'Expiration',
-                        'class' => 'form-control']
+                    <?= $this->Form->input('expires',
+                    [
+                        'type' => 'select',
+                        'multiple' => false,
+                        'options' => [
+                            ['text' => '30', 'value' => 30],
+                            ['text' => '60', 'value' => 60],
+                            ['text' => '90', 'value' => 90]
+                        ],
+                        'label' => false,
+                        'class' => 'form-control'
+                    ]
                     );?>
 
                 </div>

@@ -49,7 +49,19 @@ class ContactController extends AppController
         $this->loadModel('StpUsers');
         $this->loadModel('StpFile');
         $this->loadModel('Parts');
-        // $this->loadModel('ModelTableRows');
+        $this->loadModel('ModelTableRows');
+
+        // extract part id from url:
+        $part_id = '';
+        $curr_url = $this->request->here;
+        for($j = 0; $j < strlen($curr_url); $j++) {
+            if($curr_url[$j] == '/' && $curr_url[$j-1] == 'w') {
+                for($x = $j; $x < strlen($curr_url); $x++) {
+                    $part_id .= $curr_url[$x];
+                }
+            }
+        }
+        $final_id = intval($part_id);
 
         // instantiate empty STP user and STP file objects:
         $emp=$this->StpUsers->newEntity();
@@ -69,27 +81,26 @@ class ContactController extends AppController
                         }
                     }
                 }
-                Email::deliver('chyatesil@gmail.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
                 $data['response'] = "Success: data saved";
                 $data['debug'] = $result;
                 $models = [];
                 $this->Flash->success(__('The request has been saved.'));
-                $this->loadModel('ModelTableRows');
-                foreach ($this->request->data['model'] as $model) {
-                    $files=$this->StpFile->newEntity();
-                    $files->stp_userID = $result->stp_userID;
-                    $files->partID = $final_id;
-                    $files->modelID = $model;
-                    $files = $this->StpFile->save($files);
-                    if (strval($model) != 0) {
-                        $tables = $this->ModelTableRows->find('all', array(
-                            'conditions' => array(
-                                'model_table_rowID' => $model,
-                            ),
-                        ))->first();
-                        array_push($models, $tables);
-                    }
-                }
+                // foreach ($this->request->data['model'] as $model) {
+                //     $files=$this->StpFile->newEntity();
+                //     $files->stp_userID = $result->stp_userID;
+                //     $files->partID = $final_id;
+                //     $files->modelID = intval($model);
+                //     $files = $this->StpFile->save($files);
+                //     if (strval($model) != 0) {
+                //         $tables = $this->ModelTableRows->find('all', array(
+                //             'conditions' => array(
+                //                 'model_table_rowID' => $model,
+                //             ),
+                //         ))->first();
+                //         array_push($models, $tables);
+                //     }
+                // }
             }
             else {
                 $data['response'] = "Error: some error";

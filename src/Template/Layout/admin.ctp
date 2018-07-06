@@ -252,10 +252,40 @@ jQuery(document).ready(function($) {
                 dataRowCheck.after(newRow);
             }
         } else if(featSlide.length > 0) {
-            var newBullet = "<input type='text' class='form-control' placeholder='Enter bullet copy...' />";
-            var newSelect = "<select class='form-control' name='product-specification'><option value='Select...' selected disabled>Select...</option></select>";
-            $(this).closest('.w-bullet').find('select').first().after(newSelect);
-            $(this).closest(".w-bullet").find("input[type=text]").first().after(newBullet);
+            var parentDiv = $(this).parents('.w-bullet');
+            var newBullet;
+
+            var firstID = parseInt(parentDiv.find('input[name="op_bullet_text_1"]').attr('id'));
+            var secID = opID + 1;
+            var extraID;
+            // ops + feats bullets
+            if($(this).prev().hasClass('input text')) {
+                if(parentDiv.hasClass('operation')) {
+                    if(!parentDiv.find('input#2')) {
+                        newBullet = "<input type='text' name='op_bullet_text_"+secID+"' class='form-control' placeholder='Enter bullet copy...' />";
+                    } else {
+
+                    }
+                } else if(parentDiv.hasClass('features')) {
+                    newBullet = "<input type='text' name='feat_bullet_text'  class='form-control' placeholder='Enter bullet copy...' />";
+                }
+            }  else if ($(this).prev().hasClass('specifications')) {
+                // specs
+                var lastSelect = parentDiv.find('select[name="spec_name"]').last();
+                var selectID = parseInt(parentDiv.find('select[name="spec_name"]').last().attr('id'));
+                var sID = selectID + 1;
+                
+                var selectPair = parentDiv.find('.specifications').find('input[name="spec_value"]').last();
+                var textID = parseInt(selectPair.attr('id'));
+                tID = textID + 1;
+                var newSelect = lastSelect.clone();
+                newSelect.attr('id', sID);
+                lastSelect.after(newSelect);
+                
+                var newPair = "<input type='text' name='spec_value'  class='form-control' placeholder='Enter bullet copy...' id='"+tID+"'/>";
+                selectPair.after(newPair);
+            }          
+            $(this).closest(".w-bullet").find("input[type=text]").last().after(newBullet);
         }
     });
 

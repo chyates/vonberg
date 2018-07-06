@@ -177,25 +177,38 @@ class AdminController extends AppController
     public function addProduct()
     {
         $this->viewBuilder()->setLayout('admin');
-        if($this->request->is('post') || $this->request->is('put'))  {
-            $data = [];
-            $this->loadModel('Parts');
-            $part=$this->Parts->newEntity();
-            $part=$this->Parts->patchEntity($part,$this->request->data);
-            if($result=$this->Parts->save($part)) {
-                $data['response'] = "Success: data saved";
-            }
-            else {
-                $data['response'] = "Error: some error";
-                //print_r($emp);
-            }
-            $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
-        }
+        $data = [];
+        
+        // load variables to generate form options:
         $cat = TableRegistry::get('Categories')->find('list')->orderAsc('name');
         $type = TableRegistry::get('Types')->find('list')->orderAsc('name');
         $style = TableRegistry::get('Styles')->find('list')->orderAsc('name');
         $series = TableRegistry::get('Series')->find('list')->orderAsc('name');
         $conn = TableRegistry::get('Connections')->find('list')->orderAsc('name');
+            
+        if($this->request->is('post') || $this->request->is('put'))  {
+            // create part:
+            $this->loadModel('Parts');
+            $part=$this->Parts->newEntity();
+            $part->seriesID = $this->request->data['seriesID'];
+            $part->styleID = $this->request->data['styleID'];
+            $part->categoryID = $this->request->data['categoryID'];
+            $part->typeID = $this->request->data['typeID'];
+            $part->connectionID = $this->request->data['connectionID'];
+            $part->expires = intval($this->request->data['expires']);
+            $part->new_list = intval($this->request->data['new_list']);
+
+            // save part:
+            if($result=$this->Parts->save($part)) {
+                $data['response'] = "Success: data saved";
+            } else {
+                $data['response'] = "Error: some error";
+                //print_r($emp);
+            }
+            $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
+        }
+
+        // set variables for form data:
         $this->set('cat', $cat);
         $this->set('conn', $conn);
         $this->set(compact('series'));
@@ -291,11 +304,20 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
 
-        // first call: load appropriate variables--existing text blocks + specs, part data:
+        // first call: load appropriate variables--existing text blocks + specs, part data, DB data for form options:
         $this->loadModel('TextBlocks');
+        $this->loadModel('TextBlockBullets');
         $this->loadModel('Parts');
         $this->loadModel('Specifications');
+        $part = $this->Parts->get($id);
 
+        $cat = TableRegistry::get('Categories')->find('list');
+        $type = TableRegistry::get('Types')->find('list');
+        $style = TableRegistry::get('Styles')->find('list');
+        $series = TableRegistry::get('Series')->find('list');
+
+        // if the part already exists, populate the associated data:
+            // operations + features
         $opblock = $this->TextBlocks->find('all',array(
             'conditions' => array(
                 'partID' => $id,
@@ -303,18 +325,14 @@ class AdminController extends AppController
             'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
         ));
 
+            // specifications
         $specs = $this->Specifications->find('all',array(
             'conditions' => array(
                 'partID' => $id,
             ),
         ));
 
-        $part = $this->Parts->get($id);
-
-        $cat = TableRegistry::get('Categories')->find('list');
-        $type = TableRegistry::get('Types')->find('list');
-        $style = TableRegistry::get('Styles')->find('list');
-        $series = TableRegistry::get('Series')->find('list');
+        // if the part doesn't exist, populate all specifications in dropdown
         $genSpecs = TableRegistry::get('Specifications')->find('all', array(
             'field' => 'spec_name',
             'group' => 'spec_name',
@@ -323,27 +341,111 @@ class AdminController extends AppController
 
         // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
-            $this->loadModel('Parts');
-            $part = $this->Parts->get($id);
-            $associated = ['TextBlocks', 'TextBlockBullets'];
-            $part = $this->Parts->patchEntity($part, $this->request->data, ['associated' => ['TextBlocks' => 'TextBlockBullets']]);
+            // $part = $this->Parts->patchEntity($part, $this->request->data, ['associated' => ['TextBlocks' => 'TextBlockBullets']]);
+            // manual part creation:
+                // create arrays of operation + features text blocks, + spec entities
+            $operations = array();
+            $features = array();
+            $specifications = array();
+            $spec_names = array();
+            $spec_vals = array();
+
+            $ops_rows = array_filter($this->request->data, function($key) {
+                return (strpos($key, 'op_bullet_text') !== false);
+            }, ARRAY_FILTER_USE_KEY);
+
+            foreach($ops_rows as $op_name => $name_text) {
+                array_push($operations, $name_text);
+            }
+            
+            // foreach(array_filter($this->request->data, function($key) {
+            //     return (strpos($key, 'feat_bullet_text') === 0);
+            // }, 2) as $feat_text) {
+            //     array_push($features, $feat_text);
+            // }
+
+            // foreach($this->request->data['spec_name'] as $name_text) {
+            //     array_push($spec_names, $name_text);
+            // }
+            
+            // foreach($this->request->data['spec_value'] as $value_text) {
+            //     array_push($spec_vals, $value_text);
+            // }
+
+            // $name_index = 0;
+            // for($h = 0; $h < count($spec_names); $h++) {
+            //     $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
+            // }
+            // new operations + features + specs objects:
+            $new_ops = $this->TextBlocks->newEntity();
+            $new_ops->partID = $part->partID;
+            $new_ops->order_num = 1;
+            $new_ops->header = "Operation";
+
+            // $new_feats = $this->TextBlocks->newEntity();
+            // $new_feat->partID = $part->partID;
+            // $new_feat->order_num = 2;
+            // $new_feat->header = "Features";
+
+            if($this->TextBlocks->save($new_ops)) {
+                $this->Flash->success(__('Operations array: {0}', $operations));
+                // $this->Flash->success(__('Operations count from data var {0}', count($this->request->data['op_bullet_text'])));
+                // create new text block bullet associations w/ newly created objects
+                for($i = 0; $i <= count($operations); $i++) {
+                    $op_bullet = $this->TextBlockBullets->newEntity();
+                    $op_bullet->text_blockID = $new_ops->text_blockID;
+                    if($i > count($operations)) {
+                        $op_bullet->bullet_text = $operations[$i-1];
+                    } else {
+                        $op_bullet->bullet_text = $operations[$i];
+                    }
+                    $op_bullet->order_num = $i+1;
+                    if($this->TextBlockBullets->save($op_bullet)) {
+                        $this->Flash->success(__('The new operation bullets have been saved')); 
+                    }
+                }
+
+                // for($j = 0; $j < count($features); $j++) {
+                //     $feat_bullet = $this->TextBlockBullets->newEntity();
+                //     $feat_bullet->text_blockID = $new_feats->text_blockID;
+                //     $bullet_text = $features[$j];
+                //     if($this->TextBlockBullets->save($feat_bullet)) {
+                //         $this->Flash->success(__('The new feature bullets have been saved'));
+                //     }
+                // }
+            }
+
+            // $spec_order = 1;
+            // for($k = 0; $k < count($specifications); $k++) {
+            //     $new_spec = $this->Specifications->newEntity();
+            //     $new_spec->partID = $part->partID;
+            //     $new_spec->spec_name = key($specifications[$k]);
+            //     $new_spec->spec_value = $specifications[$k][$new_spec->spec_name];
+            //     $new_spec->order_num = $spec_order;
+            //     $spec_order++;
+            //     if($this->Specifications->save($new_spec)) {
+            //         $this->Flash->success(__('The new specifications have been saved'));
+            //     }
+            // }
+
+            // update part with description and timestamp
+            $part->description = $this->request->data['description'];
             $part->last_updated = date("Y-m-d H:i:s");
             if($this->Parts->save($part)){
-                $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
+                $this->Flash->success(__('The resource with id: {0} has been saved.', $part->partid));
                 $this->redirect(array('action' => 'editProductThree', $part->partID));
             }
         }
 
+        // set view variables
         $this->set('cat', $cat);
         $this->set(compact('series'));
-        // Save logic goes here
         $this->set('part', $part);
         $this->set('specs', $specs);
         $this->set('all_specs', $genSpecs);
         $this->set('type', $type);
         $this->set('style', $style);
         $this->set('opblock', $opblock);
-
     }
 
     public function editProductThree($id)
@@ -360,11 +462,16 @@ class AdminController extends AppController
             $this->loadModel('ModelTables');
             $headerTable = TableRegistry::get('ModelTableHeaders');
             $rowsTable = TableRegistry::get('ModelTableRows');
-            $table = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
+            $found = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
+            if(!empty($found)) {
+                $table = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
+                // delete headers and rows to put them back in
+                $headerTable->deleteAll(['model_tableID' => $table->model_tableID]);
+                $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
+            } else {
+                $table = $this->ModelTables->newEntity();
+            }
 
-            // delete headers and rows to put them back in
-            $headerTable->deleteAll(['model_tableID' => $table->model_tableID]);
-            $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
             $headerCounter = 0;
             foreach (array_filter($this->request->data, function($key) {
                 $header = strpos($key, 'table_header');
