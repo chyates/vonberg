@@ -246,17 +246,13 @@ jQuery(document).ready(function($) {
                     $("#three .buffer-div .table-create-box").css("width", currentWidth);
                 }
             } else if( $(this).hasClass('model-row') ){
-                console.log("Got to row check");
                 rowCount += 1;
                 var newRow;
                 
                 for(var k = 0; k < colCount; k++) {
-                    console.log("Got to for loop");
                     if(k == 0) {
-                        console.log("K is 0");
                         newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter model'/>";
                     } else {
-                        console.log("K is not 0");
                         newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name ='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter value'/>";
                     }
                     if(k < colCount) {

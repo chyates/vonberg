@@ -454,11 +454,13 @@ class AdminController extends AppController
         $this->loadModel('Parts');
         $part = $this->Parts->get($id);
         $this->set('part', $part);
+        $this->loadModel('ModelTables');
+        $this->loadModel('ModelTableHeaders');
+        $this->loadModel('ModelTableRows');
 
         // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
             // load vars for model tables
-            $this->loadModel('ModelTables');
             $headerTable = TableRegistry::get('ModelTableHeaders');
             $rowsTable = TableRegistry::get('ModelTableRows');
             $found = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
@@ -469,65 +471,65 @@ class AdminController extends AppController
                 $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
             } else {
                 $table = $this->ModelTables->newEntity();
-            }
-
-            $headerCounter = 0;
-            foreach (array_filter($this->request->data, function($key) {
-                $header = strpos($key, 'table_header');
-                return ($header === 0);
-            }, 2) as $header) {
-                $headerCounter++;
-                $top = $headerTable->newEntity();
-                $top->model_tableID = $table->model_tableID;
-                $top->model_table_text = $header;
-                $top->order_num = $headerCounter;
-                if ($headerTable->save($top)) {
-                    // The variable entity contains the id now
-                    $model_table_header_id = $top->model_table_headerID;
-//                    $debug = debug($top);
-//                    $this->set('debug', $debug);
-                } else {
-
-                }
-            }
-            $order_num = 0;
-            $rows = array_filter($this->request->data, function($key) {
-                return (strpos($key, 'model_name') === 0);
-            }, 2);
-
-            $cells = array();
-
-            foreach ($rows as $name => $val) {
-                $n = substr($name, 11);
-                $x = strpos($n, '-');
-                $rowNum = substr($name, 11, $x);
-                $arr = array_filter($this->request->data, function($key){
-                    global $rowNum;
-                    return (strpos($key, 'table_row_' . $rowNum));
-                }, 2);
-                $arr[$name] = $val;
-                array_push($cells, $arr);
-            }
-
-            foreach ($cells as $row ) {   # allow for empty cells EXCEPT in the first column
-                foreach ($row as $cell) {
-                    $order_num++;
-
-                    $new = $rowsTable->newEntity();
-                    $new->model_tableID = $table->model_tableID;
-                    $new->model_table_row_text = $cell;
-                    $new->order_num = $order_num;
-                    if ($rowsTable->save($new)) {
-                        // The variable entity contains the id now
-                        $model_table_header_id = $new->model_table_headerID;
-                    } else {
-                        $debug = debug($new);
+                $table->partID = $part->partID;
+                $table->order_num = 1;
+                if($this->ModelTables->save($table)) {                   
+                    $headerCounter = 0;
+                    foreach (array_filter($this->request->data, function($key) {
+                        $header = strpos($key, 'table_header');
+                        return ($header === 0);
+                    }, 2) as $header) {
+                        $headerCounter++;
+                        $top = $headerTable->newEntity();
+                        $top->model_tableID = $table->model_tableID;
+                        $top->model_table_text = $header;
+                        $top->order_num = $headerCounter;
+                        if ($this->ModelTableHeaders->save($top)) {
+                            // The variable entity contains the id now
+                            $model_table_header_id = $top->model_table_headerID;
+                            // $debug = debug($top);
+                            // $this->set('debug', $debug);
+                        } else {
+                            
+                        }
+                    }
+                    $order_num = 0;
+                    $rows = array_filter($this->request->data, function($key) {
+                        return (strpos($key, 'table_row') === 0);
+                    }, 2);
+                    
+                    $cells = array();
+                    foreach ($rows as $name => $val) {
+                        $n = substr($name, 11);
+                        $x = strpos($n, '-');
+                        $rowNum = substr($name, 11, $x);
+                        $arr = array_filter($this->request->data, function($key){
+                            global $rowNum;
+                            return (strpos($key, 'table_row_' . $rowNum));
+                        }, 2);
+                        $arr[$name] = $val;
+                        array_push($cells, $arr);
+                    }
+                    
+                    foreach ($cells as $row ) {   # allow for empty cells EXCEPT in the first column
+                        foreach ($row as $cell) {
+                            $order_num++;
+                            $new = $rowsTable->newEntity();
+                            $new->model_tableID = $table->model_tableID;
+                            $new->model_table_row_text = $cell;
+                            $new->order_num = $order_num;
+                            if ($this->ModelTableRows->save($new)) {
+                                // The variable entity contains the id now
+                                $model_table_header_id = $new->model_table_headerID;
+                                $this->redirect(array('action' => 'editProductFour', $part->partID));
+                            } else {
+                                $debug = debug($new);
+                            }
+                        }
                     }
                 }
             }
         } else {
-            
-            $this->loadModel('ModelTables');
             $tables = $this->ModelTables->find('all',array(
                 'conditions' => array(
                     'partID' => $id ),
