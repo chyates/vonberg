@@ -43,12 +43,12 @@ class AdminController extends AppController
         // query for main categories:
         $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
 
-            $cat = TableRegistry::get('Categories')->find();
-            $this->set('parts', $query);
-            $this->set('id', $id);
-            $cat1 = TableRegistry::get('Categories')->find()->where(['categoryID' => $id])->first();
-            $this->set('categories', $cat);
-            $this->set('pagename', $cat1->name);            
+        $cat = TableRegistry::get('Categories')->find();
+        $this->set('parts', $query);
+        $this->set('id', $id);
+        $cat1 = TableRegistry::get('Categories')->find()->where(['categoryID' => $id])->first();
+        $this->set('categories', $cat);
+        $this->set('pagename', $cat1->name);            
     }
 
     public function type($id)
@@ -82,7 +82,6 @@ class AdminController extends AppController
     public function get_cat()
     {
         return TableRegistry::get('Categories')->find();
-
     }
 
     public $components=array('RequestHandler');
@@ -548,6 +547,7 @@ class AdminController extends AppController
 
     public function editProductFour($id)
     {
+        $this->viewBuilder()->setLayout('admin');
         if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
             mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
         }
@@ -555,8 +555,7 @@ class AdminController extends AppController
         $part = $this->Parts->get($id, [
             'contain' => ['Series']
         ]);
-        $this->viewBuilder()->setLayout('admin');
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             if(!empty($this->request->data['schematic']['name']))
             {
                 $file = $this->request->data['schematic']; //put the data into a var for easy use
@@ -657,15 +656,15 @@ class AdminController extends AppController
         }
         $this->loadModel('Parts');
         $part = $this->Parts->get($id, [
-            'contain' => ['Series','Specifcations','TextBlocks' => ['TextBlockBullets']]
+            'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
         ]);
         // full contain for reference ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]
         $this->viewBuilder()->setLayout('admin');
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             $files = $this->request->data['stp_files'];
             foreach ($files as $file){
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('stp'); //set allowed extensions
+                $arr_ext = array('stp', 'pdf', 'txt'); //set allowed extensions
                 if(in_array($ext, $arr_ext))
                 {
                     //do the actual uploading of the file. First arg is the tmp name, second arg is
@@ -676,7 +675,7 @@ class AdminController extends AppController
                 ++$count;
             }
 
-            $this->redirect(array('action' => 'category',$part->catID));
+            $this->redirect(array('action' => 'index'));
         }
         $this->loadModel('ModelTables');
         $this->loadModel('Parts');
