@@ -1,9 +1,6 @@
 <div id="cms-edit-prod-main" class="inner-main col-md-10 mx-auto p-5">
-    <!-- This page acts almost identically to the add product page except the 
-    information for the current product should be auto-populated in each field. -->
+    <h1 id="title-five"class="active-title page-title">Edit Product: STP File Uploads</h1>
     <?= $this->Form->create($part, ['id' => "edit-prod-form", 'enctype' => 'multipart/form-data']) ?>
-<!--    <form id="edit-prod-form">-->
-        <h1 id="title-five"class="active-title page-title">Edit Product: STP File Uploads</h1>
 
         <div id="five" class="active-slide form-slide col-md-8 mx-auto table-responsive">
             <table class="model-table table">
@@ -28,16 +25,21 @@
                         <tr>
                             <td class="model-table-data"><?= $row->model_table_row_text ?></td>
                             <td class="model-table-data">
-                                <?php    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.stp')) {
-                                    echo "File does not exist yet:".strval($row->model_table_rowID).".stp";
-                                } else {
-                                    echo $row->model_table_rowID.".stp";
-                                    echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.stp'));
-                                } ?>
+                                <?php
+                                    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.stp')) {
+                                        echo "File does not exist yet:".strval($row->model_table_rowID).".stp";
+                                    } else {
+                                        echo $row->model_table_rowID.".stp";
+                                        echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.stp'));
+                                    } 
+                                ?>
                             </td>
-                            <td class="model-table-data">
-                                <?php echo $this->Form->input('stp_files[]', ['label'=>False, 'type' => 'file', 'class'=>'form-control']);?>
-                                <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_rowID]);?>
+                            <td class="d-flex model-table-data justify-content-between">
+                                <label class="fileContainer">Browse
+                                    <?php echo $this->Form->input('stp_files[]', ['label'=>False, 'type' => 'file', 'class'=>'form-control']);?>
+                                </label>
+                                    <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_rowID]);?>
+                                    <p class="file-text">No file chosen</p>
                             </td>
                         </tr>
 

@@ -23,7 +23,7 @@
                                 echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/schematic_drawing.jpg'));
                         } ?>
                         </td>
-                        <td class="model-table-data justify-content-between">
+                        <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer">Browse
                                 <?php echo $this->Form->input('schematic', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
@@ -42,7 +42,7 @@
                                     echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/hydraulic_symbol.jpg'));
                             } ?>
                         </td>
-                        <td class="model-table-data justify-content-between">
+                        <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer">Browse
                                 <?php echo $this->Form->input('performance', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
@@ -61,7 +61,7 @@
                             } ?>
 
                             </td>
-                        <td class="model-table-data justify-content-between">
+                        <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer">Browse
                                 <?php echo $this->Form->input('hydraulic', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
@@ -78,7 +78,7 @@
                                 echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/ordering_information.jpg'));
                             } ?>
                         </td>
-                        <td class="model-table-data justify-content-between">
+                        <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer">Browse
                                 <?php echo $this->Form->input('ordering', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>

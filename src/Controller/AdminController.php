@@ -496,34 +496,38 @@ class AdminController extends AppController
                     $rows = array_filter($this->request->data, function($key) {
                         return (strpos($key, 'table_row') === 0);
                     }, 2);
-                    
-                    $cells = array();
-                    foreach ($rows as $name => $val) {
-                        $n = substr($name, 11);
-                        $x = strpos($n, '-');
-                        $rowNum = substr($name, 11, $x);
-                        $arr = array_filter($this->request->data, function($key){
-                            global $rowNum;
-                            return (strpos($key, 'table_row_' . $rowNum));
-                        }, 2);
-                        $arr[$name] = $val;
-                        array_push($cells, $arr);
+                    $bros = array();
+                    foreach ($rows as $key => $val) {
+                        $bros[substr($key, 10)] = $val;
                     }
+                    uksort($bros, function($a, $b) {
+                        $ax = strpos($a, '-');
+                        $arow = intval(substr($a, 0, $ax));
+                        $acol = intval(substr($a, $ax + 1));
+
+                        $bx = strpos($b, '-');
+                        $brow = intval(substr($b, 0, $bx));
+                        $bcol = intval(substr($b, $bx + 1));
+
+                        if ($arow < $brow) {return -1;}
+                        else if ($brow < $arow) {return 1;}
+                        else if ($acol < $bcol) {return -1;}
+                        else if ($bcol < $acol) {return -1;}
+                        else {return 0;}
+                    });
                     
-                    foreach ($cells as $row ) {   # allow for empty cells EXCEPT in the first column
-                        foreach ($row as $cell) {
-                            $order_num++;
-                            $new = $rowsTable->newEntity();
-                            $new->model_tableID = $table->model_tableID;
-                            $new->model_table_row_text = $cell;
-                            $new->order_num = $order_num;
-                            if ($this->ModelTableRows->save($new)) {
-                                // The variable entity contains the id now
-                                $model_table_header_id = $new->model_table_headerID;
-                                $this->redirect(array('action' => 'editProductFour', $part->partID));
-                            } else {
-                                $debug = debug($new);
-                            }
+                    foreach ($bros as $cell ) {   # allow for empty cells EXCEPT in the first column
+                        $order_num++;
+                        $new = $rowsTable->newEntity();
+                        $new->model_tableID = $table->model_tableID;
+                        $new->model_table_row_text = $cell;
+                        $new->order_num = $order_num;
+                        if ($this->ModelTableRows->save($new)) {
+                            // The variable entity contains the id now
+                            $model_table_header_id = $new->model_table_headerID;
+                            $this->redirect(array('action' => 'editProductFour', $part->partID));
+                        } else {
+                            $debug = debug($new);
                         }
                     }
                 }
@@ -702,7 +706,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        $query =  $this->paginate($this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
+        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
         // $query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         // $this->loadModel('Parts');
@@ -923,3 +927,4 @@ class AdminController extends AppController
         $this->set('stp_users', $this->paginate($stp_users));
     }
 }
+

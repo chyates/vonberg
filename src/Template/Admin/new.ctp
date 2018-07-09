@@ -45,7 +45,14 @@ use Cake\Routing\Router;
                 </tr>
             </thead>
             <tbody>
-                <?php foreach ($parts as $part): ?>
+                <?php 
+                $now = new DateTime();
+                foreach ($parts as $part): 
+                    $range = new DateInterval('P'.strval($part->expires).'D');
+                    $expiration = $now->add($range);
+                    $diff = $expiration->diff($now);
+                    // print_r($expiration);
+                ?>
                 <tr>
                     <td class="model-table-data"><?= h($part->series->name) ?></td>
                     <td class="model-table-data"><?= h($part->style->name) ?></td>
@@ -55,7 +62,7 @@ use Cake\Routing\Router;
                         <div class="form-check form-check-inline">
                             <input class="form-check-input" type="checkbox" name="new-status" value="54days"
                                    checked>
-                            <label class="form-check-label">54 days</label>
+                            <label class="form-check-label"><?php echo $range->d . " days"; ?></label>
                         </div>
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>

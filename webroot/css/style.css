@@ -21,10 +21,6 @@ body {
     box-shadow: 0 2px 7px 4px rgba(0,0,0,0.05);
 }
 
-/* .outer-container {
-    max-width: 1240px;
-} */
-
 .inner-main, #vvi-footer, #destkop-header {
     max-width: 1240px;
 }
@@ -1872,6 +1868,20 @@ td span img.img-fluid {
 
 .table-responsive #cms-stp-down-table.model-table td.model-table-data{
     border-bottom: 1px solid #979797;
+}
+
+/* Add/Edit Products + Generate PDF file tables */
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data {
+    vertical-align: middle;
+}
+
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data label.fileContainer {
+    margin-bottom: 0;
+}
+
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data p.file-text {
+    align-self: center;
+    margin-bottom: 0;
 }
 
 /* === FILE UPLOAD BUTTON: GLOBAL / DESKTOP === */

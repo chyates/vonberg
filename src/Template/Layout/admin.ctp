@@ -228,9 +228,9 @@ jQuery(document).ready(function($) {
                 var colHead;
 
                 for(var j = 0; j < rowCount-1; j++) {
-                    var newCol = "<input type='text' class='model-row-input form-control' name='table_row_"+colCount+"-"+(j+2)+"' placeholder='Enter value' id='"+colCount+"-"+(j+2)+"'/>";
+                    var newCol = "<input type='text' class='model-row-input form-control' name='table_row_"+(j+2)+"-"+colCount+"' placeholder='Enter value' id='"+(j+2)+"-"+colCount+"'/>";
                     if(j < 1) {
-                        colHead = "<input type='text' class='model-header-input form-control' name='table_header_"+colCount+"-"+(j+1)+"' placeholder='Enter table header' id='"+colCount+"-"+(j+1)+"'/>";
+                        colHead = "<input type='text' class='model-header-input form-control' name='table_header_"+(j+1)+"-"+colCount+"' placeholder='Enter table header' id='"+(j+1)+"-"+colCount+"'/>";
                         newColDiv += colHead;
                         newColDiv += newCol;
                     } else {
@@ -251,9 +251,9 @@ jQuery(document).ready(function($) {
                 
                 for(var k = 0; k < colCount; k++) {
                     if(k == 0) {
-                        newRow = "<input type='text' class='model-row-input form-control' id='"+(k+1)+"-"+rowCount+"' name='table_row_"+(k+1)+"-"+rowCount+"' placeholder='Enter model'/>";
+                        newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter model'/>";
                     } else {
-                        newRow = "<input type='text' class='model-row-input form-control' id='"+(k+1)+"-"+rowCount+"' name ='table_row_"+(k+1)+"-"+rowCount+"' placeholder='Enter value'/>";
+                        newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name ='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter value'/>";
                     }
                     if(k < colCount) {
                         $("div#"+(k+1)+".data-column").append(newRow);

@@ -13,7 +13,7 @@
                             'label' => false,
                             'class' => 'model-header-input form-control',
                             'placeholder' => 'Model',
-                            'id' => '1'
+                            'id' => '1-1'
                         ]);
                         echo $this->Form->input('table_row_2-1', 
                         [
@@ -21,7 +21,7 @@
                             'label' => false,
                             'class' => 'model-row-input form-control',
                             'placeholder' => 'Enter model',
-                            'id' => '1'
+                            'id' => '2-1'
                         ]); ?>
                     </div>
                     <div class="add-column">
