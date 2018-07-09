@@ -340,13 +340,14 @@ class AdminController extends AppController
 
         // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
-            // manual part creation:
+            // create arrays to hold form data:
             $operations = array();
             $features = array();
             $specifications = array();
             $spec_names = array();
             $spec_vals = array();
 
+            // loop over form data and insert into arrays
             $ops_rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'op_bullet_text') !== false);
             }, 2);
@@ -379,7 +380,7 @@ class AdminController extends AppController
             for($h = 0; $h < count($spec_names); $h++) {
                 $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
             }
-            // new operations + features + specs objects:
+            // new operations + features objects:
             $new_ops = $this->TextBlocks->newEntity();
             $new_ops->partID = $part->partID;
             $new_ops->order_num = 1;
@@ -391,7 +392,6 @@ class AdminController extends AppController
             $new_feats->header = "Features";
 
             if($this->TextBlocks->save($new_ops) && $this->TextBlocks->save($new_feats)) {
-                $this->Flash->success(__('Operations array: {0}', $operations));
                 // create new text block bullet associations w/ newly created objects
                 for($i = 0; $i < count($operations); $i++) {
                     $op_bullet = $this->TextBlockBullets->newEntity();
@@ -414,6 +414,7 @@ class AdminController extends AppController
                 }
             }
 
+            // new specs objects
             $spec_order = 1;
             for($k = 0; $k < count($specifications); $k++) {
                 $new_spec = $this->Specifications->newEntity();
@@ -431,7 +432,6 @@ class AdminController extends AppController
             $part->description = $this->request->data['description'];
             $part->last_updated = date("Y-m-d H:i:s");
             if($this->Parts->save($part)){
-                $this->Flash->success(__('The resource with id: {0} has been saved.', $part->partid));
                 $this->redirect(array('action' => 'editProductThree', $part->partID));
             }
         }
@@ -657,7 +657,7 @@ class AdminController extends AppController
         $part = $this->Parts->get($id, [
             'contain' => ['Series','Specifcations','TextBlocks' => ['TextBlockBullets']]
         ]);
-//           full contain for reference ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]
+        // full contain for reference ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]
         $this->viewBuilder()->setLayout('admin');
         if ($this->request->is('post')) {
             $files = $this->request->data['stp_files'];
@@ -702,12 +702,10 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         $query =  $this->paginate($this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
-
         // $query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         // $this->loadModel('Parts');
         // $this->set('parts',$query);
-
         $this->set('parts', $query);
         $this->set('pagename', 'New Products');
 
@@ -718,9 +716,7 @@ class AdminController extends AppController
     {
         $this->loadModel('ModelPrices');
         $data = $this->ModelPrices->find('all')->toArray();
-
         $_serialize = 'data';
-
         $this->response->download('model_prices.csv'); // <= setting the file name
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize'));
@@ -762,9 +758,7 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('ModelPrices');
         $series = TableRegistry::get('Series')->find('all');
-
         $pricing = TableRegistry::get('ModelPrices')->find('all');
-
         $this->set('prices', $pricing);
         $this->set(compact('series'));
     }
@@ -805,19 +799,18 @@ class AdminController extends AppController
     public function addResource() 
     {
         $this->viewBuilder()->setLayout('admin');
-            $this->loadModel('TechnicalSpecs');
-            if($this->request->is('post')) {
-                $spec = $this->TechnicalSpecs->newEntity();
-                $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
-                $spec->last_updated = date("Y-m-d H:i:s");
-                if ($this->TechnicalSpecs->save($spec)) {
-                    $this->Flash->success(__('The resource has been saved.'));
-                    $this ->redirect(array('action' => 'index'));
-                } else {
-                    $this->Flash->error(__('The resource with could not be saved.'));
-                }
+        $this->loadModel('TechnicalSpecs');
+        if($this->request->is('post')) {
+            $spec = $this->TechnicalSpecs->newEntity();
+            $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
+            $spec->last_updated = date("Y-m-d H:i:s");
+            if ($this->TechnicalSpecs->save($spec)) {
+                $this->Flash->success(__('The resource has been saved.'));
+                $this ->redirect(array('action' => 'index'));
+            } else {
+                $this->Flash->error(__('The resource with could not be saved.'));
             }
-
+        }
     }
 
     public function editGeneralInformation() 
@@ -854,7 +847,6 @@ class AdminController extends AppController
         $query =  $this->TechnicalSpecs->find('all',
             [   'conditions' => ['resource' => 2]]);
         $this->set('specs', $query);
-
     }
 
     public function technicalDocumentation() 
@@ -864,7 +856,6 @@ class AdminController extends AppController
         $query =  $this->TechnicalSpecs->find('all',
             [   'conditions' => ['resource' => 1]]);
         $this->set('specs', $query);
-
     }
 
     public function applicationInformation() 
@@ -874,16 +865,12 @@ class AdminController extends AppController
         $query =  $this->TechnicalSpecs->find('all',
             [   'conditions' => ['resource' => 3]]);
         $this->set('specs', $query);
-
     }
 
     public function stpExport()
     {
         $data = TableRegistry::get('StpUsers')->find()->orderDesc('last_login');
-
-
         $_serialize = 'data';
-
         $this->response->download('stp_downloads.csv'); // <= setting the file name
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize'));
@@ -892,10 +879,7 @@ class AdminController extends AppController
     public function contactExport()
     {
         $data = TableRegistry::get('Contacts')->find()->orderDesc('date_submitted');
-
-
         $_serialize = 'data';
-
         $this->response->download('contacts.csv'); // <= setting the file name
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize'));
@@ -922,7 +906,6 @@ class AdminController extends AppController
         }
     }
 
-
     public function contacts()
     {
         $this->viewBuilder()->setLayout('admin');
@@ -930,12 +913,12 @@ class AdminController extends AppController
         $this->set('contacts', $this->paginate($contacts));
 
     }
+
     public function downloadSTP()
     {
         $this->viewBuilder()->setLayout('admin');
         $stp_users = TableRegistry::get('StpUsers')->find('all')->orderDesc('last_login');
         $stp_users->contain(['StpFile'=>['Parts','ModelTableRows']]);
         $this->set('stp_users', $this->paginate($stp_users));
-
     }
 }

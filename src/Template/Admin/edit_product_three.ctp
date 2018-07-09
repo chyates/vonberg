@@ -6,20 +6,22 @@
         <div class="buffer-div">
             <div class="table-create-box p-3">
                 <div class="creation-row row no-gutters">
-                    <div class="data-column">
-                        <?php echo $this->Form->input('table_header_0-1', 
+                    <div class="data-column" id="1">
+                        <?php echo $this->Form->input('table_header_1-1', 
                         [
                             'type' => 'text',
                             'label' => false,
                             'class' => 'model-header-input form-control',
-                            'placeholder' => 'Model'
+                            'placeholder' => 'Model',
+                            'id' => '1'
                         ]);
-                        echo $this->Form->input('model_name_1-1', 
+                        echo $this->Form->input('table_row_2-1', 
                         [
                             'type' => 'text',
                             'label' => false,
-                            'class' => 'model-name-input form-control',
-                            'placeholder' => 'Enter model'
+                            'class' => 'model-row-input form-control',
+                            'placeholder' => 'Enter model',
+                            'id' => '1'
                         ]); ?>
                     </div>
                     <div class="add-column">

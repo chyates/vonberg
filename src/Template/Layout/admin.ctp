@@ -210,49 +210,59 @@ jQuery(document).ready(function($) {
 
 // fxn to insert input fields upon add bullet click:
     // features bullets
-    var rowCount = 1;
     var colCount = 1;
-    var nameCount = 0;
-    var headCount = 0;
-    var extraID;
-    var textID; 
+    var rowCount = 2;
 
     $(".add-bullet").click(function(e) {
         e.preventDefault();
+
         var tableSlide = $(".table-create-box").find(this);
         var featSlide = $(".form-slide .w-bullet").find(this);
 
         if(tableSlide.length > 0) {
+            // input name/id structure: table_(header/row)_rowCount-colCount
             if( $(this).hasClass('model-column') ){
                 colCount += 1;
                 var existingRow = $(".creation-row");
-                var newColDiv = "<div class='data-column'>"
+                var newColDiv = "<div class='data-column' id='"+colCount+"'>"
                 var colHead;
-                for(var j = 0; j < rowCount; j++) {
-                    var newCol = "<input type='text' class='model-row-input form-control' name ='table_row_" +(j+1)+ "-" +colCount+ "'placeholder='Enter value' />";
+
+                for(var j = 0; j < rowCount-1; j++) {
+                    var newCol = "<input type='text' class='model-row-input form-control' name='table_row_"+(j+2)+"-"+colCount+"' placeholder='Enter value' id='"+(j+2)+"-"+colCount+"'/>";
                     if(j < 1) {
-                        colHead = "<input type='text' class='model-header-input form-control' name ='table_header_" +headCount+ "-" +colCount+ "' placeholder='Enter table header' />";
+                        colHead = "<input type='text' class='model-header-input form-control' name='table_header_"+(j+1)+"-"+colCount+"' placeholder='Enter table header' id='"+(j+1)+"-"+colCount+"'/>";
                         newColDiv += colHead;
                         newColDiv += newCol;
                     } else {
                         newColDiv += newCol;
                     }
                 }
+
                 newColDiv += "</div>";
                 existingRow.find('.data-column').last().after(newColDiv);
+
                 var currentWidth = parseInt($("#three .buffer-div .table-create-box").css("width")) +200;
                 if(colCount > 8) {
                     $("#three .buffer-div .table-create-box").css("width", currentWidth);
                 }
-            } else if ( $(this).hasClass('model-row') ){
+            } else if( $(this).hasClass('model-row') ){
+                console.log("Got to row check");
                 rowCount += 1;
-                var dataRowCheck = $(".creation-row .data-column").find('.model-row-input:last-child');
-                var firstRowCheck = $(".creation-row .data-column .model-name-input:last-child");
-                var newFirst = "<input type='text' class='model-name-input form-control' name ='model_name_" +rowCount+ "-1' placeholder='Enter model'/>";
-            
-                firstRowCheck.after(newFirst);
-                var newRow = "<input type='text' class='model-row-input form-control' name ='table_row_" +rowCount+ "-" +colCount+ "' placeholder='Enter value' />";
-                dataRowCheck.after(newRow);
+                var newRow;
+                
+                for(var k = 0; k < colCount; k++) {
+                    console.log("Got to for loop");
+                    if(k == 0) {
+                        console.log("K is 0");
+                        newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter model'/>";
+                    } else {
+                        console.log("K is not 0");
+                        newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name ='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter value'/>";
+                    }
+                    if(k < colCount) {
+                        $("div#"+(k+1)+".data-column").append(newRow);
+                    }
+                }
             }
         } else if(featSlide.length > 0) {
             var parentDiv = $(this).parents('.w-bullet');
@@ -299,7 +309,6 @@ jQuery(document).ready(function($) {
                 var newPair;
                 
                 if(!$(this).prev().find('select[name="spec_name_2"]').length) {
-                    console.log("Hit spec_name_2 not found");
                     newSelect.attr('id', sID).attr('name', 'spec_name_'+sID);
                     firstSelect.after(newSelect);
                     var firstPair = parentDiv.find('.specifications').find('input[name="spec_value_1"]');
@@ -345,25 +354,20 @@ jQuery(document).ready(function($) {
 
         var toChange = $(this).closest('.form-group').next('p.file-text');
         var homeChange = $(this).closest('.fileContainer').next('p.file-text');
-        console.log("Found home change", homeChange.html());
 
         var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
         var homeUpdate = $(this).closest('.fileContainer').siblings('.update-button');
-        console.log("Found home update", homeUpdate.html());
 
         if(toChange.length > 0) {
-            console.log("Inside first if check");
             $(toChange).html(filename);
             $(nextUpdate).show();
         } else if(homeChange) {
-            console.log("Inside else check");
             $(homeChange).html(filename);
             $(homeUpdate).show();
         }
     });
 
     $(".rsrc-table").find("input[type=text].form-control.form-control-sm").keypress(function() {
-        console.log("Title has been changed");
         $(this).parent().siblings("td").find(".update-button").show();
     })
 });
