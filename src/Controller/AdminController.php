@@ -70,7 +70,17 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
+        // $now = new DateTime();
         $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+        // foreach($query as $part) {
+        //     $range = new DateInterval('P'.strval($part->expires).'D');
+        //     $exp_date = $now->add($range);
+        //     $check = $exp_date->sub($range);
+        //     $diff = 
+        //     if($check != $now) {
+
+        //     } 
+        // }
         $cat = TableRegistry::get('Categories')->find();
         $this->set('parts', $query);
         $this->set('categories', $cat);
@@ -302,13 +312,13 @@ class AdminController extends AppController
     public function editProductTwo($id)
     {
         $this->viewBuilder()->setLayout('admin');
-
         // first call: load appropriate variables--existing text blocks + specs, part data, DB data for form options:
-        $this->loadModel('TextBlocks');
-        $this->loadModel('TextBlockBullets');
         $this->loadModel('Parts');
         $this->loadModel('Specifications');
-        $part = $this->Parts->get($id);
+        $this->loadModel('TextBlocks');
+        $this->loadModel('TextBlockBullets');
+        $part = $this->Parts->get($id);        
+
         $cat = TableRegistry::get('Categories')->find('list');
         $type = TableRegistry::get('Types')->find('list');
         $style = TableRegistry::get('Styles')->find('list');
@@ -316,13 +326,34 @@ class AdminController extends AppController
 
         // if the part already exists, populate the associated data:
             // operations + features
-        $opblock = $this->TextBlocks->find('all',array(
+        // $opblock = $this->TextBlocks->find('all',array(
+        //     'conditions' => array(
+        //         'partID' => $id,
+        //     ),
+        //     'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text',
+        //     'TextBlockBullets.order_num',
+        //     'TextBlockBullets.text_block_bulletID']]),
+        // ));
+
+        $part_ops = $this->TextBlocks->find('all', array(
             'conditions' => array(
                 'partID' => $id,
+                'order_num' => 1
             ),
-            'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+            'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text',
+            'TextBlockBullets.order_num',
+            'TextBlockBullets.text_block_bulletID']]),
         ));
 
+        $part_feats = $this->TextBlocks->find('all', array(
+            'conditions' => array(
+                'partID' => $id,
+                'order_num' => 2
+            ),
+            'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text',
+            'TextBlockBullets.order_num',
+            'TextBlockBullets.text_block_bulletID']]),
+        ));
             // specifications
         $specs = $this->Specifications->find('all',array(
             'conditions' => array(
@@ -339,6 +370,19 @@ class AdminController extends AppController
 
         // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
+            $tb_table = TableRegistry::get('TextBlocks');
+            $ops_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 1])->first();
+            $feats_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 2])->first();
+            // delete existing records to create new ones from form data:
+            if(!empty($ops_tbs)) {
+                $op_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
+                $tb_table->deleteAll(['partID' => $op_block->partID]);
+            }
+
+            if(!empty($feats_tbs)) {
+                $feat_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
+                $tb_table->deleteAll(['partID' => $feat_block->partID]);
+            }
             // create arrays to hold form data:
             $operations = array();
             $features = array();
@@ -379,17 +423,18 @@ class AdminController extends AppController
             for($h = 0; $h < count($spec_names); $h++) {
                 $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
             }
-            // new operations + features objects:
+
+            // new operations + features objects: 
             $new_ops = $this->TextBlocks->newEntity();
             $new_ops->partID = $part->partID;
             $new_ops->order_num = 1;
             $new_ops->header = "Operation";
-
+            
             $new_feats = $this->TextBlocks->newEntity();
             $new_feats->partID = $part->partID;
             $new_feats->order_num = 2;
             $new_feats->header = "Features";
-
+            
             if($this->TextBlocks->save($new_ops) && $this->TextBlocks->save($new_feats)) {
                 // create new text block bullet associations w/ newly created objects
                 for($i = 0; $i < count($operations); $i++) {
@@ -398,10 +443,10 @@ class AdminController extends AppController
                     $op_bullet->bullet_text = $operations[$i];
                     $op_bullet->order_num = $i+1;
                     if($this->TextBlockBullets->save($op_bullet)) {
-                        $this->Flash->success(__('The new operation bullets have been saved')); 
+                        $this->Flash->success(__('The new operation bullets have been saved outside of found ops block')); 
                     }
                 }
-
+                
                 for($j = 0; $j < count($features); $j++) {
                     $feat_bullet = $this->TextBlockBullets->newEntity();
                     $feat_bullet->text_blockID = $new_feats->text_blockID;
@@ -443,7 +488,8 @@ class AdminController extends AppController
         $this->set('all_specs', $genSpecs);
         $this->set('type', $type);
         $this->set('style', $style);
-        $this->set('opblock', $opblock);
+        $this->set('opblock', $part_ops);
+        $this->set('featblock', $part_feats);
     }
 
     public function editProductThree($id)

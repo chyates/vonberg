@@ -209,16 +209,15 @@ jQuery(document).ready(function($) {
     });
 
 // fxn to insert input fields upon add bullet click:
-    // features bullets
     var colCount = 1;
     var rowCount = 2;
 
     $(".add-bullet").click(function(e) {
         e.preventDefault();
-
         var tableSlide = $(".table-create-box").find(this);
         var featSlide = $(".form-slide .w-bullet").find(this);
 
+        // logic for model table slide
         if(tableSlide.length > 0) {
             // input name/id structure: table_(header/row)_rowCount-colCount
             if( $(this).hasClass('model-column') ){
@@ -260,13 +259,13 @@ jQuery(document).ready(function($) {
                     }
                 }
             }
+
+        // logic for ops/feats/specs slide
         } else if(featSlide.length > 0) {
             var parentDiv = $(this).parents('.w-bullet');
             var newBullet;
-
             var opID = parseInt(parentDiv.find('input[name="op_bullet_text_1"]').attr('id'));
             var secOp = parseInt(opID) + 1;
-
             var featID = parseInt(parentDiv.find('input[name="feat_bullet_text_1"]').attr('id'));
             var secFeat = parseInt(featID) + 1;
 
@@ -278,8 +277,8 @@ jQuery(document).ready(function($) {
                         $(parentDiv).find('input[name="op_bullet_text_1"]').after(newBullet);
                         extraID = secOp + 1;
                     } else {
+                        extraID = parseInt(parentDiv.find('input[type=text]').last().attr('id'))+1;
                         newBullet = "<input type='text' name='op_bullet_text_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"' />";
-                        extraID++;
                         $(parentDiv).find('input[type=text]').last().after(newBullet);
                     }
                 } else if(parentDiv.hasClass('features')) {
@@ -288,8 +287,8 @@ jQuery(document).ready(function($) {
                         $(parentDiv).find('input[name="feat_bullet_text_1"]').after(newBullet);
                         extraID = secFeat + 1;
                     } else {
+                        extraID = parseInt(parentDiv.find('input[type=text]').last().attr('id'))+1;
                         newBullet = "<input type='text' name='feat_bullet_text_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"' />";
-                        extraID++;
                         $(parentDiv).find('input[type=text]').last().after(newBullet);
                     }
                 }
@@ -302,6 +301,7 @@ jQuery(document).ready(function($) {
                 var specID = parseInt(parentDiv.find('select[name="spec_name_1"]').attr('id'));
                 var sID = parseInt(specID) + 1;
                 var newSelect = firstSelect.clone();
+                newSelect.val(lastSelect.find('option:first').val());
                 var newPair;
                 
                 if(!$(this).prev().find('select[name="spec_name_2"]').length) {
@@ -312,10 +312,10 @@ jQuery(document).ready(function($) {
                     firstPair.after(newPair);
                     extraID = sID + 1;
                 } else {
+                    extraID = parseInt(lastSelect.attr('id'))+1;
                     $(newSelect).attr('id', extraID).attr('name', "spec_name_"+extraID);
                     lastSelect.after(newSelect);
                     newPair = "<input type='text' name='spec_value_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"'/>";
-                    extraID++;
                     lastPair.after(newPair);
                 }                
             }          

@@ -10,16 +10,15 @@
             <div class="form-group">
                 <label>Operation</label>
                 <?php 
-                $op_count = 1;
-                if(count($opblock) < 2) {
+                $op_count;
+                if(!$opblock->count()) {
                     echo $this->Form->input('op_bullet_text_1', array('class' => 'form-control', 'label' => false, 'id' => '1'));
                 } else {
+                    $op_count = 1;
                     foreach ($opblock as $op):
                         foreach ($op->text_block_bullets as $line):
-                            if ($op->header == "Operation") {
-                                echo $this->Form->input('op_bullet_text_1', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => '1'));
-                                $count++;
-                            }
+                            echo $this->Form->input('op_bullet_text_'.strval($op_count), array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => strval($op_count)));
+                            $op_count++;
                         endforeach;
                     endforeach;
                 }
@@ -31,16 +30,15 @@
         <div class="form-group w-bullet features">
             <label>Features</label>
             <?php
-            $feat_count = 1;
-            if(count($opblock) < 2) {
+            $feat_count;
+            if(!$featblock->count()) {
                 echo $this->Form->input('feat_bullet_text_1', array('class' => 'form-control', 'label' => false, 'id' => '1'));
             } else {
-                foreach ($opblock as $op):
-                    foreach ($op->text_block_bullets as $line):
-                        if ($op->header == "Features") {
-                            echo $this->Form->input('feat_bullet_text_1', array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => '1'));
-
-                        }
+                $feat_count = 1;
+                foreach ($featblock as $feat):
+                    foreach ($feat->text_block_bullets as $line):
+                        echo $this->Form->input('feat_bullet_text_'.strval($feat_count), array('class' => 'form-control','label'=> False, 'value' => $line->bullet_text, 'id' => strval($feat_count)));
+                        $feat_count++;
                     endforeach;
                 endforeach;
             } 
@@ -52,32 +50,32 @@
             <label>Specifications</label>
             <?php
             $index = 0;
-            if (count($specs) > 2) {
+            $spec_array = [];
+            $options = [];
+            foreach($all_specs as $each_spec) {
+                array_push($spec_array, $each_spec->spec_name);
+            } 
+            for($x = 0; $x < count($spec_array); $x++) {
+                $options[$x] = ['text' => $spec_array[$x], 'value' => $spec_array[$x]];
+            }
+            if ($specs->count()) {
                 foreach ($specs as $spec){ ?>
-                    <div class="row">
+                    <div class="row specifications">
                         <div class="col-sm-6">
                             <?php echo $this->Form->select(
-                            'spec_name',
-                            [$spec->spec_name,'CLOSING FLOW TOLERANCE', 'DIVIDE / COMBINE RATIO', 'FLOW ADJUSTMENT RANGE', 'FLOW TOLERANCE', 'INTERNAL LEAKAGE','MAX. PRESSURE DIFFERENTIAL "1" TO "2"','OPERATING PRESSURE','PRESSURE RANGE','RELIEF ADJUSTMENT RANGE','RELIEF SETTING RANGE','RELIEF TOLERANCE','REOPENING DIFFERENTIAL','STANDARD CRACK PRESSURE','TEMPERATURE RANGE',],
-                            ['value' => $spec->spec_name]
+                            'spec_name_'.strval($index+1), $options,
+                            ['value' => $spec->spec_name, 'class' => 'form-control', 'label' => false, 'id' => strval($index+1)]
                             );?>
                         </div>
                         <div class="col-sm-6">
-                            <?= $this->Form->input('spec_value', array('class' => 'form-control','label'=> False, 'value' => $spec->spec_value));?>
+                            <?= $this->Form->input('spec_value_'.strval($index+1), array('class' => 'form-control','label'=> False, 'value' => $spec->spec_value, 'id' => strval($index+1)));?>
                         </div>
                     </div>
-            <?php 
+                <?php 
                     $index++;
-                }
-            } else {
-                $spec_array = [];
-                $options = [];
-                foreach($all_specs as $each_spec) {
-                    array_push($spec_array, $each_spec->spec_name);
-                } 
-                for($x = 0; $x < count($spec_array); $x++) {
-                    $options[$x] = ['text' => $spec_array[$x], 'value' => $spec_array[$x]];
-                }?>
+                } ?>
+                <a class="add-bullet" href="">Add Bullet</a>
+            <?php  } else { ?>
                     <div class="row specifications">
                         <div class="col-sm-6">
                         <?php echo $this->Form->select('spec_name_1', $options, ['class' => 'form-control', 'label' => false, 'id' => '1']);?>
@@ -87,8 +85,7 @@
                         </div>
                     </div>
                     <a class="add-bullet" href="">Add Bullet</a>
-            <?php 
-            } ?>
+            <?php } ?>
         </div>
         <div class="row no-gutters justify-content-between">
             <a href="/admin/edit-product-one/<?= $part->partID ?>" class="back btn btn-primary">Back</a>

@@ -1974,9 +1974,6 @@ ul.pagination li {
     text-transform: uppercase;
 }
 
-/* === CMS PRODUCT CATEGORY: GLOBAL / DESKTOP === */
-
-
 /* === CMS STP DOWNLOAD: GLOBAL / DESKTOP === */
 
 #cms-stp-download-main.inner-main {
@@ -2012,11 +2009,13 @@ a.add-bullet {
     text-decoration: underline;
 }
 
-#add-prod-form .col-sm-6 div.form-check {
+#add-prod-form .col-sm-6 div.form-check,
+#edit-prod-form .col-sm-6 div.form-check {
     padding: 0;
 }
 
-#add-prod-form .form-check-inline.radio label {
+#add-prod-form .form-check-inline.radio label,
+#edit-prod-form .form-check-inline.radio label {
     display: inline-flex;
     align-items: center;
     margin-right: 15px;
