@@ -324,17 +324,6 @@ class AdminController extends AppController
         $style = TableRegistry::get('Styles')->find('list');
         $series = TableRegistry::get('Series')->find('list');
 
-        // if the part already exists, populate the associated data:
-            // operations + features
-        // $opblock = $this->TextBlocks->find('all',array(
-        //     'conditions' => array(
-        //         'partID' => $id,
-        //     ),
-        //     'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text',
-        //     'TextBlockBullets.order_num',
-        //     'TextBlockBullets.text_block_bulletID']]),
-        // ));
-
         $part_ops = $this->TextBlocks->find('all', array(
             'conditions' => array(
                 'partID' => $id,
@@ -371,8 +360,10 @@ class AdminController extends AppController
         // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
             $tb_table = TableRegistry::get('TextBlocks');
+            $specs_table = TableRegistry::get('Specifications');
             $ops_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 1])->first();
             $feats_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 2])->first();
+            $specs_rec = $this->Specifications->find('all')->where(['partID' => $part->partID])->first();
             // delete existing records to create new ones from form data:
             if(!empty($ops_tbs)) {
                 $op_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
@@ -382,6 +373,12 @@ class AdminController extends AppController
             if(!empty($feats_tbs)) {
                 $feat_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
                 $tb_table->deleteAll(['partID' => $feat_block->partID]);
+            }
+
+            if(!empty($specs_rec)) {
+                $spec_block = $this->Specifications->find('all')->where(['partID' => $part->partID])->first();
+
+                $specs_table->deleteAll(['partID' => $spec_block->partID]);
             }
             // create arrays to hold form data:
             $operations = array();

@@ -6,7 +6,7 @@
         <div class="buffer-div">
             <div class="table-create-box p-3">
                 <div class="creation-row row no-gutters">
-                    <?php if(!$table->count()) { ?>
+                    <?php if(count($table) < 1) { ?>
                         <div class="data-column" id="1">
                             <?php 
                                 echo $this->Form->input('table_header_1-1',
@@ -30,30 +30,60 @@
                     <?php } else { 
                         $colCount = 1;
                         $rowCount = 1;
-                        foreach($table->model_table_headers as $table_header):
-                    ?>
-                        <div class="data-column" id=<?php echo strval($colCount); ?>>
-                        <?php 
-                            echo $this->Form->input('table_header_'.strval($rowCount).'-'.strval($colCount),
-                            [
-                                'type' => 'text',
-                                'label' => false,
-                                'class' => 'model-header-input form-control',
-                                'value' => $table_header->model_table_text,
-                                'id' => strval($rowCount).'-'.strval($colCount)
-                            ]);
+                        $divCount = count($table->model_table_headers);
+                        $headArr = array();
+                        $rowArr = array();
+                        foreach($table->model_table_headers as $table_header){
+                            echo $table_header->model_table_text;
+                            // $headArr[$table_header->$model_table_text] = $table_header->model_table_text;
+                        }
+                        
+                        foreach($table->model_table_rows as $table_row){
+                            echo $table_row->model_table_row_text;
+                            // $rowArr[strval($table_row->$model_table_row_text)] = $table_row->model_table_row_text;
+                        }
 
-                            echo $this->Form->input('table_header_'.strval($rowCount).'-'.strval($colCount),
-                            [
-                                'type' => 'text',
-                                'label' => false,
-                                'class' => 'model-header-input form-control',
-                                'value' => $table_header->model_table_text,
-                                'id' => strval($rowCount).'-'.strval($colCount)
-                            ]);
+                        print_r($rowArr);
+                        // $sortedRows = array();
+                        // for($j = 0; $j < count($rowArr); $j++) {
+
+                        // }
+                        while($divCount > 0):
+                    ?>
+                        <div class="data-column" id="<?= strval($colCount); ?>">
+                        <?php 
+                            for($i = 0; $i < count($headArr); $i++){
+                                echo $this->Form->input('table_header_'.strval($rowCount).'-'.strval($colCount),
+                                [
+                                    'type' => 'text',
+                                    'label' => false,
+                                    'class' => 'model-header-input form-control',
+                                    'value' => $headArr[$i],
+                                    'id' => strval($rowCount).'-'.strval($colCount)
+                                ]);
+                                $colCount++;
+                            }
+                            foreach($table->model_table_rows as $table_row):
+                                echo $this->Form->input('table_header_'.strval($rowCount).'-'.strval($colCount),
+                                [
+                                    'type' => 'text',
+                                    'label' => false,
+                                    'class' => 'model-row-input form-control',
+                                    'value' => $table_row->model_table_row_text,
+                                    'id' => strval($rowCount).'-'.strval($colCount)
+                                ]);
+                                $rowCount++;
+                            endforeach;
                         ?>
                         </div>
-                    <?php  endforeach;
+                    <?php  
+                        $divCount--;
+                        if($rowCount % $colCount == 0) {
+                            echo "</div>";
+                            // $inCount = 0;
+                        }
+                        // $inCount++;
+                        endwhile;
                         } 
                     ?>
                     <div class="add-column">
