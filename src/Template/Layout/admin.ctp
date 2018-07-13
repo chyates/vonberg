@@ -351,7 +351,7 @@ jQuery(document).ready(function($) {
     });
 
     $('#delete-check-modal').on('show.bs.modal', function(event) {
-        $("#partname").val($(event.relatedTarget).data('file'));
+        $("#partname").text($(event.relatedTarget).data('file'));
     });
 
     var lastA = $('.admin-nav').find('.cms-greyed');

@@ -1871,15 +1871,18 @@ td span img.img-fluid {
 }
 
 /* Add/Edit Products + Generate PDF file tables */
-#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data {
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data,
+#cms-edit-resource-main .table-responsive .table td.d-flex {
     vertical-align: middle;
 }
 
-#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data label.fileContainer {
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data label.fileContainer,
+#cms-edit-resource-main .table-responsive .table td.d-flex label.fileContainer {
     margin-bottom: 0;
 }
 
-#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data p.file-text {
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data p.file-text,
+#cms-edit-resource-main .table-responsive .table td.d-flex p.file-text {
     align-self: center;
     margin-bottom: 0;
 }
@@ -2034,11 +2037,16 @@ a.add-bullet {
 
 /* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
 
+/* HR styles */
+hr.resource-divider {
+    width: 750px;
+    border-color: #979797;
+}
+
 #cms-manage-resources-main p.text-center a.btn.btn-primary {
     padding: 1% 4%;
 }
 
-/* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
 
 #cms-add-resource-main label.fileContainer {
     text-transform: uppercase;

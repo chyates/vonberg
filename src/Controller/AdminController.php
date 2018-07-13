@@ -36,6 +36,7 @@ class AdminController extends AppController
 
     }
 
+    // category pages
     public function catalog($id = null)
     {
         $this->viewBuilder()->setLayout('admin');
@@ -51,6 +52,7 @@ class AdminController extends AppController
         $this->set('pagename', $cat1->name);            
     }
 
+    // subcategory pages
     public function type($id)
     {
         $this->viewBuilder()->setLayout('admin');
@@ -65,22 +67,13 @@ class AdminController extends AppController
         $this->set('pagename', $subcat1->name);
     }
 
-
+    // main page 
     public function index()
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         // $now = new DateTime();
         $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
-        // foreach($query as $part) {
-        //     $range = new DateInterval('P'.strval($part->expires).'D');
-        //     $exp_date = $now->add($range);
-        //     $check = $exp_date->sub($range);
-        //     $diff = 
-        //     if($check != $now) {
-
-        //     } 
-        // }
         $cat = TableRegistry::get('Categories')->find();
         $this->set('parts', $query);
         $this->set('categories', $cat);
@@ -109,7 +102,6 @@ class AdminController extends AppController
             }
             else {
                 echo "Error: some error";
-                //print_r($emp);
             }
         }
     }
@@ -126,7 +118,6 @@ class AdminController extends AppController
                 echo $result->id;
             } else {
                 echo "Error: some error";
-                //print_r($emp);
             }
         }
     }
@@ -143,7 +134,6 @@ class AdminController extends AppController
                 echo $result->id;
             } else {
                 echo "Error: some error";
-                //print_r($emp);
             }
         }
     }
@@ -160,7 +150,6 @@ class AdminController extends AppController
                 echo $result->id;
             } else {
                 echo "Error: some error";
-                //print_r($emp);
             }
         }
     }
@@ -177,7 +166,6 @@ class AdminController extends AppController
             }
             else {
                 $data['response'] = "Error: some error";
-                //print_r($emp);
             }
             $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
         }
@@ -212,7 +200,6 @@ class AdminController extends AppController
                 $data['response'] = "Success: data saved";
             } else {
                 $data['response'] = "Error: some error";
-                //print_r($emp);
             }
             $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
         }
@@ -239,7 +226,6 @@ class AdminController extends AppController
             }
             else {
                 $data['response'] = "Error: some error";
-                //print_r($emp);
             }
             $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
         }
@@ -262,7 +248,6 @@ class AdminController extends AppController
         $this->set('conn', $conn);
         // required
         $this->set(compact('series'));
-        // Save logic goes here
         $this->set('part', $part);
         $this->set('type', $type);
         $this->set('style', $style);
@@ -302,7 +287,6 @@ class AdminController extends AppController
         $this->set('conn', $conn);
         $this->set('cat', $cat);
         $this->set(compact('series'));
-        // Save logic goes here
         $this->set('part', $part);
         $this->set('type', $type);
         $this->set('style', $style);
@@ -500,7 +484,6 @@ class AdminController extends AppController
 
         $found = $this->ModelTables->find('all')->where(['partID' => $id])->toList();
         $this->set('found', $found);
-        // print_r($found);
         // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
             // load vars for model tables
@@ -530,48 +513,38 @@ class AdminController extends AppController
                         if ($this->ModelTableHeaders->save($top)) {
                             // The variable entity contains the id now
                             $model_table_header_id = $top->model_table_headerID;
-                            // $debug = debug($top);
-                            // $this->set('debug', $debug);
                         } else {
                             $this->Flash->error(__('Error saving model table headers'));
                         }
                     }
+                    $order_num = 0;
                     $vt_data = array_filter($this->request->data, function($key) {
                         return (strpos($key, 'table_row') === 0);
                     }, 2);
-                    
+
                     $hz_data = array();
                     foreach ($vt_data as $key => $val) {
                         $hz_data[substr($key, 10)] = $val;
                     }
-                    
+
                     uksort($hz_data, function($a, $b) {
                         $ax = strpos($a, '-');
                         $arow = intval(substr($a, 0, $ax));
                         $acol = intval(substr($a, $ax + 1));
-                        
+
                         $bx = strpos($b, '-');
                         $brow = intval(substr($b, 0, $bx));
                         $bcol = intval(substr($b, $bx + 1));
-                        
-                        if ($arow < $brow) {
-                            return -1;
-                        }
-                        else if ($brow < $arow) {
-                            return 1;
-                        }
-                        else if ($acol < $bcol) {
-                            return -1;
-                        }
-                        else if ($bcol < $acol) {
-                            return -1;
-                        }
-                        else {
-                            return 0;
-                        }
+
+                        $retval = 0;
+                        if ($arow < $brow) {$retval = -1;}
+                        else if ($brow < $arow) {$retval = 1;}
+                        else if ($acol < $bcol) {$retval = -1;}
+                        else if ($bcol < $acol) {$retval = 1;}
+                        else {$retval = 0;}
+                        return $retval;
                     });
                     
-                    $order_num = 0;
                     foreach ($hz_data as $cell ) {   # allow for empty cells EXCEPT in the first column
                         $order_num++;
                         $new = $rowsTable->newEntity();
@@ -621,7 +594,6 @@ class AdminController extends AppController
             if(!empty($this->request->data['schematic']['name']))
             {
                 $file = $this->request->data['schematic']; //put the data into a var for easy use
-
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
                 $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
 
@@ -636,48 +608,33 @@ class AdminController extends AppController
             }
             if(!empty($this->request->data['performance']['name']))
             {
-                $file = $this->request->data['performance']; //put the data into a var for easy use
+                $file = $this->request->data['performance'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
 
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
-
-                //only process if the extension is valid
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.jpg');
                     $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
                 }
             }
             if(!empty($this->request->data['hydraulic']['name']))
             {
-                $file = $this->request->data['hydraulic']; //put the data into a var for easy use
+                $file = $this->request->data['hydraulic'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
 
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
-
-                //only process if the extension is valid
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/hydraulic_symbol.jpg');
                     $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
                 }
             }
             if(!empty($this->request->data['ordering']['name']))
             {
-                $file = $this->request->data['ordering']; //put the data into a var for easy use
+                $file = $this->request->data['ordering'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
 
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
-
-                //only process if the extension is valid
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.jpg');
                     $this->Flash->success(__('The file ORDERING_INFORMATION.JPG was saved.', h($part->partid)));
                 }
@@ -697,12 +654,10 @@ class AdminController extends AppController
         $cat = TableRegistry::get('Categories')->find('list');
         $type = TableRegistry::get('Types')->find('list');
         $style = TableRegistry::get('Styles')->find('list');
-
         $series = TableRegistry::get('Series')->find('list');
 
         $this->set('cat', $cat);
         $this->set(compact('series'));
-        // Save logic goes here
         $this->set('part', $part);
         $this->set('type', $type);
         $this->set('style', $style);
@@ -720,17 +675,15 @@ class AdminController extends AppController
         $part = $this->Parts->get($id, [
             'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
         ]);
-        // full contain for reference ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]
+
         $this->viewBuilder()->setLayout('admin');
         if ($this->request->is('post') || $this->request->is('put')) {
             $files = $this->request->data['stp_files'];
             foreach ($files as $file){
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('stp', 'pdf', 'txt'); //set allowed extensions
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
+                $arr_ext = array('stp', 'pdf', 'txt'); 
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($part->partID).'/'.strval($this->request->data['filename'][$count]).'.stp');
                     $this->Flash->success(__('The STP file  was saved.', h($part->partid)));
                 }
@@ -749,7 +702,6 @@ class AdminController extends AppController
         ))->first();
         $part = $this->Parts->get($id);
 
-        // Save logic goes here
         $this->set('table', $table);
         $this->set('part', $part);
 
@@ -792,13 +744,9 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
-        // $query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
-        // $this->loadModel('Parts');
-        // $this->set('parts',$query);
         $this->set('parts', $query);
         $this->set('pagename', 'New Products');
-
     }
 
 
@@ -813,7 +761,8 @@ class AdminController extends AppController
     }
 
 
-    public function priceImport() {
+    public function priceImport() 
+    {
         if(isset($_POST["submit"])){
             if($_FILES['file']['csv']){
                 $filename = explode('.', $_FILES['file']['csv']);
@@ -827,9 +776,7 @@ class AdminController extends AppController
                         $data = array(
                             'fieldName' => $item1
                         );
-                        //  $item2 = $data[1];
-                        //  $item3 = $data[2];
-                        //  $item4 = $data[3];
+
                         $Applicant = $this->Applicants->newEntity($data);
                         $this->Applicants->save($Applicant);
                     }
@@ -872,17 +819,17 @@ class AdminController extends AppController
     public function editResources() 
     {
         $this->viewBuilder()->setLayout('admin');
-        $this->viewBuilder()->setLayout('admin');
-        $this->viewBuilder()->setLayout('admin');
+
         $this->loadModel('TechnicalSpecs');
         $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 2]]);
-        $this->set('generals', $query);
+        [   'conditions' => ['resource' => 2]]);
         $query2 =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 1]]);
-        $this->set('technicals', $query2);
+        [   'conditions' => ['resource' => 1]]);
         $query3 =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 3]]);
+        [   'conditions' => ['resource' => 3]]);
+
+        $this->set('generals', $query);
+        $this->set('technicals', $query2);
         $this->set('applications', $query3);
     }
 
@@ -890,7 +837,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
-        if($this->request->is('post')) {
+        if($this->request->is('post') || $this->request->is('put')) {
             $spec = $this->TechnicalSpecs->newEntity();
             $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
             $spec->last_updated = date("Y-m-d H:i:s");
@@ -1012,4 +959,3 @@ class AdminController extends AppController
         $this->set('stp_users', $this->paginate($stp_users));
     }
 }
-

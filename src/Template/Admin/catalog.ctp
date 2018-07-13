@@ -14,17 +14,18 @@ use Cake\Routing\Router;
                     <div class="col">
                         <h1 class="page-title">Delete File?</h1>
                         <p>Are you sure you want to delete</p>
-                        <div id="partname"><P>FPO FILE TEXT</div>
+                        <p id="partname">FPO FILE TEXT</p>
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
                             <?php
-                            echo $this->Form->postLink(
-                                'Delete',
-                                array('action' => 'partDelete'),
-                                array('id'=>'delete-confirm','class' => 'btn btn-primary'),
-                                false);
-        ?>
+                                echo $this->Form->postLink(
+                                    'Delete',
+                                    array('action' => 'partDelete'),
+                                    array('id'=>'delete-confirm','class' => 'btn btn-primary'),
+                                    false
+                                );
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -61,19 +62,21 @@ use Cake\Routing\Router;
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
                         <?php
-                        echo $this->Html->link(
-                            $this->Html->tag('delete', 'Delete'),
-                            '#',
-                            array(
-                                'id'=>'btn-confirm',
-                                'data-toggle'=> 'modal',
-                                'data-file'=> $part->series->name,
-                                'data-target' => '#delete-check-modal',
-                                'data-action'=> Router::url(
-                                    array('action'=>'deletePart',$part->partID)
-                                ),
-                                'escape' => false),
-                            false);
+                            echo $this->Html->link(
+                                $this->Html->tag('delete', 'Delete'),
+                                '#',
+                                array(
+                                    'id'=>'btn-confirm',
+                                    'class' => 'delete-toggle-link',
+                                    'data-toggle'=> 'modal',
+                                    'data-file'=> $part->series->name,
+                                    'data-target' => '#delete-check-modal',
+                                    'data-action'=> Router::url(
+                                        array('action'=>'deletePart',$part->partID)
+                                    ),
+                                    'escape' => false),
+                                false
+                            );
                         ?>
                     </td>
                 </tr>

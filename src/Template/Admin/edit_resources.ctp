@@ -8,7 +8,7 @@
                     <div class="col">
                         <h1 class="page-title">Delete File?</h1>
                         <p>Are you sure you want to delete</p>
-                        <p>FPO FILE TEXT</p>
+                        <p id="partname">FPO FILE TEXT</p>
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
@@ -19,15 +19,6 @@
             </div>
         </div>
     </div>
-    
-    <!-- This template follows a similar format as the manage resources page, however the information for all of the resources is already populated from the database.
-    
-    Each category should have its own table with headers and a title. The PDFs should be sorted by category; there absolutely could be more than three per section.  
-
-    Upon clicking the 'Update' button, the following should happen, depending on what the user changed:
-        - the file should be updated in the database and the content in the 'Current File' column should change to reflect the update
-        - the title of the file should be updated, on the page as well as in the database 
-        - both should be updated -->
 
     <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
         <h2 class="category-title">General Information</h2>
@@ -40,10 +31,19 @@
                 </tr>
             </thead>
             <tbody>
+                <?php foreach($generals as $g_resource): ?>
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
+                    <td><input type="text" class="form-control" placeholder="<?= $g_resource->title ?>"></td>
                     <td>
+                        <?= $this->Text->truncate(
+                            $g_resource->file,
+                            15,
+                            [
+                                'ellipsis' => '...',
+                                'exact' => false
+                            ]) ?>
+                    </td>
+                    <td class="d-flex justify-content-between">
                         <label class="fileContainer">Browse
                             <input type="file" class="form-control"/>
                         </label>
@@ -52,30 +52,7 @@
                         <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td>
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td>
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
-                    </td>
-                </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->
@@ -91,10 +68,19 @@
                 </tr>
             </thead>
             <tbody>
+            <?php foreach($technicals as $t_resource): ?>
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
+                    <td><input type="text" class="form-control" placeholder="<?= $t_resource->title ?>"></td>
                     <td>
+                        <?= $this->Text->truncate(
+                            $t_resource->file,
+                            15,
+                            [
+                                'ellipsis' => '...',
+                                'exact' => false
+                            ]) ?>
+                    </td>
+                    <td class="d-flex justify-content-between">
                         <label class="fileContainer">Browse
                             <input type="file" class="form-control"/>
                         </label>
@@ -103,30 +89,7 @@
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td>
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td>
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->
@@ -142,10 +105,19 @@
                 </tr>
             </thead>
             <tbody>
+            <?php foreach($applications as $a_resource): ?>
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
+                    <td><input type="text" class="form-control" placeholder="<?= $a_resource->title ?>"></td>
                     <td>
+                        <?= $this->Text->truncate(
+                            $a_resource->file,
+                            15,
+                            [
+                                'ellipsis' => '...',
+                                'exact' => false
+                            ]) ?>
+                    </td>
+                    <td class="d-flex justify-content-between">
                         <label class="fileContainer">Browse
                             <input type="file" class="form-control"/>
                         </label>
@@ -154,32 +126,8 @@
                         <p><a href="">Delete</a></p>
                     </td>
                 </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td>
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td><input type="text" class="form-control form-control-sm" placeholder="File Title Displayed on Site"></td>
-                    <td>FileName.pdf</td>
-                    <td>
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
+            <?php endforeach; ?>
             </tbody>
         </table>
     </div><!-- .rsrc-table end -->
-
 </div><!-- #cms-edit-resource-main end -->

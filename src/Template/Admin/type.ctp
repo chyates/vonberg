@@ -14,7 +14,7 @@ use Cake\Routing\Router;
                     <div class="col">
                         <h1 class="page-title">Delete File?</h1>
                         <p>Are you sure you want to delete</p>
-                        <div id="partname"><P>FPO FILE TEXT</div>
+                        <p id="partname">FPO FILE TEXT</p>
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
