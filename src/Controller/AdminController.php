@@ -376,9 +376,7 @@ class AdminController extends AppController
             }
 
             if(!empty($specs_rec)) {
-                $spec_block = $this->Specifications->find('all')->where(['partID' => $part->partID])->first();
-
-                $specs_table->deleteAll(['partID' => $spec_block->partID]);
+                $specs_table->deleteAll(['partID' => $specs_rec->partID]);
             }
             // create arrays to hold form data:
             $operations = array();
@@ -500,18 +498,21 @@ class AdminController extends AppController
         $this->loadModel('ModelTableHeaders');
         $this->loadModel('ModelTableRows');
 
+        $found = $this->ModelTables->find('all')->where(['partID' => $id])->toList();
+        $this->set('found', $found);
+        // print_r($found);
         // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
             // load vars for model tables
             $headerTable = TableRegistry::get('ModelTableHeaders');
             $rowsTable = TableRegistry::get('ModelTableRows');
-            $found = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
-            if(!empty($found)) {
-                $table = $this->ModelTables->find('all')->where(['partID >' => $id])->first();
+            $m_tables = TableRegistry::get('ModelTables');
+            if(!empty($found)) {   
+                $m_tables->deleteAll(['partID' => $id]);
                 // delete headers and rows to put them back in
-                $headerTable->deleteAll(['model_tableID' => $table->model_tableID]);
-                $rowsTable->deleteAll(['model_tableID' => $table->model_tableID]);
-            } else {
+                $headerTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
+                $rowsTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
+            }
                 $table = $this->ModelTables->newEntity();
                 $table->partID = $part->partID;
                 $table->order_num = 1;
@@ -532,34 +533,46 @@ class AdminController extends AppController
                             // $debug = debug($top);
                             // $this->set('debug', $debug);
                         } else {
-                            
+                            $this->Flash->error(__('Error saving model table headers'));
                         }
                     }
-                    $order_num = 0;
-                    $rows = array_filter($this->request->data, function($key) {
+                    $vt_data = array_filter($this->request->data, function($key) {
                         return (strpos($key, 'table_row') === 0);
                     }, 2);
-                    $bros = array();
-                    foreach ($rows as $key => $val) {
-                        $bros[substr($key, 10)] = $val;
+                    
+                    $hz_data = array();
+                    foreach ($vt_data as $key => $val) {
+                        $hz_data[substr($key, 10)] = $val;
                     }
-                    uksort($bros, function($a, $b) {
+                    
+                    uksort($hz_data, function($a, $b) {
                         $ax = strpos($a, '-');
                         $arow = intval(substr($a, 0, $ax));
                         $acol = intval(substr($a, $ax + 1));
-
+                        
                         $bx = strpos($b, '-');
                         $brow = intval(substr($b, 0, $bx));
                         $bcol = intval(substr($b, $bx + 1));
-
-                        if ($arow < $brow) {return -1;}
-                        else if ($brow < $arow) {return 1;}
-                        else if ($acol < $bcol) {return -1;}
-                        else if ($bcol < $acol) {return -1;}
-                        else {return 0;}
+                        
+                        if ($arow < $brow) {
+                            return -1;
+                        }
+                        else if ($brow < $arow) {
+                            return 1;
+                        }
+                        else if ($acol < $bcol) {
+                            return -1;
+                        }
+                        else if ($bcol < $acol) {
+                            return -1;
+                        }
+                        else {
+                            return 0;
+                        }
                     });
                     
-                    foreach ($bros as $cell ) {   # allow for empty cells EXCEPT in the first column
+                    $order_num = 0;
+                    foreach ($hz_data as $cell ) {   # allow for empty cells EXCEPT in the first column
                         $order_num++;
                         $new = $rowsTable->newEntity();
                         $new->model_tableID = $table->model_tableID;
@@ -570,11 +583,13 @@ class AdminController extends AppController
                             $model_table_header_id = $new->model_table_headerID;
                             $this->redirect(array('action' => 'editProductFour', $part->partID));
                         } else {
+                            $this->Flash->error(__('Error saving model table rows'));
                             $debug = debug($new);
                         }
                     }
+                } else {
+                    $this->Flash->error(__('Error saving model table'));
                 }
-            }
         } else {
             $tables = $this->ModelTables->find('all',array(
                 'conditions' => array(
@@ -735,14 +750,41 @@ class AdminController extends AppController
         $part = $this->Parts->get($id);
 
         // Save logic goes here
-        $this->set('part', $part);
         $this->set('table', $table);
+        $this->set('part', $part);
 
     }
 
     public function generatePDF()
     {
         $this->viewBuilder()->setLayout('admin');
+
+        // load variables to generate form options:
+        $cat = TableRegistry::get('Categories')->find('list')->orderAsc('name');
+        $type = TableRegistry::get('Types')->find('list')->orderAsc('name');
+        $style = TableRegistry::get('Styles')->find('list')->orderAsc('name');
+        $series = TableRegistry::get('Series')->find('list')->orderAsc('name');
+        $conn = TableRegistry::get('Connections')->find('list')->orderAsc('name');
+
+        $this->loadModel('Specifications');
+        $genSpecs = TableRegistry::get('Specifications')->find('all', array(
+            'field' => 'spec_name',
+            'group' => 'spec_name',
+            'order' => 'spec_name ASC'
+        ), 'list');
+
+        // handle submit
+        if($this->request->is('post') || $this->request->is('put'))  {
+            // $this->redirect(array('controller' => 'admin', 'action' => 'generatePdf2'));
+        }
+
+        // set variables for form data:
+        $this->set('cat', $cat);
+        $this->set('conn', $conn);
+        $this->set(compact('series'));
+        $this->set('type', $type);
+        $this->set('style', $style);
+        $this->set('all_specs', $genSpecs);
     }
 
     public function new()

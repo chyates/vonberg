@@ -209,10 +209,24 @@ jQuery(document).ready(function($) {
     });
 
 // fxn to insert input fields upon add bullet click:
-    var colCount = 1;
-    var rowCount = 2;
+    var colCount = 0;
+    var rowCount = 0;
+    if(!$(".creation-row #2.data-column").length) {
+        colCount = 1;
+    } else {
+        $(".creation-row .data-column").each(function(index) {
+            colCount++
+        });
+    }
+
+    $(".creation-row .data-column").find("input[id*='-1']").each(function(index) {
+        console.log("Found ", rowCount, "rows");
+        rowCount++;
+    })
+
 
     $(".add-bullet").click(function(e) {
+        console.log("Current row count before add: ", rowCount);
         e.preventDefault();
         var tableSlide = $(".table-create-box").find(this);
         var featSlide = $(".form-slide .w-bullet").find(this);
@@ -321,6 +335,15 @@ jQuery(document).ready(function($) {
             }          
         }
     });
+
+    // update input value on keypress, model table slide edit product form:
+    $("#three .creation-row .data-column").find("input[type=text]").on("keypress", function() {
+        console.log("Input changed");
+        console.log("Current value: ", $(this).val());
+        if($(this).val() != "") {
+            $(this).attr('value', "");
+        }
+    })
 
     // define the function within the global scope
     $('#delete-check-modal').on('show.bs.modal', function(e) {

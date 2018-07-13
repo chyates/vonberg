@@ -16,6 +16,7 @@
                 $count=0;
                 $rowcount = 0;
                //  echo debug($table);
+               if(isset($table)) {
                 foreach ($table->model_table_headers as $header) {
                     ++$count;
                 }
@@ -26,11 +27,11 @@
                             <td class="model-table-data"><?= $row->model_table_row_text ?></td>
                             <td class="model-table-data">
                                 <?php
-                                    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.stp')) {
-                                        echo "File does not exist yet:".strval($row->model_table_rowID).".stp";
+                                    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP')) {
+                                        echo "File does not exist yet";
                                     } else {
                                         echo $row->model_table_rowID.".stp";
-                                        echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.stp'));
+                                        echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP'));
                                     } 
                                 ?>
                             </td>
@@ -38,15 +39,16 @@
                                 <label class="fileContainer">Browse
                                     <?php echo $this->Form->input('stp_files[]', ['label'=>False, 'type' => 'file', 'class'=>'form-control']);?>
                                 </label>
-                                    <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_rowID]);?>
-                                    <p class="file-text">No file chosen</p>
+                                <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_rowID]);?>
+                                <p class="file-text">No file chosen</p>
                             </td>
                         </tr>
 
                         <?php
                     }
                     ++$rowcount;
-                } ?>
+                } 
+               }  ?>
                 </tbody>
             </table>
             <div class="row no-gutters justify-content-between">

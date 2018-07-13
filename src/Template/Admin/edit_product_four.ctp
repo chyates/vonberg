@@ -57,7 +57,7 @@
                                     echo "None";
                                 } else {
                                     echo "hydraulic_symbol.jpg";
-                                    echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/typical_performance.jpg'));
+                                    echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/hydraulic_symbol.jpg'));
                             } ?>
 
                             </td>

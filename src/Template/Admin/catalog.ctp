@@ -60,7 +60,6 @@ use Cake\Routing\Router;
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                         <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
-                        <a data-toggle="modal" data-target="#delete-check-modal">Duplicate</a>
                         <?php
                         echo $this->Html->link(
                             $this->Html->tag('delete', 'Delete'),
