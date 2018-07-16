@@ -24,8 +24,7 @@ class AdminController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation']);
-
+        $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation', 'addResource']);
     }
 
     public function view()
@@ -33,7 +32,6 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $cat = TableRegistry::get('Categories')->find();
         $this->set('categories', $cat);
-
     }
 
     // category pages
@@ -79,7 +77,6 @@ class AdminController extends AppController
         $this->set('categories', $cat);
         $this->set('dealer_time',filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
         $this->set('catalog_time',filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
-
     }
     
     public function get_cat()
@@ -243,10 +240,10 @@ class AdminController extends AppController
         $style = TableRegistry::get('Styles')->find('list');
         $series = TableRegistry::get('Series')->find('list');
         $conn = TableRegistry::get('Connections')->find('list');
+
         $this->set('cat', $cat);
         $this->set('data', $data);
         $this->set('conn', $conn);
-        // required
         $this->set(compact('series'));
         $this->set('part', $part);
         $this->set('type', $type);
@@ -281,9 +278,9 @@ class AdminController extends AppController
         $cat = TableRegistry::get('Categories')->find('list');
         $type = TableRegistry::get('Types')->find('list');
         $style = TableRegistry::get('Styles')->find('list');
-
         $series = TableRegistry::get('Series')->find('list');
         $conn = TableRegistry::get('Connections')->find('list');
+
         $this->set('conn', $conn);
         $this->set('cat', $cat);
         $this->set(compact('series'));
@@ -349,7 +346,7 @@ class AdminController extends AppController
             $ops_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 1])->first();
             $feats_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 2]);
             $specs_rec = $this->Specifications->find('all')->where(['partID' => $part->partID])->first();
-            
+
             // delete existing records to create new ones from form data:
             if(!empty($ops_tbs)) {
                 $op_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
@@ -666,17 +663,17 @@ class AdminController extends AppController
 
     public function editProductFive($id)
     {
-        $count=0;
         $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Parts');
+
+        $count=0;
         if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
             mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
         }
-        $this->loadModel('Parts');
         $part = $this->Parts->get($id, [
             'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
         ]);
 
-        $this->viewBuilder()->setLayout('admin');
         if ($this->request->is('post') || $this->request->is('put')) {
             $files = $this->request->data['stp_files'];
             foreach ($files as $file){
@@ -704,7 +701,6 @@ class AdminController extends AppController
 
         $this->set('table', $table);
         $this->set('part', $part);
-
     }
 
     public function generatePDF()
@@ -717,8 +713,8 @@ class AdminController extends AppController
         $style = TableRegistry::get('Styles')->find('list')->orderAsc('name');
         $series = TableRegistry::get('Series')->find('list')->orderAsc('name');
         $conn = TableRegistry::get('Connections')->find('list')->orderAsc('name');
-
         $this->loadModel('Specifications');
+
         $genSpecs = TableRegistry::get('Specifications')->find('all', array(
             'field' => 'spec_name',
             'group' => 'spec_name',
@@ -743,7 +739,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
+        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
 
         $this->set('parts', $query);
         $this->set('pagename', 'New Products');
@@ -850,13 +846,32 @@ class AdminController extends AppController
         $this->loadModel('TechnicalSpecs');
         if($this->request->is('post') || $this->request->is('put')) {
             $spec = $this->TechnicalSpecs->newEntity();
-            $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
+            // $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
+            $spec->resource = intval($this->request->data['resource']);
+            $spec->title = $this->request->data['title'];
+            $sub_path = substr($this->request->data['file_path'], 12);
+            $spec->file = $this->request->data['file_path'];
+            // $spec->file = $this->request->data['file_path'];
             $spec->last_updated = date("Y-m-d H:i:s");
+
+            if(!empty($this->request->data['file']['name']))
+            {
+                $file = $this->request->data['file'];
+                // $ext = substr(strtolower(strrchr($this->request->data['file_path'], '.')), 1); 
+                // $spec->file = $ext;
+                // $arr_ext = array('stp', 'pdf', 'txt'); 
+                // if(in_array($ext, $arr_ext))
+                // {
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications' . $this->request->data['file_path']);
+                $this->Flash->success(__('The new resource file  was saved.'));
+                // }
+            }
+
             if ($this->TechnicalSpecs->save($spec)) {
                 $this->Flash->success(__('The resource has been saved.'));
                 $this ->redirect(array('action' => 'index'));
             } else {
-                $this->Flash->error(__('The resource with could not be saved.'));
+                $this->Flash->error(__('The resource could not be saved.'));
             }
         }
     }
@@ -892,16 +907,34 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
+        $this->getEventManager()->off($this->Csrf);
         $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
 
         if($this->request->is('post') || $this->request->is('put')) {
             $resource = $this->TechnicalSpecs->get(intval($this->request->data['tech_id']));
             $resource->title = $this->request->data['tech_title'];
-            $resource->file = strval($this->request->data['file_path']);
+            $dunder_file = str_replace(' ', '_', $this->request->data['file_path']);
+            $resource->file = $dunder_file;
             if($this->TechnicalSpecs->save($resource)) {
+                $this->Flash->success(__($dunder_file));
                 $this->Flash->success(__('The resource has been updated'));
                 return $this->redirect($this->referer());
             }
+            
+            // $file = $this->request->data['file_path'];
+            // $sub_path = substr($this->request->data['file_path'], 12);
+            // $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
+            // $arr_ext = array('stp', 'pdf', 'txt'); 
+            // if(in_array($ext, $arr_ext))
+            // {
+            //     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/'.strval($this->request->data['file_path']).'.stp');
+            //     $this->Flash->success(__('The STP file  was saved.', h($part->partid)));
+            // }
+
+            // $files = $this->request->data['stp_files'];
+            // foreach ($files as $file){
+            //     ++$count;
+            // }
         }
 
         $this->set('specs', $query);
@@ -911,8 +944,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 2]]);
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
         $this->set('specs', $query);
     }
 
@@ -920,8 +952,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 1]]);
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
         $this->set('specs', $query);
     }
 
@@ -929,8 +960,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 3]]);
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
         $this->set('specs', $query);
     }
 
@@ -978,7 +1008,6 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $contacts = TableRegistry::get('Contacts')->find('all')->orderDesc('date_submitted');
         $this->set('contacts', $this->paginate($contacts));
-
     }
 
     public function downloadSTP()
@@ -989,4 +1018,3 @@ class AdminController extends AppController
         $this->set('stp_users', $this->paginate($stp_users));
     }
 }
-

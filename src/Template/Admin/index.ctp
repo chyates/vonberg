@@ -28,7 +28,7 @@
                         </span>
                         <a href="/admin/priceExport">model_prices.csv</a>
                     </td>
-                    <td>2017-11-08 13:46:02</td>
+                    <td>11/08/2017</td>
                     <td class="d-flex justify-content-between">
                         <label class="fileContainer">Browse
                             <input type="file" class="form-control">

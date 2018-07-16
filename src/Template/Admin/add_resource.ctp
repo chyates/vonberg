@@ -18,13 +18,16 @@
         </div>
 
         <div class="form-group">
-            <?php echo $this->Form->input('title', ['label' => ['text' => 'File Title'], 'class'=>'form-control']);?>
+            <?php echo $this->Form->input('title', ['label' => ['text' => 'File Title'], 'class'=>'form-control']); ?>
         </div>
 
         <div class="form-group">
             <label id="up-label-addrsrc">Upload File</label>
             <label class="fileContainer">Browse
-                <?php echo $this->Form->input('file', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
+                <?php 
+                    echo $this->Form->input('file', ['type' => 'file', 'class'=>'form-control', 'label' => false]);
+                    echo $this->Form->input('file_path', ['type' => 'hidden']); 
+                ?>
             </label>
             <p class="file-text">No file chosen</p>
         </div>

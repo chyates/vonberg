@@ -6,7 +6,6 @@
             <thead>
                 <tr>
                     <th>Current File</th>
-                    <th>Last Updated</th>
                     <th>Replace File</th>
                 </tr>
             </thead>
@@ -17,9 +16,6 @@
                             <img class="img-fluid" src="/img/download.svg"/>
                         </span>
                         <A HREF="/admin/priceExport">model_prices.csv</A></td>
-                    <td>
-                       Date here
-                    </td>
                     <td class="justify-content-between">
                         <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>
                         <div class="form-group">
@@ -38,25 +34,41 @@
     </div><!-- .rsrc-table end -->
 
     <div class="table-responsive col-md-8 mx-auto">
-        <table id="cms-model-price-table" class="model-table table table-striped">
-            <thead>
-                <tr>
-                    <th class="model-table-header">Model</th>
-                    <th class="model-table-header">Base Price</th>
-                    <th class="model-table-header"></th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php
-                    foreach($prices as $price): ?>
-                <tr>
-                    <td class="model-table-data"><?php echo $price->model_text; ?></td>
-                    <td class="model-table-data"><?php echo money_format('$%.2n', $price->unit_price); ?></td>
-                    <td class="model-table-data"><a href="/admin/edit-product">Edit</a></td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div id="cms-model-price-table" class="model-table table table-striped">
+            <div class="row">
+                <div class="col-5 model-table-header">Model</div>
+                <div class="col-5 model-table-header">Base Price</div>
+                <div class="col-2 model-table-header"></div>
+            </div>
+            <?php foreach($prices as $price): ?>
+                <?= $this->Form->create('edit-model-pricing', ['id' => "edit-model-pricing", 'class' => 'inactive', 'enctype' => 'multipart/form-data']) ?>
+                    <?php echo $this->Form->input('id', ['label'=>False, 'class'=>'hidden', 'type'=>'text', 'value'=>$price->model_priceID]);?>
+                    <div class="row">
+                        <div class="col-5 model-table-data">
+                            <div><?php echo $price->model_text; ?></div>
+                            <?php echo $this->Form->input('model_text', ['label'=>False, 'type'=>'text', 'value'=>$price->model_text]);?>
+                        </div>
+                        <div class="col-5 model-table-data">
+                            <div><?php echo money_format('$%.2n', $price->unit_price); ?></div>
+                            <span>$</span>
+                            <?php echo $this->Form->input('unit_price', ['label'=>False, 'type'=>'text', 'value'=>$price->unit_price]);?>
+                        </div>
+                        <div class="col-2 model-table-data">
+                            <div class="edit">Edit</div>
+                            <input type="submit" value="Save" />
+                        </div>
+                    </div>
+                <?= $this->Form->end() ?>
+            <?php endforeach; ?>
+        </div>
     </div>
+
+    <script>
+        Array.prototype.forEach.call(document.querySelectorAll('#cms-model-price-table form'), function(form) {
+            form.querySelector('.edit').onclick = function() {
+                form.className = 'active'
+            }
+        })
+    </script>
 
 </div><!-- #cms-model-price-main end -->

@@ -18,7 +18,6 @@
                         'inputDefaults' => array(
                             'label' => false,
                             'div' => false
-
                         )
                     )); ?>
                     <p>You will receive an email with the files attached.</p>

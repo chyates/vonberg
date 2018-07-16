@@ -22,7 +22,7 @@
                         <span class="pr-2">
                             <img class="img-fluid" src="/img/download.svg"/>
                         </span>    
-                        <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank">
+                        <a href="<?= '/img/pdfs/technical_specifications/'. $spec->file; ?>" target="_blank">
                             <?php echo $spec->file;?>
                         </a>
                     </td>

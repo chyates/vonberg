@@ -54,13 +54,31 @@ use Cake\Routing\Router;
                     // print_r($expiration);
                 ?>
                 <tr>
-                    <td class="model-table-data"><?= h($part->series->name) ?></td>
-                    <td class="model-table-data"><?= h($part->style->name) ?></td>
-                    <td class="model-table-data"><?= h($part->connection->name) ?></td>
+                    <td class="model-table-data">
+                        <?php if($part->series->name) {
+                            echo $part->series->name;
+                        } else {
+                            echo "No series";
+                        } ?>
+                    </td>
+                    <td class="model-table-data">
+                        <?php if($part->style) {
+                            echo $part->style->name;
+                        } else {
+                            echo "No style";
+                        } ?>
+                    </td>
+                    <td class="model-table-data">
+                        <?php if($part->description) {
+                            echo $part->description;
+                        } else {
+                            echo "No description";
+                        } ?>
+                    </td>
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                     <td class="model-table-data">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="new-status" value="54days"
+                            <input class="form-check-input" type="checkbox" name="new-status" value="<?= h($part->expires) ?>"
                                    checked>
                             <label class="form-check-label"><?php echo $range->d . " days"; ?></label>
                         </div>

@@ -82,9 +82,13 @@ class ContactController extends AppController
                             $file_paths .= strval($str_model);
                             $file_paths .= ".stp, ";
                         }
-                        $f_record = $this->StpFile->newEntity();
-                        $f_record->stp_userID = $emp->stp_userID;
-                        $f_record->partID = intval($final_id);
+                        // $f_record = $this->StpFile->newEntity();
+                        // $f_record->stp_userID = $emp->stp_userID;
+                        // $f_record->partID = intval($final_id);
+                        // $f_record->modelID = $file_paths;
+                        // if($this->StpFile->save($f_record)) {
+                        //     $this->Flash->success(__('The file associations have been saved.'));
+                        // }
                     }
                 }
                 Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);

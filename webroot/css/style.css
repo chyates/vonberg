@@ -1964,10 +1964,6 @@ ul.pagination li {
     padding: 10px 20px;
 }
 
-#cms-main-container .btn.btn-primary {
-    padding: 1% 4%;
-}
-
 #cms-main-container p.text-center {
     margin: 5vh 0;
 }
@@ -2073,6 +2069,45 @@ hr.resource-divider {
 
 #add-rsrc-form #add-rsrc-submit {
     padding: 10px 22px;
+}
+
+.edit-rsrc-form h4.rsrc-col-title {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.edit-rsrc-form .spec-row {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.edit-rsrc-form .spec-row .col-md-6 {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: start;
+}
+
+.edit-rsrc-form .spec-row .col-md-6 .row.no-gutters .col {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center
+}
+
+.edit-rsrc-form .spec-row .col-md-6 .row.no-gutters .col p.file-text {
+    margin: 0 1vw;
+}
+
+.edit-rsrc-form .spec-row .col-md-3 p a {
+    color: #425460;
+    text-decoration: underline;
+}
+
+hr.edit-rsrc-div {
+    border-color: #979797;
 }
 
 /* === MODEL PRICING: GLOBAL / DESKTOP === */

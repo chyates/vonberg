@@ -384,20 +384,33 @@ jQuery(document).ready(function($) {
         var homeChange = $(this).closest('.fileContainer').next('p.file-text');
 
         var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
-        var homeUpdate = $('#edit-rsrc-form').find('div.submit .update-button');
+        var toUpdate = $(this).closest('.table-responsive .table').find('.update-button');
+        var reOrgBtn = $(this).closest('.spec-row').find(".update-button");
 
         var hiddenFile = $("#cms-edit-resource-main .table-responsive").find("input[name='file_path']");
         var hiddenTitle = $("#cms-edit-resource-main .table-responsive").find("input[name='tech_title']");
+        var hiddenAdd = $("#cms-add-resource-main #add-rsrc-form").find("input[name='file_path']");
+
+        if(hiddenAdd.length > 0) {
+            hiddenAdd.attr('value', homeChange.text());
+        }
+
         if(toChange.length > 0) {
+            console.log("Found to change");
             $(toChange).html(filename);
             $(nextUpdate).show();
-            hiddenFile.attr('value', toChange.text());
         } else if(homeChange) {
+            console.log("Found home change");
             $(homeChange).html(filename);
             var substr = homeChange.text().slice(12);
-            $(homeUpdate).show();
+            $(toUpdate).show();
+            $(reOrgBtn).show();
             hiddenTitle.val(newTitle);
             hiddenFile.val(substr);
+            if(hiddenAdd.length > 0) {
+                console.log("Found add resource form");
+                hiddenAdd.val(substr);
+            }
         }
     });
 
