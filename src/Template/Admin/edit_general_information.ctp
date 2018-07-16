@@ -20,14 +20,7 @@ use Cake\Routing\Router;
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <?php
-                                echo $this->Form->postLink(
-                                    'Delete',
-                                    array('action' => 'resourceDelete'),
-                                    array('id'=>'delete-confirm','class' => 'btn btn-primary'),
-                                    false
-                                );
-                            ?>
+                            <a href="/admin/resource-delete/" method="POST" id='delete-confirm' class="btn btn-primary">DELETE</a>
                         </div>
                     </div>
                 </div>
@@ -48,7 +41,7 @@ use Cake\Routing\Router;
             <?php
             foreach ($specs as $spec): ?>
                 <tr>
-                    <td><input type="text" class="form-control form-control-sm" value="<?php echo $spec->title;?>"></td>
+                    <td><input type="text" class="title-in form-control" placeholder="<?php echo $spec->title;?>"></td>
                     <td>
                         <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank">
                             <?php echo $this->Text->truncate(
@@ -73,6 +66,7 @@ use Cake\Routing\Router;
                                 array(
                                     'id'=>'btn-confirm',
                                     'data-toggle'=> 'modal',
+                                    'data-id' => $spec->techID,
                                     'data-file'=> $spec->title,
                                     'data-target' => '#delete-check-modal',
                                     'data-action'=> Router::url(
@@ -81,7 +75,7 @@ use Cake\Routing\Router;
                                     'escape' => false),
                                 false
                             );
-                        ?>                  
+                        ?>                 
                     </td>
                 </tr>
             <?php endforeach;?>

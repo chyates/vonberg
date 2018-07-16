@@ -941,7 +941,7 @@ a.btn.btn-primary {
     border-top: none;
 }
 
-.table-responsive .model-table th.model-table-header {
+.table-responsive .model-table .model-table-header {
     color: #017D44;
     font-size: 16px;
     font-weight: 600;
@@ -949,7 +949,7 @@ a.btn.btn-primary {
     text-transform: uppercase;
 }
 
-.table-responsive .model-table td.model-table-data {
+.table-responsive .model-table .model-table-data {
     color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
@@ -1768,12 +1768,14 @@ td span img.img-fluid {
 
 /* Model Table */
 .model-table.table-striped>tbody>tr:nth-child(even)>td, 
-.model-table.table-striped>tbody>tr:nth-child(even)>th {
+.model-table.table-striped>tbody>tr:nth-child(even)>th,
+.model-table.table-striped>*:nth-child(even) {
    background-color: #F9F9F7;
 }
 
 .model-table.table-striped>tbody>tr:nth-child(odd)>td, 
-.model-table.table-striped>tbody>tr:nth-child(odd)>th {
+.model-table.table-striped>tbody>tr:nth-child(odd)>th,
+.model-table.table-striped>*:nth-child(odd) {
    background-color: #FFFFFF;
 }
 
@@ -1820,6 +1822,8 @@ td span img.img-fluid {
     border-bottom: #979797;
     text-transform: none;
     vertical-align: middle;
+    align-items: center;
+    padding: 2vh 0;
 }
 
 .rsrc-table.table-responsive .table tbody tr:not(:last-child) {
@@ -1845,9 +1849,9 @@ td span img.img-fluid {
 
 #cms-edit-resource-main .rsrc-table.table-responsive .table td p,
 #cms-main-container #cms-home-table.rsrc-table.table-responsive .table td p.file-text {
-    display: inline-block;
-    vertical-align: top;
+    display: flex;
     margin-bottom: 0;
+    align-self: center;
 }
 
 #cms-edit-resource-main .rsrc-table.table-responsive .table p a {
@@ -1872,17 +1876,17 @@ td span img.img-fluid {
 
 /* Add/Edit Products + Generate PDF file tables */
 #cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data,
-#cms-edit-resource-main .table-responsive .table td.d-flex {
+#cms-edit-resource-main .table-responsive .table td {
     vertical-align: middle;
 }
 
 #cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data label.fileContainer,
-#cms-edit-resource-main .table-responsive .table td.d-flex label.fileContainer {
+#cms-edit-resource-main .table-responsive .table td label.fileContainer {
     margin-bottom: 0;
 }
 
 #cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data p.file-text,
-#cms-edit-resource-main .table-responsive .table td.d-flex p.file-text {
+#cms-edit-resource-main .table-responsive .table td p.file-text {
     align-self: center;
     margin-bottom: 0;
 }
@@ -1904,6 +1908,7 @@ label.fileContainer {
     border: 1px solid #017D44;
     color: #017D44;
     background-color: rgba(204,204,204,0);
+    margin-bottom: 0;
 }
 
 #cms-edit-resource-main label.fileContainer,
@@ -2076,6 +2081,19 @@ hr.resource-divider {
     margin-right: 1vw;
 }
 
+#cms-model-price-table .row {
+    padding-top: .75em;
+    padding-bottom: .75em
+}
+
+#cms-model-price-table form {width: 100%}
+#cms-model-price-table .edit {cursor: pointer}
+.inactive .model-table-data .input {display: none}
+.inactive .model-table-data input {display: none}
+.inactive .model-table-data span {display: none}
+.active .model-table-data div {display: none}
+.active .model-table-data .input {display: inline-block}
+
 /* === DELETE MODAL: GLOBAL / DESKTOP === */
 
 #delete-check-modal .modal-content {
@@ -2104,3 +2122,6 @@ hr.resource-divider {
     justify-content: space-evenly;
     display: flex;
 }
+
+
+.hidden {display: none}

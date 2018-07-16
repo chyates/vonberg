@@ -23,8 +23,9 @@ use Cake\Routing\Router;
                                 'Delete',
                                 array('action' => 'partDelete'),
                                 array('id'=>'delete-confirm','class' => 'btn btn-primary'),
-                                false);
-        ?>
+                                false
+                            );
+                            ?>
                         </div>
                     </div>
                 </div>

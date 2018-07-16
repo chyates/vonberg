@@ -24,7 +24,7 @@ class AdminController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive']);
+        $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation']);
 
     }
 
@@ -341,22 +341,19 @@ class AdminController extends AppController
             'order' => 'spec_name ASC'
         ), 'list');
 
+        
         // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
             $tb_table = TableRegistry::get('TextBlocks');
             $specs_table = TableRegistry::get('Specifications');
             $ops_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 1])->first();
-            $feats_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 2])->first();
+            $feats_tbs = $this->TextBlocks->find('all')->where(['partID' => $part->partID, 'order_num' => 2]);
             $specs_rec = $this->Specifications->find('all')->where(['partID' => $part->partID])->first();
+            
             // delete existing records to create new ones from form data:
             if(!empty($ops_tbs)) {
                 $op_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
                 $tb_table->deleteAll(['partID' => $op_block->partID]);
-            }
-
-            if(!empty($feats_tbs)) {
-                $feat_block = $this->TextBlocks->find('all')->where(['partID' => $part->partID])->first();
-                $tb_table->deleteAll(['partID' => $feat_block->partID]);
             }
 
             if(!empty($specs_rec)) {
@@ -610,6 +607,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['performance'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -621,6 +619,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['hydraulic'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -632,6 +631,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['ordering'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -763,29 +763,27 @@ class AdminController extends AppController
 
     public function priceImport() 
     {
-        if(isset($_POST["submit"])){
-            if($_FILES['file']['csv']){
-                $filename = explode('.', $_FILES['file']['csv']);
-                debug($filename);
-                if($filename[1]=='csv'){
-
-                    $handle = fopen($_FILES['file']['csv'], "r");
-                    while ($data = fgetcsv($handle)){
-                        $item1 = $data[0];
-
-                        $data = array(
-                            'fieldName' => $item1
-                        );
-
-                        $Applicant = $this->Applicants->newEntity($data);
-                        $this->Applicants->save($Applicant);
-                    }
-                    fclose($handle);
+        if($_FILES['csv']){
+            $filename = explode('.', $_FILES['csv']['name']);
+            if($filename[1]=='csv'){
+                $MP = TableRegistry::get('ModelPrices');
+                $old = $MP->find('all')->toArray();
+                foreach ($old as $o) {
+                    $MP->delete($o);
                 }
+
+                $handle = fopen($_FILES['csv']['tmp_name'], "r");
+                while (($line = fgetcsv($handle)) !== FALSE) {
+                    $newEntry = $MP->newEntity();
+                    $newEntry->model_text = $line[0];
+                    $newEntry->unit_price = $line[1];
+                    $MP->save($newEntry);
+                }
+                fclose($handle);
             }
         }
         $this->render(FALSE);
-        $this->Flash->set('Model Prices Imported');
+        //$this->Flash->set('Model Prices Imported');
         return $this->redirect($this->referer());
     }
 
@@ -796,6 +794,19 @@ class AdminController extends AppController
         $this->loadModel('ModelPrices');
         $series = TableRegistry::get('Series')->find('all');
         $pricing = TableRegistry::get('ModelPrices')->find('all');
+
+        if($this->request->is('post') || $this->request->is('put'))  {
+            $id = intval($this->request->data['id']);
+            $model_text = $this->request->data['model_text'];
+            $unit_price = $this->request->data['unit_price'];
+
+            $target = TableRegistry::get('ModelPrices')->get($id);
+            $target->model_text = $model_text;
+            $target->unit_price = $unit_price;
+
+            TableRegistry::get('ModelPrices')->save($target);
+        }
+
         $this->set('prices', $pricing);
         $this->set(compact('series'));
     }
@@ -850,12 +861,21 @@ class AdminController extends AppController
         }
     }
 
-    public function editGeneralInformation() 
+    public function editGeneralInformation($id = null) 
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 2]]);
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            $resource = $this->TechnicalSpecs->get($id);
+            $resource->title = $this->request->data['tech_title'];
+            $resource->file = $this->request->data['path'];
+            if($this->TechnicalSpecs->save($resource)) {
+                $this->Flash->success(__('The resource has been updated'));
+                return $this->redirect($this->referer());
+            }
+        }
         $this->set('specs', $query);
     }
     
@@ -872,8 +892,18 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 3]]);
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            $resource = $this->TechnicalSpecs->get(intval($this->request->data['tech_id']));
+            $resource->title = $this->request->data['tech_title'];
+            $resource->file = strval($this->request->data['file_path']);
+            if($this->TechnicalSpecs->save($resource)) {
+                $this->Flash->success(__('The resource has been updated'));
+                return $this->redirect($this->referer());
+            }
+        }
+
         $this->set('specs', $query);
     }
 
@@ -959,3 +989,4 @@ class AdminController extends AppController
         $this->set('stp_users', $this->paginate($stp_users));
     }
 }
+

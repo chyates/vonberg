@@ -318,7 +318,7 @@ jQuery(document).ready(function($) {
                 newSelect.val(lastSelect.find('option:first').val());
                 var newPair;
                 
-                if(!$(this).prev().find('select[name="spec_name_2"]').length) {
+                if($(this).prev().find("#1").length) {
                     newSelect.attr('id', sID).attr('name', 'spec_name_'+sID);
                     firstSelect.after(newSelect);
                     var firstPair = parentDiv.find('.specifications').find('input[name="spec_value_1"]');
@@ -352,6 +352,9 @@ jQuery(document).ready(function($) {
 
     $('#delete-check-modal').on('show.bs.modal', function(event) {
         $("#partname").text($(event.relatedTarget).data('file'));
+        var currRoute = $('#delete-confirm').attr('href');
+        var upId = $(event.relatedTarget).data('id');
+        $('#delete-confirm').attr('href', currRoute + upId);
     });
 
     var lastA = $('.admin-nav').find('.cms-greyed');
@@ -368,6 +371,12 @@ jQuery(document).ready(function($) {
     });
 
     $(".update-button").hide();
+
+    var newTitle;
+    $(".title-in").change(function() {
+        console.log("Updated value: ", $(this).val());
+        newTitle = $(this).val();
+    })
     $(".fileContainer").find("input[type=file]").change(function() {
         var filename = $(this).val();
 
@@ -375,14 +384,20 @@ jQuery(document).ready(function($) {
         var homeChange = $(this).closest('.fileContainer').next('p.file-text');
 
         var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
-        var homeUpdate = $(this).closest('.fileContainer').siblings('.update-button');
+        var homeUpdate = $('#edit-rsrc-form').find('div.submit .update-button');
 
+        var hiddenFile = $("#cms-edit-resource-main .table-responsive").find("input[name='file_path']");
+        var hiddenTitle = $("#cms-edit-resource-main .table-responsive").find("input[name='tech_title']");
         if(toChange.length > 0) {
             $(toChange).html(filename);
             $(nextUpdate).show();
+            hiddenFile.attr('value', toChange.text());
         } else if(homeChange) {
             $(homeChange).html(filename);
+            var substr = homeChange.text().slice(12);
             $(homeUpdate).show();
+            hiddenTitle.val(newTitle);
+            hiddenFile.val(substr);
         }
     });
 

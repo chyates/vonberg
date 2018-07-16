@@ -71,6 +71,9 @@ class ContactController extends AppController
             // update STP user object
             $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
             if($result=$this->StpUsers->save($emp)) {
+                // create instance(s) of STP file records in stpxusers table:
+
+
                 // Send email to client:
                 $file_paths = '';
                 if(!empty($this->request->data['model'])) {
@@ -79,6 +82,9 @@ class ContactController extends AppController
                             $file_paths .= strval($str_model);
                             $file_paths .= ".stp, ";
                         }
+                        $f_record = $this->StpFile->newEntity();
+                        $f_record->stp_userID = $emp->stp_userID;
+                        $f_record->partID = intval($final_id);
                     }
                 }
                 Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
