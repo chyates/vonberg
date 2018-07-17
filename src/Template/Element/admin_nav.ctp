@@ -56,7 +56,7 @@
 
     <!-- Resources Dropdown -->
     <div id="resources-dropdown" class="dropdown">
-        <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Resources</a>
+        <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" href="/admin/manage-resources">Resources</a>
         <div class="dropdown-menu" aria-labelledby="product-dropdown">
             <div class="row no-gutters justify-content-between">
                 <p class="drop-header"><a href="/admin/general-information">General Information</a></p>
@@ -69,7 +69,7 @@
     </div><!-- #resources-dropdown end -->
 
     <a class="cms-greyed nav-link nav-item" disabled>About</a>
-    <a class="cms-greyed nav-link nav-item" href="/dealers/">Find a Distributor</a>
-    <a class="cms-greyed nav-link nav-item" href="/admin/contacts/">Contact</a>
+    <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
+    <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
     <?= $this->User->logout(); ?>
 </nav><!-- main-navbar end -->

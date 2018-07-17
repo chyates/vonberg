@@ -28,7 +28,7 @@
                             <td class="model-table-data">
                                 <?php
                                     if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP')) {
-                                        echo "File does not exist yet";
+                                        echo "None";
                                     } else {
                                         echo $row->model_table_rowID.".stp";
                                         echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP'));

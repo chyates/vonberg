@@ -30,6 +30,7 @@ class ContactController extends AppController
 
     public function index()
     {
+        $this->viewBuilder()->setLayout('vonberg');
         $this->loadModel('Contacts');
         $cat=$this->Contacts->newEntity();
         if($this->request->is('post')) {
@@ -128,10 +129,10 @@ class ContactController extends AppController
     
     public function process()
     {
-
+        $this->viewBuilder()->setLayout('vonberg');
     }
     public function success()
     {
-
+        $this->viewBuilder()->setLayout('vonberg');
     }
 }

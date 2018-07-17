@@ -45,14 +45,7 @@ use Cake\Routing\Router;
                 </tr>
             </thead>
             <tbody>
-                <?php 
-                $now = new DateTime();
-                foreach ($parts as $part): 
-                    $range = new DateInterval('P'.strval($part->expires).'D');
-                    $expiration = $now->add($range);
-                    $diff = $expiration->diff($now);
-                    // print_r($expiration);
-                ?>
+                <?php foreach ($parts as $part): ?>
                 <tr>
                     <td class="model-table-data">
                         <?php if($part->series->name) {
@@ -69,18 +62,18 @@ use Cake\Routing\Router;
                         } ?>
                     </td>
                     <td class="model-table-data">
-                        <?php if($part->description) {
-                            echo $part->description;
+                        <?php if($part->connection->name) {
+                            echo $part->connection->name;
                         } else {
-                            echo "No description";
+                            echo "No connection";
                         } ?>
                     </td>
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                     <td class="model-table-data">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="new-status" value="<?= h($part->expires) ?>"
+                            <input class="form-check-input" type="checkbox" name="new_list" value="<?= h($part->expires) ?>"
                                    checked>
-                            <label class="form-check-label"><?php echo $range->d . " days"; ?></label>
+                            <label class="form-check-label"><?php echo $part->expires . " days"; ?></label>
                         </div>
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>

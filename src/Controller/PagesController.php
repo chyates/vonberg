@@ -47,6 +47,7 @@ class PagesController extends AppController
      */
     public function display(...$path)
     {
+        $this->viewBuilder()->setLayout('vonberg');        
         $count = count($path);
         if (!$count) {
             return $this->redirect('/');

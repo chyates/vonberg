@@ -160,6 +160,7 @@ $cakeDescription = 'Vonberg Dev Site';
 // $("#geocomplete").geocomplete({ details: "form" })
 // });
 jQuery(document).ready(function($) {
+
     // add "add series" to select
     $('#seriesid').prepend($('<option>', {
         value: 0,
@@ -357,7 +358,7 @@ jQuery(document).ready(function($) {
         $('#delete-confirm').attr('href', currRoute + upId);
     });
 
-    var lastA = $('.admin-nav').find('.cms-greyed');
+    var lastA = $('.admin-nav').find('a.cms-greyed.nav-link.nav-item');
     lastA.next().addClass('nav-link').addClass('nav-item');
 
     $('#image-file').change(function() {
@@ -376,46 +377,83 @@ jQuery(document).ready(function($) {
     $(".title-in").change(function() {
         console.log("Updated value: ", $(this).val());
         newTitle = $(this).val();
-    })
-    $(".fileContainer").find("input[type=file]").change(function() {
-        var filename = $(this).val();
-
-        var toChange = $(this).closest('.form-group').next('p.file-text');
-        var homeChange = $(this).closest('.fileContainer').next('p.file-text');
-
-        var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
-        var toUpdate = $(this).closest('.table-responsive .table').find('.update-button');
-        var reOrgBtn = $(this).closest('.spec-row').find(".update-button");
-
-        var hiddenFile = $("#cms-edit-resource-main .table-responsive").find("input[name='file_path']");
-        var hiddenTitle = $("#cms-edit-resource-main .table-responsive").find("input[name='tech_title']");
-        var hiddenAdd = $("#cms-add-resource-main #add-rsrc-form").find("input[name='file_path']");
-
-        if(hiddenAdd.length > 0) {
-            hiddenAdd.attr('value', homeChange.text());
-        }
-
-        if(toChange.length > 0) {
-            console.log("Found to change");
-            $(toChange).html(filename);
-            $(nextUpdate).show();
-        } else if(homeChange) {
-            console.log("Found home change");
-            $(homeChange).html(filename);
-            var substr = homeChange.text().slice(12);
-            $(toUpdate).show();
-            $(reOrgBtn).show();
-            hiddenTitle.val(newTitle);
-            hiddenFile.val(substr);
-            if(hiddenAdd.length > 0) {
-                console.log("Found add resource form");
-                hiddenAdd.val(substr);
-            }
-        }
     });
 
-    $(".rsrc-table").find("input[type=text].form-control.form-control-sm").keypress(function() {
-        $(this).parent().siblings("td").find(".update-button").show();
+    // $(".fileContainer").find("input[type=file]").change(function() {
+    //     var filename = $(this).val();
+
+    //     var toChange = $(this).closest('.form-group').next('p.file-text');
+    //     var homeChange = $(this).closest('.fileContainer').next('p.file-text');
+
+    //     var nextUpdate = $(this).closest('.form-group').siblings('.update-button');
+    //     var toUpdate = $(this).closest('.table-responsive .table').find('.update-button');
+    //     var reOrgBtn = $(this).closest('.spec-row').find(".update-button");
+
+    //     var hiddenFile = $("#cms-edit-resource-main .table-responsive").find("input[name='file_path']");
+    //     var hiddenTitle = $("#cms-edit-resource-main .table-responsive").find("input[name='tech_title']");
+    //     var hiddenAdd = $("#cms-add-resource-main #add-rsrc-form").find("input[name='file_path']");
+
+    //     if(hiddenAdd.length > 0) {
+    //         hiddenAdd.attr('value', homeChange.text());
+    //     }
+
+    //     if(toChange.length > 0) {
+    //         console.log("Found to change");
+    //         $(toChange).html(filename);
+    //         $(nextUpdate).show();
+    //     } else if(homeChange) {
+    //         console.log("Found home change");
+    //         $(homeChange).html(filename);
+    //         var substr = homeChange.text().slice(12);
+    //         $(toUpdate).show();
+    //         $(reOrgBtn).show();
+    //         hiddenTitle.val(newTitle);
+    //         hiddenFile.val(substr);
+    //         if(hiddenAdd.length > 0) {
+    //             console.log("Found add resource form");
+    //             hiddenAdd.val(substr);
+    //         }
+    //     }
+    // });
+
+    $(".spec-row.row").find("input[type=text].form-control").keypress(function() {
+        $(this).parents('.col-md-3').siblings('.col-md-6').find(".update-button").show();
+    });
+
+    $(".fileContainer").find("input[type=file]").change(function() {
+        var filename = $(this).val();
+        var toChange;
+        var nextUpdate;
+        var hiddenTitle;
+        var hiddenAdd;
+        var substr = filename.slice(12);
+
+        if($(this).parents('.col-md-6').length > 0) {
+            toChange = $(this).parents('label.fileContainer').next('p.file-text');
+            nextUpdate = $(this).parents('label.fileContainer').siblings('div.submit').find('input.update-button');
+            hiddenTitle = $(this).closest('.spec-row').children().find("input[name='tech_title']");
+            hiddenAdd = $(this).closest('.spec-row').prev('input[type=hidden]');
+            $(nextUpdate).show();
+            $(toChange).text(substr);
+            hiddenAdd.val(substr);
+        }
+
+        if($(this).parents().prev('#up-label-addrsrc').length > 0) {
+            toChange = $(this).parents('label.fileContainer').next('p.file-text');
+            hiddenAdd = $(this).parent('div.input.file').siblings('input[type=hidden]');
+            $(toChange).text(substr);
+            hiddenAdd.val(substr);
+        }
+
+        if($(this).parents('.model-table-data').length > 0) {
+            toChange = $(this).parents('label.fileContainer').siblings('p.file-text');
+            $(toChange).html(substr);
+        }
+
+        if($(this).parents().siblings('label.sr-only').length > 0) {
+            toChange = $(this).parents('.form-group').siblings('p.file-text');
+            $(toChange).html(substr);
+        }
     })
 });
 </script>

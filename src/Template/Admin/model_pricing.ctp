@@ -55,7 +55,7 @@
                         </div>
                         <div class="col-2 model-table-data">
                             <div class="edit">Edit</div>
-                            <input type="submit" value="Save" />
+                            <input type="submit" class="btn btn-primary" value="Save" />
                         </div>
                     </div>
                 <?= $this->Form->end() ?>

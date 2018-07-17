@@ -85,18 +85,6 @@
      });
 
     jQuery(document).ready(function($){
-        // jQuery for CMS login + register screens
-        var logForm = $("#site-container div.users.form");
-        logForm.addClass('inner-main col-lg-8 col-12 mx-auto p-md-5 p-3');
-        logForm.find('form').addClass('col-6 mx-auto');
-        var notChecks = logForm.find('div.input:not(.checkbox)');
-        notChecks.addClass('form-group');
-        notChecks.find('input').addClass('form-control');
-        var checks = logForm.find('div.checkbox');
-        checks.addClass('form-check');
-        checks.find('label').addClass('form-check-label');
-        checks.find('input').addClass('form-check-input');
-        logForm.find('button').addClass('btn btn-primary');
 
         // jQuery for mobile hamburger menu
         $('.animated-icon1').click(function(){

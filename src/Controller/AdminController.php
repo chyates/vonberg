@@ -24,6 +24,7 @@ class AdminController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
+        $this->viewBuilder()->setLayout('admin');
         $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation', 'addResource']);
     }
 
@@ -55,13 +56,12 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-
-        $type_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.typeID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
         $subcat = TableRegistry::get('Types')->find();
+
+        $type_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.typeID =' => $id], 'order' => 'Series.name ASC', 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+        $subcat1 = TableRegistry::get('Types')->find()->where(['typesID' => $id])->first();
         $this->set('parts', $type_query);
         $this->set('id', $id);
-        $subcat1 = TableRegistry::get('Types')->find()->where(['typesID' => $id])->first();
-        $this->set('subcats', $subcat);
         $this->set('pagename', $subcat1->name);
     }
 
@@ -98,7 +98,7 @@ class AdminController extends AppController
                 echo $result->id;
             }
             else {
-                echo "Error: some error";
+                // echo "Error: some error";
             }
         }
     }
@@ -114,7 +114,7 @@ class AdminController extends AppController
             if ($result = $this->Types->save($cat)) {
                 echo $result->id;
             } else {
-                echo "Error: some error";
+                // echo "Error: some error";
             }
         }
     }
@@ -130,7 +130,7 @@ class AdminController extends AppController
             if($result=$this->Series->save($cat)) {
                 echo $result->id;
             } else {
-                echo "Error: some error";
+                // echo "Error: some error";
             }
         }
     }
@@ -146,7 +146,7 @@ class AdminController extends AppController
             if($result=$this->Connections->save($cat)) {
                 echo $result->id;
             } else {
-                echo "Error: some error";
+                // echo "Error: some error";
             }
         }
     }
@@ -261,7 +261,6 @@ class AdminController extends AppController
             $part = $this->Parts->patchEntity($part, $this->request->data);
             $part->last_updated = date("Y-m-d H:i:s");
             if($this->Parts->save($part)){
-                $this->Flash->success(__('The resource with id: {0} has been saved.', h($part->partid)));
                 $this->redirect(array('action' => 'editProductTwo',$part->partID));
             }
         }
@@ -416,7 +415,7 @@ class AdminController extends AppController
                     $op_bullet->bullet_text = $operations[$i];
                     $op_bullet->order_num = $i+1;
                     if($this->TextBlockBullets->save($op_bullet)) {
-                        $this->Flash->success(__('The new operation bullets have been saved outside of found ops block')); 
+                        // $this->Flash->success(__('The new operation bullets have been saved outside of found ops block')); 
                     }
                 }
                 
@@ -426,7 +425,7 @@ class AdminController extends AppController
                     $feat_bullet->bullet_text = $features[$j];
                     $feat_bullet->order_num = $j + 1;
                     if($this->TextBlockBullets->save($feat_bullet)) {
-                        $this->Flash->success(__('The new feature bullets have been saved'));
+                        // $this->Flash->success(__('The new feature bullets have been saved'));
                     }
                 }
             }
@@ -441,7 +440,7 @@ class AdminController extends AppController
                 $new_spec->order_num = $spec_order;
                 $spec_order++;
                 if($this->Specifications->save($new_spec)) {
-                    $this->Flash->success(__('The new specifications have been saved'));
+                    // $this->Flash->success(__('The new specifications have been saved'));
                 }
             }
 
@@ -508,7 +507,7 @@ class AdminController extends AppController
                             // The variable entity contains the id now
                             $model_table_header_id = $top->model_table_headerID;
                         } else {
-                            $this->Flash->error(__('Error saving model table headers'));
+                            // $this->Flash->error(__('Error saving model table headers'));
                         }
                     }
                     $order_num = 0;
@@ -550,12 +549,12 @@ class AdminController extends AppController
                             $model_table_header_id = $new->model_table_headerID;
                             $this->redirect(array('action' => 'editProductFour', $part->partID));
                         } else {
-                            $this->Flash->error(__('Error saving model table rows'));
+                            // $this->Flash->error(__('Error saving model table rows'));
                             $debug = debug($new);
                         }
                     }
                 } else {
-                    $this->Flash->error(__('Error saving model table'));
+                    // $this->Flash->error(__('Error saving model table'));
                 }
         } else {
             $tables = $this->ModelTables->find('all',array(
@@ -597,7 +596,7 @@ class AdminController extends AppController
                     //do the actual uploading of the file. First arg is the tmp name, second arg is
                     //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.jpg');
-                    $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
+                    // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
                 }
             }
             if(!empty($this->request->data['performance']['name']))
@@ -609,7 +608,7 @@ class AdminController extends AppController
                 if(in_array($ext, $arr_ext))
                 {
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.jpg');
-                    $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
+                    // $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
                 }
             }
             if(!empty($this->request->data['hydraulic']['name']))
@@ -621,7 +620,7 @@ class AdminController extends AppController
                 if(in_array($ext, $arr_ext))
                 {
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/hydraulic_symbol.jpg');
-                    $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
+                    // $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
                 }
             }
             if(!empty($this->request->data['ordering']['name']))
@@ -633,7 +632,7 @@ class AdminController extends AppController
                 if(in_array($ext, $arr_ext))
                 {
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.jpg');
-                    $this->Flash->success(__('The file ORDERING_INFORMATION.JPG was saved.', h($part->partid)));
+                    // $this->Flash->success(__('The file ORDERING_INFORMATION.JPG was saved.', h($part->partid)));
                 }
             }
 
@@ -682,7 +681,7 @@ class AdminController extends AppController
                 if(in_array($ext, $arr_ext))
                 {
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($part->partID).'/'.strval($this->request->data['filename'][$count]).'.stp');
-                    $this->Flash->success(__('The STP file  was saved.', h($part->partid)));
+                    // $this->Flash->success(__('The STP file  was saved.', h($part->partid)));
                 }
                 ++$count;
             }
@@ -751,7 +750,7 @@ class AdminController extends AppController
         $this->loadModel('ModelPrices');
         $data = $this->ModelPrices->find('all')->toArray();
         $_serialize = 'data';
-        $this->response->download('model_prices.csv'); // <= setting the file name
+        $this->response->download('model_prices.csv');
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize'));
     }
@@ -771,8 +770,8 @@ class AdminController extends AppController
                 $handle = fopen($_FILES['csv']['tmp_name'], "r");
                 while (($line = fgetcsv($handle)) !== FALSE) {
                     $newEntry = $MP->newEntity();
-                    $newEntry->model_text = $line[0];
-                    $newEntry->unit_price = $line[1];
+                    $newEntry->unit_price = array_pop($line);
+                    $newEntry->model_text = array_pop($line);
                     $MP->save($newEntry);
                 }
                 fclose($handle);
@@ -846,14 +845,16 @@ class AdminController extends AppController
         $this->loadModel('TechnicalSpecs');
         if($this->request->is('post') || $this->request->is('put')) {
             $spec = $this->TechnicalSpecs->newEntity();
+
             // $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
             $spec->resource = intval($this->request->data['resource']);
             $spec->title = $this->request->data['title'];
-            $sub_path = substr($this->request->data['file_path'], 12);
+            // $sub_path = substr($this->request->data['file_path'], 12);
             $spec->file = $this->request->data['file_path'];
+            echo "file path: " . $this->request->data['file_path'];
             // $spec->file = $this->request->data['file_path'];
             $spec->last_updated = date("Y-m-d H:i:s");
-
+            
             if(!empty($this->request->data['file']['name']))
             {
                 $file = $this->request->data['file'];
@@ -862,16 +863,17 @@ class AdminController extends AppController
                 // $arr_ext = array('stp', 'pdf', 'txt'); 
                 // if(in_array($ext, $arr_ext))
                 // {
-                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications' . $this->request->data['file_path']);
-                $this->Flash->success(__('The new resource file  was saved.'));
-                // }
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['file_path']);
+                    // $this->Flash->success(__('The new resource file  was saved.'));
+                    // }
             }
-
+                
             if ($this->TechnicalSpecs->save($spec)) {
-                $this->Flash->success(__('The resource has been saved.'));
+                // $this->Flash->success(__('The resource has been saved.'));
+                // print_r($spec);
                 $this ->redirect(array('action' => 'index'));
             } else {
-                $this->Flash->error(__('The resource could not be saved.'));
+                // $this->Flash->error(__('The resource could not be saved.'));
             }
         }
     }
@@ -887,7 +889,7 @@ class AdminController extends AppController
             $resource->title = $this->request->data['tech_title'];
             $resource->file = $this->request->data['path'];
             if($this->TechnicalSpecs->save($resource)) {
-                $this->Flash->success(__('The resource has been updated'));
+                // $this->Flash->success(__('The resource has been updated'));
                 return $this->redirect($this->referer());
             }
         }
@@ -916,8 +918,8 @@ class AdminController extends AppController
             $dunder_file = str_replace(' ', '_', $this->request->data['file_path']);
             $resource->file = $dunder_file;
             if($this->TechnicalSpecs->save($resource)) {
-                $this->Flash->success(__($dunder_file));
-                $this->Flash->success(__('The resource has been updated'));
+                // $this->Flash->success(__($dunder_file));
+                // $this->Flash->success(__('The resource has been updated'));
                 return $this->redirect($this->referer());
             }
             
@@ -987,7 +989,7 @@ class AdminController extends AppController
         $this->loadModel('TechnicalSpecs');
         $spec = $this->TechnicalSpecs->get($id);
         if ($this->TechnicalSpecs->delete($spec)) {
-            $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
+            // $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
             return $this->redirect($this->referer());
         }
     }
@@ -998,7 +1000,7 @@ class AdminController extends AppController
         $this->Security->validatePost = false;
         $part = $this->Parts->get($id);
         if ($this->Parts->delete($part)) {
-            $this->Flash->success(__('The part with id: {0} has been deleted.', h($id)));
+            // $this->Flash->success(__('The part with id: {0} has been deleted.', h($id)));
             return $this->redirect($this->referer());
         }
     }

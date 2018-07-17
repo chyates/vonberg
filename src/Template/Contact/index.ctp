@@ -17,12 +17,23 @@
                     'id' => 'contact-form',
                     'class' => 'needs-validation',
                     'novalidate'
-                ));
+                )); ?>
                 
-                echo $this->Form->control('name', ['label' => 'Full Name*', 'type' => 'text', 'class' => 'form-control','required']);
-                echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
-                echo $this->Form->control('phone', ['label' => 'Phone*', 'type' => 'tel', 'class' => 'form-control', 'required']);
-                echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'email', 'class' => 'form-control','required']); ?>
+                <div class="form-group">
+                    <?php echo $this->Form->control('name', ['label' => 'Full Name*', 'type' => 'text', 'class' => 'form-control','required']); ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']); ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->Form->control('phone', ['label' => 'Phone*', 'type' => 'tel', 'class' => 'form-control', 'required']); ?>
+                </div>
+
+                <div class="form-group">
+                    <?php echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'email', 'class' => 'form-control','required']); ?>
+                </div>
 
                 <div class="form-group">
                     <label id="user-role" >What is your role?</label>
@@ -38,15 +49,16 @@
                         <?php echo $this->Form->control('enduser', ['label' => ['text' => 'End User', 'class' => 'form-check-label'], 'value' => 'End User','type' => 'checkbox', 'class' => 'form-check-input']); ?>
                     </div>
                 </div>
-                <?php echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']);
 
-            ?>
+                <div class="form-group">
+                    <?php echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']); ?>
+                </div>
 
-                <div class="row no-gutters">
+                <div class="row no-gutters justify-content-between">
                     <div class="col-6 my-auto">
                         <p class="text-left my-auto">*required fields</p>
                     </div>
-                    <?php echo $this->Form->submit(); ?>
+                    <?php echo $this->Form->submit('SUBMIT', array('class' => 'btn btn-primary')); ?>
                 </div>
                 
                <?php echo $this->Form->end(); ?><!-- Contact form end -->

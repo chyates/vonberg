@@ -33,41 +33,67 @@ use Cake\Routing\Router;
     <?php foreach($specs as $spec): ?>
         <div class="row no-gutters">
             <div class="col-12">
-                <form class="edit-rsrc-form" action="/admin/edit-application-information" method="POST" id="<?= $spec->techID ?>">
-                    <input type="hidden" name="tech_id" value="<?= $spec->techID; ?>">
-                    <div class="spec-row row">
-                        <div class="col-md-3">
-                            <h4 class="rsrc-col-title">Edit Title</h4>
-                            <input type="text" name="tech_title" class="form-control" placeholder="<?= $spec->title ?>">
-                        </div>
-                        <div class="col-md-3">
-                            <h4 class="rsrc-col-title">Current File</h4>
-                            <p>
-                                <a href="<?= "/img/pdfs/technical_specifications/" . $spec->file; ?>" target="_blank">
-                                    <?php echo $this->Text->truncate(
-                                        $spec->file, 15, 
-                                        [
-                                            'ellipsis' => '...',
-                                            'exact' => false
-                                        ]); 
+                <?= $this->Form->create('edit-app', [
+                    'id' => $spec->techID,
+                    'class' => 'edit-rsrc-form'
+                ]); ?>
+                <?php 
+                    echo $this->Form->input('tech_id', [
+                        'type' => 'hidden',
+                        'value' => $spec->techID,
+                    ]); 
+                ?>
+                <div class="spec-row row">
+                    <div class="col-md-3">
+                        <h4 class="rsrc-col-title">Edit Title</h4>
+                        <?php 
+                            echo $this->Form->input('tech_title', [
+                                'type' => 'text',
+                                'class' => 'form-control',
+                                'placeholder' => $spec->title,
+                                'label' => false,
+                            ]); 
+                        ?>
+                    </div>
+                    <div class="col-md-3">
+                        <h4 class="rsrc-col-title">Current File</h4>
+                        <p>
+                            <a href="<?= "/img/pdfs/technical_specifications/" . $spec->file; ?>" target="_blank">
+                                <?php echo $this->Text->truncate(
+                                    $spec->file, 15, 
+                                    [
+                                        'ellipsis' => '...',
+                                        'exact' => false
+                                    ]); 
+                                ?>
+                            </a>
+                        </p>
+                    </div>
+                    <div class="col-md-6">
+                        <h4 class="rsrc-col-title">Replace File</h4>
+                        <div class="row no-gutters">
+                            <div class="col">
+                                <label class="fileContainer">Browse
+                                    <?php 
+                                        echo $this->Form->input('file_path', [
+                                            'type' => 'file',
+                                            'class' => 'form-control',
+                                            'label' => false,
+                                        ]);
                                     ?>
-                                </a>
-                            </p>
-                        </div>
-                        <div class="col-md-6">
-                            <h4 class="rsrc-col-title">Replace File</h4>
-                            <div class="row no-gutters">
-                                <div class="col">
-                                    <label class="fileContainer">Browse
-                                        <input type="file" name="file_path" class="form-control"/>
-                                    </label>
-                                    <p class="file-text">No file chosen</p>
-                                    <input type="submit" class="btn btn-primary update-button" value="Replace">
-                                </div>
+                                </label>
+                                <p class="file-text">No file chosen</p>
+                                <?php 
+                                    echo $this->Form->submit('replace', [
+                                        'class' => 'btn btn-primary update-button',
+                                        'value' => 'REPLACE'
+                                    ]);
+                                ?>
                             </div>
                         </div>
                     </div>
-                </form>
+                </div>
+                <?= $this->Form->end(); ?>
             </div>
         </div>
         <hr class="edit-rsrc-div">

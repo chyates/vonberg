@@ -1330,7 +1330,7 @@ p.resource-link a {
     padding: 0;
 }
 
-#contact-form .form-group .col-6 p {
+#contact-form .row.no-gutters .col-6 p.text-left {
     font-size: 11px;
 }
 
@@ -1781,7 +1781,7 @@ td span img.img-fluid {
 
 #cms-prod-cat-table.model-table.table-striped td,
 #cms-prod-cat-table.model-table.table-striped th {
-    padding: 1vh 0;
+    padding: 1vh 1vw;
 }
 
 .model-table.table-striped .model-table-data a {
@@ -1940,6 +1940,14 @@ label.fileContainer {
 
 #main-navbar .cms-greyed {
     color: #7FBDA1;
+}
+
+.admin-nav .last-prod-drop .drop-header {
+    color: #017D44;
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 18px;
+    font-weight: bold;   
 }
 
 /* === CMS PAGINATION: GLOBAL / DESKTOP === */

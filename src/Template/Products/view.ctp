@@ -98,7 +98,16 @@
             <div class="left-info">
                 <h1 class="page-title"><?= h($part->series->name);?></h1>
                 <h3 class="product-name"><?= h($part->category->name);?></h3>
-                <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
+                <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
+                    <p class="product-info"><?php echo "No style or connection"; ?></p>
+                <?php } else if(!empty($part->style->name) && empty($part->connection->name)) { ?>
+                            <p class="product-info"><?php echo h($part->style->name) . " • No connection"; ?></p> 
+                <?php   } else if(!empty($part->connection->name) && empty($part->style->name)) { ?>
+                            <p class="product-info"><?php echo "No style • " . h($part->connection->name); ?></p>
+                <?php    
+                    } else { ?>
+                        <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
+                <?php } ?>
             </div>
 
             <div class="left-desc mt-sm-3">
@@ -178,8 +187,9 @@
 
             <div class="right-col-bottom">
                 <h3 class="product-name">Ordering Information</h3>
-
-                <img class="product-order img-fluid" src="<?= "/img/parts/".$part->partID."/ordering_information.jpg"; ?>"/>
+                <?php if (file_exists('img/parts/'.$part->partID.'/ordering_information.jpg')){ ?>
+                    <img class="product-order img-fluid" src="<?= "/img/parts/".$part->partID."/ordering_information.jpg"; ?>"/>
+                <?php } ?>
             </div>
 
         </div><!-- .single-prod-right-col end -->

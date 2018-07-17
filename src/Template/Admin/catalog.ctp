@@ -48,15 +48,36 @@ use Cake\Routing\Router;
             <tbody>
                 <?php foreach ($parts as $part): ?>
                 <tr>
-                    <td class="model-table-data"><?= h($part->series->name) ?></td>
-                    <td class="model-table-data"><?= h($part->style->name) ?></td>
-                    <td class="model-table-data"><?= h($part->connection->name) ?></td>
+                    <td class="model-table-data">
+                        <?php if($part->series->name) {
+                            echo h($part->series->name);
+                        } else {
+                            echo "No series";
+                        } ?>
+                    </td>
+                    <td class="model-table-data">
+                        <?php if($part->style) {
+                            echo h($part->style->name);
+                        } else {
+                            echo "No style";
+                        } ?>
+                    </td>
+                    <td class="model-table-data">
+                        <?php if($part->connection->name) {
+                            echo h($part->connection->name);
+                        } else {
+                            echo "No connection";
+                        } ?>
+                    </td>
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                     <td class="model-table-data">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="new-status" value="54days"
-                                   checked>
-                            <label class="form-check-label">54 days</label>
+                            <?php if($part->new_list == 1) { ?>
+                                <input class="form-check-input" type="checkbox" name="new_list" value="<?= $part->expires; ?>" checked>
+                                <label class="form-check-label"><?= h($part->expires) ?> days</label>
+                            <?php } else { ?>
+                                <input class="form-check-input" type="checkbox" name="new_list">
+                            <?php } ?>
                         </div>
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
