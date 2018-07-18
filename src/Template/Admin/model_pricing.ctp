@@ -41,23 +41,59 @@
                 <div class="col-2 model-table-header"></div>
             </div>
             <?php foreach($prices as $price): ?>
-                <?= $this->Form->create('edit-model-pricing', ['id' => "edit-model-pricing", 'class' => 'inactive', 'enctype' => 'multipart/form-data']) ?>
-                    <?php echo $this->Form->input('id', ['label'=>False, 'class'=>'hidden', 'type'=>'text', 'value'=>$price->model_priceID]);?>
-                    <div class="row">
-                        <div class="col-5 model-table-data">
-                            <div><?php echo $price->model_text; ?></div>
-                            <?php echo $this->Form->input('model_text', ['label'=>False, 'type'=>'text', 'value'=>$price->model_text]);?>
+                <?= $this->Form->create('edit-model-pricing', 
+                    [
+                        'id' => "edit-model-pricing", 'class' => 'inactive', 'enctype' => 'multipart/form-data'
+                    ]) 
+                ?>
+                <?php 
+                    echo $this->Form->input('id', 
+                    [
+                        'label'=>False, 
+                        'class'=>'hidden form-control', 
+                        'type'=>'text', 
+                        'value'=>$price->model_priceID
+                    ]);
+                ?>
+                <div class="row align-items-center">
+                    <div class="col-5 model-table-data">
+                        <div>
+                            <?php 
+                                echo $price->model_text; 
+                            ?>
                         </div>
-                        <div class="col-5 model-table-data">
-                            <div><?php echo money_format('$%.2n', $price->unit_price); ?></div>
-                            <span>$</span>
-                            <?php echo $this->Form->input('unit_price', ['label'=>False, 'type'=>'text', 'value'=>$price->unit_price]);?>
-                        </div>
-                        <div class="col-2 model-table-data">
-                            <div class="edit">Edit</div>
-                            <input type="submit" class="btn btn-primary" value="Save" />
-                        </div>
+                        <?php 
+                            echo $this->Form->input('model_text', 
+                            [
+                                'label'=>False, 
+                                'type'=>'text',
+                                'class' => 'form-control',
+                                'value'=>$price->model_text
+                            ]);
+                        ?>
                     </div>
+                    <div class="col-5 model-table-data">
+                        <div>
+                            <?php 
+                                echo $this->Number->currency($price->unit_price, 'USD', array(['places' => 2])); 
+                            ?>
+                        </div>
+                        <span>$</span>
+                        <?php 
+                            echo $this->Form->input('unit_price', 
+                            [
+                                'label'=>False, 
+                                'type'=>'text',
+                                'class' => 'form-control', 
+                                'value'=> $this->Number->currency($price->unit_price, 'USD', array(['places' => 2])),
+                            ]);
+                        ?>
+                    </div>
+                    <div class="col-2 model-table-data">
+                        <div class="edit">Edit</div>
+                        <input type="submit" class="btn btn-primary" value="Save" />
+                    </div>
+                </div>
                 <?= $this->Form->end() ?>
             <?php endforeach; ?>
         </div>

@@ -14,7 +14,7 @@
 <nav id="main-navbar" class="admin-nav navbar navbar-expand-lg justify-content-end">
     <!-- Products Dropdown -->
     <div id="product-dropdown" class="dropdown">
-        <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Products</a>
+        <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" href="/admin/products">Products</a>
         <div class="dropdown-menu" aria-labelledby="product-dropdown">
             <div class="row no-gutters justify-content-between">
                 <div class="col">

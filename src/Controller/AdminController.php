@@ -25,14 +25,41 @@ class AdminController extends AppController
     {
         // allow all action
         $this->viewBuilder()->setLayout('admin');
-        $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation', 'addResource']);
+        $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation', 'editGeneralInformation', 'editTechnicalDocumentation', 'addResource']);
     }
 
-    public function view()
+    // main page 
+    public function index()
     {
         $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Parts');
+        // $now = new DateTime();
+        $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
         $cat = TableRegistry::get('Categories')->find();
+        $this->set('parts', $query);
         $this->set('categories', $cat);
+        $this->set('dealer_time',filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
+        $this->set('catalog_time',filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
+    }
+
+    public function new()
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Parts');
+        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
+        
+        $this->set('parts', $query);
+        $this->set('pagename', 'New Products');
+    }
+    
+    public function products()
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Parts');
+        $query = $this->paginate($this->Parts->find('all', array('order' => array('last_updated DESC')))->contain(['Connections', 'Types', 'Series', 'Styles', 'Categories']));
+
+        $this->set('parts', $query);
+        $this->set('pagename', 'All Products');
     }
 
     // category pages
@@ -44,10 +71,10 @@ class AdminController extends AppController
         $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
 
         $cat = TableRegistry::get('Categories')->find();
-        $this->set('parts', $query);
-        $this->set('id', $id);
         $cat1 = TableRegistry::get('Categories')->find()->where(['categoryID' => $id])->first();
         $this->set('categories', $cat);
+        $this->set('parts', $query);
+        $this->set('id', $id);
         $this->set('pagename', $cat1->name);            
     }
 
@@ -64,28 +91,22 @@ class AdminController extends AppController
         $this->set('id', $id);
         $this->set('pagename', $subcat1->name);
     }
-
-    // main page 
-    public function index()
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('Parts');
-        // $now = new DateTime();
-        $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
-        $cat = TableRegistry::get('Categories')->find();
-        $this->set('parts', $query);
-        $this->set('categories', $cat);
-        $this->set('dealer_time',filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
-        $this->set('catalog_time',filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
-    }
     
     public function get_cat()
     {
         return TableRegistry::get('Categories')->find();
     }
 
+    public function view()
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $cat = TableRegistry::get('Categories')->find();
+        $this->set('categories', $cat);
+    }
+
     public $components=array('RequestHandler');
 
+    // AJAX functions from add/edit product 1 slide modals
     public function catAdd() 
     {
         $this->loadModel('Categories');
@@ -249,43 +270,6 @@ class AdminController extends AppController
         $this->set('type', $type);
         $this->set('style', $style);
         $this->set('conn', $conn);
-        $this->set('opblock', $opblock);
-    }
-
-    public function editProductOne($id)
-    {
-        $this->viewBuilder()->setLayout('admin');
-        if ($this->request->is('post') || $this->request->is('put'))  {
-            $this->loadModel('Parts');
-            $part = $this->Parts->get($id);
-            $part = $this->Parts->patchEntity($part, $this->request->data);
-            $part->last_updated = date("Y-m-d H:i:s");
-            if($this->Parts->save($part)){
-                $this->redirect(array('action' => 'editProductTwo',$part->partID));
-            }
-        }
-        $this->loadModel('TextBlocks');
-        $this->loadModel('Parts');
-        $opblock = $this->TextBlocks->find('all',array(
-            'conditions' => array(
-                'partID' => $id,
-            ),
-            'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
-        ));
-        $part = $this->Parts->get($id);
-
-        $cat = TableRegistry::get('Categories')->find('list');
-        $type = TableRegistry::get('Types')->find('list');
-        $style = TableRegistry::get('Styles')->find('list');
-        $series = TableRegistry::get('Series')->find('list');
-        $conn = TableRegistry::get('Connections')->find('list');
-
-        $this->set('conn', $conn);
-        $this->set('cat', $cat);
-        $this->set(compact('series'));
-        $this->set('part', $part);
-        $this->set('type', $type);
-        $this->set('style', $style);
         $this->set('opblock', $opblock);
     }
 
@@ -702,6 +686,220 @@ class AdminController extends AppController
         $this->set('part', $part);
     }
 
+    public function partDelete($id)
+    {
+        $this->loadModel('Parts');
+        $this->Security->validatePost = false;
+        $part = $this->Parts->get($id);
+        if ($this->Parts->delete($part)) {
+            // $this->Flash->success(__('The part with id: {0} has been deleted.', h($id)));
+            return $this->redirect($this->referer());
+        }
+    }
+
+    public function manageResources() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $gen_query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
+        $tech_query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
+        $app_query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
+
+        $this->set('generals', $gen_query);
+        $this->set('technicals', $tech_query);
+        $this->set('applications', $app_query);
+    }
+
+    public function generalInformation() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
+
+        $this->set('specs', $query);
+    }
+
+    public function technicalDocumentation() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
+
+        $this->set('specs', $query);
+    }
+
+    public function applicationInformation() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
+
+        $this->set('specs', $query);
+    }
+
+    public function addResource() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        if($this->request->is('post') || $this->request->is('put')) {
+            $spec = $this->TechnicalSpecs->newEntity();
+            $spec->files = strval($this->request->data['filepath']);
+            $spec->resource = intval($this->request->data['resource']);
+            $spec->title = $this->request->data['title'];
+            $spec->last_updated = date("Y-m-d H:i:s");
+            
+            if(!empty($this->request->data['file']['name']))
+            {
+                $file = $this->request->data['file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            }
+                
+            if ($this->TechnicalSpecs->save($spec)) {
+                $this ->redirect(array('action' => 'index'));
+            } else {
+                // $this->Flash->error(__('The resource could not be saved.'));
+            }
+        }
+    }
+
+    public function editResources() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
+        $query2 =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
+        $query3 =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
+
+        $this->set('generals', $query);
+        $this->set('technicals', $query2);
+        $this->set('applications', $query3);
+    }
+
+    public function editGeneralInformation() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            $id = intval($this->request->data['id']);
+            
+            $resource = TableRegistry::get('TechnicalSpecs')->get($id);
+            $resource->resource = 2;
+            $resource->last_updated = date("Y-m-d H:i:s");
+
+            if(!empty($this->request->data['gen_file']['name']))
+            {
+                $file = $this->request->data['gen_file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            } else {
+                print_r($this->request->data['gen_file']);
+            }
+            
+            if(!empty($this->request->data['tech_title'])) {
+                $title = $this->request->data['tech_title'];
+                $resource->title = $title;
+            }
+            
+            if(!empty($this->request->data['filepath'])) {
+                $path = $this->request->data['filepath'];
+                $resource->files = $path;
+            }
+            
+            TableRegistry::get('TechnicalSpecs')->save($resource);
+            return $this->redirect($this->referer());
+        }
+
+        $this->set('specs', $query);
+    }
+    
+    public function editTechnicalDocumentation() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            $id = intval($this->request->data['id']);
+            
+            $resource = TableRegistry::get('TechnicalSpecs')->get($id);
+            $resource->resource = 1;
+            $resource->last_updated = date("Y-m-d H:i:s");
+
+            if(!empty($this->request->data['tech_file']['name']))
+            {
+                $file = $this->request->data['tech_file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            } else {
+                print_r($this->request->data['tech_file']);
+            }
+            
+            if(!empty($this->request->data['tech_title'])) {
+                $title = $this->request->data['tech_title'];
+                $resource->title = $title;
+            }
+            
+            if(!empty($this->request->data['filepath'])) {
+                $path = $this->request->data['filepath'];
+                $resource->files = $path;
+            }
+            
+            TableRegistry::get('TechnicalSpecs')->save($resource);
+            return $this->redirect($this->referer());
+        }
+        $this->set('specs', $query);
+    }
+    
+    public function editApplicationInformation() 
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('TechnicalSpecs');
+        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            $id = intval($this->request->data['id']);
+            
+            $resource = TableRegistry::get('TechnicalSpecs')->get($id);
+            $resource->resource = 3;
+            $resource->last_updated = date("Y-m-d H:i:s");
+
+            if(!empty($this->request->data['app_file']['name']))
+            {
+                $file = $this->request->data['app_file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            } else {
+                print_r($this->request->data['app_file']);
+            }
+            
+            if(!empty($this->request->data['tech_title'])) {
+                $title = $this->request->data['tech_title'];
+                $resource->title = $title;
+            }
+            
+            if(!empty($this->request->data['filepath'])) {
+                $path = $this->request->data['filepath'];
+                $resource->files = $path;
+            }
+            
+            TableRegistry::get('TechnicalSpecs')->save($resource);
+            return $this->redirect($this->referer());
+        }
+
+        $this->set('specs', $query);
+    }
+
+    public function resourceDelete($id)
+    {
+        $this->loadModel('TechnicalSpecs');
+        $spec = $this->TechnicalSpecs->get($id);
+        if ($this->TechnicalSpecs->delete($spec)) {
+            // $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
+            return $this->redirect($this->referer());
+        }
+    }
+
     public function generatePDF()
     {
         $this->viewBuilder()->setLayout('admin');
@@ -734,27 +932,28 @@ class AdminController extends AppController
         $this->set('all_specs', $genSpecs);
     }
 
-    public function new()
+    public function modelPricing()
     {
         $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('Parts');
-        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
-
-        $this->set('parts', $query);
-        $this->set('pagename', 'New Products');
-    }
-
-
-    public function priceExport()
-    {
         $this->loadModel('ModelPrices');
-        $data = $this->ModelPrices->find('all')->toArray();
-        $_serialize = 'data';
-        $this->response->download('model_prices.csv');
-        $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', '_serialize'));
-    }
+        $series = TableRegistry::get('Series')->find('all');
+        $pricing = TableRegistry::get('ModelPrices')->find('all');
 
+        if($this->request->is('post') || $this->request->is('put'))  {
+            $id = intval($this->request->data['id']);
+            $model_text = $this->request->data['model_text'];
+            $unit_price = $this->request->data['unit_price'];
+
+            $target = TableRegistry::get('ModelPrices')->get($id);
+            $target->model_text = $model_text;
+            $target->unit_price = $unit_price;
+
+            TableRegistry::get('ModelPrices')->save($target);
+        }
+
+        $this->set('prices', $pricing);
+        $this->set(compact('series'));
+    }
 
     public function priceImport() 
     {
@@ -782,188 +981,22 @@ class AdminController extends AppController
         return $this->redirect($this->referer());
     }
 
-
-    public function modelPricing()
+    public function priceExport()
     {
-        $this->viewBuilder()->setLayout('admin');
         $this->loadModel('ModelPrices');
-        $series = TableRegistry::get('Series')->find('all');
-        $pricing = TableRegistry::get('ModelPrices')->find('all');
-
-        if($this->request->is('post') || $this->request->is('put'))  {
-            $id = intval($this->request->data['id']);
-            $model_text = $this->request->data['model_text'];
-            $unit_price = $this->request->data['unit_price'];
-
-            $target = TableRegistry::get('ModelPrices')->get($id);
-            $target->model_text = $model_text;
-            $target->unit_price = $unit_price;
-
-            TableRegistry::get('ModelPrices')->save($target);
-        }
-
-        $this->set('prices', $pricing);
-        $this->set(compact('series'));
+        $data = $this->ModelPrices->find('all')->toArray();
+        $_serialize = 'data';
+        $this->response->download('model_prices.csv');
+        $this->viewBuilder()->className('CsvView.Csv');
+        $this->set(compact('data', '_serialize'));
     }
 
-    public function manageResources() 
+    public function downloadSTP()
     {
         $this->viewBuilder()->setLayout('admin');
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 2]]);
-        $this->set('generals', $query);
-        $query2 =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 1]]);
-        $this->set('technicals', $query2);
-        $query3 =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 3]]);
-        $this->set('applications', $query3);
-    }
-
-    public function editResources() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-        [   'conditions' => ['resource' => 2]]);
-        $query2 =  $this->TechnicalSpecs->find('all',
-        [   'conditions' => ['resource' => 1]]);
-        $query3 =  $this->TechnicalSpecs->find('all',
-        [   'conditions' => ['resource' => 3]]);
-
-        $this->set('generals', $query);
-        $this->set('technicals', $query2);
-        $this->set('applications', $query3);
-    }
-
-    public function addResource() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        if($this->request->is('post') || $this->request->is('put')) {
-            $spec = $this->TechnicalSpecs->newEntity();
-
-            // $spec = $this->TechnicalSpecs->patchEntity($spec, $this->request->data);
-            $spec->resource = intval($this->request->data['resource']);
-            $spec->title = $this->request->data['title'];
-            // $sub_path = substr($this->request->data['file_path'], 12);
-            $spec->file = $this->request->data['file_path'];
-            echo "file path: " . $this->request->data['file_path'];
-            // $spec->file = $this->request->data['file_path'];
-            $spec->last_updated = date("Y-m-d H:i:s");
-            
-            if(!empty($this->request->data['file']['name']))
-            {
-                $file = $this->request->data['file'];
-                // $ext = substr(strtolower(strrchr($this->request->data['file_path'], '.')), 1); 
-                // $spec->file = $ext;
-                // $arr_ext = array('stp', 'pdf', 'txt'); 
-                // if(in_array($ext, $arr_ext))
-                // {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['file_path']);
-                    // $this->Flash->success(__('The new resource file  was saved.'));
-                    // }
-            }
-                
-            if ($this->TechnicalSpecs->save($spec)) {
-                // $this->Flash->success(__('The resource has been saved.'));
-                // print_r($spec);
-                $this ->redirect(array('action' => 'index'));
-            } else {
-                // $this->Flash->error(__('The resource could not be saved.'));
-            }
-        }
-    }
-
-    public function editGeneralInformation($id = null) 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
-
-        if($this->request->is('post') || $this->request->is('put')) {
-            $resource = $this->TechnicalSpecs->get($id);
-            $resource->title = $this->request->data['tech_title'];
-            $resource->file = $this->request->data['path'];
-            if($this->TechnicalSpecs->save($resource)) {
-                // $this->Flash->success(__('The resource has been updated'));
-                return $this->redirect($this->referer());
-            }
-        }
-        $this->set('specs', $query);
-    }
-    
-    public function editTechnicalDocumentation() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all',
-            [   'conditions' => ['resource' => 1]]);
-        $this->set('specs', $query);
-    }
-    
-    public function editApplicationInformation() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $this->getEventManager()->off($this->Csrf);
-        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
-
-        if($this->request->is('post') || $this->request->is('put')) {
-            $resource = $this->TechnicalSpecs->get(intval($this->request->data['tech_id']));
-            $resource->title = $this->request->data['tech_title'];
-            $dunder_file = str_replace(' ', '_', $this->request->data['file_path']);
-            $resource->file = $dunder_file;
-            if($this->TechnicalSpecs->save($resource)) {
-                // $this->Flash->success(__($dunder_file));
-                // $this->Flash->success(__('The resource has been updated'));
-                return $this->redirect($this->referer());
-            }
-            
-            // $file = $this->request->data['file_path'];
-            // $sub_path = substr($this->request->data['file_path'], 12);
-            // $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-            // $arr_ext = array('stp', 'pdf', 'txt'); 
-            // if(in_array($ext, $arr_ext))
-            // {
-            //     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/'.strval($this->request->data['file_path']).'.stp');
-            //     $this->Flash->success(__('The STP file  was saved.', h($part->partid)));
-            // }
-
-            // $files = $this->request->data['stp_files'];
-            // foreach ($files as $file){
-            //     ++$count;
-            // }
-        }
-
-        $this->set('specs', $query);
-    }
-
-    public function generalInformation() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
-        $this->set('specs', $query);
-    }
-
-    public function technicalDocumentation() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
-        $this->set('specs', $query);
-    }
-
-    public function applicationInformation() 
-    {
-        $this->viewBuilder()->setLayout('admin');
-        $this->loadModel('TechnicalSpecs');
-        $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
-        $this->set('specs', $query);
+        $stp_users = TableRegistry::get('StpUsers')->find('all')->orderDesc('last_login');
+        $stp_users->contain(['StpFile'=>['Parts','ModelTableRows']]);
+        $this->set('stp_users', $this->paginate($stp_users));
     }
 
     public function stpExport()
@@ -975,36 +1008,6 @@ class AdminController extends AppController
         $this->set(compact('data', '_serialize'));
     }
 
-    public function contactExport()
-    {
-        $data = TableRegistry::get('Contacts')->find()->orderDesc('date_submitted');
-        $_serialize = 'data';
-        $this->response->download('contacts.csv'); // <= setting the file name
-        $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', '_serialize'));
-    }
-
-    public function resourceDelete($id)
-    {
-        $this->loadModel('TechnicalSpecs');
-        $spec = $this->TechnicalSpecs->get($id);
-        if ($this->TechnicalSpecs->delete($spec)) {
-            // $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
-            return $this->redirect($this->referer());
-        }
-    }
-
-    public function partDelete($id)
-    {
-        $this->loadModel('Parts');
-        $this->Security->validatePost = false;
-        $part = $this->Parts->get($id);
-        if ($this->Parts->delete($part)) {
-            // $this->Flash->success(__('The part with id: {0} has been deleted.', h($id)));
-            return $this->redirect($this->referer());
-        }
-    }
-
     public function contacts()
     {
         $this->viewBuilder()->setLayout('admin');
@@ -1012,11 +1015,12 @@ class AdminController extends AppController
         $this->set('contacts', $this->paginate($contacts));
     }
 
-    public function downloadSTP()
+    public function contactExport()
     {
-        $this->viewBuilder()->setLayout('admin');
-        $stp_users = TableRegistry::get('StpUsers')->find('all')->orderDesc('last_login');
-        $stp_users->contain(['StpFile'=>['Parts','ModelTableRows']]);
-        $this->set('stp_users', $this->paginate($stp_users));
+        $data = TableRegistry::get('Contacts')->find()->orderDesc('date_submitted');
+        $_serialize = 'data';
+        $this->response->download('contacts.csv'); // <= setting the file name
+        $this->viewBuilder()->className('CsvView.Csv');
+        $this->set(compact('data', '_serialize'));
     }
 }

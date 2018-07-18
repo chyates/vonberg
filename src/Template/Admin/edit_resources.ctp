@@ -36,7 +36,7 @@
                     <td><input type="text" class="form-control" placeholder="<?= $g_resource->title ?>"></td>
                     <td>
                         <?= $this->Text->truncate(
-                            $g_resource->file,
+                            $g_resource->files,
                             15,
                             [
                                 'ellipsis' => '...',
@@ -73,7 +73,7 @@
                     <td><input type="text" class="form-control" placeholder="<?= $t_resource->title ?>"></td>
                     <td>
                         <?= $this->Text->truncate(
-                            $t_resource->file,
+                            $t_resource->files,
                             15,
                             [
                                 'ellipsis' => '...',
@@ -110,7 +110,7 @@
                     <td><input type="text" class="form-control" placeholder="<?= $a_resource->title ?>"></td>
                     <td>
                         <?= $this->Text->truncate(
-                            $a_resource->file,
+                            $a_resource->files,
                             15,
                             [
                                 'ellipsis' => '...',

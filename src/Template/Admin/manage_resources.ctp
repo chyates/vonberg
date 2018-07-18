@@ -20,7 +20,7 @@
                             <span class="pr-2">
                                 <img class="img-fluid" src="/img/download.svg"/>
                             </span>
-                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
+                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->files;?></a></td>
                         <td><?php echo $spec->title;?></td>
                         <td><?php echo $spec->last_updated;?></td>
                     </tr>
@@ -46,7 +46,7 @@
                             <span class="pr-2">
                                 <img class="img-fluid" src="/img/download.svg"/>
                             </span>
-                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
+                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->files;?></a></td>
                         <td><?php echo $spec->title;?></td>
                         <td><?php echo $spec->last_updated;?></td>
                     </tr>
@@ -73,7 +73,7 @@
                             <span class="pr-2">
                                 <img class="img-fluid" src="/img/download.svg"/>
                             </span>
-                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->file; ?> target="_blank"><?php echo $spec->file;?></a></td>
+                            <a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->files;?></a></td>
                         <td><?php echo $spec->title;?></td>
                         <td><?php echo $spec->last_updated;?></td>
                     </tr>

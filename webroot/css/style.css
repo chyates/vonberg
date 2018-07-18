@@ -1784,7 +1784,8 @@ td span img.img-fluid {
     padding: 1vh 1vw;
 }
 
-.model-table.table-striped .model-table-data a {
+.model-table.table-striped .model-table-data a,
+#btn-confirm {
 	color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
@@ -1899,22 +1900,25 @@ label.fileContainer {
     font-size: 13px;
     font-weight: bold;
     border-radius: 3px;
-    padding: 1.5vh 2vw;
+    padding: 1.2vh 1.5vw;
     text-transform: uppercase;
+    display: inline-flex;
 }
 
-#cms-site-container label.fileContainer,
-#cms-add-resource-main label.fileContainer {
+#cms-main-container label.fileContainer,
+#cms-add-resource-main label.fileContainer,
+label.fileContainer.light {
     border: 1px solid #017D44;
     color: #017D44;
     background-color: rgba(204,204,204,0);
     margin-bottom: 0;
 }
 
-#cms-edit-resource-main label.fileContainer,
+.edit-rsrc-form label.fileContainer.dark,
 #cms-model-price-main label.fileContainer {
     color: #FFFFFF;
     background-color: #017D44;
+    margin-bottom: 0;
 }
 
 .fileContainer input[type=file] {
@@ -2067,8 +2071,9 @@ hr.resource-divider {
 }
 
 #add-rsrc-form .form-group p {
-    display: inline-block;
-    vertical-align: top;
+    display: inline-flex;
+    align-self: center;
+    margin: 0 1vw;
 }
 
 #add-rsrc-form div.submit {
@@ -2079,34 +2084,44 @@ hr.resource-divider {
     padding: 10px 22px;
 }
 
-.edit-rsrc-form h4.rsrc-col-title {
+.spec-row h4.rsrc-col-title {
     text-transform: uppercase;
     font-weight: bold;
 }
+
 
 .edit-rsrc-form .spec-row {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+    padding: 1vh 0;
 }
 
-.edit-rsrc-form .spec-row .col-md-6 {
+#cms-edit-resource-main .col-10.mx-auto .row.no-gutters:first {
+    margin-top: 2vh;
+}
+
+.edit-rsrc-form .spec-row .col-md-5 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     align-items: start;
 }
 
-.edit-rsrc-form .spec-row .col-md-6 .row.no-gutters .col {
+.edit-rsrc-form .spec-row .col-md-5 .row.no-gutters .col {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center
 }
 
-.edit-rsrc-form .spec-row .col-md-6 .row.no-gutters .col p.file-text {
+.edit-rsrc-form .spec-row .col-md-5 .row.no-gutters .col p.file-text {
     margin: 0 1vw;
+}
+
+.edit-rsrc-form .spec-row p {
+    margin-bottom: 0;
 }
 
 .edit-rsrc-form .spec-row .col-md-3 p a {
@@ -2116,6 +2131,10 @@ hr.resource-divider {
 
 hr.edit-rsrc-div {
     border-color: #979797;
+}
+
+hr.edit-rsrc-div:last-of-type {
+    display: none;
 }
 
 /* === MODEL PRICING: GLOBAL / DESKTOP === */
@@ -2129,13 +2148,24 @@ hr.edit-rsrc-div {
     padding-bottom: .75em
 }
 
-#cms-model-price-table form {width: 100%}
-#cms-model-price-table .edit {cursor: pointer}
-.inactive .model-table-data .input {display: none}
-.inactive .model-table-data input {display: none}
-.inactive .model-table-data span {display: none}
-.active .model-table-data div {display: none}
-.active .model-table-data .input {display: inline-block}
+#cms-model-price-table form {
+    width: 100%
+}
+
+#cms-model-price-table .edit {
+    cursor: pointer
+}
+
+.inactive .model-table-data .input,
+.inactive .model-table-data input,
+.inactive .model-table-data span, 
+.active .model-table-data div {
+    display: none
+}
+
+.active .model-table-data .input {
+    display: inline-block
+}
 
 /* === DELETE MODAL: GLOBAL / DESKTOP === */
 
@@ -2166,5 +2196,6 @@ hr.edit-rsrc-div {
     display: flex;
 }
 
-
-.hidden {display: none}
+.hidden {
+    display: none
+}

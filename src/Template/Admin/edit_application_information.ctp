@@ -21,7 +21,14 @@ use Cake\Routing\Router;
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <a href="/admin/resource-delete/" method="POST" id='delete-confirm' class="btn btn-primary">DELETE</a>
+                            <?php
+                                echo $this->Form->postLink(
+                                    'Delete',
+                                    array('action' => 'resourceDelete'),
+                                    array('id'=>'delete-confirm','class' => 'btn btn-primary'),
+                                    false
+                                );
+                            ?>
                         </div>
                     </div>
                 </div>
@@ -30,22 +37,35 @@ use Cake\Routing\Router;
     </div>
 
     <div class="col-10 mx-auto">
+        <div class="spec-row row">
+            <div class="col-md-4">
+                <h4 class="rsrc-col-title">Edit Title</h4>
+            </div>
+            <div class="col-md-3">
+                <h4 class="rsrc-col-title">Current File</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="rsrc-col-title">Replace File</h4>
+            </div>
+        </div>
     <?php foreach($specs as $spec): ?>
         <div class="row no-gutters">
             <div class="col-12">
-                <?= $this->Form->create('edit-app', [
-                    'id' => $spec->techID,
-                    'class' => 'edit-rsrc-form'
+            <?= $this->Form->create('edit-app', [
+                    'id' => 'edit-app',
+                    'class' => 'edit-rsrc-form inactive',
+                    'enctype' => 'multipart/form-data'
                 ]); ?>
                 <?php 
-                    echo $this->Form->input('tech_id', [
-                        'type' => 'hidden',
+                    echo $this->Form->input('id', [
+                        'label' => false,
+                        'type' => 'text',
                         'value' => $spec->techID,
+                        'class' => 'hidden form-control',
                     ]); 
                 ?>
                 <div class="spec-row row">
-                    <div class="col-md-3">
-                        <h4 class="rsrc-col-title">Edit Title</h4>
+                    <div class="col-md-4">
                         <?php 
                             echo $this->Form->input('tech_title', [
                                 'type' => 'text',
@@ -56,11 +76,10 @@ use Cake\Routing\Router;
                         ?>
                     </div>
                     <div class="col-md-3">
-                        <h4 class="rsrc-col-title">Current File</h4>
                         <p>
-                            <a href="<?= "/img/pdfs/technical_specifications/" . $spec->file; ?>" target="_blank">
+                            <a href="<?= "/img/pdfs/technical_specifications/" . $spec->files; ?>" target="_blank">
                                 <?php echo $this->Text->truncate(
-                                    $spec->file, 15, 
+                                    $spec->files, 15, 
                                     [
                                         'ellipsis' => '...',
                                         'exact' => false
@@ -69,18 +88,24 @@ use Cake\Routing\Router;
                             </a>
                         </p>
                     </div>
-                    <div class="col-md-6">
-                        <h4 class="rsrc-col-title">Replace File</h4>
+                    <div class="col-md-5">
                         <div class="row no-gutters">
                             <div class="col">
-                                <label class="fileContainer">Browse
-                                    <?php 
-                                        echo $this->Form->input('file_path', [
-                                            'type' => 'file',
-                                            'class' => 'form-control',
-                                            'label' => false,
-                                        ]);
-                                    ?>
+                                <label class="fileContainer dark">Browse
+                                <?php 
+                                    echo $this->Form->input('filepath', 
+                                    [
+                                        'type' => 'text',
+                                        'class' => 'hidden form-control',
+                                        'label' => false,
+                                    ]); 
+                                    echo $this->Form->input('app_file', 
+                                    [
+                                        'type' => 'file', 
+                                        'class'=>'form-control', 
+                                        'label' => false
+                                    ]);
+                                ?>
                                 </label>
                                 <p class="file-text">No file chosen</p>
                                 <?php 
@@ -88,6 +113,23 @@ use Cake\Routing\Router;
                                         'class' => 'btn btn-primary update-button',
                                         'value' => 'REPLACE'
                                     ]);
+                                ?>
+                                <?php
+                                    echo $this->Html->link(
+                                        $this->Html->tag('delete', 'Delete'),
+                                        '#',
+                                        array(
+                                            'id'=>'btn-confirm',
+                                            'class' => 'delete-toggle-link',
+                                            'data-toggle'=> 'modal',
+                                            'data-file'=> $spec->title,
+                                            'data-target' => '#delete-check-modal',
+                                            'data-action'=> Router::url(
+                                                array('action'=>'deleteResource', $spec->techID)
+                                            ),
+                                            'escape' => false),
+                                        false
+                                    );
                                 ?>
                             </div>
                         </div>

@@ -22,8 +22,8 @@
                         <span class="pr-2">
                             <img class="img-fluid" src="/img/download.svg"/>
                         </span>    
-                        <a href="<?= '/img/pdfs/technical_specifications/'. $spec->file; ?>" target="_blank">
-                            <?php echo $spec->file;?>
+                        <a href="<?= '/img/pdfs/technical_specifications/'. $spec->files; ?>" target="_blank">
+                            <?php echo $spec->files;?>
                         </a>
                     </td>
                     <td><?php echo ucwords(strtolower($spec->title)); ?></td>

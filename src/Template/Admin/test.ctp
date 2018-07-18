@@ -8,9 +8,9 @@
         <div class="col-md-3">
             <h4 class="rsrc-col-title">Current File</h4>
             <p>
-                <a href="<?= "/img/pdfs/technical_specifications/" . $spec->file; ?>" target="_blank">
+                <a href="<?= "/img/pdfs/technical_specifications/" . $spec->files; ?>" target="_blank">
                     <?php echo $this->Text->truncate(
-                        $spec->file, 15, 
+                        $spec->files, 15, 
                         [
                             'ellipsis' => '...',
                             'exact' => false
@@ -33,3 +33,42 @@
         </div>
     </div>
 </form>
+
+<?php 
+        // public function editProductOne($id)
+    // {
+    //     $this->viewBuilder()->setLayout('admin');
+    //     if ($this->request->is('post') || $this->request->is('put'))  {
+    //         $this->loadModel('Parts');
+    //         $part = $this->Parts->get($id);
+    //         $part = $this->Parts->patchEntity($part, $this->request->data);
+    //         $part->last_updated = date("Y-m-d H:i:s");
+    //         if($this->Parts->save($part)){
+    //             $this->redirect(array('action' => 'editProductTwo',$part->partID));
+    //         }
+    //     }
+    //     $this->loadModel('TextBlocks');
+    //     $this->loadModel('Parts');
+    //     $opblock = $this->TextBlocks->find('all',array(
+    //         'conditions' => array(
+    //             'partID' => $id,
+    //         ),
+    //         'contain' => array('TextBlockBullets' => ['fields' => ['TextBlockBullets.text_blockID','TextBlockBullets.bullet_text']]),
+    //     ));
+    //     $part = $this->Parts->get($id);
+
+    //     $cat = TableRegistry::get('Categories')->find('list');
+    //     $type = TableRegistry::get('Types')->find('list');
+    //     $style = TableRegistry::get('Styles')->find('list');
+    //     $series = TableRegistry::get('Series')->find('list');
+    //     $conn = TableRegistry::get('Connections')->find('list');
+
+    //     $this->set('conn', $conn);
+    //     $this->set('cat', $cat);
+    //     $this->set(compact('series'));
+    //     $this->set('part', $part);
+    //     $this->set('type', $type);
+    //     $this->set('style', $style);
+    //     $this->set('opblock', $opblock);
+    // }
+?>
