@@ -9,67 +9,226 @@
     <p class="text-center"><a class="btn btn-primary mr-4" href="/admin/add-product" disabled>Add New Product</a><a class="btn btn-primary mr-4" href="/admin/generate-pdf" disabled>Generate Custom PDF</a><a class="btn btn-primary" href="/admin/manage-resources" disabled>Manage Resources</a></p>
     <hr class="resource-divider mb-5">
     
-    <div id="cms-home-table" class="table-responsive rsrc-table col-md-10 mx-auto">
+    <div class="col-10 mx-auto">
         <h2 class="category-title">CSV and Catalogue Files</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Current File</th>
-                    <th>Last Updated</th>
-                    <th>Replace File</th>
-                </tr>
-            </thead>
+        <div class="spec-row row mt-5">
+            <div class="col-md-4">
+                <h4 class="rsrc-col-title">Current File</h4>
+            </div>
+            <div class="col-md-3">
+                <h4 class="rsrc-col-title">Last Updated</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="rsrc-col-title">Replace File</h4>
+            </div>
+        </div>
+    
+        <div id="prices-csv">
+            <div class="prices row no-gutters py-3">
+                <div class="col-12">
+                    <?= $this->Form->create('up-prices', 
+                    [
+                        'id' => 'up-prices',
+                        'class' => 'edit-rsrc-form',
+                        'enctype' => 'multipart/form-data',
+                        'url' => ['controller' => 'Admin', 'action' => 'priceImport']
+                        ]);
+                    ?>
 
-            <tbody>
-                <tr>
-                    <td>
-                        <span class="pr-2">
-                            <img class="img-fluid" src="/img/download.svg"/>
-                        </span>
-                        <a href="/admin/priceExport">model_prices.csv</a>
-                    </td>
-                    <td>11/08/2017</td>
-                    <td class="model-table-data d-flex justify-content-between">
-                        <label class="fileContainer light">Browse
-                            <input type="file" class="form-control">
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="pr-2">
-                            <img class="img-fluid" src="/img/download.svg"/>
-                        </span>    
-                        <?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?>
-                    </td>
-                    <td><?= date('m/d/Y', $dealer_time);?></td>
-                    <td class="model-table-data d-flex justify-content-between">
-                        <label class="fileContainer light">Browse
-                            <input type="file" class="form-control">
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <span class="pr-2">
-                            <img class="img-fluid" src="/img/download.svg"/>
-                        </span>    
-                        <a href="/img/pdfs/VONBERG-Product_Catalog.pdf" target="_blank">VonbergCatalogue.pdf</a></td>
-                    <td><?= date('m/d/Y', $catalog_time);?></td>
-                    <td class="model-table-data d-flex justify-content-between">
-                        <label class="fileContainer light">Browse
-                            <input type="file" class="form-control">
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+                    <div class="spec-row row">
+                        <div class="col-md-4">
+                            <span class="pr-2">
+                                <img class="img-fluid" src="/img/download.svg"/>
+                            </span>
+                            
+                            <p>
+                                <?php
+                                    echo $this->Html->link(
+                                        'model_prices.csv',
+                                        '/admin/priceExport'
+                                    );
+                                ?>
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <p>11/08/2017</p>
+                        </div>
+                        
+                        <div class="col-md-5">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <label class="fileContainer light">Browse
+                                        <?php 
+                                            echo $this->Form->input('filepath',
+                                            [
+                                                'type' => 'text',
+                                                'class' => 'hidden form-control',
+                                                'label' => false,
+                                            ]); 
+                                                
+                                            echo $this->Form->input('csv_file',
+                                            [
+                                                'type' => 'file',
+                                                'class' => 'form-control',
+                                                'label' => false
+                                            ]);
+                                        ?>
+                                    </label>
+                                    <p class="file-text">No file chosen</p>
+                                    <?php
+                                        echo $this->Form->submit('replace',
+                                        [
+                                            'class' => 'btn btn-primary update-button',
+                                            'value' => 'REPLACE',
+                                        ]); 
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?= $this->Form->end(); ?>
+                </div>
+            </div>
+        </div><!-- #prices-csv end -->
+
+        <div id="dealers-csv">
+            <div class="dealers row no-gutters py-3">
+                <div class="col-12">
+                    <?= $this->Form->create('up-dealers', 
+                    [
+                        'id' => 'up-dealers',
+                        'class' => 'edit-rsrc-form',
+                        'enctype' => 'multipart/form-data',
+                        'url' => ['controller' => 'Dealers', 'action' => 'index' ]
+                        ]);
+                    ?>
+
+                    <div class="spec-row row">
+                        <div class="col-md-4">
+                            <span class="pr-2">
+                                <img class="img-fluid" src="/img/download.svg"/>
+                            </span>
+                            
+                            <p>
+                                <?php
+                                    echo $this->Html->link(
+                                        'dealers.csv',
+                                        '/dealers/dealerExport'
+                                    );
+                                ?>
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <p><?= date('m/d/Y', $dealer_time);?></p>
+                        </div>
+                        
+                        <div class="col-md-5">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <label class="fileContainer light">Browse
+                                        <?php 
+                                            echo $this->Form->input('filepath',
+                                            [
+                                                'type' => 'text',
+                                                'class' => 'hidden form-control',
+                                                'label' => false,
+                                            ]); 
+                                                
+                                            echo $this->Form->input('upload',
+                                            [
+                                                'type' => 'file',
+                                                'class' => 'form-control',
+                                                'label' => false
+                                            ]);
+                                        ?>
+                                    </label>
+                                    <p class="file-text">No file chosen</p>
+                                    <?php
+                                        echo $this->Form->submit('replace',
+                                        [
+                                            'class' => 'btn btn-primary update-button',
+                                            'value' => 'REPLACE',
+                                        ]); 
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?= $this->Form->end(); ?>
+                </div>
+            </div>
+        </div><!-- #dealers-csv end -->
+
+        <div id="catalog-row">
+            <div class="catalog row no-gutters py-3">
+                <div class="col-12">
+                    <?= $this->Form->create('up-catalog', 
+                    [
+                        'id' => 'up-catalog',
+                        'class' => 'edit-rsrc-form',
+                        'enctype' => 'multipart/form-data',
+                        'url' => ['controller' => 'Admin', 'action' => 'replaceCatalog']
+                        ]);
+                    ?>
+
+                    <div class="spec-row row">
+                        <div class="col-md-4">
+                            <span class="pr-2">
+                                <img class="img-fluid" src="/img/download.svg"/>
+                            </span>
+                            
+                            <p>
+                                <?php
+                                    echo $this->Html->link(
+                                        'VonbergCatalogue.pdf',
+                                        '/img/pdfs/VONBERG-Product_Catalog.pdf',
+                                        [ 'target' => '_blank']
+                                    );
+                                ?>
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <p><?= date('m/d/Y', $catalog_time);?></p>
+                        </div>
+                        
+                        <div class="col-md-5">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <label class="fileContainer light">Browse
+                                        <?php 
+                                            echo $this->Form->input('filepath',
+                                            [
+                                                'type' => 'text',
+                                                'class' => 'hidden form-control',
+                                                'label' => false,
+                                            ]); 
+                                                
+                                            echo $this->Form->input('catalog_file',
+                                            [
+                                                'type' => 'file',
+                                                'class' => 'form-control',
+                                                'label' => false
+                                            ]);
+                                        ?>
+                                    </label>
+                                    <p class="file-text">No file chosen</p>
+                                    <?php
+                                        echo $this->Form->submit('replace',
+                                        [
+                                            'class' => 'btn btn-primary update-button',
+                                            'value' => 'REPLACE',
+                                        ]); 
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?= $this->Form->end(); ?>
+                </div>
+            </div>
+        </div><!-- #dealers-csv end -->
     </div>
 </div>
-

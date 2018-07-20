@@ -1262,6 +1262,7 @@ p.resource-link a {
 
 #find-distributor-main .left-search .search-block h4 {
     text-transform: uppercase;
+    font-family: "Poppins", sans-serif;
 }
 
 #find-distributor-main .left-search .search-block .results-link {
@@ -1762,7 +1763,7 @@ p.resource-link span img.img-fluid {
 /* === TABLE STYLES: GLOBAL / DESKTOP === */
 
 /* Shared Styles */
-td span img.img-fluid {
+span img.img-fluid {
     width: 15px;
 }
 
@@ -1906,7 +1907,7 @@ label.fileContainer {
 }
 
 #cms-add-resource-main label.fileContainer,
-label.fileContainer.light {
+label.fileContainer.light, .update-button.light {
     border: 1px solid #017D44;
     color: #017D44;
     background-color: rgba(204,204,204,0);
@@ -1914,7 +1915,7 @@ label.fileContainer.light {
 }
 
 label.fileContainer.dark,
-#cms-model-price-main label.fileContainer {
+#cms-model-price-main label.fileContainer, .update-button.dark {
     color: #FFFFFF;
     background-color: #017D44;
     margin-bottom: 0;
@@ -2136,7 +2137,11 @@ hr.resource-divider {
     border-bottom: 1px solid #979797;
 }
 
-.edit-rsrc-form .spec-row .col-md-3 p a {
+#cms-main-container .spec-row .col-md-4 p {
+    display: inline-flex;
+}
+
+.spec-row p a {
     color: #425460;
     text-decoration: underline;
 }

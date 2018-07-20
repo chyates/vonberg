@@ -33,13 +33,12 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        // $now = new DateTime();
         $query =  $this->paginate($this->Parts->find('all', ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
         $cat = TableRegistry::get('Categories')->find();
         $this->set('parts', $query);
         $this->set('categories', $cat);
-        $this->set('dealer_time',filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
-        $this->set('catalog_time',filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
+        $this->set('dealer_time', filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
+        $this->set('catalog_time', filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
     }
 
     public function new()
@@ -717,9 +716,20 @@ class AdminController extends AppController
         $this->Security->validatePost = false;
         $part = $this->Parts->get($id);
         if ($this->Parts->delete($part)) {
-            // $this->Flash->success(__('The part with id: {0} has been deleted.', h($id)));
             return $this->redirect($this->referer());
         }
+    }
+
+    public function replaceCatalog() 
+    {
+        if(file_exists(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf')) {
+            unlink(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf');
+        }
+
+        $new_pdf = $this->request->data['catalog_file'];
+        move_uploaded_file($new_pdf['tmp_name'], WWW_ROOT . 'img/pdfs/VONBERG-Product_Catalog.pdf');
+        $this->render(FALSE);
+        return $this->redirect($this->referer());
     }
 
     public function manageResources() 
@@ -1099,11 +1109,13 @@ class AdminController extends AppController
 
     public function stpExport()
     {
-        $data = TableRegistry::get('StpUsers')->find()->orderDesc('last_login');
-        $_serialize = 'data';
+        $data = TableRegistry::get('StpUsers')->find('all')->orderDesc('stp_userID');
+        $file_data = TableRegistry::get('StpFile')->find('all')->orderDesc('stp_userID');
+        $_serialize = ['data', 'file_data'];
+        $_header = ['User ID', 'Email', 'First Name', 'Last Name', 'Company', 'Last Login', 'Files Acquired'];
         $this->response->download('stp_downloads.csv'); // <= setting the file name
         $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', '_serialize'));
+        $this->set(compact('data', 'file_data', '_serialize', '_header'));
     }
 
     public function contacts()

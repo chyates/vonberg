@@ -1,7 +1,8 @@
 <?php
 namespace App\Controller;
 
-use App\Controller\AppController;
+use App\Controller\File;
+use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
 
 /**
@@ -15,9 +16,8 @@ class DealersController extends AppController
 {
      public function beforeFilter(Event $event)
     {
-       // allow all action
-    $this->Auth->allow(['view', 'index']);
-     	}
+        $this->Auth->allow(['view', 'index']);
+    }
 
     /**
      * Index method
@@ -65,57 +65,62 @@ class DealersController extends AppController
 
     public function index()
     {
-        $uploadData = '';
-        if ($this->request->is('post')) {
-            if(!empty($this->request->data['upload']['name'])){
-                $options = array(
-                    // Refer to php.net fgetcsv for more information
-                    'length' => 0,
-                    'delimiter' => ',',
-                    'enclosure' => '"',
-                    'escape' => '\\',
-                    // Generates a Model.field headings row from the csv file
-                    'headers' => true,
-                    // If true, String $content is the data, not a path to the file
-                    'text' => false,
-                );
-                $uploadPath = WWW_ROOT.'/csv/';
-                $uploadFile = $uploadPath.$this->request->data['upload']['name'];
-                move_uploaded_file($this->request->data['upload']['tmp_name'], WWW_ROOT . 'csv' .DS. $this->request->data['upload']['name']);
-                $uploadData = $this->Dealers->importCsv($uploadFile,array('Dealers.id', 'Dealers.name', 'Dealers.address', 'Dealers.address1', 'Dealers.address2', 'Dealers.city', 'Dealers.state', 'Dealers.zip', 'Dealers.country', 'Dealers.telephone','Dealers.fax','Dealers.lat','Dealers.lng','Dealers.website'), $options);
-                $entities = $this->Dealers->newEntities($uploadData);
-                $table = $this->Dealers;
-                $results = $table->getConnection()->transactional(function () use ($table, $entities) {
-                    foreach ($entities as $entity) {
-                        $table->save($entity, ['atomic' => false]);
-                    }
-                });
-                $this->Flash->success(__('The dealers have been saved. '));
-                //return $this->redirect($this->referer());
-                //return $this->redirect(['action' => 'index']);
-            }else{
-                $this->Flash->error(__('Please choose a file to upload.'));
-            }
+        $this->viewBuilder()->setLayout('admin');
 
+        // $uploadData = '';
+        if ($this->request->is('post')) {
+            if($_FILES['upload']) {
+                $filename = explode('.', $_FILES['upload']['name']);
+                if($filename[1] == 'csv') {
+                    $dists = TableRegistry::get('Dealers');
+                    $d_old = $dists->find('all')->toArray();
+                    foreach($d_old as $d) {
+                        $dists->delete($d);
+                    }
+    
+                    $handle = fopen($_FILES['upload']['tmp_name'], "r");
+                    while(($line = fgetcsv($handle)) !== FALSE) {
+                        $new_dist = $dists->newEntity();
+                        $new_dist->price_class = array_pop($line);
+                        $new_dist->long = array_pop($line);
+                        $new_dist->lat = array_pop($line);
+                        $new_dist->fax = array_pop($line);
+                        $new_dist->telephone = array_pop($line);
+                        $new_dist->zip = array_pop($line);
+                        $new_dist->country = array_pop($line);
+                        $new_dist->city = array_pop($line);
+                        $new_dist->state = array_pop($line);
+                        $new_dist->address2 = array_pop($line);
+                        $new_dist->address1 = array_pop($line);
+                        $new_dist->name = array_pop($line);
+                        if($dists->save($new_dist)) {
+                            $this->Flash->success(__('The dealers have been saved. '));
+                        } else {
+                            $this->Flash->error(__('Please choose a file to upload.'));
+                        }
+                    }
+                    fclose($handle);
+                }
+                $this->render(FALSE);
+                return $this->redirect($this->referer());
+            }
         }
 
         $dealers = $this->paginate($this->Dealers);
         $this->set(compact('dealers'));
-        $this->viewBuilder()->setLayout('admin');
     	$options = array(
-	// Refer to php.net fgetcsv for more information
-	'length' => 0,
-	'delimiter' => ',',
-	'enclosure' => '"',
-	'escape' => '\\',
-	// Generates a Model.field headings row from the csv file
-	'headers' => true,
-	// If true, String $content is the data, not a path to the file
-	'text' => false,
-);
+            // Refer to php.net fgetcsv for more information
+            'length' => 0,
+            'delimiter' => ',',
+            'enclosure' => '"',
+            'escape' => '\\',
+            // Generates a Model.field headings row from the csv file
+            'headers' => true,
+            // If true, String $content is the data, not a path to the file
+            'text' => false,
+        );
         $this->set('uploadData', $uploadData);
-   
-}
+    }
 
 
     /**
@@ -145,21 +150,16 @@ class DealersController extends AppController
 
     public function dealerExport()
     {
+        $this->loadModel('Dealers');
+
         $data = $this->Dealers->find()->all();
-        $options = array(
-            // Refer to php.net fgetcsv for more information
-            'length' => 0,
-            'delimiter' => ',',
-            'enclosure' => '"',
-            'escape' => '\\',
-            // Generates a Model.field headings row from the csv file
-            'headers' => true,
-            // If true, String $content is the data, not a path to the file
-            'text' => false,
-        );
-        $filepath = WWW_ROOT.'/csv/dealers.csv';
-        $this->Dealers->exportCsv($filepath, $data, $options);
-        return $this->redirect('/csv/dealers.csv');    }
+        $_serialize = 'data';
+        $_headers = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
+        $_extract = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
+        $this->response->download('dealers.csv');
+        $this->viewBuilder()->className('CsvView.Csv');
+        $this->set(compact('data', '_serialize', '_headers', '_extract'));
+    }
 
     /**
      * Delete method

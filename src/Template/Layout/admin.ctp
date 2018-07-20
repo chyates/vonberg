@@ -425,9 +425,8 @@ jQuery(document).ready(function($) {
         if($(this).parents('.model-table-data').length > 0) {
             toChange = $(this).parents('label.fileContainer').siblings('p.file-text');
             $(toChange).html(substr);
-            if($(this).parent().siblings('input.update-button').length > 0) {
-                console.log("Found update button");
-                $(this).parents().siblings('input.update-button').show();
+            if($(this).parent().siblings('button.update-button').length > 0) {
+                $(this).parents().siblings('button.update-button').toggleClass('dark light').show();
             }
         }
 

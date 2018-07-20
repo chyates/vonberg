@@ -4,15 +4,22 @@
  * @var \App\Model\Entity\Dealer[]|\Cake\Collection\CollectionInterface $dealers
  */
 ?>
-<div class="container">
+<div id="cms-dealers-main" class="inner-main col-md-10 mx-auto">
+    <h1 class="page-title">Distributors</h1>
     <div class="row">
         <div class="col-xs-4">
 <nav class="large-3 medium-4 columns" id="actions-sidebar">
     <ul class="side-nav">
         <li class="heading"><?= __('Actions') ?></li>
         <li><?= $this->Html->link(__('Export Dealers'), ['action' => 'dealerExport']) ?></li>
-        <li><?= $this->Html->link(__('New Dealer'), ['action' => 'add']) ?></li>
-<LI> <?= $this->Form->create('Dealer', array('url' => array('action' => 'index'), 'enctype' => 'multipart/form-data'));
+        <li>
+            <?= $this->Html->link(__('New Dealer'), ['action' => 'add']) ?></li>
+        <li>
+            <?= $this->Form->create('Dealer', array
+            (
+                'url' => array('action' => 'index'), 
+                'enctype' => 'multipart/form-data'
+            ));
         echo $this->Form->input('upload', array('type' => 'file'));
 echo $this->Form->button('Upload CSV File', ['class' => 'btn btn-lg btn-success1 btn-block padding-t-b-15']);
 echo $this->Form->end();     

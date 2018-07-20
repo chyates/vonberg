@@ -34,7 +34,7 @@ class LocatorController extends AppController
         $lng=$this->request->data['lng'];
         $query = $myTable
             ->find('bydistance', $options)
-            ->select(['name','address','address1','city','state','zip','telephone','fax', 'lat', 'lng']);
+            ->select(['name','address1','address2', 'city','state','zip','telephone','fax', 'lat', 'lng']);
                         }	
                 }
         $this->set('query', $query);
