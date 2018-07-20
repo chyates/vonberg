@@ -24,7 +24,7 @@
                         } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer">Browse
+                            <label class="fileContainer dark">Browse
                                 <?php echo $this->Form->input('schematic', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
@@ -43,7 +43,7 @@
                             } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer">Browse
+                            <label class="fileContainer dark">Browse
                                 <?php echo $this->Form->input('performance', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
@@ -62,7 +62,7 @@
 
                             </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer">Browse
+                            <label class="fileContainer dark">Browse
                                 <?php echo $this->Form->input('hydraulic', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
@@ -79,7 +79,7 @@
                             } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer">Browse
+                            <label class="fileContainer dark">Browse
                                 <?php echo $this->Form->input('ordering', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
@@ -90,7 +90,7 @@
             </table>
 
             <div class="row no-gutters justify-content-between">
-                <a id="back-four" class="back btn btn-primary">Back</a>
+                <a id="back-four" class="back btn btn-primary" href=<?= "/admin/edit-product-three/". $part->partID ?>>Back</a>
                 <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
             </div>
         </div><!-- #four end -->

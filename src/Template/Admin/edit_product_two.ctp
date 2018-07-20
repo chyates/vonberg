@@ -23,7 +23,8 @@
                     endforeach;
                 }
                 ?>
-                <a class="add-bullet" href="">Add Bullet</a>
+                <a class="plus add-bullet" href="">Add Bullet</a>
+                <a class="del add-bullet" href="">Remove Bullet</a>
             </div>
         </div>
 
@@ -43,7 +44,8 @@
                 endforeach;
             } 
             ?>
-            <a class="add-bullet" href="">Add Bullet</a>
+            <a class="plus add-bullet" href="">Add Bullet</a>
+            <a class="del add-bullet" href="">Remove Bullet</a>
         </div>
 
         <div class="form-group row no-gutters align-items-center w-bullet">
@@ -74,7 +76,8 @@
                 <?php 
                     $index++;
                 } ?>
-                <a class="add-bullet" href="">Add Bullet</a>
+                <a class="plus add-bullet" href="">Add Bullet</a>
+                <a class="del add-bullet" href="">Remove Bullet</a>
             <?php  } else { ?>
                     <div class="row specifications">
                         <div class="col-sm-6">
@@ -84,7 +87,8 @@
                             <?= $this->Form->input('spec_value_1', array('class' => 'form-control','label'=> False, 'id' => '1'));?>
                         </div>
                     </div>
-                    <a class="add-bullet" href="">Add Bullet</a>
+                    <a class="plus add-bullet" href="">Add Bullet</a>
+                    <a class="del add-bullet" href="">Remove Bullet</a>
             <?php } ?>
         </div>
         <div class="row no-gutters justify-content-between">

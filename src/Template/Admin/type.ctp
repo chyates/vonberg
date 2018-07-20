@@ -18,14 +18,7 @@ use Cake\Routing\Router;
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <?php
-                            echo $this->Form->postLink(
-                                'Delete',
-                                array('action' => 'partDelete'),
-                                array('id'=>'delete-confirm','class' => 'btn btn-primary'),
-                                false
-                            );
-                            ?>
+                            <a class="btn btn-primary" href="/admin/part-delete/" id="delete-confirm">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -89,6 +82,7 @@ use Cake\Routing\Router;
                             array(
                                 'id'=>'btn-confirm',
                                 'data-toggle'=> 'modal',
+                                'data-pid' => $part->partID,
                                 'data-file'=> $part->series->name,
                                 'data-target' => '#delete-check-modal',
                                 'data-action'=> Router::url(

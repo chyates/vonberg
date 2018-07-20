@@ -1905,7 +1905,6 @@ label.fileContainer {
     display: inline-flex;
 }
 
-#cms-main-container label.fileContainer,
 #cms-add-resource-main label.fileContainer,
 label.fileContainer.light {
     border: 1px solid #017D44;
@@ -1914,7 +1913,7 @@ label.fileContainer.light {
     margin-bottom: 0;
 }
 
-.edit-rsrc-form label.fileContainer.dark,
+label.fileContainer.dark,
 #cms-model-price-main label.fileContainer {
     color: #FFFFFF;
     background-color: #017D44;
@@ -2023,6 +2022,11 @@ a.add-bullet {
 	font-size: 14px;
 	line-height: 21px;
     text-decoration: underline;
+    display: inline-flex;
+}
+
+a.del.add-bullet {
+    margin-left: 270px;
 }
 
 #add-prod-form .col-sm-6 div.form-check,
@@ -2098,6 +2102,10 @@ hr.resource-divider {
     padding: 1vh 0;
 }
 
+.edit-rsrc-form input.form-control {
+    border-radius: 2px;
+}
+
 #cms-edit-resource-main .col-10.mx-auto .row.no-gutters:first {
     margin-top: 2vh;
 }
@@ -2122,6 +2130,10 @@ hr.resource-divider {
 
 .edit-rsrc-form .spec-row p {
     margin-bottom: 0;
+}
+
+.tech.row.no-gutters:not(:last-child), .gen.row.no-gutters:not(:last-child), .app.row.no-gutters:not(:last-child) {
+    border-bottom: 1px solid #979797;
 }
 
 .edit-rsrc-form .spec-row .col-md-3 p a {

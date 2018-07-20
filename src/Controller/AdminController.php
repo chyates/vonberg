@@ -175,8 +175,9 @@ class AdminController extends AppController
     public function partAdd() 
     {
         if($this->request->is('post')) {
-            $data = [];
             $this->loadModel('Parts');
+
+            $data = [];
             $part=$this->Parts->newEntity();
             $part=$this->Parts->patchEntity($part,$this->request->data);
             if($result=$this->Parts->save($part)) {
@@ -186,6 +187,30 @@ class AdminController extends AppController
                 $data['response'] = "Error: some error";
             }
             $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
+        }
+    }
+
+    // AJAX function to toggle new status, products + catalog + type pages
+    public function checkNew() 
+    {
+        $this->loadModel('Parts');
+        if($this->request->is('ajax')) {
+            $this->autoRender = false;
+            $part = $this->Parts->get(intval($this->request->query['id']));
+
+            if($part->new_list == 0) {
+                $part->new_list = 1;
+                $part->expires = 30;
+            } else {
+                $part->new_list = 0;
+                $part->expires = 0;
+            }
+            if($result = $this->Parts->save($part)) {
+                $data['response'] = $part->expires;
+                // return json_encode($part);
+            } else {
+                // echo "Error: some error";
+            }
         }
     }
 
@@ -771,6 +796,79 @@ class AdminController extends AppController
         $query =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 2]]);
         $query2 =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 1]]);
         $query3 =  $this->TechnicalSpecs->find('all', ['conditions' => ['resource' => 3]]);
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            $id = intval($this->request->data['id']);
+            
+            if(!empty($this->request->data['gen_file']['name']))
+            {
+                $resource = TableRegistry::get('TechnicalSpecs')->get($id);
+                $resource->resource = 2;
+                $resource->last_updated = date("Y-m-d H:i:s");
+
+                if(!empty($this->request->data['tech_title'])) {
+                    $title = $this->request->data['tech_title'];
+                    $resource->title = $title;
+                }
+                
+                if(!empty($this->request->data['filepath'])) {
+                    $path = $this->request->data['filepath'];
+                    $resource->files = $path;
+                }
+            
+                $file = $this->request->data['gen_file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            } else {
+                // print_r($this->request->data['gen_file']);
+            }
+
+            if(!empty($this->request->data['tech_file']['name']))
+            {
+                $resource = TableRegistry::get('TechnicalSpecs')->get($id);
+                $resource->resource = 3;
+                $resource->last_updated = date("Y-m-d H:i:s");
+
+                if(!empty($this->request->data['tech_title'])) {
+                    $title = $this->request->data['tech_title'];
+                    $resource->title = $title;
+                }
+                
+                if(!empty($this->request->data['filepath'])) {
+                    $path = $this->request->data['filepath'];
+                    $resource->files = $path;
+                }
+            
+                $file = $this->request->data['tech_file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            } else {
+                // print_r($this->request->data['tech_file']);
+            }
+
+            if(!empty($this->request->data['app_file']['name']))
+            {
+                $resource = TableRegistry::get('TechnicalSpecs')->get($id);
+                $resource->resource = 1;
+                $resource->last_updated = date("Y-m-d H:i:s");
+
+                if(!empty($this->request->data['tech_title'])) {
+                    $title = $this->request->data['tech_title'];
+                    $resource->title = $title;
+                }
+                
+                if(!empty($this->request->data['filepath'])) {
+                    $path = $this->request->data['filepath'];
+                    $resource->files = $path;
+                }
+            
+                $file = $this->request->data['app_file'];
+                move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
+            } else {
+                // print_r($this->request->data['app_file']);
+            }
+            
+            TableRegistry::get('TechnicalSpecs')->save($resource);
+            return $this->redirect($this->referer());
+        }
 
         $this->set('generals', $query);
         $this->set('technicals', $query2);

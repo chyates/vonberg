@@ -20,7 +20,7 @@ use Cake\Routing\Router;
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <a href="/admin/resource-delete/" method="POST" id='delete-confirm' class="btn btn-primary">DELETE</a>
+                            <a class="btn btn-primary" href="/admin/resource-delete/" id="delete-confirm">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -105,6 +105,22 @@ use Cake\Routing\Router;
                                         'class' => 'btn btn-primary update-button',
                                         'value' => 'REPLACE'
                                     ]);
+                                    echo $this->Html->link(
+                                        $this->Html->tag('delete', 'Delete'),
+                                        '#',
+                                        array(
+                                            'id'=>'btn-confirm',
+                                            'class' => 'delete-toggle-link',
+                                            'data-pid' => $spec->techID,
+                                            'data-toggle'=> 'modal',
+                                            'data-file'=> $spec->title,
+                                            'data-target' => '#delete-check-modal',
+                                            'data-action'=> Router::url(
+                                                array('action'=>'deleteResource', $spec->techID)
+                                            ),
+                                            'escape' => false),
+                                        false
+                                    );
                                 ?>
                             </div>
                         </div>

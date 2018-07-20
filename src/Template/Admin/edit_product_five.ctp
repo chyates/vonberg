@@ -36,7 +36,7 @@
                                 ?>
                             </td>
                             <td class="d-flex model-table-data justify-content-between">
-                                <label class="fileContainer">Browse
+                                <label class="fileContainer dark">Browse
                                     <?php echo $this->Form->input('stp_files[]', ['label'=>False, 'type' => 'file', 'class'=>'form-control']);?>
                                 </label>
                                 <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_rowID]);?>
@@ -52,7 +52,7 @@
                 </tbody>
             </table>
             <div class="row no-gutters justify-content-between">
-                <a id="back-five" class="back btn btn-primary">Back</a>
+                <a id="back-five" class="back btn btn-primary" href=<?= "/admin/edit-product-four/". $part->partID ?>>Back</a>
                 <?= $this->Form->submit('Add product',array('class'=>'btn btn-primary'));?>
             </div>
         </div><!-- #five end -->

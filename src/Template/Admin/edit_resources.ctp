@@ -1,4 +1,12 @@
-<div id="cms-edit-resource-main" class="inner-main col-md-10 mx-auto p-5">
+<?php
+/**
+ * @var \App\View\AppView $this
+ * @var \App\Model\Entity\Dealer[]|\Cake\Collection\CollectionInterface $dealers
+ */
+use Cake\Routing\Router;
+?>
+
+<div id="cms-edit-resources-main" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">Edit Resources</h1>
 
     <div id="delete-check-modal" class="modal" tabindex="-1" role="dialog">
@@ -12,7 +20,7 @@
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <button type="button" class="btn btn-primary">Delete</button>
+                            <a class="btn btn-primary" href="/admin/resource-delete/" id="delete-confirm">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -20,114 +28,333 @@
         </div>
     </div>
 
-    <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+    <div class="col-10 mx-auto">
         <h2 class="category-title">General Information</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Edit Title</th>
-                    <th>Current File</th>
-                    <th>Replace File</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach($generals as $g_resource): ?>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="<?= $g_resource->title ?>"></td>
-                    <td>
-                        <?= $this->Text->truncate(
-                            $g_resource->files,
-                            15,
-                            [
-                                'ellipsis' => '...',
-                                'exact' => false
-                            ]) ?>
-                    </td>
-                    <td class="d-flex justify-content-between">
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="" data-toggle="modal" data-target="#delete-check-modal">Delete</a></p>
-                    </td>
-                </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div><!-- .rsrc-table end -->
+        <div class="spec-row row mt-5">
+            <div class="col-md-4">
+                <h4 class="rsrc-col-title">Edit Title</h4>
+            </div>
+            <div class="col-md-3">
+                <h4 class="rsrc-col-title">Current File</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="rsrc-col-title">Replace File</h4>
+            </div>
+        </div>
 
-    <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+        <div id="gen">
+            <?php foreach($generals as $g): ?>
+            <div class="gen row no-gutters py-3">
+                <div class="col-12">
+                    <?= $this->Form->create('edit-gen', 
+                    [
+                        'id' => 'edit-gen',
+                        'class' => 'edit-rsrc-form inactive',
+                        'enctype' => 'multipart/form-data'
+                    ]); 
+                    ?>
+
+                    <?php 
+                        echo $this->Form->input('id', 
+                        [
+                            'label' => false,
+                            'type' => 'text',
+                            'value' => $g->techID,
+                            'class' => 'hidden form-control',
+                        ]); 
+                    ?>
+                    <div class="spec-row row">
+                        <div class="col-md-4">
+                            <?php 
+                                echo $this->Form->input('tech_title', 
+                                [
+                                    'type' => 'text',
+                                    'class' => 'form-control',
+                                    'placeholder' => $g->title,
+                                    'label' => false,
+                                ]); 
+                            ?>
+                        </div>
+                        
+                        <div class="col-md-3">
+                            <p>
+                                <a href="<?= "/img/pdfs/technical_specifications/" . $g->files; ?>" target="_blank">
+                                <?php echo $this->Text->truncate(
+                                    $g->files, 15, 
+                                    [
+                                        'ellipsis' => '...',
+                                        'exact' => false
+                                    ]); 
+                                ?>
+                                </a>
+                            </p>
+                        </div>
+                        
+                        <div class="col-md-5">
+                            <div class="row no-gutters">
+                                <div class="col">
+                                    <label class="fileContainer dark">Browse
+                                        <?php 
+                                        echo $this->Form->input('filepath', 
+                                        [
+                                            'type' => 'text',
+                                            'class' => 'hidden form-control',
+                                            'label' => false,
+                                            ]); 
+                                            echo $this->Form->input('gen_file', 
+                                            [
+                                                'type' => 'file', 
+                                                'class'=>'form-control', 
+                                                'label' => false
+                                                ]);
+                                                ?>
+                                    </label>
+                                    <p class="file-text">No file chosen</p>
+                                    <?php 
+                                        echo $this->Form->submit('replace', 
+                                        [
+                                            'class' => 'btn btn-primary update-button',
+                                            'value' => 'REPLACE'
+                                        ]);
+                                        echo $this->Html->link(
+                                            $this->Html->tag('delete', 'Delete'),
+                                            '#',
+                                            array(
+                                                'id'=>'btn-confirm',
+                                                'class' => 'delete-toggle-link',
+                                                'data-pid' => $g->techID,
+                                                'data-toggle'=> 'modal',
+                                                'data-file'=> $g->title,
+                                                'data-target' => '#delete-check-modal',
+                                                'data-action'=> Router::url(
+                                                    array('action'=>'deleteResource', $g->techID)
+                                                ),
+                                                'escape' => false),
+                                            false
+                                        );
+                                    ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?= $this->Form->end(); ?>
+                </div>
+            </div>
+            <?php endforeach; ?><!-- general info resources end -->
+        </div>
+
         <h2 class="category-title">Technical Documentation</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Edit Title</th>
-                    <th>Current File</th>
-                    <th>Replace File</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($technicals as $t_resource): ?>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="<?= $t_resource->title ?>"></td>
-                    <td>
-                        <?= $this->Text->truncate(
-                            $t_resource->files,
-                            15,
-                            [
-                                'ellipsis' => '...',
-                                'exact' => false
-                            ]) ?>
-                    </td>
-                    <td class="d-flex justify-content-between">
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div><!-- .rsrc-table end -->
+        <div class="spec-row row mt-5">
+            <div class="col-md-4">
+                <h4 class="rsrc-col-title">Edit Title</h4>
+            </div>
+            <div class="col-md-3">
+                <h4 class="rsrc-col-title">Current File</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="rsrc-col-title">Replace File</h4>
+            </div>
+        </div>
 
-    <div class="table-responsive justify-content-between rsrc-table col-md-11 mx-auto">
+        <div id="tech">
+            <?php foreach($technicals as $t): ?>
+                <div class="tech row no-gutters py-3">
+                    <div class="col-12">
+                    <?= $this->Form->create('edit-tech', [
+                            'id' => 'edit-tech',
+                            'class' => 'edit-rsrc-form inactive',
+                            'enctype' => 'multipart/form-data'
+                        ]); ?>
+                        <?php 
+                            echo $this->Form->input('id', [
+                                'label' => false,
+                                'type' => 'text',
+                                'value' => $t->techID,
+                                'class' => 'hidden form-control',
+                            ]); 
+                        ?>
+                        <div class="spec-row row">
+                            <div class="col-md-4">
+                                <?php 
+                                    echo $this->Form->input('tech_title', [
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'placeholder' => $t->title,
+                                        'label' => false,
+                                    ]); 
+                                ?>
+                            </div>
+                            <div class="col-md-3">
+                                <p>
+                                    <a href="<?= "/img/pdfs/technical_specifications/" . $t->files; ?>" target="_blank">
+                                        <?php echo $this->Text->truncate(
+                                            $t->files, 15, 
+                                            [
+                                                'ellipsis' => '...',
+                                                'exact' => false
+                                            ]); 
+                                        ?>
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <label class="fileContainer dark">Browse
+                                        <?php 
+                                            echo $this->Form->input('filepath', 
+                                            [
+                                                'type' => 'text',
+                                                'class' => 'hidden form-control',
+                                                'label' => false,
+                                            ]); 
+                                            echo $this->Form->input('tech_file', 
+                                            [
+                                                'type' => 'file', 
+                                                'class'=>'form-control', 
+                                                'label' => false
+                                            ]);
+                                        ?>
+                                        </label>
+                                        <p class="file-text">No file chosen</p>
+                                        <?php 
+                                            echo $this->Form->submit('replace', 
+                                            [
+                                                'class' => 'btn btn-primary update-button',
+                                                'value' => 'REPLACE'
+                                            ]);
+                                            echo $this->Html->link(
+                                                $this->Html->tag('delete', 'Delete'),
+                                                '#',
+                                                array(
+                                                    'id'=>'btn-confirm',
+                                                    'class' => 'delete-toggle-link',
+                                                    'data-pid' => $t->techID,
+                                                    'data-toggle'=> 'modal',
+                                                    'data-file'=> $t->title,
+                                                    'data-target' => '#delete-check-modal',
+                                                    'data-action'=> Router::url(
+                                                        array('action'=>'deleteResource', $t->techID)
+                                                    ),
+                                                    'escape' => false),
+                                                false
+                                            );
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?= $this->Form->end(); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?><!-- tech doc resources end -->
+        </div>
+
         <h2 class="category-title">Application Information</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Edit Title</th>
-                    <th>Current File</th>
-                    <th>Replace File</th>
-                </tr>
-            </thead>
-            <tbody>
-            <?php foreach($applications as $a_resource): ?>
-                <tr>
-                    <td><input type="text" class="form-control" placeholder="<?= $a_resource->title ?>"></td>
-                    <td>
-                        <?= $this->Text->truncate(
-                            $a_resource->files,
-                            15,
-                            [
-                                'ellipsis' => '...',
-                                'exact' => false
-                            ]) ?>
-                    </td>
-                    <td class="d-flex justify-content-between">
-                        <label class="fileContainer">Browse
-                            <input type="file" class="form-control"/>
-                        </label>
-                        <p class="file-text">No file chosen</p>
-                        <button type="submit" class="btn btn-primary update-button">Replace</button>
-                        <p><a href="">Delete</a></p>
-                    </td>
-                </tr>
-            <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div><!-- .rsrc-table end -->
+        <div class="spec-row row mt-5">
+            <div class="col-md-4">
+                <h4 class="rsrc-col-title">Edit Title</h4>
+            </div>
+            <div class="col-md-3">
+                <h4 class="rsrc-col-title">Current File</h4>
+            </div>
+            <div class="col-md-5">
+                <h4 class="rsrc-col-title">Replace File</h4>
+            </div>
+        </div>
+
+        <div id="app">
+            <?php foreach($applications as $a): ?>
+                <div class="app row no-gutters py-3">
+                    <div class="col-12">
+                    <?= $this->Form->create('edit-app', [
+                            'id' => 'edit-app',
+                            'class' => 'edit-rsrc-form inactive',
+                            'enctype' => 'multipart/form-data'
+                        ]); ?>
+                        <?php 
+                            echo $this->Form->input('id', [
+                                'label' => false,
+                                'type' => 'text',
+                                'value' => $a->techID,
+                                'class' => 'hidden form-control',
+                            ]); 
+                        ?>
+                        <div class="spec-row row">
+                            <div class="col-md-4">
+                                <?php 
+                                    echo $this->Form->input('tech_title', [
+                                        'type' => 'text',
+                                        'class' => 'form-control',
+                                        'placeholder' => $a->title,
+                                        'label' => false,
+                                    ]); 
+                                ?>
+                            </div>
+                            <div class="col-md-3">
+                                <p>
+                                    <a href="<?= "/img/pdfs/technical_specifications/" . $a->files; ?>" target="_blank">
+                                        <?php echo $this->Text->truncate(
+                                            $a->files, 15, 
+                                            [
+                                                'ellipsis' => '...',
+                                                'exact' => false
+                                            ]); 
+                                        ?>
+                                    </a>
+                                </p>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="row no-gutters">
+                                    <div class="col">
+                                        <label class="fileContainer dark">Browse
+                                        <?php 
+                                            echo $this->Form->input('filepath', 
+                                            [
+                                                'type' => 'text',
+                                                'class' => 'hidden form-control',
+                                                'label' => false,
+                                            ]); 
+                                            echo $this->Form->input('app_file', 
+                                            [
+                                                'type' => 'file', 
+                                                'class'=>'form-control', 
+                                                'label' => false
+                                            ]);
+                                        ?>
+                                        </label>
+                                        <p class="file-text">No file chosen</p>
+                                        <?php 
+                                            echo $this->Form->submit('replace', 
+                                            [
+                                                'class' => 'btn btn-primary update-button',
+                                                'value' => 'REPLACE'
+                                            ]);
+                                            echo $this->Html->link(
+                                                $this->Html->tag('delete', 'Delete'),
+                                                '#',
+                                                array(
+                                                    'id'=>'btn-confirm',
+                                                    'class' => 'delete-toggle-link',
+                                                    'data-pid' => $a->techID,
+                                                    'data-toggle'=> 'modal',
+                                                    'data-file'=> $a->title,
+                                                    'data-target' => '#delete-check-modal',
+                                                    'data-action'=> Router::url(
+                                                        array('action'=>'deleteResource', $a->techID)
+                                                    ),
+                                                    'escape' => false),
+                                                false
+                                            );
+                                        ?>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <?= $this->Form->end(); ?>
+                    </div>
+                </div>
+            <?php endforeach; ?><!-- app info resources end -->
+        </div>
+    </div>
 </div><!-- #cms-edit-resource-main end -->

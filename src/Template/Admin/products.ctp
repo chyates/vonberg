@@ -18,14 +18,7 @@ use Cake\Routing\Router;
                         <p>from the system? This action cannot be undone.</p>
                         <div class="btn-row">
                             <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <?php
-                                echo $this->Form->postLink(
-                                    'Delete',
-                                    array('action' => 'partDelete'),
-                                    array('id'=>'delete-confirm','class' => 'btn btn-primary'),
-                                    false
-                                );
-                            ?>
+                            <a class="btn btn-primary" href="/admin/part-delete/" id="delete-confirm">Delete</a>
                         </div>
                     </div>
                 </div>
@@ -47,7 +40,7 @@ use Cake\Routing\Router;
             </thead>
             <tbody>
                 <?php foreach ($parts as $part): ?>
-                <tr>
+                <tr id="<?= $part->partID ?>">
                     <td class="model-table-data">
                         <?php if($part->series->name) {
                             echo h($part->series->name);
@@ -72,6 +65,7 @@ use Cake\Routing\Router;
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                     <td class="model-table-data">
                         <div class="form-check form-check-inline">
+                            <input type="hidden" class="form-control" name="part_id" value="<?= $part->partID ?>"/>
                             <?php if($part->new_list == 1) { ?>
                                 <input class="form-check-input" type="checkbox" name="new_list" value="<?= $part->expires; ?>" checked>
                                 <label class="form-check-label"><?= h($part->expires) ?> days</label>
@@ -90,6 +84,7 @@ use Cake\Routing\Router;
                                     'id'=>'btn-confirm',
                                     'class' => 'delete-toggle-link',
                                     'data-toggle'=> 'modal',
+                                    'data-pid' => $part->partID,
                                     'data-file'=> $part->series->name,
                                     'data-target' => '#delete-check-modal',
                                     'data-action'=> Router::url(

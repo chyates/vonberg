@@ -29,8 +29,8 @@
                         <a href="/admin/priceExport">model_prices.csv</a>
                     </td>
                     <td>11/08/2017</td>
-                    <td class="d-flex justify-content-between">
-                        <label class="fileContainer">Browse
+                    <td class="model-table-data d-flex justify-content-between">
+                        <label class="fileContainer light">Browse
                             <input type="file" class="form-control">
                         </label>
                         <p class="file-text">No file chosen</p>
@@ -45,8 +45,8 @@
                         <?= $this->Html->link(__('dealers.csv'), ['action' => 'dealerExport']) ?>
                     </td>
                     <td><?= date('m/d/Y', $dealer_time);?></td>
-                    <td class="d-flex justify-content-between">
-                        <label class="fileContainer">Browse
+                    <td class="model-table-data d-flex justify-content-between">
+                        <label class="fileContainer light">Browse
                             <input type="file" class="form-control">
                         </label>
                         <p class="file-text">No file chosen</p>
@@ -60,8 +60,8 @@
                         </span>    
                         <a href="/img/pdfs/VONBERG-Product_Catalog.pdf" target="_blank">VonbergCatalogue.pdf</a></td>
                     <td><?= date('m/d/Y', $catalog_time);?></td>
-                    <td class="d-flex justify-content-between">
-                        <label class="fileContainer">Browse
+                    <td class="model-table-data d-flex justify-content-between">
+                        <label class="fileContainer light">Browse
                             <input type="file" class="form-control">
                         </label>
                         <p class="file-text">No file chosen</p>

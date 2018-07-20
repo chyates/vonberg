@@ -29,7 +29,19 @@
                         <?php foreach ($part->model_table->model_table_rows as $row):
                          if ($mobRow === 1) {
                              echo '<div class="form-check check-req">';
-                             echo $this->Form->control('model[]', ['type' => 'checkbox', 'value'=> $row->model_table_rowID, 'class' => 'form-check-input', 'label' => ['text' => 'Model ' . $row->model_table_row_text, 'class' => 'form-check-label'], 'id' => $row->model_table_rowID]);
+                             echo $this->Form->control('model[]', 
+                             [
+                                 'type' => 'checkbox', 
+                                 'value'=> $row->model_table_rowID, 
+                                 'class' => 'form-check-input', 
+                                 'label' => 
+                                    [
+                                     'text' => 'Model ' . $row->model_table_row_text, 
+                                     'class' => 'form-check-label'
+                                    ], 
+                                'id' => $row->model_table_rowID,
+                                'hiddenField' => false
+                            ]);
                              echo '</div>';
                             }
                             if ($mobRow >= $width){
@@ -366,8 +378,8 @@
                 data: fd,
                 cache: false,
                 error: function (xhr, ajaxOptions, thrownError) {
-                    //alert(xhr.responseText);
-                    alert("Error: "+thrownError);
+                    console.log(xhr.responseText);
+                    console.log("Error: "+thrownError);
                 },
                 xhr: function () {
                     var xhr = new window.XMLHttpRequest();
@@ -382,7 +394,7 @@
                 },
                 success: function (response) {
                     // console.log("Model information");
-                    $(".modal_message").html(data);
+                    $(".modal_message").html(response);
                 }
             });
             $(this).hide();
