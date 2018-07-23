@@ -60,13 +60,11 @@ class ProductsController extends AppController
     public function get_cat()
     {
         return TableRegistry::get('Categories')->find();
-
     }
 
     public function get_series()
     {
         return TableRegistry::get('Series')->find();
-
     }
 
     public function catalog($cat = null)
@@ -74,11 +72,7 @@ class ProductsController extends AppController
         $this->viewBuilder()->setLayout('default');
         $this->loadModel('Parts');
         if (!empty($cat)) {
-        $query =  $this->Parts->find('all',
-            [   'conditions' => ['Parts.categoryID' => $cat],
-                'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
-                ])
-            ->order(['Series.name'=>'ASC']);
+        $query =  $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']])->order(['Series.name'=>'ASC']);
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }
@@ -88,12 +82,9 @@ class ProductsController extends AppController
         $textblocks = TableRegistry::get('TextBlocks')->find();
         $specs = TableRegistry::get('Specifications')->find();
 
-
-
         $this->set('types', $types);
         $this->set('parts', $query);
         $this->set('category', $cat2);
-
     }
 
     public function type($type = null)
@@ -102,38 +93,28 @@ class ProductsController extends AppController
         $upperSpace = ucwords($spaceType);
         $this->loadModel('Parts');
         if (!empty($upperSpace)) {
-        $query =  $this->Parts->find('all',
-            [   'conditions' => ['Parts.typeID' => $upperSpace],
-                'contain' => ['Connections', 'Types','Series','Styles', 'Categories']
-                ])
-            ->order(['Series.name'=>'ASC']);
+        $query =  $this->Parts->find('all', ['conditions' => ['Parts.typeID' => $upperSpace], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']])->order(['Series.name'=>'ASC']);
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.typeID' => $upperSpace],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }
 
         $type2 = TableRegistry::get('Types')->get($upperSpace);
         $cat = TableRegistry::get('Categories')->find();
+
         $this->set('category', $cat);
-// $textblocks = TableRegistry::get('TextBlocks')->find();
-        // $specs = TableRegistry::get('Specifications')->find();
-
-
-
         $this->set('types', $type2);
         $this->set('parts', $query);
-        // $this->set('category', $cat2);
-
     }
 
     public function search()
     {
         $this->loadModel('Parts');
         $query = $this->Parts
-            // Use the plugins 'search' custom finder and pass in the
-            // processed query params
-            ->find('search', ['search' => $this->request->getQueryParams(),'recursive' => 2])
-            // You can add extra things to the query if you need to
-            ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+        // Use the plugins 'search' custom finder and pass in the
+        // processed query params
+        ->find('search', ['search' => $this->request->getQueryParams(),'recursive' => 2])
+        // You can add extra things to the query if you need to
+        ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         $this->set('parts', $this->paginate($query));
     }
@@ -148,18 +129,12 @@ class ProductsController extends AppController
         $seriesID = $this->request->query('seriesID');
         $q = $this->request->query('q');
         $rows=NULL;
-   /*     if (is_null($seriesID) && empty($q)) {
-            // break out here
-            $series = TableRegistry::get('Series')->find();
-            $this->set(compact('series'));
-            $rows = NULL;
-        }*/
         if ($q) {
             $conn = ConnectionManager::get('default');
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
             $query = 'SELECT p.partID, s.name as series, st.name as style, c.name as conn, ty.name as tipe, mp.unit_price, mp.model_text
             FROM
-              model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
+                model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
             LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
             LEFT JOIN model_prices as mp ON mp.model_text = mtr.model_table_row_text
             LEFT JOIN series as s ON p.seriesID = s.seriesID
@@ -177,51 +152,49 @@ class ProductsController extends AppController
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
 
             $query = 'SELECT
-    p.partID,
-    s.name as series,
-    st.name as style,
-    c.name as conn,
-    ty.name as tipe,
-    mp.unit_price,
-    mp.model_text  
-FROM
-    series as s,
-    styles as st,
-    connections as c,
-    parts as p,
-    types as ty,
-    model_prices as mp,
-    model_table_rows as mtr,
-    model_tables as mt
-WHERE
-	s.seriesID = '.$seriesID.'
-AND
-	s.seriesID = p.seriesID
-AND
-	p.partID = mt.partID
-AND
-	mt.model_tableID = mtr.model_tableID
-AND
-	mtr.model_table_row_text = mp.model_text
-AND
-    p.styleID = st.styleID
-AND
-    p.connectionID  = c.connectionID
-AND
-	p.typeID = ty.typesID
-ORDER BY
-    mp.model_text';
+                p.partID,
+                s.name as series,
+                st.name as style,
+                c.name as conn,
+                ty.name as tipe,
+                mp.unit_price,
+                mp.model_text  
+            FROM
+                series as s,
+                styles as st,
+                connections as c,
+                parts as p,
+                types as ty,
+                model_prices as mp,
+                model_table_rows as mtr,
+                model_tables as mt
+            WHERE
+                s.seriesID = '.$seriesID.'
+            AND
+                s.seriesID = p.seriesID
+            AND
+                p.partID = mt.partID
+            AND
+                mt.model_tableID = mtr.model_tableID
+            AND
+                mtr.model_table_row_text = mp.model_text
+            AND
+                p.styleID = st.styleID
+            AND
+                p.connectionID  = c.connectionID
+            AND
+                p.typeID = ty.typesID
+            ORDER BY
+                mp.model_text';
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
         }
         $this->set('prices', $rows);
-        $this->loadModel('Series');
-        $matchingTasks= $this->Series->association('Parts')->find()
-            ->select(['seriesID'])// id of product in Tasks Table
-            ->distinct();
 
-        $series = $this->Series->find()
-            ->where(['seriesID IN' => $matchingTasks])->orderAsc('name');
+        $this->loadModel('Series');
+        $matchingTasks= $this->Series->association('Parts')->find()->select(['seriesID'])->distinct();
+        $series = $this->Series->find()->where(['seriesID IN' => $matchingTasks])->orderAsc('name');
+
         $this->set(compact('series'));
     }
 

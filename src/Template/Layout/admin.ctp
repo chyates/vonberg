@@ -430,9 +430,12 @@ jQuery(document).ready(function($) {
             }
         }
 
-        if($(this).parents().siblings('label.sr-only').length > 0) {
+        if($(this).parents('.fileContainer').siblings('label.sr-only').length > 0) {
             toChange = $(this).parents('.form-group').siblings('p.file-text');
             $(toChange).html(substr);
+            if($(this).parents('.form-group').siblings('button.update-button').length > 0) {
+                $(this).parents('.form-group').siblings('button.update-button').show();
+            }
         }
         
         $(this).parents('label.fileContainer').toggleClass('dark light');

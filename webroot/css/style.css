@@ -73,6 +73,15 @@ body {
     font-weight: 600;
 }
 
+h3.empty-data {
+    font-size: 18px;
+    color: #017d44;
+    letter-spacing: 0;
+    line-height: 25px;
+    font-family: "Poppins", sans-serif;
+    text-transform: none;
+}
+
 /* h4, d/t */
 h4 {
     font-size: 16px;
@@ -2156,13 +2165,13 @@ hr.edit-rsrc-div:last-of-type {
 
 /* === MODEL PRICING: GLOBAL / DESKTOP === */
 
-#cms-model-price-main .form-inline div.form-group {
-    margin-right: 1vw;
-}
-
 #cms-model-price-table .row {
     padding-top: .75em;
     padding-bottom: .75em
+}
+
+#cms-model-price-main .rsrc-table.table-responsive p.file-text {
+    margin: 0 1vw;
 }
 
 #cms-model-price-table form {

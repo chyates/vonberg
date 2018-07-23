@@ -104,7 +104,6 @@
                     }
                 }
             }
-            // echo $seg;
         ?>
         <div class="single-prod-left-col col-sm-7 col-12 px-lg-3">
             <div class="left-info">
@@ -125,7 +124,13 @@
             <div class="left-desc mt-sm-3">
                 <h3 class="product-name">Description</h3>
                 <p class="product-info">
-                    <?php echo $part->description; ?>
+                    <?php 
+                        if(!empty($part->description)) {
+                            echo $part->description;
+                        } else {
+                            echo "No description provided";
+                        } 
+                    ?>
                 </p>
             </div>
 
@@ -173,26 +178,37 @@
                             echo $block->header;
                             echo '</h3>
                         <ul class="right-list px-3">';
+                        } 
+                        if(count($block->text_block_bullets) > 2) {
+                            foreach ($block->text_block_bullets as $bullet):
+                                echo '<li class="mt-2 pl-3">' . $bullet->bullet_text . '</li>';
+                            endforeach; 
+                        } else {
+                            echo "<li class='mt-2 pl-3'>No bullets provided</li>";
                         }
-                        foreach ($block->text_block_bullets as $bullet):
-                            echo '<li class="mt-2 pl-3">' . $bullet->bullet_text . '</li>';
-                        endforeach; ?>
-                        <?php
                         $typecount = $block->header;
                     endforeach;
                     echo '</ul>';
-                }?>
+                } ?>
 
                 <h3 class="product-name">Specifications</h3>
                 <div class="spec-table table-sm">
                     <table class="table">
-                    <?php
-                    foreach ($part->specifications as $spec): ?>
+                    <?php 
+                        if(count($part->specifications) > 2) {
+                            foreach ($part->specifications as $spec): 
+                    ?>
                         <tr>
                             <th><?php echo $spec->spec_name;?></th>
                             <td><?php echo $spec->spec_value;?></td>
                         </tr>
-                    <?php endforeach;?>
+                    <?php 
+                        endforeach; 
+                    } else { ?>
+                        <tr>
+                            <td>No specifications found</td>
+                        </tr>
+                     <?php } ?>
                     </table>
                 </div>
             </div>
@@ -209,88 +225,106 @@
     </div><!-- #single-prod-main end -->
 
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5">
+        <?php if(count($part->model_table) > 2){ ?>
         <div class="table-responsive">
             <table class="model-table table">
-
                 <thead>
-                <?php
-                $columns=0;
-                foreach ($part->model_table->model_table_headers as $header): ?>
-                <th class="model-table-header"><?php echo $header->model_table_text; ?></th>
-
+                <?php if(count($part->model_table_headers) > 2) {
+                    $columns=0;
+                    foreach ($part->model_table->model_table_headers as $header): ?>
+                        <th class="model-table-header"><?php echo $header->model_table_text; ?></th>
                 <?php
                     $columns++;
-                endforeach; ?>
+                    endforeach; 
+                }
+                ?>
                 </thead>
 
                 <tbody>
                 <tr>
-                    <?php
-                    $count=1;
-                    $mobCount = 0;
-                    foreach ($part->model_table->model_table_rows as $row):
-                        echo '<td class="model-table-data">'.$row->model_table_row_text.'</td>';
-                        if ($count >= $columns){
-                            echo '</tr>';
-                            $count=0;
+                    <?php 
+                        if(count($part->model_table_rows) > 2) {
+                            $count=1;
+                            $mobCount = 0;
+                            foreach ($part->model_table->model_table_rows as $row):
+                                echo '<td class="model-table-data">'.$row->model_table_row_text.'</td>';
+                                if ($count >= $columns){
+                                    echo '</tr>';
+                                    $count=0;
+                                }
+                                $count++;
+                                $mobCount++;
+                            endforeach;
                         }
-                        $count++;
-                        $mobCount++;
-                    endforeach;
                     ?>
                 </tr>
                 </tbody>
             </table>
         </div>
-
+        <?php 
+            } else {
+                echo "<h3 class='empty-data'>No model table provided</h3>"; 
+            } 
+        ?>
     </div><!-- .series-model-table end -->
 
     <!-- Mobile model table/dropdowns -->
     <div id="mob-model-tables" class="col-12">
         <div class="row no-gutters pt-4 pb-3">
-            <div class="col-4">
-            <?php $mobHead = 1;
-            $divID = 1;
-            for($i = 0; $i <= ($mobCount/$columns)-1; $i++) {
-                foreach ($part->model_table->model_table_headers as $header):
-                    if($mobHead === 2) {
-                        echo '<div class="mob-hidden ' . strval($divID) . '">';
-                    } if($mobHead === 1) { ?>
-                    <p class="top-data model-table-header"><?php echo $header->model_table_text; ?></p>
-
-                <?php } else { ?>
-                    <p class="model-table-header"><?php echo $header->model_table_text; ?></p>
-                <?php } if ($mobHead >= $columns){
-                    echo '</div>';
-                    $mobHead=0;
-                }
-                $mobHead++;
-            endforeach; 
-            $divID++;
+            <?php 
+                if(count($part->model_table) > 2) { 
+            ?>
+                <div class="col-4">
+                    <?php $mobHead = 1;
+                        $divID = 1;
+                        for($i = 0; $i <= ($mobCount/$columns)-1; $i++) {
+                            foreach ($part->model_table->model_table_headers as $header):
+                                if($mobHead === 2) {
+                                    echo '<div class="mob-hidden ' . strval($divID) . '">';
+                                } if($mobHead === 1) { ?>
+                                <p class="top-data model-table-header"><?php echo $header->model_table_text; ?></p>
+                        <?php
+                                } else { 
+                        ?>
+                                <p class="model-table-header"><?php echo $header->model_table_text; ?></p>
+                        <?php 
+                            } if ($mobHead >= $columns) {
+                                echo '</div>';
+                                $mobHead=0;
+                            }
+                            $mobHead++;
+                            endforeach; 
+                        $divID++;
+                            } 
+                    ?>
+                </div>
+                <div class="col-8">
+                    <?php 
+                        $mobRow = 1;
+                        $rowID = 1;
+                        foreach ($part->model_table->model_table_rows as $row):
+                            if($mobRow === 2) {
+                                echo '<div class="mob-hidden ' . $rowID . '">';
+                                $rowID++;
+                            } if ($mobRow === 1) {
+                                echo '<p class="top-data model-table-data">'.$row->model_table_row_text.'<a class="drop-toggle" href="">View More</a><span class=""><img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/></span></p>';
+                            } else {
+                                echo '<p class="model-table-data">'.$row->model_table_row_text.'</p>';
+                            }
+                            if ($mobRow >= $columns){
+                                echo '</div>';
+                                $mobRow=0;
+                            }
+                            $count++;
+                            $mobRow++;
+                        endforeach;
+                    ?>
+                </div>
+            <?php 
+                } else {
+                    echo "<h3 class='empty-data'>No model table provided</h3>";
                 } 
             ?>
-            </div>
-            <div class="col-8">
-            <?php $mobRow = 1;
-            $rowID = 1;
-            foreach ($part->model_table->model_table_rows as $row):
-                if($mobRow === 2) {
-                    echo '<div class="mob-hidden ' . $rowID . '">';
-                    $rowID++;
-                } if ($mobRow === 1) {
-                    echo '<p class="top-data model-table-data">'.$row->model_table_row_text.'<a class="drop-toggle" href="">View More</a><span class=""><img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/></span></p>';
-                } else {
-                    echo '<p class="model-table-data">'.$row->model_table_row_text.'</p>';
-                }
-                if ($mobRow >= $columns){
-                    echo '</div>';
-                    $mobRow=0;
-                }
-                $count++;
-                $mobRow++;
-            endforeach;
-            ?>
-            </div>
         </div>
     </div>
 
@@ -355,13 +389,6 @@
   })();
 
     $(document).ready(function(){
-        // var stp = $("#get-stp-modal #get-stp-form input.form-check-input[name=model]");
-        // console.log("Amount of model checkboxes", stp.length);
-        // console.log("STP: ", stp);
-        // for (var x = 0; x < stp.length; x++) {
-        //     console.log("This: ", $(stp[x]).val());
-        //     // console.log("Each value: ", sIndex.attr('id'));
-        // }
         var feedback = '<p class="invalid-feedback">This field is required.</p>';
         $("input:not(input[type=hidden])").each(function(index) {
             $(this).after(feedback)

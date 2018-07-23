@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-lg-4 col-sm-5">
-        <?php if(!empty($prices)) { ?>
+        <?php if(count($prices) > 2) { ?>
             <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
         <?php } else { ?>
             <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
@@ -32,7 +32,15 @@
         </div>
     </div>
 
-    <?php if (!empty($prices)) { ?>
+    <?php 
+        $curr_url = $this->request->query;
+        $q_exists = false;
+        if(count($curr_url) > 0) {
+            $q_exists = true;
+        }
+    ?>
+
+    <?php if (count($prices) > 2) { ?>
     <!-- The following table should populate whichever data the user searched for -->
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
         <div class="table-responsive col-lg-10 col-12 mx-auto">
@@ -59,11 +67,20 @@
             </table>
         </div>
     </div><!-- .series-model-table end -->
-    <?php } ?>
+    <?php } else { ?>
+        <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
+            <div class="col-lg-10 col-12 mx-auto">
+                <?php if($q_exists != false) { ?>
+                    <h3 class='empty-data'>No prices found</h3>
+            <?php } ?>
+            </div>
+        </div>
+   <?php } ?>
 
     <!-- Mobile model table/dropdowns -->
     <div id="mob-prices-tables" class="col-12 my-3">
-        <?php foreach($prices as $mob_price): ?>
+        <?php if(isset($prices)) {
+        foreach($prices as $mob_price): ?>
         <div class="row no-gutters">
             <div class="col-4">
                 <p class="top-data model-table-header">Model</p>
@@ -84,7 +101,14 @@
                 </div>
             </div>
         </div>
-        <?php endforeach; ?>
+        <?php endforeach; 
+        } else { ?>
+            <div class="row no-gutters">
+                <div class="col-12">
+                    <h3 class="empty-data">No prices found</h3>
+                </div>
+            </div>
+        <?php } ?>
     </div>
 
     <div class="row no-gutters">

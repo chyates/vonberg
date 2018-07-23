@@ -11,7 +11,7 @@ class LocatorController extends AppController
     public function beforeFilter(Event $event)
     {
        // allow all action
-        $this->Auth->allow([ 'index']);
+        $this->Auth->allow(['index']);
     }
 
     public function index()

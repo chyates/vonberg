@@ -52,7 +52,7 @@
                         </div>
                         
                         <div class="col-md-3">
-                            <p>11/08/2017</p>
+                            <p>07/23/2018</p>
                         </div>
                         
                         <div class="col-md-5">
@@ -67,7 +67,7 @@
                                                 'label' => false,
                                             ]); 
                                                 
-                                            echo $this->Form->input('csv_file',
+                                            echo $this->Form->input('csv',
                                             [
                                                 'type' => 'file',
                                                 'class' => 'form-control',

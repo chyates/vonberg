@@ -37,7 +37,7 @@ class AdminController extends AppController
         $cat = TableRegistry::get('Categories')->find();
         $this->set('parts', $query);
         $this->set('categories', $cat);
-        $this->set('dealer_time', filemtime(WWW_ROOT.'csv/upload_dealers.csv'));
+        $this->set('dealer_time', filemtime(WWW_ROOT.'csv/dealers.csv'));
         $this->set('catalog_time', filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
     }
 
@@ -206,7 +206,6 @@ class AdminController extends AppController
             }
             if($result = $this->Parts->save($part)) {
                 $data['response'] = $part->expires;
-                // return json_encode($part);
             } else {
                 // echo "Error: some error";
             }
@@ -1003,7 +1002,6 @@ class AdminController extends AppController
         $this->loadModel('TechnicalSpecs');
         $spec = $this->TechnicalSpecs->get($id);
         if ($this->TechnicalSpecs->delete($spec)) {
-            // $this->Flash->success(__('The resource with id: {0} has been deleted.', h($id)));
             return $this->redirect($this->referer());
         }
     }
@@ -1045,7 +1043,7 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('ModelPrices');
         $series = TableRegistry::get('Series')->find('all');
-        $pricing = TableRegistry::get('ModelPrices')->find('all');
+        $pricing = TableRegistry::get('ModelPrices')->find('all')->orderAsc('model_text');
 
         if($this->request->is('post') || $this->request->is('put'))  {
             $id = intval($this->request->data['id']);
@@ -1067,7 +1065,7 @@ class AdminController extends AppController
     {
         if($_FILES['csv']){
             $filename = explode('.', $_FILES['csv']['name']);
-            if($filename[1]=='csv'){
+            if($filename[1] =='csv'){
                 $MP = TableRegistry::get('ModelPrices');
                 $old = $MP->find('all')->toArray();
                 foreach ($old as $o) {
@@ -1085,7 +1083,6 @@ class AdminController extends AppController
             }
         }
         $this->render(FALSE);
-        //$this->Flash->set('Model Prices Imported');
         return $this->redirect($this->referer());
     }
 

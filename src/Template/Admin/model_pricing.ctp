@@ -16,7 +16,7 @@
                             <img class="img-fluid" src="/img/download.svg"/>
                         </span>
                         <A HREF="/admin/priceExport">model_prices.csv</A></td>
-                    <td class="justify-content-between">
+                    <td class="d-flex justify-content-between">
                         <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>
                         <div class="form-group">
                             <label class="sr-only" for="csv"> CSV </label>

@@ -5,7 +5,6 @@ use App\Controller\AppController;
 use Cake\Event\Event;
 
 use Cake\Mailer\Email;
-// use Cake\Network\Email;
 use Cake\ORM\TableRegistry;
 
 class ContactController extends AppController
@@ -53,29 +52,13 @@ class ContactController extends AppController
         $this->loadModel('Parts');
         $this->loadModel('ModelTableRows');
 
-        // extract part id from url:
-        $part_id = '';
-        $curr_url = $this->request->here;
-        for($j = 0; $j < strlen($curr_url); $j++) {
-            if($curr_url[$j] == '/' && $curr_url[$j-1] == 'w') {
-                for($x = $j; $x < strlen($curr_url); $x++) {
-                    $part_id .= $curr_url[$x];
-                }
-            }
-        }
-        $final_id = 15;
-        // echo "TEsting echo" . $final_id;
-        // print_r($this->request->data['model']);
-
         // instantiate empty STP user and STP file objects:
         $emp=$this->StpUsers->newEntity();
-        // $association = $this->StpFile->newEntity();
 
         if($this->request->is('post') || $this->request->is('put')) {
             // update STP user object
             $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
             if($result=$this->StpUsers->save($emp)) {
-                // print_r($result);
                 // Send email to client:
                 $file_paths = '';
                 if(!empty($this->request->data['model'])) {
@@ -86,22 +69,20 @@ class ContactController extends AppController
                         }
                     }
                 }
+
                 // Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
                 $data['response'] = "Success: data saved";
                 $data['debug'] = $result;
                 $models = [];
                 $this->Flash->success(__('The request has been saved.'));
                 foreach ($this->request->data['model'] as $model) {
-                    $stp=$this->StpFile->newEntity();
-                    $stp->stp_userID = $result->stp_userID;
-                    $stp->partID = $final_id;
-                    $stp->modelID = intval($model);
-                    if($this->StpFile->save($stp)) {
-                        echo "Successfully saved";
-                    } else {
-                        echo "Couldn't save";
-                    }
+                    $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
+                    $cmd_vars .= 'USERID=' . $result->stp_userID . ' ';
+                    $cmd_vars .= 'PARTID=' . $this->request->data['part'] . ' ';
+                    $cmd_vars .= 'MODELID=' . $model . ' ';
+                    exec($cmd_vars . '/home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/doTheStp.js');
                 }
+                exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
             }
             else {
                 $data['response'] = "Error: some error";
@@ -111,86 +92,7 @@ class ContactController extends AppController
         }
         $this->set(compact('data'));
         $this->set('_serialize', 'data');
-    }
-
-    // public function stp()
-    // {
-    //     $data = [];
-    //     $this->loadModel('StpUsers');
-    //     $this->loadModel('StpFile');
-    //     $this->loadModel('Parts');
-    //     $this->loadModel('ModelTableRows');
-
-    //     $userTable = TableRegistry::get('StpUsers');
-    //     $filesTable = TableRegistry::get('StpFile');
-
-    //     // extract part id from url:
-    //     $part_id = '';
-    //     $curr_url = $this->request->here;
-    //     for($j = 0; $j < strlen($curr_url); $j++) {
-    //         if($curr_url[$j] == '/' && $curr_url[$j-1] == 'w') {
-    //             for($x = $j; $x < strlen($curr_url); $x++) {
-    //                 $part_id .= $curr_url[$x];
-    //             }
-    //         }
-    //     }
-        
-    //     $final_id = intval($part_id);
-    //     $part = $this->Parts->get($final_id);
-    //     $s_user = $this->StpUsers->newEntity();
-    //     $emp = $this->StpUsers->newEntity();
-        
-    //     if($this->request->is('post') || $this->request->is('put')) {
-
-    //         // update STP user object
-    //         // $s_user->email = $this->request->data['email'];
-    //         // $s_user->first_name = $this->request->data['first_name'];
-    //         // $s_user->last_name = $this->request->data['last_name'];
-    //         // $s_user->company = $this->request->data['company'];
-    //         // $s_user->last_login = date("Y-m-d H:i:s");
-    //         $s_user = $this->StpUsers->patchEntity($s_user, $this->request->data);
-    //         $emp=$this->StpUsers->patchEntity($emp, $this->request->data);
-
-    //         if($result = $this->StpUsers->save($emp)) {
-    //             $file_paths = '';
-
-    //             // if(!empty($this->request->data['model'])) {
-    //             //     foreach($this->request->data['model'] as $str_model) {
-    //             //         // $mtr = TableRegistry::get('ModelTableRows')->get(intval($str_model));
-    //             //         if(strval($str_model) != "0") {
-    //             //             $file_paths .= strval($str_model);
-    //             //             $file_paths .= ".stp, ";
-    //             //         }
-
-    //             //         $f_record = $filesTable->newEntity();
-    //             //         $f_record->stp_userID = $s_user->stp_userID;
-    //             //         // $f_record->partID = $part->partID;
-    //             //         // $f_record->modelID = $mtr->model_table_rowID;
-
-    //             //         if($this->StpFile->save($f_record)) {
-    //             //             $this->Flash->success(__('The file associations have been saved.'));
-    //             //         }
-    //             //     }
-    //             // } else {
-    //             //     echo "Models are empty";
-    //             // }
-
-    //             // Send email to client:
-    //             // Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
-    //             $data['response'] = "Success: data saved";
-    //             // $data['debug'] = $result;
-    //             $models = [];
-    //             $this->Flash->success(__('The request has been saved.'));
-    //         }
-    //         else {
-    //             $data['response'] = "Error: some error";
-    //             print_r($emp);
-    //             $this->Flash->success(__('The request has not been saved.'));
-    //         }
-    //     }
-    //     $this->set(compact('data'));
-    //     $this->set('_serialize', 'data');
-    // }         
+    }        
             
     public function process()
     {
