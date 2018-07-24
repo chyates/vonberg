@@ -13,26 +13,31 @@
                     echo'<h1 class="page-header my-4">';
                     echo $part->type->name;
                     echo '</h1>
-          <div class="row no-gutters">';
+                        <div class="row no-gutters">';
                   } ?>
                 <div class="col-sm-4">
-                    <A HREF=<?= "/products/view/".$part->partID; ?>>
-                    <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
-                    <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
-                <?php } else { ?>
-                    <?php if($part->category->name == "Pressure Controls") { ?>
-                        <img class="product-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
-                    <?php } else if ($part->category->name == "Flow Regulating Valves") { ?>
-                        <img class="product-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
-                    <?php } else if ($part->category->name == "Directional Valves") { ?>
-                        <img class="product-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
-                    <?php } else if ($part->category->name == "Safety Valves") { ?>
-                        <img class="product-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
-                    <?php } else if ($part->category->name == "Cartridge Bodies") { ?>
-                        <img class="product-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
                     <?php 
-                        } 
-                     }  
+                        if(!empty($part->category->name)) {
+                            if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')) { ?>
+                            <A HREF=<?= "/products/view/".$part->partID; ?>>
+                            <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
+                    <?php } else { ?>
+                        <?php if($part->category->name == "Pressure Controls") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Flow Regulating Valves") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Directional Valves") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Safety Valves") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Cartridge Bodies") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
+                        <?php 
+                            } 
+                        }
+                    } else {
+                        echo "<h3 class='empty-data'>No category</h3>";
+                    }  
                     ?>
                         <div class="product-text-block my-3">
                             <h3 class="product-name"><?= h($part->series->name) ?></h3>

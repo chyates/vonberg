@@ -70,11 +70,11 @@ class ContactController extends AppController
                     }
                 }
 
-                // Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
                 $data['response'] = "Success: data saved";
                 $data['debug'] = $result;
                 $models = [];
-                $this->Flash->success(__('The request has been saved.'));
+                // $this->Flash->success(__('The request has been saved.'));
                 foreach ($this->request->data['model'] as $model) {
                     $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
                     $cmd_vars .= 'USERID=' . $result->stp_userID . ' ';
@@ -87,7 +87,7 @@ class ContactController extends AppController
             else {
                 $data['response'] = "Error: some error";
                 // print_r($emp);
-                $this->Flash->success(__('The request has not been saved.'));
+                // $this->Flash->success(__('The request has not been saved.'));
             }
         }
         $this->set(compact('data'));

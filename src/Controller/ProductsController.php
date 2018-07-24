@@ -201,8 +201,16 @@ class ProductsController extends AppController
     public function new()
     {
         $this->loadModel('Parts');
-        $query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+        $else_query = $this->Parts->find('all', array('limit'=>10, 'group' =>array('typeID'), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
+        $new_query = $this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
-        $this->set('parts',$query);
+        if(count($new_query) < 1) {
+            echo "Didn't find new products";
+            $this->set('parts', $else_query);
+        } else {
+            // echo "Found new products";
+            $this->set('parts', $new_query);
+        }
+        // $this->set('parts',$query);
     }
 }

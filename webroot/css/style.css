@@ -2225,3 +2225,22 @@ hr.edit-rsrc-div:last-of-type {
 .hidden {
     display: none
 }
+
+/* === EXTRA DEALERS PAGES */
+
+#cms-dealers-main .model-table.table-striped td.model-table-data, th.model-table-header {
+    padding: 1vh 0.75vw;
+}
+
+#cms-site-container #cms-dealers-main #index-dealers div.submit,
+#cms-site-container #cms-dealers-main #index-dealers p.file-text {
+    display: inline-flex;
+}
+
+#cms-site-container #cms-dealers-main #index-dealers p.file-text {
+    margin: 0 2vw;
+}
+
+#cms-site-container #cms-single-dealer th.text-right {
+    vertical-align: middle;
+}

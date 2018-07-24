@@ -86,6 +86,24 @@
 
     jQuery(document).ready(function($){
 
+        // add divs for bootstrap validation
+        var feedback = '<div class="invalid-feedback">This field is required.</div>';
+        $("#contact-form textarea").after(feedback);
+        $("#contact-form input").each(function(index) {
+            $(this).after(feedback)
+        });
+
+        // add form-group class to trigger validations
+        $("#contact-form .input").not("#contact-form .input.checkbox").addClass('form-group');
+
+        // format checkboxes + submit row
+        var rowLabel = $("#contact-form div.select").find("label").first();
+        rowLabel.next("input[type=hidden]").wrapAll('<div class="row no-gutters" />');
+
+        var submit = $("#contact-form div.submit");
+        submit.addClass('col-6 text-right');
+        submit.find('input[type=submit]').addClass('btn btn-primary');
+
         // jQuery for mobile hamburger menu
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');

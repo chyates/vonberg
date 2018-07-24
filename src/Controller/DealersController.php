@@ -67,7 +67,7 @@ class DealersController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
 
-        // $uploadData = '';
+        $uploadData = '';
         if ($this->request->is('post')) {
             if($_FILES['upload']) {
                 $filename = explode('.', $_FILES['upload']['name']);
@@ -82,14 +82,14 @@ class DealersController extends AppController
                     while(($line = fgetcsv($handle)) !== FALSE) {
                         $new_dist = $dists->newEntity();
                         $new_dist->price_class = array_pop($line);
+                        $new_dist->fax = array_pop($line);
                         $new_dist->long = array_pop($line);
                         $new_dist->lat = array_pop($line);
-                        $new_dist->fax = array_pop($line);
                         $new_dist->telephone = array_pop($line);
                         $new_dist->zip = array_pop($line);
+                        $new_dist->state = array_pop($line);
                         $new_dist->country = array_pop($line);
                         $new_dist->city = array_pop($line);
-                        $new_dist->state = array_pop($line);
                         $new_dist->address2 = array_pop($line);
                         $new_dist->address1 = array_pop($line);
                         $new_dist->name = array_pop($line);
@@ -126,7 +126,7 @@ class DealersController extends AppController
             // If true, String $content is the data, not a path to the file
             'text' => false,
         );
-        $this->set('uploadData', $uploadData);
+        // $this->set('uploadData', $uploadData);
     }
 
 
