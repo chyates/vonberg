@@ -3,7 +3,7 @@
         <div class="col-md-5 col-sm-10 mx-sm-auto left-search">
             <h1 class="page-header">Find a Distributor</h1>
             <p class="product-info">Enter Zip Code</p>
-            <?= $this->Form->create('Locator', array('url' => array('action' => 'index'),'class' => 'form-inline', 'enctype' => 'multipart/form-data'));
+            <?= $this->Form->create('Locator', array('url' => array('action' => 'index'),'class' => 'form-inline details', 'id' => 'dist-form', 'enctype' => 'multipart/form-data'));
                 echo $this->Form->input('address', array('class' => 'form-control','label'=>'','type' => 'text','id' => 'geocomplete'));
                 echo $this->Form->hidden('lat', array('id' => 'lat'));
                 $this->Form->unlockField('lat');
@@ -31,7 +31,18 @@
                                             echo '<p>'. strtolower($dealer->address2) .'</p>';
                                         endif;
                                     ?>
-                                    <p><?= strtolower(h($dealer->city)); ?>, <?= strtolower(h($dealer->state)); ?> <?= strtolower(h($dealer->zip)); ?></p>
+                                    <p>
+                                        <?php 
+                                            echo strtolower(h($dealer->city)) . ", ";
+                                            echo (h($dealer->state)) . " ";
+                                            if(strlen(h($dealer->zip)) == 4) {
+                                                $w_zero = "0" . strtolower(h($dealer->zip));
+                                                echo $w_zero;
+                                            } else {
+                                                echo strtolower(h($dealer->zip)); 
+                                            }
+                                        ?>
+                                    </p>
                                     <?php
                                         if ($dealer->website):
                                             echo '<p><a class="results-link" href="'.$dealer->website.'">'. strtolower($dealer->website) .'</a></p>';

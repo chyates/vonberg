@@ -37,7 +37,7 @@
     ?>
 
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-121418676-1"></script>
-
+    <script src="https://www.google.com/recaptcha/api.js?onload=onloadCallback&render=explicit" async defer></script>
     <script type="text/javascript">
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
@@ -63,32 +63,41 @@
 
 <?= $this->fetch('script') ?>
 
-<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyA0lVHjz_FEwUJzVwn6rTIMEyYUTHot7EY"></script>
+<script async defer src="//maps.googleapis.com/maps/api/js?key=AIzaSyCeCUFNTzQXY_J_HYtw6JAhr6fyCl5RoZE&callback=initMap"
+  type="text/javascript"></script>
+<!-- <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCeCUFNTzQXY_J_HYtw6JAhr6fyCl5RoZE"></script> -->
+
+<script type="text/javascript">
+  var onloadCallback = function() {
+    console.log("grecaptcha is ready!");
+  };
+</script>
 
 <?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 
 <script>
+
     // functions that return icons.  Make or find your own markers.
     function normalIcon() {
         return {
             url: '/img/pin-unselected.png'
         };
     }
+
     function highlightedIcon() {
         return {
             url: '/img/pin-selected.png'
         };
     }
 
-     $(function(){
-         $("#geocomplete").geocomplete({ details: "form" })
-     });
+    $(function(){
+        $("#geocomplete").geocomplete({ details: "form" })
+    });
 
     jQuery(document).ready(function($){
-
         // add divs for bootstrap validation
         var feedback = '<div class="invalid-feedback">This field is required.</div>';
-        $("#contact-form textarea").after(feedback);
+        $("#contact-form textarea:not(#g-recaptcha-response)").after(feedback);
         $("#contact-form input").each(function(index) {
             $(this).after(feedback)
         });
@@ -169,6 +178,7 @@
         carousel.css('background-image', backgrounds[0]);
     });  
 </script>
+
 <script type="text/javascript">
     function initGeolocation()
     {
@@ -182,19 +192,15 @@
             alert("Sorry, your browser does not support geolocation services.");
         }
     }
-
     function success(position)
     {
-
         document.getElementById('lng').value = position.coords.longitude;
         document.getElementById('lat').value = position.coords.latitude
     }
-
     function fail()
     {
         // Could not obtain location
     }
-
 </script>
 </body>
 </html>

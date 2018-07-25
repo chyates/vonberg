@@ -5,6 +5,9 @@
             <?PHP $this->Form->unlockField('q');?>
             <?PHP $this->Form->unlockField('seriesID');?>
             <h1 class="page-header">Product Prices</h1>
+            <?php if(isset($like)) {
+                echo $like; 
+            } ?>
             <div class="form-group">
                 <label>Enter Model Number</label>
                 <input type="text" class="form-control" name="q">

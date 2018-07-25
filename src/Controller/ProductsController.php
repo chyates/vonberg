@@ -132,7 +132,9 @@ class ProductsController extends AppController
         if ($q) {
             $conn = ConnectionManager::get('default');
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
-            $query = 'SELECT p.partID, s.name as series, st.name as style, c.name as conn, ty.name as tipe, mp.unit_price, mp.model_text
+
+            // echo $like_where;
+            $query = "SELECT p.partID, s.name as series, st.name as style, c.name as conn, ty.name as tipe, mp.unit_price, mp.model_text
             FROM
                 model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
             LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
@@ -141,10 +143,9 @@ class ProductsController extends AppController
             LEFT JOIN styles as st ON p.styleID = st.styleID
             LEFT JOIN connections as c ON p.connectionID = c.connectionID
             LEFT JOIN types as ty ON p.typeID = ty.typesID
-            WHERE
-            ' . $like_where . '
+            WHERE " . $like_where . "
             ORDER BY
-                mp.model_text';
+                mp.model_text";
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
         } elseif ($seriesID) {
@@ -205,7 +206,7 @@ class ProductsController extends AppController
         $new_query = $this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
         if(count($new_query) < 1) {
-            echo "Didn't find new products";
+            echo "Did not find new products";
             $this->set('parts', $else_query);
         } else {
             // echo "Found new products";

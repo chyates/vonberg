@@ -13,6 +13,15 @@ class ContactController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Security');
+        $this->loadComponent('Recaptcha.Recaptcha', [
+            'enable' => true,     // true/false
+            'sitekey' => '6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y', //if you don't have, get one: https://www.google.com/recaptcha/intro/index.html
+            'secret' => '6LfrHFYUAAAAAHPykY9ZAs4C8pnwXZnVr9jsogs1',
+            'type' => 'image',  // image/audio
+            'theme' => 'light', // light/dark
+            'lang' => 'en',      // default en
+            'size' => 'normal'  // normal/compact
+        ]);
     }
 
     public function beforeFilter(Event $event)
@@ -33,12 +42,19 @@ class ContactController extends AppController
         $this->loadModel('Contacts');
         $cat=$this->Contacts->newEntity();
         if($this->request->is('post')) {
-            $cat=$this->Contacts->patchEntity($cat,$this->request->data);
-            if($result=$this->Contacts->save($cat)) {
-                $this->redirect(array('action' => 'success'));
-            }
-            else {
-                echo "Error: some error";
+            if ($this->request->is('post')) {
+                if ($this->Recaptcha->verify()) { 
+                    $cat=$this->Contacts->patchEntity($cat,$this->request->data);
+                    if($result=$this->Contacts->save($cat)) {
+                        $this->redirect(array('action' => 'success'));
+                    }
+                    else {
+                        echo "Error: some error";
+                    }
+                } else {
+                    $recaptcha_passed = false;
+                    $this->set(compact('recaptcha_passed'));
+                }
             }
         }    
     }

@@ -107,7 +107,7 @@
         ?>
         <div class="single-prod-left-col col-sm-7 col-12 px-lg-3">
             <div class="left-info">
-                <h1 class="page-title"><?= h($part->series->name);?></h1>
+                <h1 class="page-title"><?= $part->series->name;?></h1>
                 <h3 class="product-name"><?= h($part->category->name);?></h3>
                 <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                     <p class="product-info"><?php echo "No style or connection"; ?></p>
@@ -167,7 +167,6 @@
             <div class="right-main-content mt-sm-3 p-sm-4">
                 <?php
                 $typecount='';
-                if ($part->text_blocks != Null ) {
                   echo '<div class="row no-gutters">';
                     foreach ($part->text_blocks as $block):
                         if ($typecount <> $block->header) {
@@ -179,36 +178,26 @@
                             echo '</h3>
                         <ul class="right-list px-3">';
                         } 
-                        if(count($block->text_block_bullets) > 2) {
-                            foreach ($block->text_block_bullets as $bullet):
-                                echo '<li class="mt-2 pl-3">' . $bullet->bullet_text . '</li>';
-                            endforeach; 
-                        } else {
-                            echo "<li class='mt-2 pl-3'>No bullets provided</li>";
-                        }
+                        foreach ($block->text_block_bullets as $bullet):
+                            echo '<li class="mt-2 pl-3">' . $bullet->bullet_text . '</li>';
+                        endforeach; 
                         $typecount = $block->header;
                     endforeach;
-                    echo '</ul>';
-                } ?>
+                    echo '</ul>'; ?>
 
                 <h3 class="product-name">Specifications</h3>
                 <div class="spec-table table-sm">
                     <table class="table">
                     <?php 
-                        if(count($part->specifications) > 2) {
-                            foreach ($part->specifications as $spec): 
+                        foreach ($part->specifications as $spec): 
                     ?>
                         <tr>
                             <th><?php echo $spec->spec_name;?></th>
                             <td><?php echo $spec->spec_value;?></td>
                         </tr>
                     <?php 
-                        endforeach; 
-                    } else { ?>
-                        <tr>
-                            <td>No specifications found</td>
-                        </tr>
-                     <?php } ?>
+                        endforeach;  
+                    ?>
                     </table>
                 </div>
             </div>
@@ -225,25 +214,22 @@
     </div><!-- #single-prod-main end -->
 
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5">
-        <?php if(count($part->model_table) > 2){ ?>
         <div class="table-responsive">
             <table class="model-table table">
                 <thead>
-                <?php if(count($part->model_table_headers) > 2) {
+                <?php 
                     $columns=0;
                     foreach ($part->model_table->model_table_headers as $header): ?>
                         <th class="model-table-header"><?php echo $header->model_table_text; ?></th>
                 <?php
                     $columns++;
                     endforeach; 
-                }
                 ?>
                 </thead>
 
                 <tbody>
                 <tr>
                     <?php 
-                        if(count($part->model_table_rows) > 2) {
                             $count=1;
                             $mobCount = 0;
                             foreach ($part->model_table->model_table_rows as $row):
@@ -255,17 +241,11 @@
                                 $count++;
                                 $mobCount++;
                             endforeach;
-                        }
                     ?>
                 </tr>
                 </tbody>
             </table>
         </div>
-        <?php 
-            } else {
-                echo "<h3 class='empty-data'>No model table provided</h3>"; 
-            } 
-        ?>
     </div><!-- .series-model-table end -->
 
     <!-- Mobile model table/dropdowns -->

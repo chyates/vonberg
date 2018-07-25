@@ -54,6 +54,15 @@
                     <?php echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']); ?>
                 </div>
 
+                <div class="form-group">
+                    <?= $this->Recaptcha->display() ?>
+                    <?php 
+                        if(isset($recaptcha_passed)) { 
+                            echo '<div class="invalid-feedback" style="display: block;">Recaptcha must be passed successfully.</div>';
+                        }
+                    ?>
+                </div>
+
                 <div class="row no-gutters justify-content-between">
                     <div class="col-6 my-auto">
                         <p class="text-left my-auto">*required fields</p>
@@ -61,7 +70,10 @@
                     <?php echo $this->Form->submit('SUBMIT', array('class' => 'btn btn-primary')); ?>
                 </div>
                 
-               <?php echo $this->Form->end(); ?><!-- Contact form end -->
+               <?php 
+                $this->Form->unlockField('g-recaptcha-response');
+                echo $this->Form->end(); 
+               ?><!-- Contact form end -->
         </div><!-- .contact-right end -->
     </div><!-- .row no-gutters end -->
 </div><!-- #contact-main-container end -->
