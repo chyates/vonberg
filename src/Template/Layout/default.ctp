@@ -72,6 +72,7 @@
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');
         });
+        
         $('#markers_info .marker').hover(
             // mouse in
             function () {

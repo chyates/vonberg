@@ -7,12 +7,6 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="/css/style.css">
     <link rel="shortcut icon" type="image/x-icon" href="/img/favicon-32x32.png">
-    <style>
-        #markers_info .marker {
-            height: auto;
-            cursor: pointer;
-        }
-    </style>
     <?php 
         // SEO implementation:
         $description = $this->fetch('description');
@@ -46,7 +40,7 @@
     </script>
 </head>
 
-<body onLoad="initGeolocation();">
+<body>
 <div id="site-container" class="outer-container container-fluid">
     <?= $this->element('nav') ?>
 
@@ -63,8 +57,6 @@
 
 <?= $this->fetch('script') ?>
 
-<script async defer src="//maps.googleapis.com/maps/api/js?key=AIzaSyCeCUFNTzQXY_J_HYtw6JAhr6fyCl5RoZE&callback=initMap"
-  type="text/javascript"></script>
 <!-- <script type="text/javascript" src="//maps.googleapis.com/maps/api/js?key=AIzaSyCeCUFNTzQXY_J_HYtw6JAhr6fyCl5RoZE"></script> -->
 
 <script type="text/javascript">
@@ -76,24 +68,6 @@
 <?php echo $this->Html->script('/js/jquery.geocomplete.min.js');?>
 
 <script>
-
-    // functions that return icons.  Make or find your own markers.
-    function normalIcon() {
-        return {
-            url: '/img/pin-unselected.png'
-        };
-    }
-
-    function highlightedIcon() {
-        return {
-            url: '/img/pin-selected.png'
-        };
-    }
-
-    $(function(){
-        $("#geocomplete").geocomplete({ details: "form" })
-    });
-
     jQuery(document).ready(function($){
         // add divs for bootstrap validation
         var feedback = '<div class="invalid-feedback">This field is required.</div>';
@@ -127,13 +101,24 @@
         }
 
         $("div.marker").click(function(){
-            var index = $('#markers_info .marker').index(this);
-            gMarkers0[index].setIcon(highlightedIcon());
+            var divID = $(this).attr('id');
+            $(".gmnoprint").each(function(index) {
+                // console.log("Each marker id: ", $(this).attr('id'));
+                // console.log("Each marker img src: ", $(this).find("img").attr('src'));
+                var mIcon = $(this).find('img');
+                if(divID == index) {
+                    // $(mIcon).attr('src', '/img/pin-selected.png');
+                    console.log("Icon img src: ", $(mIcon).attr('src'));
+                    var highlightDiv = $('div.marker[id*="'+index+'"]');
+                    console.log($(highlightDiv).html());
+                    highlightDiv.toggleClass('marker-unselected marker-selected');
+                }
+            })
             $(this).toggleClass('marker-unselected').toggleClass('marker-selected');
             var toggleDivs = $("div.marker.marker-selected").not(this);
-            var togglePins = $('#markers_info .marker.marker-selected').not(this).index();
+            // var togglePins = $('#markers_info .marker.marker-selected').not(this).index();
             toggleDivs.toggleClass('marker-selected').toggleClass('marker-unselected');
-            gMarkers0[togglePins].setIcon(normalIcon());
+            // window.gMarkers[togglePins].setIcon(normalIcon());
         });
 
         var form = $("#find-distributor-main .form-inline");

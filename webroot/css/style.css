@@ -188,7 +188,7 @@ form input, form textarea, form a {
     width: calc(100% / 5)!important;
 }
 
-#someothers {
+#map {
     height: 725px!important;
 }
 
@@ -1206,6 +1206,7 @@ p.resource-link a {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    cursor: pointer;
 }
 
 .marker .col-8, .marker .col-4 {

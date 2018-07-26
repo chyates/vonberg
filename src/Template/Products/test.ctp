@@ -1,83 +1,60 @@
-<div id="contact-main-container" class="inner-main col-lg-8 col-12 mx-auto p-md-5 p-3">
-    <div class="row no-gutters px-md-5 justify-content-sm-between">
-        <div class="col-lg-4 col-sm-5 mr-sm-5 py-2 contact-left">
-            <div class="contact-block p-4">
-                <h3 class="product-name">Vonberg Valve, Inc.</h3>
-                <p>3800 Industrial Avenue<br>Rolling Meadows, IL<br>60008-1085 USA</p>
-                <p>Phone: (847) 259-3800<br>Fax: (847) 259-3997<br>Email: info@vonberg.com</p>
-            </div>
-        </div><!-- .contact-left end -->
-        <div class="col-sm-6 contact-right">
-            <h1 class="page-header">Contact Us</h1>
+<?php
+    $options = [
+        'zoom' => 6,
+        'type' => 'R',
+        'unitSystem'=> 'UnitSystem.IMPERIAL',
+        'geolocate' => true,
+        'div' => ['id' => 'map'],
+        'map' => ['navOptions' => ['style' => 'SMALL']]
+    ];
 
-            <!-- Contact form begin -->
-            <?php 
-                echo $this->Form->create('Contact', array(
-                    'id' => 'contact-form',
-                    'class' => 'needs-validation col-10',
-                    'novalidate'
-                ));
-                echo $this->Form->control('name', ['label' => 'Full Name*', 'type' => 'text', 'class' => 'form-control','required']);
-                echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']);
-                echo $this->Form->control('phone', ['label' => 'Phone*', 'type' => 'tel', 'class' => 'form-control', 'required']);
-                echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'email', 'class' => 'form-control','required']);
-                echo $this->Form->control('role', ['label' => 'What is your role?', 'type' => 'select', 'multiple' => 'checkbox', 'options' => array('Manufacturer' => 'Manufacturer', 'Distributor' => 'Distributor', 'End user' => 'End user'), 'class' => 'form-check-input']);
-                echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']);
-            ?>
+    $map =  $this->GoogleMap->map($options);
+    echo $map;
+    
+    if (isset($query)) {
+        foreach ($query as $dealer):
+            $this->GoogleMap->addMarker(['lat' => $dealer->lat, 'lng' => $dealer->lng, 'title' => $dealer->name, 'content' => $dealer->address, 'icon' => '/img/pin-unselected.png']);
 
-                <p class="text-left req-text my-auto">Character limit: 50</p>
-                <div class="g-recaptcha mb-3" data-sitekey="6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y"></div>
-                <div class="row no-gutters">
-                    <div class="col-6 my-auto">
-                        <p class="text-left req-text my-auto">*required fields</p>
-                    </div>
-                    <?php echo $this->Form->submit(); ?>
-                </div>
-                
-               <?php echo $this->Form->end(); ?><!-- Contact form end -->
-        </div><!-- .contact-right end -->
-    </div><!-- .row no-gutters end -->
-</div><!-- #contact-main-container end -->
+        endforeach;
+    }
+    $this->GoogleMap->finalize()
+?>
 
-<script>
-    (function() {
-    'use strict';
-    window.addEventListener('load', function() {
-        // Fetch all the forms we want to apply custom Bootstrap validation styles to
-        var forms = document.getElementsByClassName('needs-validation');
-        // Loop over them and prevent submission
-        var validation = Array.prototype.filter.call(forms, function(form) {
-            form.addEventListener('submit', function(event) {
-                console.log("Hit form validation function");
-                if (form.checkValidity() === false) {
-                    console.log("Form is invalid, check");
-                    event.preventDefault();
-                    event.stopPropagation();
-                }
-                form.classList.add('was-validated');
-            }, false);
-        });
-    }, false);
-  })();
+<div id="map" style="height: 725px;" ></div>
 
-jQuery(document).ready(function(){
-// add divs for bootstrap validation
-    var feedback = '<div class="invalid-feedback">This field is required.</div>';
-    $("textarea").after(feedback);
-    $("input").each(function(index) {
-        $(this).after(feedback)
+<script type="text/javascript">
+var map, infoWindow;
+function initMap() {
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: {lat: -34.397, lng: 150.644},
+        zoom: 6
     });
+    infoWindow = new google.maps.InfoWindow;
 
-// add form-group class to trigger validations
-    $("#contact-form div.input:not(div.input.checkbox)").addClass('form-group');
-    $("#contact-form div.checkbox").addClass('form-check form-check-inline');
+    // Try HTML5 geolocation.
+    if (navigator.geolocation) {
+    navigator.geolocation.getCurrentPosition(function(position) {
+        var pos = {
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
+        };
+        map.setCenter(pos);
+    }, function() {
+        handleLocationError(true, infoWindow, map.getCenter());
+    });
+    } else {
+    // Browser doesn't support Geolocation
+    handleLocationError(false, infoWindow, map.getCenter());
+    }
+}
 
-// format checkboxes + submit row
-    var rowLabel = $("#contact-form div.select").find("label").first();
-    rowLabel.next("input[type=hidden]").wrapAll('<div class="row no-gutters" />');
-
-    var submit = $("#contact-form div.submit");
-    submit.addClass('col-6 text-right');
-    submit.find('input[type=submit]').addClass('btn btn-primary');
-})
+function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
+} 
 </script>
+
+$directions_url = 'https://www.google.com/maps/dir/?api=1&origin='.$lat.','.$lng.'&destination='.$dealer->lat.','.$dealer->lng;
