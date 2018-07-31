@@ -4,6 +4,8 @@ namespace App\Controller;
 use App\Controller\AppController;
 use Cake\Event\Event;
 use Cake\ORM\TableRegistry;
+use Geo\Geocoder\Geocoder;
+use Cake\Http\Client;
 
 class LocatorController extends AppController
 {
@@ -23,20 +25,23 @@ class LocatorController extends AppController
 
         if ($this->request->is('post')) {
             $myTable = TableRegistry::get('Dealers');
+            $address = urlencode($this->request->data['zip']);
+            $url = "https://maps.googleapis.com/maps/api/geocode/json?address={$address}&key=AIzaSyCeCUFNTzQXY_J_HYtw6JAhr6fyCl5RoZE";
+            $resp_json = file_get_contents($url);
+            $resp = json_decode($resp_json, true);
 
-            $lat_query = $myTable->find('all', array('conditions'=> ['Dealers.zip' => $this->request->data['zip']]))->select(['lat'])->first();
-            $lng_query = $myTable->find('all', array('conditions' => ['Dealers.zip' => $this->request->data['zip']]))->select(['lng'])->first();
+            if($resp['status'] == 'OK') {
+                $lat = $resp['results'][0]['geometry']['location']['lat'];
+                $lng = $resp['results'][0]['geometry']['location']['lng'];
 
-            $lat = intval($lat_query->lat);
-            $lng = intval($lng_query->lng); 
-
-            $options = [
-                'latitude' => $lat,
-                'longitude' => $lng,
-                'radius' => 200
-            ];
-
-            $query = $myTable->find('bydistance', $options)->select(['name','address1','address2', 'city','state','zip','telephone', 'lat', 'lng']);
+                $options = [
+                    'latitude' => $lat,
+                    'longitude' => $lng,
+                    'radius' => 200
+                ];
+                    
+                $query = $myTable->find('bydistance', $options)->select(['name','address1','address2', 'city','state','zip','telephone', 'lat', 'lng']);
+            }
         }
         $this->set('query', $query);
     }

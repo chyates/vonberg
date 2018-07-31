@@ -43,7 +43,7 @@ $options = array(
         $this->setTable('dealers');
         $this->setDisplayField('name');
         $this->setPrimaryKey('id');
-	$this->addBehavior('Geo.Geocoder', [ 'apiKey' => 'AIzaSyC5Z7f-hct4XitWSMJqz-s7Kv5YihiVp6o']);
+	$this->addBehavior('Geo.Geocoder', [ 'apiKey' => 'AIzaSyCeCUFNTzQXY_J_HYtw6JAhr6fyCl5RoZE']);
 	$this->addBehavior('CakePHPCSV.Csv', $options);
 	$this->addBehavior('Chris48s/GeoDistance.GeoDistance', [ 'latitudeColumn' => 'lat', 'longitudeColumn' => 'lng' ]);
     }

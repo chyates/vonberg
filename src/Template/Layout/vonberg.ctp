@@ -50,9 +50,9 @@
 
 </div><!-- site-container end -->
 
-<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/gh/paulkinzett/toolbar@1.0.1/jquery.toolbar.js"></script>
 
 <?= $this->fetch('script') ?>
@@ -100,26 +100,26 @@
             emptyBlock.parent().css('background-color', '#FFFFFF');
         }
 
-        $("div.marker").click(function(){
-            var divID = $(this).attr('id');
-            $(".gmnoprint").each(function(index) {
-                // console.log("Each marker id: ", $(this).attr('id'));
-                // console.log("Each marker img src: ", $(this).find("img").attr('src'));
-                var mIcon = $(this).find('img');
-                if(divID == index) {
-                    // $(mIcon).attr('src', '/img/pin-selected.png');
-                    console.log("Icon img src: ", $(mIcon).attr('src'));
-                    var highlightDiv = $('div.marker[id*="'+index+'"]');
-                    console.log($(highlightDiv).html());
-                    highlightDiv.toggleClass('marker-unselected marker-selected');
-                }
-            })
-            $(this).toggleClass('marker-unselected').toggleClass('marker-selected');
-            var toggleDivs = $("div.marker.marker-selected").not(this);
-            // var togglePins = $('#markers_info .marker.marker-selected').not(this).index();
-            toggleDivs.toggleClass('marker-selected').toggleClass('marker-unselected');
-            // window.gMarkers[togglePins].setIcon(normalIcon());
-        });
+        // $("div.marker").click(function(){
+        //     var divID = $(this).attr('id');
+        //     $(".gmnoprint").each(function(index) {
+        //         // console.log("Each marker id: ", $(this).attr('id'));
+        //         // console.log("Each marker img src: ", $(this).find("img").attr('src'));
+        //         var mIcon = $(this).find('img');
+        //         if(divID == index) {
+        //             // $(mIcon).attr('src', '/img/pin-selected.png');
+        //             console.log("Icon img src: ", $(mIcon).attr('src'));
+        //             var highlightDiv = $('div.marker[id*="'+index+'"]');
+        //             console.log($(highlightDiv).html());
+        //             highlightDiv.toggleClass('marker-unselected marker-selected');
+        //         }
+        //     })
+        //     $(this).toggleClass('marker-unselected').toggleClass('marker-selected');
+        //     var toggleDivs = $("div.marker.marker-selected").not(this);
+        //     // var togglePins = $('#markers_info .marker.marker-selected').not(this).index();
+        //     toggleDivs.toggleClass('marker-selected').toggleClass('marker-unselected');
+        //     // window.gMarkers[togglePins].setIcon(normalIcon());
+        // });
 
         var form = $("#find-distributor-main .form-inline");
         form.find("div.input.text").addClass('col-8');

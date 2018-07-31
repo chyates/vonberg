@@ -15,8 +15,8 @@ class ContactController extends AppController
         $this->loadComponent('Security');
         $this->loadComponent('Recaptcha.Recaptcha', [
             'enable' => true,     // true/false
-            'sitekey' => '6LfrHFYUAAAAAMT5xPdA-HLr-5kqefg-q-mrNK3y', //if you don't have, get one: https://www.google.com/recaptcha/intro/index.html
-            'secret' => '6LfrHFYUAAAAAHPykY9ZAs4C8pnwXZnVr9jsogs1',
+            'sitekey' => '6LfSzmYUAAAAADY5KtrQSU4asZlDHXgnb_8-rfWY', //if you don't have, get one: https://www.google.com/recaptcha/intro/index.html
+            'secret' => '6LfSzmYUAAAAADVwd3pSZfGdsJ7IoiHN6RenPAoa',
             'type' => 'image',  // image/audio
             'theme' => 'light', // light/dark
             'lang' => 'en',      // default en

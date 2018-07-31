@@ -1187,6 +1187,11 @@ p.resource-link a {
     border: 1px solid #DDDDDD;
 }
 
+#markers_info {
+    display: flex;
+    flex-direction: column;
+}
+
 #markers_info, .marker {
     width: 100%;
 }
