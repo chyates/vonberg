@@ -51,12 +51,12 @@ class PartsTable extends Table
                 'comparison' => 'LIKE',
                 'wildcardAny' => '*',
                 'wildcardOne' => '?',
-                'field' => ['description', 'Series.name'],
-            ])
-            ->add('seriesID', 'Search.Callback', [
-                'callback' => function ($query, $args, $filter) {
-                    // Modify $query as required
-                }]);
+                'field' => ['description', 'Series.name', 'Categories.name'],
+            ]);
+            // ->add('seriesID', 'Search.Callback', [
+            //     'callback' => function ($query, $args, $filter) {
+            //         // Modify $query as required
+            //     }]);
 
 
     }

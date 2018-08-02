@@ -837,6 +837,29 @@ a.btn.btn-primary {
     width: 560px;
 }
 
+#category-main-container .prod-category-main.row .col-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+#category-main-container .prod-category-main.row .col-6 a {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+#subcat-main-container .prod-category-main.row .col-6 {
+    display: flex;
+    flex-direction: column;
+}
+
+#subcat-main-container .prod-category-main.row .col-6 a {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
 
 /* +++ PRODUCT CATEGORY: TABLET +++ */
 

@@ -102,7 +102,7 @@
                     ?>
                     </div>
                 <?php }  ?>
-                <div class="product-text-block my-sm-3 mb-4">
+                <div class="product-text-block mt-sm-3 mb-sm-0 mb-4">
                     <h3 class="product-name"><?= h($part->series->name) ?></h3>
                     <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                     <p class="product-info"><?php echo "No style or connection"; ?></p>

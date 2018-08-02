@@ -7,7 +7,7 @@
     echo'<div class="prod-category-main row mx-lg-5">';
         foreach ($parts as $part):
          ?>
-            <div class="col-md-4 col-6 my-3">
+            <div class="col-md-4 col-6 my-md-3">
 
                 <A HREF=<?= "/products/view/".$part->partID; ?>>
                 <?php if(file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
@@ -29,7 +29,7 @@
                         } 
                      }  
                     ?>
-                <div class="product-text-block my-3">
+                <div class="product-text-block mt-sm-3 mb-sm-0 mb-4">
                     <h3 class="product-name"><?= h($part->series->name) ?></h3>
                     <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                     <p class="product-info"><?php echo "No style or connection"; ?></p>
