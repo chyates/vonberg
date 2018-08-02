@@ -13,78 +13,112 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td class="model-table-data">Product Image</td>
+                        <td class="first model-table-data">Product Thumbnail</td>
                         <td class="model-table-data">
                         <?php    
-                        if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/schematic_drawing.jpg')) {
+                        if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/thumbnail.jpg')) {
                                 echo "None";
                             } else {
-                                echo "schematic_drawing.jpg";
-                                echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/schematic_drawing.jpg'));
+                                echo "parts/" .strval($part->partID). "/thumbnail.jpg";
                         } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer dark">Browse
+                            <label class="fileContainer light">Browse
+                                <?php echo $this->Form->input('thumbnail', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
+                            </label>
+                            <p class="file-text">No file chosen</p>
+                        </td>
+                    </tr><!-- thumbnail row end -->
+
+                    <tr>
+                        <td class="first model-table-data">Product Image</td>
+                        <td class="model-table-data">
+                        <?php    
+                        if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/product_image.jpg')) {
+                                echo "None";
+                            } else {
+                                echo "parts/" .strval($part->partID). "/product_image.jpg";
+                        } ?>
+                        </td>
+                        <td class="d-flex model-table-data justify-content-between">
+                            <label class="fileContainer light">Browse
+                                <?php echo $this->Form->input('product_image', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
+                            </label>
+                            <p class="file-text">No file chosen</p>
+                        </td>
+                    </tr><!-- image row end -->
+
+                    <tr>
+                        <td class="first model-table-data">Schematic Drawing</td>
+                        <td class="model-table-data">
+                            <?php    
+                                if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/schematic_drawing.jpg')) {
+                                    echo "None";
+                                } else {
+                                    echo "parts/" .strval($part->partID). "/schematic_drawing.jpg";
+                            } ?>
+
+                            </td>
+                        <td class="d-flex model-table-data justify-content-between">
+                            <label class="fileContainer light">Browse
                                 <?php echo $this->Form->input('schematic', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
                         </td>
-                    </tr>
+                    </tr><!-- schematic row end -->
 
                     <tr>
-                        <td class="model-table-data">Typical Performance</td>
+                        <td class="first model-table-data">Ordering Information</td>
+                        <td class="model-table-data">
+                            <?php    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/ordering_information.jpg')) {
+                                echo "None";
+                            } else {
+                                echo "parts/" .strval($part->partID). "/ordering_information.jpg";
+                            } ?>
+                        </td>
+                        <td class="d-flex model-table-data justify-content-between">
+                            <label class="fileContainer light">Browse
+                                <?php echo $this->Form->input('ordering', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
+                            </label>
+                            <p class="file-text">No file chosen</p>
+                        </td>
+                    </tr><!-- ordering info row end -->
+
+                    <tr>
+                        <td class="first model-table-data">Typical Performance</td>
                         <td class="model-table-data">
                             <?php    
                                 if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/typical_performance.jpg')) {
                                     echo "None";
                                 } else {
-                                    echo "typical_performance.jpg";
-                                    echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/hydraulic_symbol.jpg'));
+                                    echo "parts/" .strval($part->partID). "/typical_performance.jpg";
                             } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer dark">Browse
+                            <label class="fileContainer light">Browse
                                 <?php echo $this->Form->input('performance', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
                         </td>
-                    </tr>
+                    </tr><!-- typical performance row end -->
+
                     <tr>
-                        <td class="model-table-data">Schematic Drawing</td>
+                        <td class="first model-table-data">Performance Graph</td>
                         <td class="model-table-data">
                             <?php    
-                                if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/hydraulic_symbol.jpg')) {
+                                if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/performance_graph.jpg')) {
                                     echo "None";
                                 } else {
-                                    echo "hydraulic_symbol.jpg";
-                                    echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/hydraulic_symbol.jpg'));
-                            } ?>
-
-                            </td>
-                        <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer dark">Browse
-                                <?php echo $this->Form->input('hydraulic', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
-                            </label>
-                            <p class="file-text">No file chosen</p>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td class="model-table-data">Ordering Information</td>
-                        <td class="model-table-data">
-                            <?php    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/ordering_information.jpg')) {
-                                echo "None";
-                            } else {
-                                echo "ordering_information.jpg";
-                                echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/ordering_information.jpg'));
+                                    echo "parts/" .strval($part->partID). "/performance_graph.jpg";
                             } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
-                            <label class="fileContainer dark">Browse
-                                <?php echo $this->Form->input('ordering', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
+                            <label class="fileContainer light">Browse
+                                <?php echo $this->Form->input('graph', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
                             </label>
                             <p class="file-text">No file chosen</p>
                         </td>
-                    </tr>
+                    </tr><!-- performance graph row end -->
 
                 </tbody>
             </table>

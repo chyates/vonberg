@@ -64,7 +64,7 @@
             if ($typecount<>0) {
                 echo '</div>';
             }
-            echo'<div class="prod-category-main row mx-lg-5">
+            echo'<div class="prod-category-main row mx-lg-5 mt-4">
                <div class="col-lg">
                <h2 class="category-title">' .
                '<a href='. '"/products/type/' . $part->typeID .'">';
@@ -75,10 +75,13 @@
                 </div>
           <div class="prod-category-main row mx-lg-5">';
         } ?>
-            <div class="col-md-4 col-6 my-3">
-
+            <div class="col-md-4 col-6 my-md-3">
                 <A HREF=<?= "/products/view/".$part->partID; ?>>
-                <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
+                <?php if (file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
+                <div class="product-img-block-container">
+                    <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>"/>
+                </div>
+                <?php } else if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')) { ?>
                 <div class="product-img-block-container">
                     <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
                 </div>
@@ -99,7 +102,7 @@
                     ?>
                     </div>
                 <?php }  ?>
-                <div class="product-text-block my-3">
+                <div class="product-text-block my-sm-3 mb-4">
                     <h3 class="product-name"><?= h($part->series->name) ?></h3>
                     <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                     <p class="product-info"><?php echo "No style or connection"; ?></p>

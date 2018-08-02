@@ -10,7 +10,9 @@
             <div class="col-md-4 col-6 my-3">
 
                 <A HREF=<?= "/products/view/".$part->partID; ?>>
-                <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
+                <?php if(file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
+                    <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>"/>
+                <?php } else if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
                     <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
                 <?php } else { ?>
                     <?php if($part->category->name == "Pressure Controls") { ?>

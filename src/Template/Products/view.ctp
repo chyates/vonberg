@@ -93,7 +93,7 @@
 </div>
 
 <div id="single-prod-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5">
-    <div id="single-prod-main" class="row no-gutters mx-lg-5 px-lg-5 py-lg-4">
+    <div id="single-prod-main" class="row no-gutters mx-lg-5 px-lg-5">
         <?php 
             $curr_url = $this->request->here;
             $seg = '';
@@ -134,17 +134,17 @@
                 </p>
             </div>
 
-            <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
+            <?php if (file_exists('img/parts/'.$part->partID.'/product_image.jpg')){ ?>
             <div class="left-img-div mt-sm-4">
                 <h3 class="product-name">Product Rendering</h3>
-                <img class="my-3 img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
+                <img class="my-3 img-fluid" src="<?= "/img/parts/".$part->partID."/product_image.jpg"; ?>"/>
             </div>
             <?php } ?>
 
-            <?php if (file_exists('img/parts/'.$part->partID.'/hydraulic_symbol.jpg')){ ?>
+            <?php if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
             <div class="left-img-div mt-sm-4">
                 <h3 class="product-name">Schematic</h3>
-                <img class="my-3 " src="<?= "/img/parts/".$part->partID."/hydraulic_symbol.jpg"; ?>"/>
+                <img class="my-3 " src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
             </div>
             <?php } ?>
 
@@ -251,9 +251,6 @@
     <!-- Mobile model table/dropdowns -->
     <div id="mob-model-tables" class="col-12">
         <div class="row no-gutters pt-4 pb-3">
-            <?php 
-                if(count($part->model_table) > 2) { 
-            ?>
                 <div class="col-4">
                     <?php $mobHead = 1;
                         $divID = 1;
@@ -300,11 +297,6 @@
                         endforeach;
                     ?>
                 </div>
-            <?php 
-                } else {
-                    echo "<h3 class='empty-data'>No model table provided</h3>";
-                } 
-            ?>
         </div>
     </div>
 

@@ -5,9 +5,6 @@
             <?PHP $this->Form->unlockField('q');?>
             <?PHP $this->Form->unlockField('seriesID');?>
             <h1 class="page-header">Product Prices</h1>
-            <?php if(isset($like)) {
-                echo $like; 
-            } ?>
             <div class="form-group">
                 <label>Enter Model Number</label>
                 <input type="text" class="form-control" name="q">
@@ -43,7 +40,6 @@
         }
     ?>
 
-    <?php if (count($prices) > 2) { ?>
     <!-- The following table should populate whichever data the user searched for -->
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
         <div class="table-responsive col-lg-10 col-12 mx-auto">
@@ -70,15 +66,6 @@
             </table>
         </div>
     </div><!-- .series-model-table end -->
-    <?php } else { ?>
-        <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
-            <div class="col-lg-10 col-12 mx-auto">
-                <?php if($q_exists != false) { ?>
-                    <h3 class='empty-data'>No prices found</h3>
-            <?php } ?>
-            </div>
-        </div>
-   <?php } ?>
 
     <!-- Mobile model table/dropdowns -->
     <div id="mob-prices-tables" class="col-12 my-3">

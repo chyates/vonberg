@@ -72,7 +72,11 @@ class ProductsController extends AppController
         $this->viewBuilder()->setLayout('default');
         $this->loadModel('Parts');
         if (!empty($cat)) {
-        $query =  $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']])->order(['Series.name'=>'ASC']);
+            $query =  $this->Parts->find('all', array(
+                'conditions' => array('Parts.categoryID' => $cat),
+                'order' => array('Types.name' => 'ASC', 'Series.name' => 'ASC'),
+                'contain' => array('Connections', 'Types','Series','Styles', 'Categories')
+            ));
         } else {
         $query = $this->Parts->find('all', ['conditions' => ['Parts.categoryID' => $cat],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
         }

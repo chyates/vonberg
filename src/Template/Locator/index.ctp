@@ -49,8 +49,21 @@
                                             if(strlen(h($dealer->zip)) == 4) {
                                                 $w_zero = "0" . strtolower(h($dealer->zip));
                                                 echo $w_zero;
+                                            }  else if (strpos($dealer->zip, " ") !== false) {
+                                                $wo_space = str_replace(" ", "-", $dealer->zip) . ", ";
+                                                echo $wo_space;
+                                            } else if (strlen(h($dealer->zip)) == 6 && strpos($dealer->zip, " ") == false) {
+                                                $w_dash = substr_replace($dealer->zip, "-", 3, 0) . ", ";
+                                                echo $w_dash;
+                                            } else if (strlen(h($dealer->zip)) > 5 && strlen(h($dealer->zip)) != 6 && strpos($dealer->zip, " ") == false) {
+                                                $w_dash = substr_replace($dealer->zip, "-", 5, 0);
+                                                echo $w_dash;
                                             } else {
-                                                echo strtolower(h($dealer->zip)); 
+                                                echo h($dealer->zip); 
+                                            }
+
+                                            if(!empty($dealer->country)) {
+                                                echo ucwords(strtolower(h($dealer->country)));
                                             }
                                         ?>
                                     </p>
@@ -72,7 +85,43 @@
                                         endif;
 
                                     ?>
-                                    <p><a class="results-link" href=<?="https://www.google.com/maps?saddr=My+Location&daddr=" . $dealer->lat . "," . $dealer->lng; ?> target="_new">Get directions ></a></p>
+
+                                    <?php 
+                                        // construct address link
+                                        $first_addr = str_replace(" ", "+", $dealer->address1);
+                                        if($dealer->address2) {
+                                            $second_addr = str_replace(" ", "+", $dealer->address2);
+                                        }
+                                        $up_city = str_replace(" ", "+", $dealer->city);
+                                        $state = $dealer->state;
+
+                                        if(strlen(h($dealer->zip)) == 4) {
+                                            $up_zip = "0" . strtolower(h($dealer->zip));
+                                        } else if (strlen(h($dealer->zip) > 5) && strlen(h($dealer->zip)) != 6 && strpos($dealer->zip, " ") === false) {
+                                            $up_zip = substr($dealer->zip, 0, -4);
+                                        } else if(strlen(h($dealer->zip) == 6) && strpos($dealer->zip, " ") == false) {
+                                            $up_zip = substr_replace($dealer->zip, "+", 3, 0);
+                                        } else if (strpos($dealer->zip, " ") !== false) {
+                                            $up_zip = str_replace(" ", "+", $dealer->zip);
+                                        } else {
+                                            $up_zip = $dealer->zip; 
+                                        }
+
+                                        if($dealer->country) {
+                                            $country = $dealer->country;
+                                        }
+
+                                        if(!isset($second_addr) && !isset($country)) {
+                                            $full_addr = $first_addr . "+" . $up_city . "+" . $state . "+" . $up_zip;
+                                        } else if(isset($second_addr) && !isset($country)) {
+                                            $full_addr = $first_addr . "+" . $second_addr . "+" . $up_city . "+" . $state . "+" . $up_zip;
+                                        } else if(!isset($second_addr) && isset($country)) {
+                                            $full_addr = $first_addr . "+" . $up_city . "+" . $state . "+" . $up_zip  . "+" . $country;
+                                        } else if(isset($second_addr) && isset($country)) {
+                                            $full_addr = $first_addr . "+" . $second_addr . "+" . $up_city . "+" . $state . "+" . $up_zip . "+" . $country;
+                                        }
+                                    ?>
+                                    <p><a class="results-link" href=<?="https://www.google.com/maps?saddr=My+Location&daddr=" .$full_addr; ?> target="_new">Get directions ></a></p>
                                 </div>
                             </div>
                         </div>

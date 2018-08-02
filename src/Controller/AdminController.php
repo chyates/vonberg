@@ -586,11 +586,45 @@ class AdminController extends AppController
         if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
             mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
         }
+
         $this->loadModel('Parts');
         $part = $this->Parts->get($id, [
             'contain' => ['Series']
         ]);
+
         if ($this->request->is('post') || $this->request->is('put')) {
+            if(!empty($this->request->data['thumbnail']['name']))
+            {
+                $file = $this->request->data['thumbnail']; //put the data into a var for easy use
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                //only process if the extension is valid
+                if(in_array($ext, $arr_ext))
+                {
+                    //do the actual uploading of the file. First arg is the tmp name, second arg is
+                    //where we are putting it
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/thumbnail.' . $ext);
+                    // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
+                }
+            }
+
+            if(!empty($this->request->data['product_image']['name']))
+            {
+                $file = $this->request->data['product_image']; //put the data into a var for easy use
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                //only process if the extension is valid
+                if(in_array($ext, $arr_ext))
+                {
+                    //do the actual uploading of the file. First arg is the tmp name, second arg is
+                    //where we are putting it
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/product_image.' . $ext);
+                    // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
+                }
+            }
+
             if(!empty($this->request->data['schematic']['name']))
             {
                 $file = $this->request->data['schematic']; //put the data into a var for easy use
@@ -602,34 +636,11 @@ class AdminController extends AppController
                 {
                     //do the actual uploading of the file. First arg is the tmp name, second arg is
                     //where we are putting it
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.jpg');
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.' . $ext);
                     // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
                 }
             }
-            if(!empty($this->request->data['performance']['name']))
-            {
-                $file = $this->request->data['performance'];
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
 
-                if(in_array($ext, $arr_ext))
-                {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.jpg');
-                    // $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
-                }
-            }
-            if(!empty($this->request->data['hydraulic']['name']))
-            {
-                $file = $this->request->data['hydraulic'];
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
-
-                if(in_array($ext, $arr_ext))
-                {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/hydraulic_symbol.jpg');
-                    // $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
-                }
-            }
             if(!empty($this->request->data['ordering']['name']))
             {
                 $file = $this->request->data['ordering'];
@@ -638,8 +649,34 @@ class AdminController extends AppController
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.jpg');
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.' . $ext);
                     // $this->Flash->success(__('The file ORDERING_INFORMATION.JPG was saved.', h($part->partid)));
+                }
+            }
+
+            if(!empty($this->request->data['performance']['name']))
+            {
+                $file = $this->request->data['performance'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                if(in_array($ext, $arr_ext))
+                {
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.' . $ext);
+                    // $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
+                }
+            }
+
+            if(!empty($this->request->data['graph']['name']))
+            {
+                $file = $this->request->data['graph'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+
+                if(in_array($ext, $arr_ext))
+                {
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/performance_graph.' . $ext);
+                    // $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
                 }
             }
 
