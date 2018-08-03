@@ -76,8 +76,9 @@ use Cake\Routing\Router;
                             <label class="form-check-label"><?php echo $part->expires . " days"; ?></label>
                         </div>
                     <td class="model-table-data actions">
-                        <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
+                        <?= $this->Html->link(__('VIEW'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
+                        <?= $this->Html->link(__('EDIT'), ['action' => 'edit-product', $part->partID]) ?>
+                        <!-- <?= $this->Html->link(__('DUPLICATE'), ['action' => 'duplicate', $part->partID]) ?> -->
                         <?php
                             echo $this->Html->link(
                                 $this->Html->tag('delete', 'Delete'),

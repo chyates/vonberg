@@ -18,9 +18,9 @@
                 <div class="col-sm-4">
                     <?php 
                         if(!empty($part->category->name)) {
-                            if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')) { ?>
+                            if (file_exists('img/parts/'.$part->partID.'/product_image.jpg')) { ?>
                             <A HREF=<?= "/products/view/".$part->partID; ?>>
-                            <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>"/>
+                            <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."product_image.jpg"; ?>"/>
                     <?php } else { ?>
                         <?php if($part->category->name == "Pressure Controls") { ?>
                             <img class="product-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
@@ -59,7 +59,8 @@
                     echo '</div><div class="row no-gutters">';
                 }
                 $typecount = $part->typeID;
-            endforeach; ?>
+            endforeach; 
+            ?>
 
         </div><!-- single-product-main-row end, 2 -->
         </div>

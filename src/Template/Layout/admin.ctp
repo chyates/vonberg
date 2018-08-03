@@ -371,7 +371,6 @@ jQuery(document).ready(function($) {
     $('#delete-check-modal').on('show.bs.modal', function(event) {
         $("#partname").text($(event.relatedTarget).data('file'));
         var currRoute = $('#delete-confirm').attr('href');
-        console.log("Current route: ", currRoute)
         var upId = $(event.relatedTarget).data('pid');
         $('#delete-confirm').attr('href', currRoute + upId);
     });

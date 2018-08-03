@@ -3,7 +3,15 @@
     <?= $this->Form->create($part, ['id' => "edit-prod-form"]) ?>
     <div id="two" class="active-slide form-slide col-md-5 mx-auto">
         <div class="form-group">
-            <?php echo $this->Form->control('description',['cols'=>50, 'rows'=>6,'class'=>'form-control','label'=>'Detail Description:']);?>
+            <?php 
+                echo $this->Form->control('description',
+                [
+                    'cols' => 50, 
+                    'rows' => 6,
+                    'class' => 'form-control',
+                    'label' => 'Detail Description:'
+                ]);
+            ?>
         </div>
 
         <div class="form-group w-bullet operation">

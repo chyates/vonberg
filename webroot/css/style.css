@@ -791,10 +791,6 @@ a.btn.btn-primary {
     background-color: rgba(235, 236, 230, 0.5)
 }
 
-#landing-main-container .landing-list-row .landing-img-block {
-    border: 0.67px solid #CCCCCC;
-}
-
 .learn-more-block .btn.btn-primary {
     padding: 6px 30px;
 }
@@ -1907,27 +1903,32 @@ span img.img-fluid {
 }
 
 /* Add/Edit Products + Generate PDF file tables */
-#cms-edit-prod-main .form-slide.table-responsive table.model-table tbody tr:not(:last-child) {
+#cms-edit-prod-main .form-slide.table-responsive table.model-table tbody tr:not(:last-child),
+#cms-gen-pdf-main .form-slide.table-responsive table.model-table tbody tr:not(:last-child), {
     border-bottom: 1px solid #979797;
 }
 
 #cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data,
+#cms-gen-pdf-main .form-slide.table-responsive table.model-table td.model-table-data,
 #cms-edit-resource-main .table-responsive .table td {
     vertical-align: middle;
     padding: 2.5vh 0;
 }
 
-#cms-edit-prod-main .form-slide.table-responsive table.model-table td.first.model-table-data {
+#cms-edit-prod-main .form-slide.table-responsive table.model-table td.first.model-table-data,
+#cms-gen-pdf-main .form-slide.table-responsive table.model-table td.first.model-table-data {
     font-weight: bold;
     text-transform: uppercase;
 }
 
 #cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data label.fileContainer,
+#cms-gen-pdf-main .form-slide.table-responsive table.model-table td.model-table-data label.fileContainer,
 #cms-edit-resource-main .table-responsive .table td label.fileContainer {
     margin-bottom: 0;
 }
 
 #cms-edit-prod-main .form-slide.table-responsive table.model-table td.model-table-data p.file-text,
+#cms-gen-pdf-main .form-slide.table-responsive table.model-table td.model-table-data p.file-text,
 #cms-edit-resource-main .table-responsive .table td p.file-text {
     align-self: center;
     margin-bottom: 0;
@@ -2084,6 +2085,7 @@ a.del.add-bullet {
 }
 
 #add-prod-form .form-check-inline.radio label,
+#gen-pdf-form .form-check-inline.radio label,
 #edit-prod-form .form-check-inline.radio label {
     display: inline-flex;
     align-items: center;
@@ -2093,12 +2095,18 @@ a.del.add-bullet {
 #three .buffer-div {
     overflow: scroll;
     width: 1000px;
-    height: 800px;
+    height: 600px;
     margin: 0 auto;
 }
 
 #three .buffer-div .table-create-box {
     width: 2000px;
+}
+
+#three .row.no-gutters.mt-4 .col-11 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
 /* === ADD / EDIT RESOURCE: GLOBAL / DESKTOP === */
@@ -2112,7 +2120,6 @@ hr.resource-divider {
 #cms-manage-resources-main p.text-center a.btn.btn-primary {
     padding: 1% 4%;
 }
-
 
 #cms-add-resource-main label.fileContainer {
     text-transform: uppercase;

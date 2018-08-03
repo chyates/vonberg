@@ -106,10 +106,10 @@
                         <td class="first model-table-data">Performance Graph</td>
                         <td class="model-table-data">
                             <?php    
-                                if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/performance_graph.jpg')) {
+                                if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/performance_graphs.pdf')) {
                                     echo "None";
                                 } else {
-                                    echo "parts/" .strval($part->partID). "/performance_graph.jpg";
+                                    echo "parts/" .strval($part->partID). "/performance_graphs.pdf";
                             } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">

@@ -97,7 +97,7 @@
 
                                         if(strlen(h($dealer->zip)) == 4) {
                                             $up_zip = "0" . strtolower(h($dealer->zip));
-                                        } else if (strlen(h($dealer->zip) > 5) && strlen(h($dealer->zip)) != 6 && strpos($dealer->zip, " ") === false) {
+                                        } else if (strlen($dealer->zip) > 5 && strlen($dealer->zip) != 6 && strpos($dealer->zip, " ") === false) {
                                             $up_zip = substr($dealer->zip, 0, -4);
                                         } else if(strlen(h($dealer->zip) == 6) && strpos($dealer->zip, " ") == false) {
                                             $up_zip = substr_replace($dealer->zip, "+", 3, 0);

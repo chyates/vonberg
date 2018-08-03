@@ -46,10 +46,24 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
-        
+
         $this->set('parts', $query);
         $this->set('pagename', 'New Products');
     }
+
+    // public function duplicate($id)
+    // {
+    //     $this->viewBuilder()->setLayout('admin');
+    //     $this->loadModel('Parts');
+    //     $copy = $this->Parts->newEntity();
+    //     $copy = $this->Parts->get($id);
+    //     $copy->partID = NULL;
+    //     // $this->Parts->create();
+    //     if($this->Parts->save($copy)) {
+    //         $this->redirect(array('controller' => 'admin', 'action' => 'new'));
+    //     }
+
+    // }
     
     public function products()
     {
@@ -671,7 +685,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['graph'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+                $arr_ext = array('pdf'); //set allowed extensions
 
                 if(in_array($ext, $arr_ext))
                 {

@@ -6,7 +6,6 @@
         <div class="buffer-div">
             <div class="table-create-box p-3">
                 <div class="creation-row row no-gutters">
-                <!-- <?php print_r($found); ?> -->
                     <?php if(!isset($table)) { ?>
                         <div class="data-column" id="1">
                             <?php 
@@ -29,8 +28,6 @@
                             ?>
                         </div>
                     <?php } else { 
-                            // print_r($table->model_table_headers);
-                            // echo $table->model_tableID;
                             $colCount = count($table->model_table_headers);
                             $headArray = array();
                             $rowArray = array();
@@ -40,14 +37,13 @@
                                 $headArray[$h] = $table_header->model_table_text;
                                 $h++;
                             }
-                            // print_r($headArray);
 
                             $r = 0;
                             foreach($table->model_table_rows as $table_row){
                                 $rowArray[$r] = $table_row->model_table_row_text;
                                 $r++;
                             }
-                            // print_r($rowArray);
+
                             $divCount = 0;
                             $finalArr = array();
                             while($divCount < $colCount) {
@@ -59,7 +55,7 @@
                                 $divCount++;
                             }
                             $vert_count = 1;
-                            // print_r($finalArr);
+
                             $rowtal = count($finalArr) / $colCount;
                             ?>
                         
@@ -77,7 +73,7 @@
                                             'class' => 'model-header-input form-control',
                                             'value' => $headArray[$head_count],
                                             'id' => strval($r_count)."-".strval($vert_count)
-                                            ]);
+                                        ]);
                                         $head_count++;
                                     }
                                     echo $this->Form->input('table_row_'.strval($in_count)."-".strval($vert_count), 
@@ -87,11 +83,9 @@
                                         'class' => 'model-row-input form-control',
                                         'id' => strval($in_count)."-".strval($vert_count),
                                         'value' => $finalArr[$k],
-                                        ]);
+                                    ]);
 
-                                        // if(($r_count != 1) && ($r_count >= ($colCount-1)) && ($vert_count < $colCount)) {
                                         if($in_count > $rowtal) {
-                                            // echo "Row count on division: ".$r_count;
                                             $vert_count++;
                                             if ($vert_count > $colCount) {
                                                 echo "</div>";
@@ -104,7 +98,6 @@
                                         if($vert_count > $colCount) {
                                             $vert_count--;
                                             $in_count--;
-                                            // echo "</div>";
                                         } 
                                         $r_count++;
                                         $in_count++;
@@ -114,19 +107,21 @@
                         }
                     ?>
                     <div class="add-column">
-                        <a class="model-column add-bullet" href="">Add Column</a>
+                        <a class="model-column plus add-bullet" href="">Add Column</a>
                     </div>
                 </div>
                 <div class="row no-gutters">
                     <div class="col">
-                        <a class="model-row add-bullet" href="">Add Row</a>
+                        <a class="model-row plus add-bullet" href="">Add Row</a>
                     </div>
                 </div>
             </div>
         </div>
-        <div class="row no-gutters justify-content-between">
-            <a href="/admin/edit-product-two/<?= $part->partID ?>" class="back btn btn-primary">Back</a>
-            <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
+        <div class="row no-gutters mt-4">
+            <div class="col-11 mx-auto">
+                <a href="/admin/edit-product-two/<?= $part->partID ?>" class="back btn btn-primary">Back</a>
+                <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
+            </div>
         </div>
     </div><!-- #three end -->
     <?= $this->Form->end(); ?>
