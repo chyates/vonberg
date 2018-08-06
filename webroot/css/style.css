@@ -97,6 +97,7 @@ p {
     font-size: 14px;
     letter-spacing: 0;
     line-height: 21px;
+    margin-bottom: 0;
 }
 
 /* li */
@@ -371,6 +372,10 @@ a.btn.btn-primary {
     padding: 0;
 }
 
+#product-dropdown .dropdown-menu .col {
+    padding: 3vh 1.5vw;
+}
+
 #resources-dropdown .dropdown-menu {
     padding: 3vh 3vw;
 }
@@ -381,13 +386,17 @@ a.btn.btn-primary {
 }
 
 #product-dropdown .dropdown-menu > p ,
-#product-dropdown .dropdown-menu > p { 
+#resources-dropdown .dropdown-menu > p { 
     display: inline-block; 
 }
 
 #resources-dropdown .dropdown-menu.show .row .drop-header {
     margin-bottom: 0;
     padding: 0px 5px;
+}
+
+.drop-header {
+    margin-bottom: 1vh;
 }
 
 .drop-header a {
@@ -401,6 +410,7 @@ a.btn.btn-primary {
 .drop-content {
     color: #4A4A4A;
     line-height: 17px;
+    margin-bottom: 1.5vh;
 }
 
 .last-prod-drop {
@@ -454,8 +464,12 @@ a.btn.btn-primary {
         width: 100%;
     }
 
-    #resource-dropdown .dropdown-menu {
+    #resources-dropdown .dropdown-menu {
         width: 100%;
+    }
+
+    #resources-dropdown .dropdown-menu .drop-header {
+        margin-right: 1vw;
     }
 }
 
@@ -746,8 +760,6 @@ a.btn.btn-primary {
     max-height: 180px;
 }
 
-
-
 /* +++ NEW PRODUCTS: TABLET +++ */
 
 @media (max-width: 991px) {
@@ -869,10 +881,6 @@ a.btn.btn-primary {
     #category-main-container .prod-category-header-row .col-sm-5 {
         display: none;
     }
-
-    #category-main-container .product-img-block-container {
-        /* border-top: 1px solid rgba(150, 150, 150, 0.3); */
-    } 
 }
 
 /* === SINGLE PRODUCT STYLES: GLOBAL / DESKTOP === */
@@ -912,7 +920,6 @@ a.btn.btn-primary {
 .product-order {
     height: 180px;
 }
-
 
 .single-prod-right-col .right-main-content {
     border: 1px solid #DDDDDD;
@@ -987,7 +994,6 @@ a.btn.btn-primary {
 	font-family: Poppins;
 	font-size: 14px;
     line-height: 20px;
-    /* text-transform: uppercase; */
 }
 
 #mob-bottom-links {
@@ -1010,20 +1016,20 @@ a.btn.btn-primary {
 
 /* +++ SINGLE PRODUCT GET STP MODAL +++ */
 
- .modal-header {
+.modal-header {
     border-bottom: none;
 }
 
- .modal-content {
+.modal-content {
     border-radius: 0;
     border: 1px solid #DDDDDD;
 }
 
- .modal-header .close {
+.modal-header .close {
     opacity: 1;
 }
 
- .modal-header .close img.modal-close-icon {
+.modal-header .close img.modal-close-icon {
     width: 26px;
     border-radius: 26px;
     padding: 5px;
@@ -1056,7 +1062,7 @@ a.btn.btn-primary {
     text-decoration: underline;
 }
 
- .thanks {
+.thanks {
     display: none;
     padding: 0 3vw 3vh;
 }
@@ -1254,13 +1260,13 @@ p.resource-link a {
     cursor: pointer;
 }
 
-.marker .col-8, .marker .col-4 {
+.marker .col-sm-8, .marker .col-sm-4 {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.marker .col-8 p, .marker .col-4 p {
+.marker .col-sm-8 p, .marker .col-sm-4 p {
     text-transform: capitalize;
     margin-bottom: 0;
 }
@@ -1566,6 +1572,9 @@ p.resource-link a {
 .resource-block {
     border: 1px solid #DDDDDD;
     background-color: rgba(235,236,230,0.3);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .resource-block h2 {
@@ -1588,6 +1597,22 @@ p.resource-link span img.img-fluid {
 .resource-block p {
     margin: 10px 0;
     font-size: 13px;
+}
+
+.resource-block a.btn.btn-primary.my-4 {
+    width: 100px;
+}
+
+@media (max-width: 740px) {
+    .resource-block h2 {
+        font-size: 20px;
+    }
+}
+
+@media (max-width: 575px) {
+    .resource-block h2 {
+        font-size: 24px;
+    }
 }
 
 /* === PRODUCT PRICES + RESULTS: GLOBAL / DESKTOP === */

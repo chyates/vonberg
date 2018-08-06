@@ -110,9 +110,58 @@ class ProductsController extends AppController
         $this->set('parts', $query);
     }
 
-    public function search()
+    public function search($check = null)
     {
         $this->loadModel('Parts');
+        $this->loadModel('Specifications');
+
+        $found = array();
+        if(!empty($check)) {
+            $parts = $this->Parts->find('all', array(
+                'conditions' => array(
+                    'contain' => ['Connections', 'Types','Series','Styles', 'Categories'],
+                    'or' => array(
+                        'MATCH(Parts.description) AGAINST(? IN BOOLEAN MODE)' => $check,
+                        'MATCH(Series.name) AGAINST(? IN BOOLEAN MODE)' => $check,
+                        'MATCH(Types.name) AGAINST(? IN BOOLEAN MODE)' => $check,
+                        'MATCH(Connections.name) AGAINST(? IN BOOLEAN MODE)' => $check,
+                        'MATCH(Categories.name) AGAINST(? IN BOOLEAN MODE)' => $check,
+                        'MATCH(Categories.description) AGAINST(? IN BOOLEAN MODE)' => $check,
+                    )
+                )
+            ))->order(['Series.name' => 'ASC']);
+            if(count($parts) > 1) {
+                foreach($parts as $part) {
+                    array_push($found, $part);
+                }
+            }
+
+            $specs = $this->Specifications->find('all', array(
+                'conditions' => array(
+                    'or' => array(
+                        'MATCH(Specifications.spec_name) AGAINST(? IN BOOLEAN MODE)' => $check,
+                        'MATCH(Specifications.spec_value) AGAINST(? IN BOOLEAN MODE)' => $check,
+                    )
+                )
+            ));
+
+            if(count($specs) > 1) {
+                foreach($specs as $spec) {
+                    $each_part = $this->Parts->get($spec->partID, 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']);
+                    array_push($found, $each_part);
+                }
+            }
+
+            $bullets = $this->TextBlockBullets->find('all', array(
+                'conditions' => array(
+                    'or' => array(
+                        'MATCH(TextBlockBullets.bullet_text) AGAINST(? IN BOOLEAN MODE)' => $check
+                    )
+                )
+            ));
+            // match text blocks and then parts, cycle through
+            // do the same for model table rows
+        }
         $query = $this->Parts
         // Use the plugins 'search' custom finder and pass in the
         // processed query params

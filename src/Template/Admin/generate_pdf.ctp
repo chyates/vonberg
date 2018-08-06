@@ -353,7 +353,7 @@
                         console.log(ajax)
 
                         let selType = document.getElementById('typeid')
-                        let type = selType[selType.selectedIndex].innerText
+                        let type = selType[selType.selectedIndex].innerText.replace(/ /g, "_")
                         let selCat = document.getElementById('categoryid')
                         let category = selCat[selCat.selectedIndex].innerText
                         let style = document.getElementById('styleid-1').checked ? 'INLINE' : 'CARTRIDGE'
@@ -633,6 +633,7 @@
                             let a = document.createElement('a')
                             let url = URL.createObjectURL(blob)
                             a.href = url
+                            // let type_repl = type.replace(" ", "_")
                             a.download = type + '.pdf'
                             document.body.appendChild(a)
                             a.click()

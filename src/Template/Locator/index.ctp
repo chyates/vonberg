@@ -32,22 +32,22 @@
                         <div id="<?= $u_id ?>" class="marker marker-unselected" onclick="toggleDivs(document.getElementById(<?= $u_id ?>))">
                             <h4><?= h($dealer->name) ?></h4>
                             <div class="row no-gutters">
-                                <div class="col-8">
+                                <div class="col-sm-8 col-7">
                                     <?php
                                         if ($dealer->address1):
-                                            echo '<p>'. strtolower($dealer->address1) .'</p>';
+                                            echo '<p>'. ucwords(strtolower($dealer->address1)) .'</p>';
                                         endif;
 
                                         if ($dealer->address2):
-                                            echo '<p>'. strtolower($dealer->address2) .'</p>';
+                                            echo '<p>'. ucwords(strtolower($dealer->address2)) .'</p>';
                                         endif;
                                     ?>
                                     <p>
                                         <?php 
-                                            echo strtolower(h($dealer->city)) . ", ";
+                                            echo ucwords(strtolower(h($dealer->city))) . ", ";
                                             echo (h($dealer->state)) . " ";
                                             if(strlen(h($dealer->zip)) == 4) {
-                                                $w_zero = "0" . strtolower(h($dealer->zip));
+                                                $w_zero = "0" . $dealer->zip;
                                                 echo $w_zero;
                                             }  else if (strpos($dealer->zip, " ") !== false) {
                                                 $wo_space = str_replace(" ", "-", $dealer->zip) . ", ";
@@ -73,17 +73,14 @@
                                         endif;
                                     ?>
                                 </div>
-                                <div class="col-4">
+                                <div class="col-sm-4 col-5">
                                     <?php
                                     if ($dealer->telephone):
                                         echo '<p>P: '. preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '($1) $2-$3', $dealer->telephone) .'</p>';
                                     endif;
-                                    ?>
-                                    <?php
-                                        if ($dealer->fax):
-                                            echo '<p>F: '. preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '($1) $2-$3', $dealer->fax) .'</p>';
-                                        endif;
-
+                                    if ($dealer->fax):
+                                        echo '<p>F: '. preg_replace('~.*(\d{3})[^\d]{0,7}(\d{3})[^\d]{0,7}(\d{4}).*~', '($1) $2-$3', $dealer->fax) .'</p>';
+                                    endif;
                                     ?>
 
                                     <?php 
