@@ -53,7 +53,9 @@
                 </thead>
 
                 <tbody>
-                <?php foreach($prices as $price) { ?>
+                <?php 
+                if(count($prices) > 1): 
+                    foreach($prices as $price) { ?>
                 <tr>
                     <td class="model-table-data"><?php echo $price['model_text']; ?></td>
                     <td class="model-table-data"><?php echo $price['series']; ?></td>
@@ -61,7 +63,9 @@
                     <td class="model-table-data"><?php echo $price['conn']; ?></td>
                     <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $price['unit_price']); ?></td>
                 </tr>
-                <?php } ?>
+                <?php } 
+                endif;
+                ?>
                 </tbody>
             </table>
         </div>

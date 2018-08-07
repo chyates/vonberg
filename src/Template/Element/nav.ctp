@@ -5,12 +5,21 @@
         </a>
         <div class="d-flex flex-row justify-content-end">
             <a class="header-link nav-link" href="/products/new">New Products</a>
-            <?php echo $this->Form->create(null, ['class'=>'form-inline','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'search']]);
-            // You'll need to populate $authors in the template from your controller
-            echo $this->Form->control('q', ['label' => false,'type' => 'search','class'=>'form-control', 'placeholder'=>'Search by product number or keyword','aria-label'=>'Search']);
-            echo $this->Form->button('', ['class'=>'form-button']);
-            // Match the search param in your table configuration
-            echo $this->Form->end(); ?>
+            <?= $this->Form->create('site-search', 
+                [
+                    'class'=>'form-inline',
+                    'url' => ['controller' => 'Products', 'action' => 'search']
+                ]); ?>
+                <?php echo $this->Form->control('lookup', 
+                [
+                    'label' => false,
+                    'type' => 'search',
+                    'class'=>'form-control', 
+                    'placeholder'=>'Search by product number or keyword'
+                ]);
+                echo $this->Form->button('', ['type' => 'submit', 'class'=>'form-button']);
+                echo $this->Form->end(); 
+                ?>
         </div>
     </nav><!-- home-top-header end -->
     <nav id="main-navbar" class="navbar navbar-expand-lg justify-content-end">

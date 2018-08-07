@@ -27,11 +27,15 @@
                             <td class="model-table-data"><?= $row->model_table_row_text ?></td>
                             <td class="model-table-data">
                                 <?php
-                                    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP')) {
-                                        echo "None";
+                                    clearstatcache();
+                                    $ext = "/". strval($row->model_table_rowID) . ".stp";
+                                    echo $ext;
+                                    // echo "img/parts/" . strval($part->partID) . "/" . strval($row->model_table_rowID) . ".stp";
+                                    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID) . strval($ext))) {
+                                        echo "No current file";
                                     } else {
-                                        echo $row->model_table_rowID.".stp";
-                                        echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP'));
+                                        // echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP'));
+                                        echo strval($row->model_table_rowID) . ".stp";
                                     } 
                                 ?>
                             </td>

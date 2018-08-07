@@ -18,7 +18,7 @@ class ProductsController extends AppController
         $this->loadComponent('Search.Prg', [
             // This is default config. You can modify "actions" as needed to make
             // the PRG component work only for specified methods.
-            'actions' => ['index', 'search']
+            'actions' => ['index']
         ]);
     }
 
@@ -110,66 +110,117 @@ class ProductsController extends AppController
         $this->set('parts', $query);
     }
 
-    public function search($check = null)
+    public function search()
     {
         $this->loadModel('Parts');
         $this->loadModel('Specifications');
+        $this->loadModel('TextBlockBullets');
+        $this->loadModel('TextBlocks');
+        $this->loadModel('ModelTableRows');
+        $this->loadModel('ModelTables');
+        
+        // $found = array();
+        if($this->request->is('post') || $this->request->is('put')) {
+            // $this->request->data['lookup'] = $this->request->['lookup'];
 
-        $found = array();
-        if(!empty($check)) {
-            $parts = $this->Parts->find('all', array(
-                'conditions' => array(
-                    'contain' => ['Connections', 'Types','Series','Styles', 'Categories'],
-                    'or' => array(
-                        'MATCH(Parts.description) AGAINST(? IN BOOLEAN MODE)' => $check,
-                        'MATCH(Series.name) AGAINST(? IN BOOLEAN MODE)' => $check,
-                        'MATCH(Types.name) AGAINST(? IN BOOLEAN MODE)' => $check,
-                        'MATCH(Connections.name) AGAINST(? IN BOOLEAN MODE)' => $check,
-                        'MATCH(Categories.name) AGAINST(? IN BOOLEAN MODE)' => $check,
-                        'MATCH(Categories.description) AGAINST(? IN BOOLEAN MODE)' => $check,
-                    )
-                )
-            ))->order(['Series.name' => 'ASC']);
-            if(count($parts) > 1) {
-                foreach($parts as $part) {
-                    array_push($found, $part);
+            $l = ConnectionManager::get('default');
+            $like_str = ' LIKE "%' . $this->request->data['lookup'] . '%"';
+            $lookup ="SELECT p.partID
+            FROM
+                model_tables as mt JOIN parts as p ON mt.partID = p.partID
+            JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
+            JOIN series as s ON p.seriesID = s.seriesID
+            JOIN types as ty ON p.typeID = ty.typesID
+            WHERE p.description" . $like_str . " OR
+            s.name" . $like_str . " OR
+            ty.name" . $like_str . " OR
+            mtr.model_table_row_text" . $like_str . " OR
+            mtr.model_table_row_text ='" . $this->request->data['lookup'] . "'
+            GROUP BY s.name";
+            // $parts = $this->Parts->find('all', array(
+            //     'conditions' => array(
+            //         'contain' => ['Connections', 'Types','Series','Styles', 'Categories'],
+            //         'or' => array(
+            //             'MATCH(Parts.description) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //             'MATCH(Series.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //             'MATCH(Types.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //             'MATCH(Connections.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //             'MATCH(Categories.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //             'MATCH(Categories.description) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //         )
+            //     )
+            // ))->order(['Series.name' => 'ASC']);
+            // foreach($parts as $part) {
+            //     array_push($found, $part);
+            // }
+            // print_r($parts);
+
+            // $specs = $this->Specifications->find('all', array(
+            //     'conditions' => array(
+            //         'or' => array(
+            //             'MATCH(Specifications.spec_name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //             'MATCH(Specifications.spec_value) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
+            //         )
+            //     )
+            // ));
+
+            // if(count($specs) > 0) {
+            //     foreach($specs as $spec) {
+            //         $each_part = $this->Parts->get($spec->partID, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
+            //         array_push($found, $each_part);
+            //     }
+            // }
+
+            // $bullets = $this->TextBlockBullets->find('all', array(
+            //     'conditions' => array(
+            //         'or' => array(
+            //             'MATCH(TextBlockBullets.bullet_text) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup']
+            //         )
+            //     )
+            // ));
+
+            // if(count($bullets) > 0) {
+            //     foreach($bullets as $bullet) {
+            //         $block = $this->TextBlocks->get($bullet->text_blockID);
+            //         $block_part = $this->Parts->get($block->partID, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
+            //         array_push($found, $block_part);
+            //     }
+            // }
+
+            // $models = $this->ModelTableRows->find('all', array(
+            //     'conditions' => array(
+            //         'or' => array(
+            //             'MATCH(ModelTableRows.model_table_row_text) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup']
+            //         )
+            //     )
+            // ));
+
+            // if(count($models) > 0) {
+            //     foreach($models as $model) {
+            //         $model_table = $this->ModelTables->get($model->model_tableID);
+            //         $table_part = $this->Parts->get($model_table->partID, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
+            //         array_push($found, $table_part);
+            //     }
+            // }
+
+            $res = $l->execute($lookup);
+            $found = $res->fetchAll();
+            $final = array();
+            
+            for($p = 0; $p < count($found); $p++) {
+                $each_part = $this->Parts->get($found[$p], ['contain' => ['Connections', 'Categories', 'Styles', 'Types', 'Series']]);
+                array_push($final, $each_part);
                 }
             }
+        // $query = $this->Parts
+        // // Use the plugins 'search' custom finder and pass in the
+        // // processed query params
+        // ->find('search', ['search' => $this->request->getQueryParams(),'recursive' => 2])
+        // // You can add extra things to the query if you need to
+        // ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
 
-            $specs = $this->Specifications->find('all', array(
-                'conditions' => array(
-                    'or' => array(
-                        'MATCH(Specifications.spec_name) AGAINST(? IN BOOLEAN MODE)' => $check,
-                        'MATCH(Specifications.spec_value) AGAINST(? IN BOOLEAN MODE)' => $check,
-                    )
-                )
-            ));
 
-            if(count($specs) > 1) {
-                foreach($specs as $spec) {
-                    $each_part = $this->Parts->get($spec->partID, 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']);
-                    array_push($found, $each_part);
-                }
-            }
-
-            $bullets = $this->TextBlockBullets->find('all', array(
-                'conditions' => array(
-                    'or' => array(
-                        'MATCH(TextBlockBullets.bullet_text) AGAINST(? IN BOOLEAN MODE)' => $check
-                    )
-                )
-            ));
-            // match text blocks and then parts, cycle through
-            // do the same for model table rows
-        }
-        $query = $this->Parts
-        // Use the plugins 'search' custom finder and pass in the
-        // processed query params
-        ->find('search', ['search' => $this->request->getQueryParams(),'recursive' => 2])
-        // You can add extra things to the query if you need to
-        ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
-
-        $this->set('parts', $this->paginate($query));
+        $this->set('parts', $final);
     }
 
     public function customization()

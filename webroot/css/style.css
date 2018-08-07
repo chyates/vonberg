@@ -766,6 +766,10 @@ a.btn.btn-primary {
     .product-img-block-container {
         height: 150px;
     }
+
+    .product-img-block {
+        max-height: 150px;
+    }
 }
 
 /* +++ NEW PRODUCTS: MOBILE +++ */
