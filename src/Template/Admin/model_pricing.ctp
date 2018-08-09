@@ -52,7 +52,7 @@
                         'label'=>False, 
                         'class'=>'hidden form-control', 
                         'type'=>'text', 
-                        'value'=>$price->model_priceID
+                        'value'=> strval($price->model_priceID)
                     ]);
                 ?>
                 <div class="row align-items-center">

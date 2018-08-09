@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-lg-4 col-sm-5">
-        <?php if(count($prices) > 2) { ?>
+        <?php if(isset($prices)) { ?>
             <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
         <?php } else { ?>
             <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
@@ -44,29 +44,47 @@
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
         <div class="table-responsive col-lg-10 col-12 mx-auto">
             <table class="model-table table">
-                <thead>
-                <th class="model-table-header">Model</th>
-                <th class="model-table-header">Series</th>
-                <th class="model-table-header">Style</th>
-                <th class="model-table-header">Connections</th>
-                <th class="model-table-header prices-last">Base Price</th>
-                </thead>
-
-                <tbody>
                 <?php 
-                if(count($prices) > 1): 
-                    foreach($prices as $price) { ?>
-                <tr>
-                    <td class="model-table-data"><?php echo $price['model_text']; ?></td>
-                    <td class="model-table-data"><?php echo $price['series']; ?></td>
-                    <td class="model-table-data"><?php echo $price['style']; ?></td>
-                    <td class="model-table-data"><?php echo $price['conn']; ?></td>
-                    <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $price['unit_price']); ?></td>
-                </tr>
-                <?php } 
-                endif;
+                    if(isset($prices)): 
                 ?>
+                    <thead>
+                        <th class="model-table-header">Model</th>
+                        <th class="model-table-header">Series</th>
+                        <th class="model-table-header">Style</th>
+                        <th class="model-table-header">Connections</th>
+                        <th class="model-table-header prices-last">Base Price</th>
+                    </thead>
+                    
+                <?php foreach($prices as $price) { ?>
+                    <tbody>
+                        <tr>
+                            <td class="model-table-data"><?php echo $price['model_text']; ?></td>
+                            <td class="model-table-data"><?php echo $price['series']; ?></td>
+                            <td class="model-table-data"><?php echo $price['style']; ?></td>
+                            <td class="model-table-data"><?php echo $price['conn']; ?></td>
+                            <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $price['unit_price']); ?></td>
+                        </tr>
+                    </tbody>
+                <?php } 
+                    elseif(isset($no_series)): 
+                ?>
+                <thead>
+                    <th class="model-table-header">Model</th>
+                    <th class="model-table-header">Description</th>
+                    <th class="prices-last model-table-header">Base Price</th>
+                </thead>
+                
+                <?php
+                    foreach($no_series as $item)
+                ?>
+                <tbody>
+                    <tr>
+                        <td class="model-table-data"><?php echo $item['model_text']; ?></td>
+                        <td class="model-table-data"><?php echo $item['description']; ?></td>
+                        <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $item['unit_price']); ?></td>
+                    </tr>
                 </tbody>
+                <?php endif; ?>
             </table>
         </div>
     </div><!-- .series-model-table end -->

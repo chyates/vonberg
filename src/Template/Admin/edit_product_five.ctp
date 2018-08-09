@@ -29,13 +29,13 @@
                                 <?php
                                     clearstatcache();
                                     $ext = "/". strval($row->model_table_rowID) . ".stp";
-                                    echo $ext;
-                                    // echo "img/parts/" . strval($part->partID) . "/" . strval($row->model_table_rowID) . ".stp";
-                                    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID) . strval($ext))) {
-                                        echo "No current file";
+                                    $step = WWW_ROOT . "img/parts/" .strval($part->partID) . "/" . strval($row->model_table_rowID) . ".STP";
+
+                                    if (file_exists($step)) {
+                                        echo strval($row->model_table_rowID) . ".stp";
                                     } else {
                                         // echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP'));
-                                        echo strval($row->model_table_rowID) . ".stp";
+                                        echo "No current file";
                                     } 
                                 ?>
                             </td>

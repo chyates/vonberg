@@ -137,71 +137,6 @@ class ProductsController extends AppController
             mtr.model_table_row_text" . $like_str . " OR
             mtr.model_table_row_text ='" . $this->request->data['lookup'] . "'
             GROUP BY s.name";
-            // $parts = $this->Parts->find('all', array(
-            //     'conditions' => array(
-            //         'contain' => ['Connections', 'Types','Series','Styles', 'Categories'],
-            //         'or' => array(
-            //             'MATCH(Parts.description) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //             'MATCH(Series.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //             'MATCH(Types.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //             'MATCH(Connections.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //             'MATCH(Categories.name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //             'MATCH(Categories.description) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //         )
-            //     )
-            // ))->order(['Series.name' => 'ASC']);
-            // foreach($parts as $part) {
-            //     array_push($found, $part);
-            // }
-            // print_r($parts);
-
-            // $specs = $this->Specifications->find('all', array(
-            //     'conditions' => array(
-            //         'or' => array(
-            //             'MATCH(Specifications.spec_name) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //             'MATCH(Specifications.spec_value) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup'],
-            //         )
-            //     )
-            // ));
-
-            // if(count($specs) > 0) {
-            //     foreach($specs as $spec) {
-            //         $each_part = $this->Parts->get($spec->partID, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
-            //         array_push($found, $each_part);
-            //     }
-            // }
-
-            // $bullets = $this->TextBlockBullets->find('all', array(
-            //     'conditions' => array(
-            //         'or' => array(
-            //             'MATCH(TextBlockBullets.bullet_text) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup']
-            //         )
-            //     )
-            // ));
-
-            // if(count($bullets) > 0) {
-            //     foreach($bullets as $bullet) {
-            //         $block = $this->TextBlocks->get($bullet->text_blockID);
-            //         $block_part = $this->Parts->get($block->partID, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
-            //         array_push($found, $block_part);
-            //     }
-            // }
-
-            // $models = $this->ModelTableRows->find('all', array(
-            //     'conditions' => array(
-            //         'or' => array(
-            //             'MATCH(ModelTableRows.model_table_row_text) AGAINST(? IN BOOLEAN MODE)' => $this->request->data['lookup']
-            //         )
-            //     )
-            // ));
-
-            // if(count($models) > 0) {
-            //     foreach($models as $model) {
-            //         $model_table = $this->ModelTables->get($model->model_tableID);
-            //         $table_part = $this->Parts->get($model_table->partID, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories']]);
-            //         array_push($found, $table_part);
-            //     }
-            // }
 
             $res = $l->execute($lookup);
             $found = $res->fetchAll();
@@ -212,13 +147,6 @@ class ProductsController extends AppController
                 array_push($final, $each_part);
                 }
             }
-        // $query = $this->Parts
-        // // Use the plugins 'search' custom finder and pass in the
-        // // processed query params
-        // ->find('search', ['search' => $this->request->getQueryParams(),'recursive' => 2])
-        // // You can add extra things to the query if you need to
-        // ->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]);
-
 
         $this->set('parts', $final);
     }
@@ -238,20 +166,15 @@ class ProductsController extends AppController
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
 
             // echo $like_where;
-            $query = "SELECT p.partID, s.name as series, st.name as style, c.name as conn, ty.name as tipe, mp.unit_price, mp.model_text
+            $query = "SELECT mp.model_text, mp.unit_price, mp.description
             FROM
-                model_tables as mt LEFT JOIN parts as p ON mt.partID = p.partID
-            LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
-            LEFT JOIN model_prices as mp ON mp.model_text = mtr.model_table_row_text
-            LEFT JOIN series as s ON p.seriesID = s.seriesID
-            LEFT JOIN styles as st ON p.styleID = st.styleID
-            LEFT JOIN connections as c ON p.connectionID = c.connectionID
-            LEFT JOIN types as ty ON p.typeID = ty.typesID
+                model_prices as mp
             WHERE " . $like_where . "
             ORDER BY
                 mp.model_text";
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
+            $this->set('no_series', $rows);
         } elseif ($seriesID) {
             $conn = ConnectionManager::get('default');
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
@@ -293,8 +216,11 @@ class ProductsController extends AppController
                 mp.model_text';
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
+            $this->set('prices', $rows);
         }
-        $this->set('prices', $rows);
+
+        $this->loadModel('ModelPrices');
+        $dropdown = $this->ModelPrices->find('all')->orderAsc('model_text');
 
         $this->loadModel('Series');
         $matchingTasks= $this->Series->association('Parts')->find()->select(['seriesID'])->distinct();

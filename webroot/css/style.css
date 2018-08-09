@@ -993,11 +993,12 @@ a.btn.btn-primary {
     text-transform: uppercase;
 }
 
-.table-responsive .model-table .model-table-data {
+.table-responsive .model-table td.model-table-data {
     color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
     line-height: 20px;
+    padding: 3vh 0;
 }
 
 #mob-bottom-links {
@@ -2299,6 +2300,10 @@ hr.edit-rsrc-div:last-of-type {
 
 .hidden {
     display: none
+}
+
+#add-prod-form .hidden {
+    margin-top: 2vh;
 }
 
 /* === EXTRA DEALERS PAGES */

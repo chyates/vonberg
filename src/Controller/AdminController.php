@@ -230,6 +230,11 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $data = [];
+        $this->loadModel('Parts');
+        $this->loadModel('Series');
+        $this->loadModel('Types');
+        $this->loadModel('Categories');
+        $this->loadModel('Connections');
         
         // load variables to generate form options:
         $cat = TableRegistry::get('Categories')->find('list')->orderAsc('name');
@@ -240,18 +245,54 @@ class AdminController extends AppController
             
         if($this->request->is('post') || $this->request->is('put'))  {
             // create part:
-            $this->loadModel('Parts');
-            $part=$this->Parts->newEntity();
-            $part->seriesID = $this->request->data['seriesID'];
+            $part = $this->Parts->newEntity();
             $part->styleID = $this->request->data['styleID'];
-            $part->categoryID = $this->request->data['categoryID'];
-            $part->typeID = $this->request->data['typeID'];
-            $part->connectionID = $this->request->data['connectionID'];
+
+            if(!empty($this->request->data['newcat'])) {
+                $new_cat = $this->Categories->newEntity();
+                $new_cat->name = $this->request->data['newcat'];
+                if($this->Categories->save($new_cat)) {
+                    $part->categoryID = $new_cat->categoryID;
+                }
+            } else {
+                $part->categoryID = $this->request->data['categoryID'];
+            }
+
+            if(!empty($this->request->data['newseries'])) {
+                $new_sr = $this->Series->newEntity();
+                $new_sr->name = $this->request->data['newseries'];
+                if($this->Series->save($new_sr)) {
+                    $part->seriesID = $new_sr->seriesID;
+                }
+            } else {
+                $part->seriesID = $this->request->data['seriesID'];
+            }
+
+            if(!empty($this->request->data['newtype'])) {
+                $new_type = $this->Types->newEntity();
+                $new_type->name = $this->request->data['newtype'];
+                if($this->Types->save($new_type)) {
+                    $part->typeID = $new_type->typesID;
+                }
+            } else {
+                $part->typeID = $this->request->data['typeID'];
+            }
+
+            if(!empty($this->request->data['newconn'])) {
+                $new_conn = $this->Connections->newEntity();
+                $new_conn->name = $this->request->data['newconn'];
+                if($this->Connections->save($new_conn)) {
+                    $part->connectionID = $new_conn->connectionID;
+                }
+            } else {
+                $part->connectionID = $this->request->data['connectionID'];
+            }
+
             $part->expires = intval($this->request->data['expires']);
             $part->new_list = intval($this->request->data['new_list']);
 
             // save part:
-            if($result=$this->Parts->save($part)) {
+            if($result = $this->Parts->save($part)) {
                 $data['response'] = "Success: data saved";
             } else {
                 $data['response'] = "Error: some error";
@@ -496,7 +537,7 @@ class AdminController extends AppController
         $this->loadModel('ModelTableHeaders');
         $this->loadModel('ModelTableRows');
 
-        $found = $this->ModelTables->find('all')->where(['partID' => $id])->toList();
+        $found = $this->ModelTables->find('all', ['conditions' => ['partID' => $id]])->first();
         $this->set('found', $found);
         // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
@@ -505,11 +546,11 @@ class AdminController extends AppController
             $rowsTable = TableRegistry::get('ModelTableRows');
             $m_tables = TableRegistry::get('ModelTables');
             if(!empty($found)) {   
-                $m_tables->deleteAll(['partID' => $id]);
+                // $m_tables->deleteAll(['partID' => $id]);
                 // delete headers and rows to put them back in
-                $headerTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
-                $rowsTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
-            }
+                // $headerTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
+                // $rowsTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
+            } else {
                 $table = $this->ModelTables->newEntity();
                 $table->partID = $part->partID;
                 $table->order_num = 1;
@@ -577,6 +618,7 @@ class AdminController extends AppController
                 } else {
                     // $this->Flash->error(__('Error saving model table'));
                 }
+            }
         } else {
             $tables = $this->ModelTables->find('all',array(
                 'conditions' => array(
@@ -1127,6 +1169,7 @@ class AdminController extends AppController
                 while (($line = fgetcsv($handle)) !== FALSE) {
                     $newEntry = $MP->newEntity();
                     $newEntry->unit_price = array_pop($line);
+                    $newEntry->description = array_pop($line);
                     $newEntry->model_text = array_pop($line);
                     $MP->save($newEntry);
                 }
@@ -1140,7 +1183,7 @@ class AdminController extends AppController
     public function priceExport()
     {
         $this->loadModel('ModelPrices');
-        $data = $this->ModelPrices->find('all')->toArray();
+        $data = $this->ModelPrices->find('all')->orderAsc('model_priceID')->toArray();
         $_serialize = 'data';
         $this->response->download('model_prices.csv');
         $this->viewBuilder()->className('CsvView.Csv');
