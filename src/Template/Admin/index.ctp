@@ -52,7 +52,7 @@
                         </div>
                         
                         <div class="col-md-3">
-                            <p>07/23/2018</p>
+                            <p><?= date('m/d/Y', $model_time);?></p>
                         </div>
                         
                         <div class="col-md-5">
@@ -113,7 +113,7 @@
                             <p>
                                 <?php
                                     echo $this->Html->link(
-                                        'dealers.csv',
+                                        'distributors.csv',
                                         '/dealers/dealerExport'
                                     );
                                 ?>

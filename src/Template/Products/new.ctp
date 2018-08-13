@@ -11,7 +11,11 @@
                         echo '</div>';
                     }
                     echo'<h1 class="page-header my-4">';
-                    echo $part->type->name;
+                    if($part->type->name) {
+                        echo $part->type->name;
+                    } else {
+                        echo "No type";
+                    }
                     echo '</h1>
                         <div class="row no-gutters">';
                   } ?>

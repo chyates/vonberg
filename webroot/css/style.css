@@ -994,11 +994,19 @@ a.btn.btn-primary {
 }
 
 .table-responsive .model-table td.model-table-data {
+    padding: 3vh 0;
+}
+
+.table-responsive .model-table td.model-table-data,
+.table-responsive .model-table.table-striped div.model-table-data {
     color: #425460;
 	font-family: Poppins;
 	font-size: 14px;
     line-height: 20px;
-    padding: 3vh 0;
+}
+
+.table-responsive .model-table.table-striped div.model-table-data {
+    padding: 1vh 0;
 }
 
 #mob-bottom-links {
@@ -2130,7 +2138,7 @@ a.del.add-bullet {
 }
 
 #three .buffer-div .table-create-box {
-    width: 2000px;
+    width: 2900px;
 }
 
 #three .row.no-gutters.mt-4 .col-11 {
@@ -2302,7 +2310,8 @@ hr.edit-rsrc-div:last-of-type {
     display: none
 }
 
-#add-prod-form .hidden {
+#add-prod-form .hidden,
+#edit-prod-form .hidden {
     margin-top: 2vh;
 }
 

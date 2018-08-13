@@ -78,7 +78,7 @@ use Cake\Routing\Router;
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('VIEW'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
                         <?= $this->Html->link(__('EDIT'), ['action' => 'edit-product', $part->partID]) ?>
-                        <!-- <?= $this->Html->link(__('DUPLICATE'), ['action' => 'duplicate', $part->partID]) ?> -->
+                        <?= $this->Html->link(__('DUPLICATE'), ['action' => 'duplicate', $part->partID]) ?>
                         <?php
                             echo $this->Html->link(
                                 $this->Html->tag('delete', 'Delete'),

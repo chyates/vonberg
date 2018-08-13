@@ -30,25 +30,25 @@
                 <div class="row no-gutters justify-content-between">
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/1">Flow Regulating Valves</A></p>
-                        <p class="drop-content"><a href="/products/type/6">Flow Regulators</a></p>
                         <p class="drop-content"><a href="/products/type/8">Flow Dividers & Combiners</a></p>
+                        <p class="drop-content"><a href="/products/type/6">Flow Regulators</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/2">Directional Valves</A></p>
-                        <p class="drop-content"><a href="/products/type/7">Check Valves - Poppet</a></p>
                         <p class="drop-content"><a href="/products/type/9">Check Valves - Ball</a></p>
+                        <p class="drop-content"><a href="/products/type/7">Check Valves - Poppet</a></p>
                         <p class="drop-content"><a href="/products/type/10">Shuttle Valves</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/3">Safety Valves</A></p>
-                        <p class="drop-content"><a href="/products/type/11">Velocity Fuses</a></p>
                         <p class="drop-content"><a href="/products/type/12">Flow Limiters</a></p>
+                        <p class="drop-content"><a href="/products/type/11">Velocity Fuses</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/5">Pressure Controls</A></p>
                         <p class="drop-content"><a href="/products/type/15">Counterbalance Valves</a></p>
-                        <p class="drop-content"><a href="/products/type/13">Relief Valves - Direct Acting</a></p>
                         <p class="drop-content"><a href="/products/type/14">Relief Valves - Differential Area</a></p>
+                        <p class="drop-content"><a href="/products/type/13">Relief Valves - Direct Acting</a></p>
                     </div>
                     <div class="col">
                         <p class="drop-header"><A HREF="/products/catalog/7">Cartridge Bodies</A></p>

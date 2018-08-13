@@ -107,7 +107,7 @@ class DealersController extends AppController
                 }
         
                 $new_dist_file = $_FILES['upload'];
-                move_uploaded_file($new_dist_file['tmp_name'], WWW_ROOT . 'csv/dealers.csv');
+                move_uploaded_file($new_dist_file['tmp_name'], WWW_ROOT . 'csv/distributors.csv');
                 $this->render(FALSE);
                 return $this->redirect($this->referer());
             }
@@ -163,7 +163,7 @@ class DealersController extends AppController
         $_serialize = 'data';
         $_headers = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
         $_extract = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
-        $this->response->download('dealers.csv');
+        $this->response->download('distributors.csv');
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize', '_headers', '_extract'));
     }

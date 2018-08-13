@@ -37,7 +37,8 @@ class AdminController extends AppController
         $cat = TableRegistry::get('Categories')->find();
         $this->set('parts', $query);
         $this->set('categories', $cat);
-        $this->set('dealer_time', filemtime(WWW_ROOT.'csv/dealers.csv'));
+        $this->set('dealer_time', filemtime(WWW_ROOT.'csv/distributors.csv'));
+        $this->set('model_time', filemtime(WWW_ROOT.'csv/model_prices.csv'));
         $this->set('catalog_time', filemtime(WWW_ROOT.'img/pdfs/VONBERG-Product_Catalog.pdf'));
     }
 
@@ -45,7 +46,7 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('last_updated DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
+        $query =  $this->paginate($this->Parts->find('all', array('conditions' => array('new_list' => 1), 'order'=>array('expires DESC')))->contain(['Connections', 'Types','Series','Styles', 'Categories','ModelTables'=> ['ModelTableRows']]));
 
         $this->set('parts', $query);
         $this->set('pagename', 'New Products');
@@ -55,10 +56,32 @@ class AdminController extends AppController
     // {
     //     $this->viewBuilder()->setLayout('admin');
     //     $this->loadModel('Parts');
+    //     $this->loadModel('ModelTables');
+    //     $this->loadModel('ModelTableRows');
+    //     $this->loadModel('ModelTableHeaders');
+    //     $this->loadModel('Specifications');
+    //     $this->loadModel('TextBlocks');
+    //     $this->loadModel('TextBlockBullets');
+
     //     $copy = $this->Parts->newEntity();
-    //     $copy = $this->Parts->get($id);
-    //     $copy->partID = NULL;
-    //     // $this->Parts->create();
+    //     $copy = $this->Parts->get($id, ['contain' => ['ModelTables', 'Specifications', 'TextBlocks']]);
+        
+    //     $last = $this->Parts->find('all')->all();
+    //     $last_part = $last->last();
+        // $last_mt = $this->ModelTables->find('all')->last();
+        // $last_mth = $this->ModelTableHeaders->find('all')->last();
+        // $last_mtr = $this->ModelTableRows->find('all')->last();
+        // $last_spec = $this->Specifications->find('all')->last();
+        // $last_tb = $this->TextBlocks->find('all')->last();
+        // $last_tbb = $this->TextBlockBullets->find('all')->last();
+        
+        // $new_id = intval($last_part->partID) + 1;
+        // $copy->partID = $new_id;
+        // print_r($copy);
+        // $copy->model_table->partID = $new_id;
+        // $copy->specifications->partID = $new_id;
+        // $copy->text_blocks->partID = $new_id;
+        // $this->Parts->create();
     //     if($this->Parts->save($copy)) {
     //         $this->redirect(array('controller' => 'admin', 'action' => 'new'));
     //     }
@@ -538,7 +561,7 @@ class AdminController extends AppController
         $this->loadModel('ModelTableRows');
 
         $found = $this->ModelTables->find('all', ['conditions' => ['partID' => $id]])->first();
-        $this->set('found', $found);
+
         // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
             // load vars for model tables
@@ -546,10 +569,89 @@ class AdminController extends AppController
             $rowsTable = TableRegistry::get('ModelTableRows');
             $m_tables = TableRegistry::get('ModelTables');
             if(!empty($found)) {   
-                // $m_tables->deleteAll(['partID' => $id]);
-                // delete headers and rows to put them back in
-                // $headerTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
-                // $rowsTable->deleteAll(['model_tableID' => $found[0]->model_tableID]);
+                $headers = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
+                $m_rows = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
+                $head_count = 0;
+
+                foreach(array_filter($this->request->data, function($key) {
+                    $head_up = strpos($key, 'table_header');
+                    return ($head_up === 0);
+                }, 2) as $head_up) {
+                    $head_count++;
+                    $ht_update = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $head_count]])->first();
+
+                    if(!empty($ht_update)) {
+                        $h_update = $headerTable->get($ht_update->model_table_headerID);
+                        if(!empty($h_update)) {
+                            if($h_update->model_table_text != $head_up) {
+                                $h_update->model_table_text = $head_up;
+                            }
+                            $headerTable->save($h_update);
+                        }
+                    } else {
+                        $h_new = $this->ModelTableHeaders->newEntity();
+                        $h_new->model_tableID = $found->model_tableID;
+                        $h_new->model_table_text = $head_up;
+                        $h_new->order_num = $head_count;
+                        $headerTable->save($h_new);
+                    }
+                }
+
+                $row_order = 0;
+                $vert_data = array_filter($this->request->data, function($key) {
+                    return (strpos($key, 'table_row') === 0);
+                }, 2);
+
+                $horiz_data = array();
+                foreach ($vert_data as $key => $val) {
+                    $horiz_data[substr($key, 10)] = $val;
+                }
+
+                uksort($horiz_data, function($a, $b) {
+                    $a_x = strpos($a, '-');
+                    $a_row = intval(substr($a, 0, $a_x));
+                    $a_col = intval(substr($a, $a_x + 1));
+
+                    $b_x = strpos($b, '-');
+                    $b_row = intval(substr($b, 0, $b_x));
+                    $b_col = intval(substr($b, $b_x + 1));
+
+                    $ret_val = 0;
+                    if ($a_row < $b_row) {$ret_val = -1;}
+                    else if ($b_row < $a_row) {$ret_val = 1;}
+                    else if ($a_col < $b_col) {$ret_val = -1;}
+                    else if ($b_col < $a_col) {$ret_val = 1;}
+                    else {$ret_val = 0;}
+                    return $ret_val;
+                });
+                
+                foreach ($horiz_data as $cell_up) {
+                    $row_order++;
+                    $rt_update = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $row_order]])->first();
+                    if(!empty($rt_update)) {
+                        $r_update = $rowsTable->get($rt_update->model_table_rowID);
+                        if(!empty($r_update)) {
+                            if($r_update->model_table_row_text != $cell_up) {
+                                $r_update->model_table_row_text = $cell_up;
+                            }
+                            if($this->ModelTableRows->save($r_update)) {
+                                // $this->redirect(array('action' => 'editProductFour', $part->partID));
+                            }
+                        }
+                    } else {
+                        $r_new = $this->ModelTableRows->newEntity();
+                        $r_new->model_tableID = $found->model_tableID;
+                        $r_new->model_table_row_text = $cell_up;
+                        $r_new->order_num = $row_order;
+                        if ($this->ModelTableRows->save($r_new)) {
+                            // $this->redirect(array('action' => 'editProductFour', $part->partID));
+                        } else {
+                            // $this->Flash->error(__('Error saving model table rows'));
+                            $debug = debug($new);
+                        }
+                    }
+                }
+                $this->redirect(array('action' => 'editProductFour', $part->partID));
             } else {
                 $table = $this->ModelTables->newEntity();
                 $table->partID = $part->partID;
@@ -566,12 +668,12 @@ class AdminController extends AppController
                         $top->model_table_text = $header;
                         $top->order_num = $headerCounter;
                         if ($this->ModelTableHeaders->save($top)) {
-                            // The variable entity contains the id now
                             $model_table_header_id = $top->model_table_headerID;
                         } else {
                             // $this->Flash->error(__('Error saving model table headers'));
                         }
                     }
+
                     $order_num = 0;
                     $vt_data = array_filter($this->request->data, function($key) {
                         return (strpos($key, 'table_row') === 0);
@@ -600,14 +702,13 @@ class AdminController extends AppController
                         return $retval;
                     });
                     
-                    foreach ($hz_data as $cell ) {   # allow for empty cells EXCEPT in the first column
+                    foreach ($hz_data as $cell ) {
                         $order_num++;
                         $new = $rowsTable->newEntity();
                         $new->model_tableID = $table->model_tableID;
                         $new->model_table_row_text = $cell;
                         $new->order_num = $order_num;
                         if ($this->ModelTableRows->save($new)) {
-                            // The variable entity contains the id now
                             $model_table_header_id = $new->model_table_headerID;
                             $this->redirect(array('action' => 'editProductFour', $part->partID));
                         } else {
@@ -1175,6 +1276,13 @@ class AdminController extends AppController
                 }
                 fclose($handle);
             }
+
+            if(file_exists(WWW_ROOT.'csv/model_prices.csv')) {
+                unlink(WWW_ROOT.'csv/model_prices.csv');
+            }
+    
+            $new_model_file = $_FILES['csv'];
+            move_uploaded_file($new_model_file['tmp_name'], WWW_ROOT . 'csv/model_prices.csv');
         }
         $this->render(FALSE);
         return $this->redirect($this->referer());
@@ -1185,9 +1293,10 @@ class AdminController extends AppController
         $this->loadModel('ModelPrices');
         $data = $this->ModelPrices->find('all')->orderAsc('model_priceID')->toArray();
         $_serialize = 'data';
+        $_header = ['Model Pricing Record ID', 'Description', 'Unit Price', 'Price Class'];
         $this->response->download('model_prices.csv');
         $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', '_serialize'));
+        $this->set(compact('data', '_serialize', '_header'));
     }
 
     public function downloadSTP()

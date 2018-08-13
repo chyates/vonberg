@@ -19,25 +19,25 @@
             <div class="row no-gutters justify-content-between">
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/1">Flow Regulating Valves</a></p>
-                    <p class="drop-content"><a href="/admin/type/6">Flow Regulators</a></p>
                     <p class="drop-content"><a href="/admin/type/8">Flow Dividers & Combiners</a></p>
+                    <p class="drop-content"><a href="/admin/type/6">Flow Regulators</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/2">Directional Valves</a></p>
-                    <p class="drop-content"><a href="/admin/type/7">Check Valves - Poppet</a></p>
                     <p class="drop-content"><a href="/admin/type/9">Check Valves - Ball</a></p>
+                    <p class="drop-content"><a href="/admin/type/7">Check Valves - Poppet</a></p>
                     <p class="drop-content"><a href="/admin/type/10">Shuttle Valves</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/3">Safety Valves</a></p>
-                    <p class="drop-content"><a href="/admin/type/11">Velocity Fuses</a></p>
                     <p class="drop-content"><a href="/admin/type/12">Flow Limiters</a></p>
+                    <p class="drop-content"><a href="/admin/type/11">Velocity Fuses</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/5">Pressure Controls</a></p>
                     <p class="drop-content"><a href="/admin/type/15">Counterbalance Valves</a></p>
-                    <p class="drop-content"><a href="/admin/type/13">Relief Valves - Direct Acting</a></p>
                     <p class="drop-content"><a href="/admin/type/14">Relief Valves - Differential Area</a></p>
+                    <p class="drop-content"><a href="/admin/type/13">Relief Valves - Direct Acting</a></p>
                 </div>
                 <div class="col">
                     <p class="drop-header"><a href="/admin/catalog/7">Cartridge Bodies</a></p>

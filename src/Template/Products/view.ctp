@@ -26,7 +26,9 @@
                     $rowID = 1;
                     $width = sizeof($part->model_table->model_table_headers); ?>
                     <div id="check-container">
-                        <?php foreach ($part->model_table->model_table_rows as $row):
+                        <?php 
+                        echo $part->model_table->model_tableID;
+                        foreach ($part->model_table->model_table_rows as $row):
                          if ($mobRow === 1) {
                              echo '<div class="form-check check-req">';
                              echo $this->Form->control('model[]', 

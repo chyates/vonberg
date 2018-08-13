@@ -55,7 +55,7 @@
                         'value'=> strval($price->model_priceID)
                     ]);
                 ?>
-                <div class="row align-items-center">
+                <div class="row no-gutters align-items-center">
                     <div class="col-5 model-table-data">
                         <div>
                             <?php 
