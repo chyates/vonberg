@@ -52,41 +52,101 @@ class AdminController extends AppController
         $this->set('pagename', 'New Products');
     }
 
-    // public function duplicate($id)
-    // {
-    //     $this->viewBuilder()->setLayout('admin');
-    //     $this->loadModel('Parts');
-    //     $this->loadModel('ModelTables');
-    //     $this->loadModel('ModelTableRows');
-    //     $this->loadModel('ModelTableHeaders');
-    //     $this->loadModel('Specifications');
-    //     $this->loadModel('TextBlocks');
-    //     $this->loadModel('TextBlockBullets');
+    public function duplicate($id)
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('Parts');
+        $this->loadModel('ModelTables');
+        $this->loadModel('ModelTableRows');
+        $this->loadModel('ModelTableHeaders');
+        $this->loadModel('Specifications');
+        $this->loadModel('TextBlocks');
+        $this->loadModel('TextBlockBullets');
 
-    //     $copy = $this->Parts->newEntity();
-    //     $copy = $this->Parts->get($id, ['contain' => ['ModelTables', 'Specifications', 'TextBlocks']]);
+        // $copy = $this->Parts->newEntity();
+        $copy = $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
+        $copy->last_updated = date("Y-m-d H:i:s");
         
-    //     $last = $this->Parts->find('all')->all();
-    //     $last_part = $last->last();
-        // $last_mt = $this->ModelTables->find('all')->last();
-        // $last_mth = $this->ModelTableHeaders->find('all')->last();
-        // $last_mtr = $this->ModelTableRows->find('all')->last();
-        // $last_spec = $this->Specifications->find('all')->last();
-        // $last_tb = $this->TextBlocks->find('all')->last();
-        // $last_tbb = $this->TextBlockBullets->find('all')->last();
+        $dupe = $this->Parts->newEntity();
         
-        // $new_id = intval($last_part->partID) + 1;
-        // $copy->partID = $new_id;
-        // print_r($copy);
-        // $copy->model_table->partID = $new_id;
-        // $copy->specifications->partID = $new_id;
-        // $copy->text_blocks->partID = $new_id;
-        // $this->Parts->create();
-    //     if($this->Parts->save($copy)) {
-    //         $this->redirect(array('controller' => 'admin', 'action' => 'new'));
-    //     }
+        // parts table duplication:
+        $dupe->categoryID = $copy->categoryID;
+        $dupe->typeID = $copy->typeID;
+        $dupe->seriesID = $copy->seriesID;
+        $dupe->styleID = $copy->styleID;
+        $dupe->connectionID = $copy->connectionID;
+        $dupe->description = $copy->description;
+        $dupe->new_list = 1;
+        $dupe->expires = 30;
 
-    // }
+        if($this->Parts->save($dupe)) {
+            // specs duplication
+            if(!empty($copy->specifications)) {
+                foreach($copy->specifications as $old_spec) {
+                    $new_spec = $this->Specifications->newEntity();
+                    $new_spec->spec_name = $old_spec->spec_name;
+                    $new_spec->partID = $dupe->partID;
+                    $new_spec->spec_value = $old_spec->spec_value;
+                    $this->Specifications->save($new_spec);
+                }
+            }
+            
+            // text block/bullets duplication
+            if(!empty($copy->text_blocks)) {
+
+                foreach($copy->text_blocks as $old_block) {
+                    $new_tb = $this->TextBlocks->newEntity();
+                    $new_tb->partID = $dupe->partID;
+                    $new_tb->order_num = $old_block->order_num;
+                    $new_tb->header = $old_block->header;
+                    $this->TextBlocks->save($new_tb);
+                    
+                    if(!empty($old_block->text_block_bullets)) {
+                        foreach($old_block->text_block_bullets as $old_bullet){
+                            $new_tbb = $this->TextBlockBullets->newEntity();
+                            $new_tbb->text_blockID = $new_tb->text_blockID;
+                            $new_tbb->bullet_text = $old_bullet->bullet_text;
+                            $new_tbb->order_num = $old_block->order_num;
+                            $this->TextBlockBullets->save($new_tbb);
+                        }
+                    }
+                }
+            }
+            
+            // foreach($copy->text_blocks->text_block_bullets as $old_bullet) {
+
+            // }
+            
+            // model table + headers/rows duplication
+            if(!empty($copy->model_table)) {
+                $new_mt = $this->ModelTables->newEntity();
+                $new_mt->order_num = 1;
+                $new_mt->partID = $dupe->partID;
+                $this->ModelTables->save($new_mt);
+                
+                if(!empty($copy->model_table->model_table_headers)) {
+                    foreach($copy->model_table->model_table_headers as $old_header) {
+                        $new_mth = $this->ModelTableHeaders->newEntity();
+                        $new_mth->model_tableID = $new_mt->model_tableID;
+                        $new_mth->model_table_text = $old_header->model_table_text;
+                        $new_mth->order_num = $old_header->order_num;
+                        $this->ModelTableHeaders->save($new_mth);
+                    }
+                }
+                
+                if(!empty($copy->model_table->model_table_rows)) {
+                    foreach($copy->model_table->model_table_rows as $old_row) {
+                        $new_mtr = $this->ModelTableRows->newEntity();
+                        $new_mtr->model_tableID = $new_mt->model_tableID;
+                        $new_mtr->model_table_row_text = $old_row->model_table_row_text;
+                        $new_mtr->order_num = $old_row->order_num;
+                        $this->ModelTableRows->save($new_mtr);
+                    }
+                }
+            }
+            $this->redirect(array('controller' => 'admin', 'action' => 'editProduct', $dupe->partID));
+        }
+    }
     
     public function products()
     {

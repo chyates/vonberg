@@ -6,7 +6,6 @@
 use Cake\Routing\Router;
 ?>
 <div id="cms-prod-cat-main" class="inner-main col-md-10 mx-auto p-5">
-
     <div id="delete-check-modal" class="modal" tabindex="-1" role="dialog">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -24,7 +23,7 @@ use Cake\Routing\Router;
                 </div>
             </div>
         </div>
-    </div>
+    </div><!-- delete product modal end -->
 
     <h1 class="page-title"><?= __($pagename) ?></h1>
     <div class="table-responsive">
@@ -73,8 +72,9 @@ use Cake\Routing\Router;
                             <?php } ?>
                         </div>
                     <td class="model-table-data actions">
-                        <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
-                        <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
+                        <?= $this->Html->link(__('VIEW'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
+                        <?= $this->Html->link(__('EDIT'), ['action' => 'edit-product', $part->partID]) ?>
+                        <?= $this->Html->link(__('DUPLICATE'), ['action' => 'duplicate', $part->partID]) ?>
                         <?php
                             echo $this->Html->link(
                                 $this->Html->tag('delete', 'Delete'),
@@ -110,4 +110,3 @@ use Cake\Routing\Router;
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>
-

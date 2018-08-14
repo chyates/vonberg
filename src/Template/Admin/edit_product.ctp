@@ -370,31 +370,9 @@
             id: 'testID'
         }));
 
-        // if add series is clicked do this.
-        // $("#seriesid").on("change", function () {
-        //     $modal = $('#add-series-modal');
-        //     if($(this).val() === '0'){
-        //         $modal.modal('show');
-        //     }
-        // });
-        // if add type is clicked do this.
-        // $("#typeid").on("change", function () {
-        //     $modal = $('#add-type-modal');
-        //     if($(this).val() === '0'){
-        //         $modal.modal('show');
-        //     }
-        // });
-        // if add category is clicked do this.
         $("select.accept.form-control").on("change", function () {
             var next = $(this).parent("div.input.select").next('div.input.text').find('.hidden')
             next.show();
         });
-        // if add series is clicked do this.
-        // $("#connectionid").on("change", function () {
-        //     $modal = $('#add-conn-modal');
-        //     if($(this).val() === '0'){
-        //         $modal.modal('show');
-        //     }
-        // });
     })
 </script>

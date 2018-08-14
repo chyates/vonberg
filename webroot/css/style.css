@@ -1847,7 +1847,7 @@ span img.img-fluid {
 
 #cms-prod-cat-table.model-table.table-striped td,
 #cms-prod-cat-table.model-table.table-striped th {
-    padding: 1vh 1vw;
+    padding: 1vh 0.75vw;
 }
 
 .model-table.table-striped .model-table-data a,
