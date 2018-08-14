@@ -36,7 +36,7 @@
 
 <div id="category-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <div class="prod-category-header-row row mx-lg-5">
-        <div class="col-sm-7 col-12 my-lg-auto">
+        <div class="col-md-7 col-12 my-lg-auto">
             <h1 class="page-title"><?= h($category->name) ?></h1>
             <p class="product-info"><?php echo $category->description; ?> </p>
         </div>
@@ -76,7 +76,7 @@
           <div class="prod-category-main row mx-lg-5">';
         } ?>
             <div class="col-md-4 col-6 my-md-3">
-                <A HREF=<?= "/products/view/".$part->partID; ?>>
+                <a href=<?= "/products/view/".$part->partID; ?>>
                 <?php if (file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
                 <div class="product-img-block-container">
                     <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>"/>
@@ -105,17 +105,17 @@
                 <div class="product-text-block mt-lg-3 mt-sm-5 mb-sm-0 mb-4">
                     <h3 class="product-name"><?= h($part->series->name) ?></h3>
                     <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
-                    <p class="product-info"><?php echo "No style or connection"; ?></p>
-                <?php } else if(!empty($part->style->name) && empty($part->connection->name)) { ?>
-                            <p class="product-info"><?php echo h($part->style->name) . " • No connection"; ?></p> 
-                <?php   } else if(!empty($part->connection->name) && empty($part->style->name)) { ?>
-                            <p class="product-info"><?php echo "No style • " . h($part->connection->name); ?></p>
-                <?php    
-                    } else { ?>
+                        <p class="product-info"><?php echo "No style or connection"; ?></p>
+                    <?php } else if(!empty($part->style->name) && empty($part->connection->name)) { ?>
+                        <p class="product-info"><?php echo h($part->style->name) . " • No connection"; ?></p> 
+                    <?php } else if(!empty($part->connection->name) && empty($part->style->name)) { ?>
+                        <p class="product-info"><?php echo "No style • " . h($part->connection->name); ?></p>
+                    <?php } else { ?>
                         <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
-                <?php } ?>
+                    <?php } ?>
                 </div>
-                </A>
+                    </a>
+                <hr class="tm-cat">
             </div>
         <?php
             $typecount = $part->typeID;

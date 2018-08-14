@@ -8,8 +8,7 @@
         foreach ($parts as $part):
          ?>
             <div class="col-md-4 col-6 my-md-3">
-
-                <A HREF=<?= "/products/view/".$part->partID; ?>>
+                <a href=<?= "/products/view/".$part->partID; ?>>
                 <?php if(file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
                     <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>"/>
                 <?php } else if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')){ ?>
@@ -42,12 +41,12 @@
                         <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>
                 <?php } ?>
                 </div>
-                </A>
+                </a>
+                <hr class="tm-cat">
             </div>
         <?php
-
             $typecount = $part->typeID;
-        endforeach; ?>
-
+        endforeach; 
+        ?>
     </div>
 </div>

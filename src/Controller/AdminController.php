@@ -828,15 +828,12 @@ class AdminController extends AppController
 
             if(!empty($this->request->data['product_image']['name']))
             {
-                $file = $this->request->data['product_image']; //put the data into a var for easy use
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+                $file = $this->request->data['product_image']; 
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
+                $arr_ext = array('jpg', 'jpeg', 'gif'); 
 
-                //only process if the extension is valid
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/product_image.' . $ext);
                     // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
                 }
@@ -844,15 +841,12 @@ class AdminController extends AppController
 
             if(!empty($this->request->data['schematic']['name']))
             {
-                $file = $this->request->data['schematic']; //put the data into a var for easy use
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+                $file = $this->request->data['schematic'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'jpeg', 'gif');
 
-                //only process if the extension is valid
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.' . $ext);
                     // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
                 }
@@ -862,7 +856,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['ordering'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+                $arr_ext = array('jpg', 'jpeg', 'gif');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -875,7 +869,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['performance'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
+                $arr_ext = array('jpg', 'jpeg', 'gif');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -888,7 +882,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['graph'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-                $arr_ext = array('pdf'); //set allowed extensions
+                $arr_ext = array('pdf');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -1231,7 +1225,7 @@ class AdminController extends AppController
                 $file = $this->request->data['app_file'];
                 move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/pdfs/technical_specifications/' . $this->request->data['filepath']);
             } else {
-                print_r($this->request->data['app_file']);
+                // print_r($this->request->data['app_file']);
             }
             
             if(!empty($this->request->data['tech_title'])) {
