@@ -24,7 +24,7 @@
         </div>
 
         <div class="col-lg-4 col-sm-5">
-        <?php if(isset($prices)) { ?>
+        <?php if(!empty($prices)) {  ?>
             <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
         <?php } else { ?>
             <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
@@ -66,7 +66,7 @@
                         </tr>
                     </tbody>
                 <?php } 
-                    elseif(isset($no_series)): 
+                    elseif(isset($no_series)):
                 ?>
                 <thead>
                     <th class="model-table-header">Model</th>
@@ -75,7 +75,7 @@
                 </thead>
                 
                 <?php
-                    foreach($no_series as $item)
+                    foreach($no_series as $item):
                 ?>
                 <tbody>
                     <tr>
@@ -84,7 +84,9 @@
                         <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $item['unit_price']); ?></td>
                     </tr>
                 </tbody>
-                <?php endif; ?>
+                <?php
+                endforeach;
+            endif; ?>
             </table>
         </div>
     </div><!-- .series-model-table end -->

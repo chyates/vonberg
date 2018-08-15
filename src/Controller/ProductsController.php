@@ -170,8 +170,8 @@ class ProductsController extends AppController
             FROM
                 model_prices as mp
             WHERE " . $like_where . "
-            ORDER BY
-                mp.model_text";
+            ORDER BY mp.model_text";
+
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
             $this->set('no_series', $rows);
@@ -214,6 +214,7 @@ class ProductsController extends AppController
                 p.typeID = ty.typesID
             ORDER BY
                 mp.model_text';
+
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
             $this->set('prices', $rows);
