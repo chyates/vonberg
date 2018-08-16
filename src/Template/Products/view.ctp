@@ -408,71 +408,57 @@
     //     }.bind(btn)
     // })
 
-    let performance, product, ordering, schematic
+    function getDataUri(url, callback) {
+        let image = new Image()
 
-    // if(document.getElementById('product')) {              
-    //     let reader = new FileReader()
-    //     reader.onload = function() {
-    //         product = document.getElementById('product')
-    //     }
-    //     reader.readAsDataURL(product)
-    // }
+        image.onload = function() {
+            let canvas = document.createElement('canvas')
+            canvas.width = this.naturalWidth
+            canvas.height = this.naturalHeight
 
-    if(document.getElementById('schematic')) {
-        // let reader = new FileReader()
-        // reader.onload = function() {
-            schematic = document.getElementById('schematic').src
-            console.log("Schematic file: ", schematic)
-        // }
-        // reader.readAsDataURL(schematic)
+            canvas.getContext('2d').drawImage(this, 0, 0)
+
+            callback(canvas.toDataURL('image/jpg'))
+        }
+
+        image.src = url
     }
 
-    // if(document.getElementById('ordering').length > 0) {
-    //     document.getElementById('ordering').onchange = function(e) {
-    //         let reader = new FileReader()
-    //         reader.onload = function() {
-    //             ordering = reader.result
-    //         }
-    //         reader.readAsDataURL(e.target.files[0])
-    //     }
-    // }
+    let performance, product, ordering, schematic, oldLogo
 
-    // document.getElementById('performance').onchange = function(e) {                
-    //     let reader = new FileReader()
-    //     reader.onload = function() {
-    //         performance = reader.result
-    //     }
-    //     reader.readAsDataURL(e.target.files[0])
-    // }
+    getDataUri('<?= "/img/parts/".$part->partID."/typical_performance.jpg"; ?>', function(dataUri) {
+        performance = dataUri
+    })
+
+    getDataUri('<?= "/img/parts/".$part->partID."/product_image.jpg"; ?>', function(dataUri) {
+        product = dataUri
+    })
+
+    getDataUri('<?= "/img/parts/".$part->partID."/ordering_information.jpg"; ?>', function(dataUri) {
+        ordering = dataUri
+    })
+
+    getDataUri('<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>', function(dataUri) {
+        schematic = dataUri
+    })
+
+    getDataUri('/img/1971-logo.png', function(dataUri) {
+        oldLogo = dataUri
+    })
     
     document.getElementById('gen-pdf').onclick = function(e) {
         e.preventDefault()
-        let ajax = new XMLHttpRequest()
-        // let schem = new XMLHttpRequest()
 
-        // if(document.getElementById('schematic')) {
-        //     console.log("Found schematic element")
-        //     schem.open('GET', document.getElementById('schematic').src)
-        // }
-        
+        let ajax = new XMLHttpRequest()
         ajax.open('GET', '/img/vonberg_logo.png')
-        // if(document.getElementById('schematic')) {
-            // let reader = new FileReader()
-            // reader.onload = function() {
-            //     schematic = document.getElementById('schematic')
-            // }
-            // reader.readAsDataURL(schematic)
-            // ajax.open('GET', document.getElementById('schematic').src)
-            // console.log("Image source: ", document.getElementById('schematic').src)
-            // let schematic = ajax.response
-            // console.log("Schematic file: ", schematic)
-        // }
         ajax.responseType = 'arraybuffer'
+
         ajax.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 let logo = ajax.response
-                schematic = schem.response
-                console.log(ajax)
+                // let schematic = productImages.schematic
+                
+                console.log('jax', ajax)
 
                 let type = document.getElementById('typeid').innerText.replace(/ /g, "_")
                 // let type = selType.innerText.replace(/ /g, "_")
@@ -657,22 +643,31 @@
                     })
                 }
 
-                if (210 + extra > 150 + colWidth * 1.3) console.log('ruh roh')
+                let tooMuchShit
+                if (210 + extra > 150 + colWidth * 1.3) tooMuchShit = true
+                let origin = (tooMuchShit) ? 210 + extra : 150 + colWidth * 1.3
                 
                 if (ordering) {
                     doc.font('Helvetica-Bold')
                     doc.fillColor('#000000')
-                    doc.text('ORDERING INFORMATION', colWidth + 45, 150 + colWidth + colWidth * .3)
-                    doc.rect(colWidth + 45, 160 + colWidth + colWidth * .3, inverseWidth, 1).fillAndStroke('#00703c')
-                    doc.image(ordering, colWidth + 45, 170 + colWidth + colWidth * .3, {
+                    doc.text('ORDERING INFORMATION', colWidth + 45, origin)
+                    doc.rect(colWidth + 45, 10 + origin, inverseWidth, 1).fillAndStroke('#00703c')
+                    doc.image(ordering, colWidth + 45, 20 + origin, {
                         fit: [colWidth, colWidth * .6]
                     })
                 }
+
+                let availableSpace = (docHeight - 75) - (20 + origin + colWidth * .6 + 10)
+                let maxRows = Math.floor((availableSpace - 10) / 15)
+                console.log('availableSpace', availableSpace)
+                console.log('maxRows', maxRows)
+                
 
                 // bottom column
                 function footer() {
                     doc.fillColor('#000000')
                     doc.fontSize(6)
+                    doc.font('Helvetica')
                     doc.text(
                         "This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met. The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of Vonberg Valve, Inc. without prior notification.",
                         15, docHeight - 75
@@ -680,19 +675,24 @@
 
                     doc.rect(15, docHeight - 43, docWidth - 30, 2).fillAndStroke('#00703c')
 
+                    if (oldLogo) doc.image(oldLogo, 15, docHeight - 40, {fit: [172, 30]})
+
                     doc.fillColor('#000000')
                     doc.fontSize(8)
                     doc.text(
                         '3800 Industrial Avengue • Rolling Meadows, IL 60008-1085 USA © 2015',
-                        0, docHeight - 35, {align: 'center'}
+                        colWidth + 45, docHeight - 35
+                        // 187, docHeight - 35, {width: docWidth - 187, align: 'center'}
                     )
                     doc.text(
                         'phone: 847-259-3800 • fax: 847-259-3997 • email: info@vonberg.com',
-                        0, docHeight - 25, {align: 'center'}
+                        colWidth + 45, docHeight - 25
+                        // 187, docHeight - 25, {width: docWidth - 187, align: 'center'}
                     )
                 }
 
-                let base = 170 + colWidth * 1.9 + 10
+                let base = (tooMuchShit) ? 20 + origin + colWidth * .6 : 170 + colWidth * 1.9
+                base += 10
 
                 let tableColWidth = Math.floor((docWidth - 30) / totalCol)
                 let cellWidths = {cols: seriesTable[0].length}
@@ -717,7 +717,7 @@
                     return total
                 }
 
-                if (seriesTable.length > 7) {
+                if (seriesTable.length > 7 || tooMuchShit) {
                     footer()
                     doc.addPage({
                         margin: 15
@@ -726,8 +726,11 @@
                     base = 90
                 } else if (seriesTable[0].length > 1) {
                     doc.rect(15, base, docWidth - 30, 2).fillAndStroke('#00703c')
-                    base += 10
+                    base += 8
+                }
 
+                if (seriesTable[0].length > 1) {
+                    if (seriesTable[0].length > 8) doc.fontSize(8)
                     seriesTable.forEach(function(row, yIndex) {
                         doc.fillColor('#000000')
                         if (yIndex === 0) doc.font('Helvetica-Bold')
@@ -738,7 +741,6 @@
                         base += 15
                         if (yIndex === 0) doc.font('Helvetica')
                     })
-
                 }
 
                 footer()
@@ -750,7 +752,7 @@
                     let url = URL.createObjectURL(blob)
                     a.href = url
                     // let type_repl = type.replace(" ", "_")
-                    a.download = type + '.pdf'
+                    a.download = type + series + '.pdf'
                     document.body.appendChild(a)
                     a.click()
                     setTimeout(() => {

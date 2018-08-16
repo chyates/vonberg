@@ -158,6 +158,7 @@ class ProductsController extends AppController
 
     public function prices()
     {
+        $this->loadModel('Parts');
         $seriesID = $this->request->query('seriesID');
         $q = $this->request->query('q');
         $rows=NULL;
@@ -218,6 +219,12 @@ class ProductsController extends AppController
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
             $this->set('prices', $rows);
+
+            if(empty($rows)) {
+                $empty = $this->Parts->find('all', ['conditions' => ['Parts.seriesID' => $seriesID], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
+
+                $this->set('empty_prices', $empty);
+            }
         }
 
         $this->loadModel('ModelPrices');

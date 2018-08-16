@@ -1,9 +1,16 @@
 <div id="prices-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <div class="row no-gutters justify-content-lg-center justify-content-sm-between">
         <div class="col-lg-4 col-sm-6 mr-lg-3 px-lg-4">
-            <?php echo $this->Form->create(null, ['type' => 'get','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);?>
-            <?PHP $this->Form->unlockField('q');?>
-            <?PHP $this->Form->unlockField('seriesID');?>
+            <?php 
+                echo $this->Form->create(null, 
+                    [
+                        'type' => 'get',
+                        'valueSources' => 'query',
+                        'url' => ['controller' => 'Products', 'action' => 'prices']
+                    ]);
+            ?>
+            <?php $this->Form->unlockField('q');?>
+            <?php $this->Form->unlockField('seriesID');?>
             <h1 class="page-header">Product Prices</h1>
             <div class="form-group">
                 <label>Enter Model Number</label>
@@ -16,7 +23,7 @@
                     <option value="" selected="selected">Select from dropdown...</option>
                     <?php foreach($series as $item) { ?>
                         <option value="<?php echo $item['seriesID']; ?>"><?php echo $item['name']; ?></option>
-                        <?php } ?>
+                    <?php } ?>
                     </select>
                 </div>
             <input type="submit" class="btn btn-primary my-4" value="Get Prices"/>
@@ -31,21 +38,12 @@
         <?php } ?>
         </div>
     </div>
-
-    <?php 
-        $curr_url = $this->request->query;
-        $q_exists = false;
-        if(count($curr_url) > 0) {
-            $q_exists = true;
-        }
-    ?>
-
     <!-- The following table should populate whichever data the user searched for -->
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
         <div class="table-responsive col-lg-10 col-12 mx-auto">
             <table class="model-table table">
                 <?php 
-                    if(isset($prices)): 
+                    if(!empty($prices)): 
                 ?>
                     <thead>
                         <th class="model-table-header">Model</th>
@@ -65,8 +63,8 @@
                             <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $price['unit_price']); ?></td>
                         </tr>
                     </tbody>
-                <?php } 
-                    elseif(isset($no_series)):
+                <?php 
+                    } elseif(isset($no_series)):
                 ?>
                 <thead>
                     <th class="model-table-header">Model</th>
@@ -85,8 +83,46 @@
                     </tr>
                 </tbody>
                 <?php
-                endforeach;
-            endif; ?>
+                    endforeach;
+                    elseif(!empty($empty_prices)):
+                        foreach($empty_prices as $each) {
+                            $c_count = 0;
+                            foreach($each->model_table->model_table_headers as $head_empty) {
+                                $c_count++;
+                            }
+                            
+                            $r_count = 1;
+                            $model_nums = [];
+                            foreach($each->model_table->model_table_rows as $empty) {
+                                if($r_count >= $c_count) {
+                                    $r_count = 0;
+                                }
+                                if($r_count == 1) {
+                                    array_push($model_nums, $empty->model_table_row_text);
+                                }
+                                $r_count++;
+                            }
+                            ?>
+                    <thead>
+                        <th class="model-table-header">Model</th>
+                        <th class="model-table-header">Series</th>
+                        <th class="model-table-header">Style</th>
+                        <th class="model-table-header">Connections</th>
+                        <th class="model-table-header prices-last">Base Price</th>
+                    </thead>
+                    
+
+                    <?php for($i = 0; $i < count($model_nums); $i++) { ?>
+                    <tbody>
+                        <tr>
+                            <td class="model-table-data"><?php echo $model_nums[$i]; ?></td>
+                            <td class="model-table-data"><?php echo $each->series->name; ?></td>
+                            <td class="model-table-data"><?php echo $each->style->name; ?></td>
+                            <td class="model-table-data"><?php echo $each->connection->name; ?></td>
+                            <td class="prices-last model-table-data"><?php echo "PLEASE CALL FOR<br>CURRENT PRICING"; ?></td>
+                        </tr>
+                    </tbody>
+         <?php } }endif; ?>
             </table>
         </div>
     </div><!-- .series-model-table end -->
