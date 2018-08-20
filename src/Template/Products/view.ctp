@@ -125,7 +125,7 @@
 </div>
 
 <div id="single-prod-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5">
-    <div id="single-prod-main" class="row no-gutters mx-lg-5 px-lg-5">
+    <div id="single-prod-main" class="row no-gutters mx-lg-5 px-lg-3">
         <?php 
             $curr_url = $this->request->here;
             $seg = '';
@@ -249,7 +249,7 @@
         </div><!-- .single-prod-right-col end -->
     </div><!-- #single-prod-main end -->
 
-    <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5">
+    <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-3">
         <div class="table-responsive">
             <table id="prod-mt" class="model-table table">
                 <thead>
@@ -270,7 +270,17 @@
                         $mobCount = 0;
                         $r_columns = 1;
                         foreach ($part->model_table->model_table_rows as $row):
+                            // for($s = 0; $s < strlen($row->model_table_row_text); $s++) {
+                            //     if($row->model_table_row_text[$s] == '/') {
+                            //         $up_text = substr_replace($row->model_table_row_text, "<br>", $s+1, 0);
+                            //         echo '<td id="' . ($r_columns+1) . "-" . $count . '" class="mt-pdf model-table-data">' . $up_text . '</td>';
+                            //     } else {
+                            //     }
+                            // }
                             echo '<td id="' . ($r_columns+1) . "-" . $count . '"class="mt-pdf model-table-data">'.$row->model_table_row_text.'</td>';
+
+                            if(empty($up_text)) {
+                            }
                             if ($count >= $columns){
                                 echo '</tr>';
                                 $count = 0;
@@ -397,16 +407,8 @@
             }, false);
         });
     }, false);
-  })();
+    })();
 
-    // Array.prototype.forEach.call(document.querySelectorAll('.form-nav'), function(btn) {
-    //     btn.onclick = function() {
-    //         let from = this.id.split('-')[0]
-    //         let to = this.id.split('-')[1]
-    //         document.getElementById(from).hidden = true
-    //         document.getElementById(to).hidden = false
-    //     }.bind(btn)
-    // })
 
     function getDataUri(url, callback) {
         let image = new Image()
@@ -422,6 +424,12 @@
         }
 
         image.src = url
+    }
+
+    function titleCase(str) {
+        return str.replace(/\w\S*/g, function(txt) {
+            return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase()
+        })
     }
 
     let performance, product, ordering, schematic, oldLogo
@@ -456,9 +464,8 @@
         ajax.onreadystatechange = function() {
             if (this.readyState == 4 && this.status == 200) {
                 let logo = ajax.response
-                // let schematic = productImages.schematic
                 
-                console.log('jax', ajax)
+                // console.log('jax', ajax)
 
                 let type = document.getElementById('typeid').innerText.replace(/ /g, "_")
                 // let type = selType.innerText.replace(/ /g, "_")
@@ -521,6 +528,9 @@
                 console.log(doc)
                 const docWidth = 612
                 const docHeight = 792
+
+                let totalPages = 1
+                let currentPage = 1 // yes i'm starting from 1 not 0 don't judge me
                 
                 function header() {
                     doc.image(logo, 10, 10, {
@@ -657,12 +667,10 @@
                     })
                 }
 
-                let availableSpace = (docHeight - 75) - (20 + origin + colWidth * .6 + 10)
-                let maxRows = Math.floor((availableSpace - 10) / 15)
-                console.log('availableSpace', availableSpace)
-                console.log('maxRows', maxRows)
+                let availableSpace = (docHeight - 75) - (20 + origin + colWidth * .6)
+                let maxRows = Math.floor((availableSpace - 8) / 15)
+                // console.log('maxRows', maxRows)
                 
-
                 // bottom column
                 function footer() {
                     doc.fillColor('#000000')
@@ -689,10 +697,17 @@
                         colWidth + 45, docHeight - 25
                         // 187, docHeight - 25, {width: docWidth - 187, align: 'center'}
                     )
+                    if (totalPages > 1) {
+                        doc.fontSize(12)
+                        doc.text(
+                            `${currentPage} / ${totalPages}`,
+                            15, docHeight - 30, {width: docWidth - 30, align: 'right'}
+                        )
+                        currentPage++
+                    }
                 }
 
-                let base = (tooMuchShit) ? 20 + origin + colWidth * .6 : 170 + colWidth * 1.9
-                base += 10
+                let base = (tooMuchShit) ? origin + colWidth * .6 : 170 + colWidth * 1.9 + 10
 
                 let tableColWidth = Math.floor((docWidth - 30) / totalCol)
                 let cellWidths = {cols: seriesTable[0].length}
@@ -717,7 +732,8 @@
                     return total
                 }
 
-                if (seriesTable.length > 7 || tooMuchShit) {
+                if (seriesTable.length > maxRows || seriesTable.length > 7) {
+                    totalPages++
                     footer()
                     doc.addPage({
                         margin: 15
@@ -751,8 +767,13 @@
                     let a = document.createElement('a')
                     let url = URL.createObjectURL(blob)
                     a.href = url
-                    // let type_repl = type.replace(" ", "_")
-                    a.download = type + series + '.pdf'
+
+                    let cat_repl = titleCase(category)
+                    let ser_repl = titleCase(series)
+                    cat_repl = cat_repl.replace(/ /g, "_")
+                    ser_repl = ser_repl.replace(/ /g, "_")
+
+                    a.download = "VONBERG-" + cat_repl + "-" + style + "-" + ser_repl + '.pdf'
                     document.body.appendChild(a)
                     a.click()
                     setTimeout(() => {

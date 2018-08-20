@@ -1347,10 +1347,10 @@ class AdminController extends AppController
         $this->loadModel('ModelPrices');
         $data = $this->ModelPrices->find('all')->orderAsc('model_priceID')->toArray();
         $_serialize = 'data';
-        $_header = ['Model Pricing Record ID', 'Description', 'Unit Price', 'Price Class'];
+        // $_header = ['Model Pricing Record ID', 'Description', 'Unit Price', 'Price Class'];
         $this->response->download('model_prices.csv');
         $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', '_serialize', '_header'));
+        $this->set(compact('data', '_serialize'));
     }
 
     public function downloadSTP()

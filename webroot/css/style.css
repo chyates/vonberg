@@ -9,7 +9,6 @@
 body {
     background-color: #EBECE6;
     font-family: "Gill Sans MT", "Gill Sans", Calibri, sans-serif !important;
-    /* box-shadow: 4px 2px 7px 0 rgba(0,0,0,0.05); */
 }
 
 .outer-container {
@@ -549,7 +548,6 @@ a.btn.btn-primary {
         -o-transition: .5s ease-in-out;
         transition: .5s ease-in-out;
         cursor: pointer;
-        /* top: -1.5rem; */
         right: 1rem;
     }
 
@@ -759,6 +757,7 @@ a.btn.btn-primary {
 @media (max-width: 991px) {
     .product-img-block-container {
         height: 150px;
+        margin-top: 1.5vh;
     }
 
     .product-img-block {
@@ -787,10 +786,6 @@ hr.tm-cat {
     margin-bottom: 1vh;
     width: 85%;
 }
-
-/* .prod-category-main.row:last-of-type hr.tm-cat {
-    display: none;
-} */
 
 #landing-main-container .product-text-block .product-name {
     text-align: center;
@@ -870,7 +865,9 @@ hr.tm-cat {
 /* +++ PRODUCT CATEGORY: TABLET +++ */
 
 @media (max-width: 991px){
-
+    .prod-category-main.row .needs-border {
+        border-top: 1px solid #969696;
+    }
 }
 
 /* +++ PRODUCT CATEGORY: MOBILE +++ */
@@ -977,6 +974,8 @@ hr.tm-cat {
 .table-responsive .model-table.table th,
 .table-responsive .model-table.table td {
     border-top: none;
+    white-space: nowrap;
+    width: 1%;
 }
 
 .table-responsive .model-table .model-table-header {
@@ -988,7 +987,7 @@ hr.tm-cat {
 }
 
 .table-responsive .model-table td.model-table-data {
-    padding: 3vh 0;
+    padding: 1.5vh 0;
 }
 
 .table-responsive .model-table td.model-table-data,
@@ -1132,6 +1131,10 @@ hr.tm-cat {
 
     #mob-model-tables .mob-hidden {
         display: none;
+    }
+
+    #mob-prices-tables .mob-hidden p.model-table-header {
+        font-size: 13px;
     }
 
     #mob-model-tables p.model-table-data a {

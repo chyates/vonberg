@@ -3,14 +3,15 @@
         <h1 class="page-header">General Information</h1>
         <p class="product-info">Download a PDF below for general company reference material. Please note that these files are the latest versions, and any previously saved or printed materials may be out of date and, therefore, incorrect.</p>
 
-        <!-- Following is copy for App Info page:
-        <p class="product-info">Vonberg understands that each application has its own unique requirements. See how our products are designed and tuned for these specific applications.</p> -->
-        
         <div class="resource-block p-sm-4 p-3 my-4">
             <?php
             foreach ($specs as $spec): ?>
-                <p class="resource-link"><span class="pr-3">
-                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->files;?>" target="_blank"><?php echo $spec->title;?></a></p>
+                <p class="resource-link">
+                    <span class="pr-3">
+                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/>
+                    </span>
+                    <a href="/img/pdfs/technical_specifications/<?php echo $spec->files;?>" target="_blank"><?php echo $spec->title;?></a>
+                </p>
             <?php endforeach;?>
         </div>
         

@@ -161,11 +161,11 @@ class DealersController extends AppController
 
         $data = $this->Dealers->find()->all();
         $_serialize = 'data';
-        $_headers = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
+        // $_headers = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
         $_extract = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
         $this->response->download('distributors.csv');
         $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', '_serialize', '_headers', '_extract'));
+        $this->set(compact('data', '_serialize', '_extract'));
     }
 
     /**

@@ -38,7 +38,7 @@
         <?php } ?>
         </div>
     </div>
-    <!-- The following table should populate whichever data the user searched for -->
+
     <div class="series-model-table-row row no-gutters mx-lg-5 px-lg-5 my-3">
         <div class="table-responsive col-lg-10 col-12 mx-auto">
             <table class="model-table table">
@@ -102,7 +102,7 @@
                                 }
                                 $r_count++;
                             }
-                            ?>
+                ?>
                     <thead>
                         <th class="model-table-header">Model</th>
                         <th class="model-table-header">Series</th>
@@ -129,36 +129,111 @@
 
     <!-- Mobile model table/dropdowns -->
     <div id="mob-prices-tables" class="col-12 my-3">
-        <?php if(isset($prices)) {
-        foreach($prices as $mob_price): ?>
-        <div class="row no-gutters">
-            <div class="col-4">
-                <p class="top-data model-table-header">Model</p>
-                <div class="mob-hidden">
-                    <p class="model-table-header">Series</p>
-                    <p class="model-table-header">Style</p>
-                    <p class="model-table-header">Connections</p>
-                    <p class="model-table-header">Base Price</p>
-                </div>
-            </div>
-            <div class="col-8">
-                <p class="top-data model-table-data"><?php echo $mob_price['model_text']; ?><a class="drop-toggle" href="">View More</a><span class=""><img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/></span></p>
-                <div class="mob-hidden">
-                    <p class="model-table-data"><?php echo $mob_price['series']; ?></p>
-                    <p class="model-table-data"><?php echo $mob_price['style']?></p>
-                    <p class="model-table-data"><?php echo $mob_price['conn']; ?></p>
-                    <p class="model-table-data"><?php echo money_format('$%.2n', $mob_price['unit_price']); ?></p>
-                </div>
-            </div>
-        </div>
-        <?php endforeach; 
-        } else { ?>
+        <?php if(!empty($prices)) {
+            foreach($prices as $mob_price): 
+        ?>
             <div class="row no-gutters">
-                <div class="col-12">
-                    <h3 class="empty-data">No prices found</h3>
+                <div class="col-3">
+                    <p class="top-data model-table-header">Model</p>
+                    <div class="mob-hidden">
+                        <p class="model-table-header">Description</p>
+                        <p class="model-table-header">Style</p>
+                        <p class="model-table-header">Connections</p>
+                        <p class="model-table-header">Base Price</p>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <p class="top-data model-table-data"><?php echo $mob_price['model_text']; ?>
+                        <a class="drop-toggle" href="">View More</a>
+                        <span class="">
+                            <img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/>
+                        </span>
+                    </p>
+                    <div class="mob-hidden">
+                        <p class="model-table-data"><?php echo $mob_price['series']; ?></p>
+                        <p class="model-table-data"><?php echo $mob_price['style']?></p>
+                        <p class="model-table-data"><?php echo $mob_price['conn']; ?></p>
+                        <p class="model-table-data"><?php echo money_format('$%.2n', $mob_price['unit_price']); ?></p>
+                    </div>
                 </div>
             </div>
-        <?php } ?>
+        <?php 
+            endforeach; 
+        } else if(isset($no_series)) { 
+            foreach($no_series as $mob_item): 
+        ?>
+            <div class="row no-gutters">
+                <div class="col-3">
+                    <p class="top-data model-table-header">Model</p>
+                    <div class="mob-hidden">
+                        <p class="model-table-header">Description</p>
+                        <p class="model-table-header">Base Price</p>
+                    </div>
+                </div>
+                <div class="col-9">
+                    <p class="top-data model-table-data"><?php echo $mob_item['model_text']; ?>
+                        <a class="drop-toggle" href="">View More</a>
+                        <span class="">
+                            <img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/>
+                        </span>
+                    </p>
+                    <div class="mob-hidden">
+                        <p class="model-table-data"><?php echo $mob_item['description']; ?></p>
+                        <p class="model-table-data"><?php echo money_format('$%.2n', $mob_item['unit_price']); ?></p>
+                    </div>
+                </div>
+            </div>
+        <?php  endforeach;
+            } else if(!empty($empty_prices)) {
+          foreach($empty_prices as $each_mob):
+            $c_count = 0;
+            foreach($each_mob->model_table->model_table_headers as $head_empty_mob) {
+                $c_count++;
+            }
+
+            $r_count = 1;
+            $mob_model_nums = [];
+            foreach($each_mob->model_table->model_table_rows as $empty_mob) {
+                if($r_count >= $c_count) {
+                    $r_count = 0;
+                }
+                if($r_count == 1) {
+                    array_push($mob_model_nums, $empty_mob->model_table_row_text);
+                }
+                $r_count++;
+            }
+        for($j = 0; $j < count($mob_model_nums); $j++) { ?>
+            <div class="row no-gutters">
+                <div class="col-3">
+                    <p class="top-data model-table-header">Model</p>
+                    <div class="mob-hidden">
+                        <p class="model-table-header">Description</p>
+                        <p class="model-table-header">Style</p>
+                        <p class="model-table-header">Connections</p>
+                        <p class="model-table-header">Base Price</p>
+                    </div>
+                </div>
+
+                <div class="col-9">
+                    <p class="top-data model-table-data"><?php echo $mob_model_nums[$j]; ?>
+                        <a class="drop-toggle" href="">View More</a>
+                        <span class="">
+                            <img class="mob-arrow img-fluid" src="/img/Arrow-Down.svg"/>
+                        </span>
+                    </p>
+                    <div class="mob-hidden">
+                        <p class="model-table-data"><?php echo $each_mob->series->name; ?></p>
+                        <p class="model-table-data"><?php echo $each_mob->style->name?></p>
+                        <p class="model-table-data"><?php echo $each_mob->connection->name; ?></p>
+                        <p class="model-table-data"><?php echo "PLEASE CALL FOR CURRENT PRICING"; ?></p>
+                    </div>
+                </div>
+
+            </div>
+        <?php }
+            endforeach;
+        }
+        ?>
     </div>
 
     <div class="row no-gutters">
@@ -184,7 +259,7 @@
             e.preventDefault();
             var eachClass = $(this).closest("p.model-table-data").next(".mob-hidden").attr("class");
             var res = eachClass.replace(' ', '.');
-            var leftDiv = $(this).closest(".col-8").prev(".col-4").find("div").filter('.' + res);
+            var leftDiv = $(this).closest(".col-9").prev(".col-3").find("div").filter('.' + res);
             if(leftDiv.css('display') == "none") {
                 $(this).closest("p.model-table-data").next('.mob-hidden').show();
                 leftDiv.show();

@@ -7,7 +7,12 @@
                     <div>
                         <h2>General Information</h2>
                         <?php foreach($generals as $spec): ?>
-                            <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->title;?></a></p>
+                            <p class="resource-link">
+                                <span class="pr-3">
+                                    <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/>
+                                </span>
+                                <a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->title;?></a>
+                            </p>
                         <?php endforeach; ?>
                     </div>
                     <a class="btn btn-primary my-4" href="/resources/general-information">View All</a>
@@ -16,7 +21,12 @@
                     <div>
                         <h2>Technical Documentation</h2>
                         <?php foreach($technicals as $spec): ?>
-                            <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->title;?></a></p>
+                            <p class="resource-link">
+                                <span class="pr-3">
+                                    <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/>
+                                </span>
+                                <a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->title;?></a>
+                            </p>
                         <?php endforeach; ?>
                     </div>
                     <a class="btn btn-primary my-4" href="/resources/technical-documentation">View All</a>
@@ -28,7 +38,12 @@
                     <div>
                         <h2>Application Information</h2>
                         <?php foreach($applications as $spec): ?>
-                            <p class="resource-link"><span class="pr-3"><img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->title;?></a></p>
+                            <p class="resource-link">
+                                <span class="pr-3">
+                                    <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/>
+                                </span>
+                                <a href=<?= "/img/pdfs/technical_specifications/".$spec->files; ?> target="_blank"><?php echo $spec->title;?></a>
+                            </p>
                         <?php endforeach; ?>
                     </div>
                     <a class="btn btn-primary my-4" href="/resources/application-information">View All</a>
@@ -36,12 +51,18 @@
                 <div class="resource-block col-sm-5 p-4 mx-3 mb-3">
                     <h2>Base Product Prices</h2>
                     <?php 
-                        echo $this->Form->create(null, ['type' => 'get','valueSources' => 'query','url' => ['controller' => 'Products', 'action' => 'prices']]);
+                        echo $this->Form->create(null, 
+                        [
+                            'type' => 'get',
+                            'valueSources' => 'query',
+                            'url' => ['controller' => 'Products', 'action' => 'prices']
+                        ]);
+
                         $this->Form->unlockField('q');
                         $this->Form->unlockField('seriesID');
                     ?>
                     <label>Enter Model Number</label>
-                    <input type="text" class="form-control" name="product-model">
+                    <input type="text" class="form-control" name="q">
                     <p class="text-center">or</p>
                     <div class="form-group">
                         <label>Select a Series</label>

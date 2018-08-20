@@ -6,8 +6,12 @@
         <div class="resource-block p-sm-4 p-3 my-4">
             <?php
             foreach ($specs as $spec): ?>
-                <p class="resource-link"><span class="pr-3">
-                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/></span><a href="/img/pdfs/technical_specifications/<?php echo $spec->files;?>" target="_blank"><?php echo $spec->title;?></a></p>
+                <p class="resource-link">
+                    <span class="pr-3">
+                        <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/>
+                    </span>
+                    <a href="/img/pdfs/technical_specifications/<?php echo $spec->files;?>" target="_blank"><?php echo $spec->title;?></a>
+                </p>
             <?php endforeach;?>
         </div>
         
