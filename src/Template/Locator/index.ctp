@@ -118,7 +118,7 @@
                                             $full_addr = $first_addr . "+" . $second_addr . "+" . $up_city . "+" . $state . "+" . $up_zip . "+" . $country;
                                         }
                                     ?>
-                                    <p><a class="results-link" href=<?="https://www.google.com/maps?saddr=My+Location&daddr=" .$full_addr; ?> target="_new">Get directions ></a></p>
+                                    <p><a class="results-link" href=<?="https://www.google.com/maps?saddr=My+Location&daddr=" .$full_addr. "&travelmode=driving"; ?> target="_new">Get directions ></a></p>
                                 </div>
                             </div>
                         </div>

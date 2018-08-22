@@ -109,7 +109,8 @@
                         'multiple' => false,
                         'options' => $cat,
                         'label' => 'Category',
-                        'class' => 'accept form-control'
+                        'class' => 'accept form-control',
+                        'value' => $part->categoryID
                     ]);
 
                     echo $this->Form->input('newcat', 
@@ -143,7 +144,8 @@
                             ['text' => '90', 'value' => 90]
                         ],
                         'label' => false,
-                        'class' => 'form-control'
+                        'class' => 'form-control',
+                        'value' => $part->expires
                     ]
                     );?>
                 </div>
@@ -158,7 +160,8 @@
                         'multiple' => false,
                         'options' => $style,
                         'label' => False,
-                        'class' => 'form-check-input'
+                        'class' => 'form-check-input',
+                        'value' => $part->styleID
                     ]);?>
             </div>
 
@@ -169,8 +172,9 @@
                         'type' => 'select',
                         'multiple' => false,
                         'options' => $type,
-                        'label' => 'Series',
-                        'class' => 'accept form-control'
+                        'label' => 'Type',
+                        'class' => 'accept form-control',
+                        'value' => $part->typeID
                     ]);
 
                     echo $this->Form->input('newtype', 
@@ -192,7 +196,8 @@
                         'multiple' => false,
                         'options' => $series,
                         'label' => 'Series',
-                        'class' => 'accept form-control'
+                        'class' => 'accept form-control',
+                        'value' => $part->seriesID
                     ]);
 
                     echo $this->Form->input('newseries', 
@@ -215,7 +220,8 @@
                         'options' => $conn,
                         'id'=> 'connectionid',
                         'label' => 'Short Description',
-                        'class' => 'accept form-control'
+                        'class' => 'accept form-control',
+                        'value' => $part->connectionID
                     ]);
 
                     echo $this->Form->input('newconn', 

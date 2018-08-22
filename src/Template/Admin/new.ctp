@@ -6,31 +6,40 @@
 use Cake\Routing\Router;
 ?>
 <div id="cms-prod-cat-main" class="inner-main col-md-10 mx-auto p-5">
-
-    <div id="delete-check-modal" class="modal" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <div class="col">
-                        <h1 class="page-title">Delete File?</h1>
-                        <p>Are you sure you want to delete</p>
-                        <p id="partname">FPO FILE TEXT</p>
-                        <p>from the system? This action cannot be undone.</p>
-                        <div class="btn-row">
-                            <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
-                            <?php
-                                echo $this->Form->postLink(
-                                    'Delete',
-                                    array('action' => 'partDelete'),
-                                    array('id'=>'delete-confirm','class' => 'btn btn-primary'),
+    <?php foreach($parts as $modal_part) : ?>
+        <div id="<?= $modal_part->partID; ?>" class="delete-modal modal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="col">
+                            <h1 class="page-title">Delete File?</h1>
+                            <p>Are you sure you want to delete</p>
+                            <p id="partname">
+                                <?php 
+                                    if(!empty($modal_part->series->name)) {
+                                        echo $modal_part->series->name;
+                                    } elseif(empty($modal_part->series->name) || $modal_part->seriesID == "0") {
+                                        echo "No series";
+                                    } 
+                                ?>
+                            </p>
+                            <p>from the system? This action cannot be undone.</p>
+                            <div class="btn-row">
+                                <button type="button" class="back btn btn-primary" data-dismiss="modal">Cancel</button>
+                                <?php
+                                    echo $this->Form->postLink(
+                                        'Delete',
+                                        array('action' => 'partDelete', $modal_part->partID),
+                                        array('id'=>'delete-confirm','class' => 'btn btn-primary'),
                                     false);
-                            ?>
+                                ?>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
+    <?php endforeach; ?>
 
     <h1 class="page-title"><?= __($pagename) ?></h1>
     <div class="table-responsive">
@@ -48,23 +57,23 @@ use Cake\Routing\Router;
                 <?php foreach ($parts as $part): ?>
                 <tr>
                     <td class="model-table-data">
-                        <?php if($part->series->name) {
+                        <?php if(!empty($part->series->name)) {
                             echo $part->series->name;
-                        } else {
+                        } elseif(empty($part->series->name) || $part->seriesID == "0") {
                             echo "No series";
                         } ?>
                     </td>
                     <td class="model-table-data">
-                        <?php if($part->style) {
+                        <?php if(!empty($part->style->name)) {
                             echo $part->style->name;
-                        } else {
+                        } elseif(empty($part->style->name) || $part->styleID == "0") {
                             echo "No style";
                         } ?>
                     </td>
                     <td class="model-table-data">
-                        <?php if($part->connection->name) {
+                        <?php if(!empty($part->connection->name)) {
                             echo $part->connection->name;
-                        } else {
+                        } elseif(empty($part->connection->name) || $part->connectionID == "0") {
                             echo "No connection";
                         } ?>
                     </td>
@@ -76,23 +85,39 @@ use Cake\Routing\Router;
                             <label class="form-check-label"><?php echo $part->expires . " days"; ?></label>
                         </div>
                     <td class="model-table-data actions">
-                        <?= $this->Html->link(__('VIEW'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
-                        <?= $this->Html->link(__('EDIT'), ['action' => 'edit-product', $part->partID]) ?>
-                        <?= $this->Html->link(__('DUPLICATE'), ['action' => 'duplicate', $part->partID]) ?>
-                        <?php
-                            echo $this->Html->link(
-                                $this->Html->tag('delete', 'Delete'),
-                                '#',
-                                array(
-                                    'id'=>'btn-confirm',
-                                    'data-toggle'=> 'modal',
-                                    'data-file'=> $part->series->name,
-                                    'data-target' => '#delete-check-modal',
-                                    'data-action'=> Router::url(
-                                        array('action'=>'deletePart',$part->partID)
+                        <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>
+                        <?= $this->Html->link(__('Edit'), ['action' => 'edit-product', $part->partID]) ?>
+                        <?= $this->Html->link(__('Duplicate'), ['action' => 'duplicate', $part->partID]) ?>
+                        <?php 
+                            if(!empty($part->series->name)) {
+                                echo $this->Html->link(
+                                    $this->Html->tag('delete', 'Delete'), '#',
+                                    array(
+                                        'id'=>'btn-confirm',
+                                        'data-toggle'=> 'modal',
+                                        'data-file'=> $part->series->name,
+                                        'data-target' => '#'.$part->partID,
+                                        'data-action'=> Router::url(
+                                            array('action'=>'partDelete',$part->partID)
+                                        ),
+                                        'escape' => false
                                     ),
-                                    'escape' => false),
                                 false);
+                            } elseif(empty($part->series->name) || $part->seriesID == "0") {
+                                echo $this->Html->link(
+                                    $this->Html->tag('delete', 'Delete'), '#',
+                                    array(
+                                        'id'=>'btn-confirm',
+                                        'data-toggle'=> 'modal',
+                                        'data-file'=> "No series",
+                                        'data-target' => '#'.$part->partID,
+                                        'data-action'=> Router::url(
+                                            array('action'=>'partDelete',$part->partID)
+                                        ),
+                                        'escape' => false
+                                    ),
+                                false);
+                            }
                         ?>
                     </td>
                 </tr>
@@ -111,4 +136,3 @@ use Cake\Routing\Router;
         <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
     </div>
 </div>
-

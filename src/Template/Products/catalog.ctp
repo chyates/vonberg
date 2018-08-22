@@ -81,9 +81,9 @@
         ?>
             <div id="<?= $col_id; ?>" class="col-md-4 col-6 my-md-3">
                 <a href=<?= "/products/view/".$part->partID; ?>>
-                    <?php if (file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
+                    <?php if (file_exists('img/parts/'.$part->partID.'/product_image.jpg')) { ?>
                     <div class="product-img-block-container">
-                        <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>"/>
+                        <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/product_image.jpg"; ?>"/>
                     </div>
                     <?php } else if (file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')) { ?>
                     <div class="product-img-block-container">

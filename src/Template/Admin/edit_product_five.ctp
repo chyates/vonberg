@@ -8,6 +8,7 @@
                     <tr>
                         <th class="model-table-header">Model</th>
                         <th class="model-table-header">Current File</th>
+                        <th class="model-table-header">Last Updated</th>
                         <th class="model-table-header">Upload File</th>
                     </tr>
                 </thead>
@@ -39,6 +40,12 @@
                                     } 
                                 ?>
                             </td>
+                            <?php 
+                            if(file_exists($step)) { ?>
+                                <td class="model-table-data"><?php echo date('m/d/Y', filemtime($step)); ?></td>
+                            <?php } else { ?>
+                                <td class="model-table-data"><?php echo "No associated date"; ?></td>
+                           <?php } ?>
                             <td class="d-flex model-table-data justify-content-between">
                                 <label class="fileContainer dark">Browse
                                     <?php echo $this->Form->input('stp_files[]', ['label'=>False, 'type' => 'file', 'class'=>'form-control']);?>

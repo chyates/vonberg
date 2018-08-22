@@ -102,8 +102,8 @@ class DealersController extends AppController
                     fclose($handle);
                 }
 
-                if(file_exists(WWW_ROOT.'csv/dealers.csv')) {
-                    unlink(WWW_ROOT.'csv/dealers.csv');
+                if(file_exists(WWW_ROOT.'csv/distributors.csv')) {
+                    unlink(WWW_ROOT.'csv/distributors.csv');
                 }
         
                 $new_dist_file = $_FILES['upload'];

@@ -44,7 +44,7 @@
                     <p class="drop-content"><a href="/admin/type/24">2-Way Manifolds</a></p>
                     <p class="drop-content"><a href="/admin/type/22">3-Way Manifolds</a></p>
                     <p class="drop-content"><a href="/admin/type/19">3-Way T-Series Manifolds</a></p>
-                    <p class="drop-content">Cavity Plugs</p>
+                    <p class="drop-content"><a href="/admin/type/30">Cavity Plugs</a></p>
                 </div>
                 <div class="col last-prod-drop">
                     <p class="cms-greyed drop-header">Product Customization</p>

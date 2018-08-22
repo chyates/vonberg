@@ -1830,6 +1830,7 @@ span img.img-fluid {
 }
 
 .model-table.table-striped .model-table-data a,
+.model-table.table-striped .model-table-data a.actions,
 #btn-confirm {
 	color: #425460;
 	font-family: Poppins;
@@ -1837,6 +1838,7 @@ span img.img-fluid {
     line-height: 21px;
     padding-right: 5px;
     text-decoration: underline;
+    text-transform: uppercase;
 }
 
 /* Resource Table */
@@ -1949,12 +1951,13 @@ span img.img-fluid {
 #cms-edit-resource-main .table-responsive .table td p.file-text {
     align-self: center;
     margin-bottom: 0;
+    margin-left: 1vw;
 }
 
 /* === FILE UPLOAD BUTTON: GLOBAL / DESKTOP === */
 
 label.fileContainer {
-    overflow: hidden;
+    /* overflow: hidden; */
     position: relative;
     font-size: 13px;
     font-weight: bold;
@@ -2063,29 +2066,29 @@ ul.pagination li {
 
 /* === DELETE MODAL: GLOBAL / DESKTOP === */
 
-#delete-check-modal .modal-content {
+.delete-modal.modal .modal-content {
     padding: 3vh 3vw;
 }
 
-#delete-check-modal .modal-body {
+.delete-modal.modal .modal-body {
     padding: 8vh 0;
 }
 
-#delete-check-modal .modal-body .col {
+.delete-modal.modal .modal-body .col {
     display: flex;
     flex-direction: column;
     text-align: center;
 }
 
-#delete-check-modal .modal-body .col p {
+.delete-modal.modal .modal-body .col p {
     margin-bottom: 2vh;
 }
 
-#delete-check-modal .modal-body .col p:nth-child(odd) {
+.delete-modal.modal .modal-body .col p:nth-child(odd) {
     font-weight: bold;
 }
 
-#delete-check-modal .modal-body .col .btn-row {
+.delete-modal.modal .modal-body .col .btn-row {
     justify-content: space-evenly;
     display: flex;
 }

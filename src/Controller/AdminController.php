@@ -65,7 +65,7 @@ class AdminController extends AppController
 
         // $copy = $this->Parts->newEntity();
         $copy = $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
-        $copy->last_updated = date("Y-m-d H:i:s");
+        // $copy->last_updated = date("Y-m-d H:i:s");
         
         $dupe = $this->Parts->newEntity();
         
@@ -203,88 +203,88 @@ class AdminController extends AppController
     public $components=array('RequestHandler');
 
     // AJAX functions from add/edit product 1 slide modals
-    public function catAdd() 
-    {
-        $this->loadModel('Categories');
-        $cat=$this->Categories->newEntity();
-        if($this->request->is('ajax')) {
-            $this->autoRender=false;
-            $this->request->data['name']=$this->request->query['name'];
-            $cat=$this->Categories->patchEntity($cat,$this->request->data);
-            if($result=$this->Categories->save($cat)) {
-                echo $result->id;
-            }
-            else {
-                // echo "Error: some error";
-            }
-        }
-    }
+    // public function catAdd() 
+    // {
+    //     $this->loadModel('Categories');
+    //     $cat=$this->Categories->newEntity();
+    //     if($this->request->is('ajax')) {
+    //         $this->autoRender=false;
+    //         $this->request->data['name']=$this->request->query['name'];
+    //         $cat=$this->Categories->patchEntity($cat,$this->request->data);
+    //         if($result=$this->Categories->save($cat)) {
+    //             echo $result->id;
+    //         }
+    //         else {
+    //             // echo "Error: some error";
+    //         }
+    //     }
+    // }
 
-    public function typeAdd()
-    {
-        $this->loadModel('Types');
-        $cat = $this->Types->newEntity();
-        if ($this->request->is('ajax')) {
-            $this->autoRender = false;
-            $this->request->data['name']=$this->request->query['name'];
-            $cat = $this->Types->patchEntity($cat, $this->request->data);
-            if ($result = $this->Types->save($cat)) {
-                echo $result->id;
-            } else {
-                // echo "Error: some error";
-            }
-        }
-    }
+    // public function typeAdd()
+    // {
+    //     $this->loadModel('Types');
+    //     $cat = $this->Types->newEntity();
+    //     if ($this->request->is('ajax')) {
+    //         $this->autoRender = false;
+    //         $this->request->data['name']=$this->request->query['name'];
+    //         $cat = $this->Types->patchEntity($cat, $this->request->data);
+    //         if ($result = $this->Types->save($cat)) {
+    //             echo $result->id;
+    //         } else {
+    //             // echo "Error: some error";
+    //         }
+    //     }
+    // }
 
-    public function seriesAdd() 
-    {
-        $this->loadModel('Series');
-        $cat=$this->Series->newEntity();
-        if($this->request->is('ajax')) {
-            $this->autoRender=false;
-            $this->request->data['name']=$this->request->query['name'];
-            $cat=$this->Series->patchEntity($cat,$this->request->data);
-            if($result=$this->Series->save($cat)) {
-                echo $result->id;
-            } else {
-                // echo "Error: some error";
-            }
-        }
-    }
+    // public function seriesAdd() 
+    // {
+    //     $this->loadModel('Series');
+    //     $cat=$this->Series->newEntity();
+    //     if($this->request->is('ajax')) {
+    //         $this->autoRender=false;
+    //         $this->request->data['name']=$this->request->query['name'];
+    //         $cat=$this->Series->patchEntity($cat,$this->request->data);
+    //         if($result=$this->Series->save($cat)) {
+    //             echo $result->id;
+    //         } else {
+    //             // echo "Error: some error";
+    //         }
+    //     }
+    // }
 
-    public function connAdd() 
-    {
-        $this->loadModel('Connections');
-        $cat=$this->Connections->newEntity();
-        if($this->request->is('ajax')) {
-            $this->autoRender=false;
-            $this->request->data['name']=$this->request->query['name'];
-            $cat=$this->Connections->patchEntity($cat,$this->request->data);
-            if($result=$this->Connections->save($cat)) {
-                echo $result->id;
-            } else {
-                // echo "Error: some error";
-            }
-        }
-    }
+    // public function connAdd() 
+    // {
+    //     $this->loadModel('Connections');
+    //     $cat=$this->Connections->newEntity();
+    //     if($this->request->is('ajax')) {
+    //         $this->autoRender=false;
+    //         $this->request->data['name']=$this->request->query['name'];
+    //         $cat=$this->Connections->patchEntity($cat,$this->request->data);
+    //         if($result=$this->Connections->save($cat)) {
+    //             echo $result->id;
+    //         } else {
+    //             // echo "Error: some error";
+    //         }
+    //     }
+    // }
 
-    public function partAdd() 
-    {
-        if($this->request->is('post')) {
-            $this->loadModel('Parts');
+    // public function partAdd() 
+    // {
+    //     if($this->request->is('post')) {
+    //         $this->loadModel('Parts');
 
-            $data = [];
-            $part=$this->Parts->newEntity();
-            $part=$this->Parts->patchEntity($part,$this->request->data);
-            if($result=$this->Parts->save($part)) {
-                $data['response'] = "Success: data saved";
-            }
-            else {
-                $data['response'] = "Error: some error";
-            }
-            $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
-        }
-    }
+    //         $data = [];
+    //         $part=$this->Parts->newEntity();
+    //         $part=$this->Parts->patchEntity($part,$this->request->data);
+    //         if($result=$this->Parts->save($part)) {
+    //             $data['response'] = "Success: data saved";
+    //         }
+    //         else {
+    //             $data['response'] = "Error: some error";
+    //         }
+    //         $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
+    //     }
+    // }
 
     // AJAX function to toggle new status, products + catalog + type pages
     public function checkNew() 
@@ -395,11 +395,64 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        $part=$this->Parts->get($id);
+        $this->loadModel('Series');
+        $this->loadModel('Types');
+        $this->loadModel('Styles');
+        $this->loadModel('Connections');
+        $this->loadModel('Categories');
+
+        $part = $this->Parts->get($id);
         $data = [];
         if($this->request->is('post') || $this->request->is('put'))  {
             $data['debug'] = "passing post";
-            $part=$this->Parts->patchEntity($part,$this->request->data);
+
+            if($this->request->data['styleID'] != $part->styleID) {
+                $part->styleID = $this->request->data['styleID'];
+            }
+
+            if(!empty($this->request->data['newcat'])) {
+                $new_cat = $this->Categories->newEntity();
+                $new_cat->name = $this->request->data['newcat'];
+                if($this->Categories->save($new_cat)) {
+                    $part->categoryID = $new_cat->categoryID;
+                }
+            } elseif($this->request->data['styleID'] != $part->categoryID) {
+                $part->categoryID = $this->request->data['categoryID'];
+            }
+
+            if(!empty($this->request->data['newseries'])) {
+                $new_sr = $this->Series->newEntity();
+                $new_sr->name = $this->request->data['newseries'];
+                if($this->Series->save($new_sr)) {
+                    $part->seriesID = $new_sr->seriesID;
+                }
+            } elseif($this->request->data != $part->seriesID) {
+                $part->seriesID = $this->request->data['seriesID'];
+            }
+
+            if(!empty($this->request->data['newtype'])) {
+                $new_type = $this->Types->newEntity();
+                $new_type->name = $this->request->data['newtype'];
+                if($this->Types->save($new_type)) {
+                    $part->typeID = $new_type->typesID;
+                }
+            } elseif($this->request->data['typeID'] != $part->typeID) {
+                $part->typeID = $this->request->data['typeID'];
+            }
+
+            if(!empty($this->request->data['newconn'])) {
+                $new_conn = $this->Connections->newEntity();
+                $new_conn->name = $this->request->data['newconn'];
+                if($this->Connections->save($new_conn)) {
+                    $part->connectionID = $new_conn->connectionID;
+                }
+            } elseif($this->request->data['connectionID'] != $part->connectionID) {
+                $part->connectionID = $this->request->data['connectionID'];
+            }
+
+            $part->expires = intval($this->request->data['expires']);
+            $part->new_list = intval($this->request->data['new_list']);
+
             if($result=$this->Parts->save($part)) {
                 $data['response'] = "Success: data saved";
             }
