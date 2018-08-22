@@ -140,7 +140,15 @@
             <div class="left-info">
                 <div id="typeid" class="hidden"><?php echo $part->type->name; ?></div>
                 <div id="partid" class="hidden"><?php echo $part->partID; ?></div>
-                <h1 id="seriesid" class="page-title"><?= $part->series->name;?></h1>
+                <h1 id="seriesid" class="page-title">
+                    <?php
+                        if(!empty($part->series->name)) {
+                            echo $part->series->name;
+                        } elseif(empty($part->series->name) || $part->seriesID == "0") {
+                            echo "No series";
+                        } 
+                    ?>
+                </h1>
                 <h3 id="categoryid" class="product-name"><?= h($part->category->name);?></h3>
                 <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                     <p class="product-info"><?php echo "No style or connection"; ?></p>

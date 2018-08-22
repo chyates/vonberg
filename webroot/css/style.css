@@ -911,9 +911,13 @@ hr.tm-cat {
 
 .product-render,
 .product-schematic,
-.product-performance,
-.product-order {
+.product-performance {
     height: 180px;
+}
+
+.product-order {
+    width: 380px;
+    height: auto;
 }
 
 .single-prod-right-col .right-main-content {

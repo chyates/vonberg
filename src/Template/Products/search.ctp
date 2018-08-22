@@ -15,7 +15,11 @@
                             }
                             echo'<h1 class="page-header my-4">';
                             echo '<a href="/products/type/' . $part->typeID . '">';
-                            echo $part->type->name;
+                            if(!empty($part->type->name)) {
+                                echo $part->type->name;
+                            } elseif(empty($part->type->name) || $part->typeID == "0") {
+                                echo "No type";
+                            }
                             echo '</a></h1>
                             <div class="row no-gutters">';
                         } 
@@ -24,9 +28,22 @@
                     <a href=<?= "/products/view/".$part->partID; ?>>
                     <?php if (file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
                         <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>" alt="product-map">
-                    <?php } else { ?>
+                    <?php } elseif(file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')) { ?>
                         <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
-                    <?php } ?>
+                        <?php } else { ?>
+                        <?php if($part->category->name == "Pressure Controls") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Pressure-Controls@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Flow Regulating Valves") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Flow-Regulating-Valves@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Directional Valves") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Directional-Valves@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Safety Valves") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Safety-Valves@2.png" alt="product-map">
+                        <?php } else if ($part->category->name == "Cartridge Bodies") { ?>
+                            <img class="product-img-block img-fluid" src="/img/Cartiridge-Bodies@2.png" alt="product-map">
+                        <?php 
+                            } 
+                        } ?>
                         <div class="product-text-block my-3">
                             <h3 class="product-name"><?= h($part->series->name) ?></h3>
                             <p class="product-info"><?= h($part->style->name) ?> • <?= h($part->connection->name) ?></p>

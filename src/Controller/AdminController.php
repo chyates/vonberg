@@ -152,7 +152,8 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        $query = $this->paginate($this->Parts->find('all', array('order' => array('last_updated DESC')))->contain(['Connections', 'Types', 'Series', 'Styles', 'Categories']));
+        $query = $this->paginate($this->Parts->find('all', array(
+            'order' => array('Categories.name' => 'ASC', 'Parts.expires' => 'DESC')))->contain(['Connections', 'Types', 'Series', 'Styles', 'Categories']));
 
         $this->set('parts', $query);
         $this->set('pagename', 'All Products');
@@ -201,90 +202,6 @@ class AdminController extends AppController
     }
 
     public $components=array('RequestHandler');
-
-    // AJAX functions from add/edit product 1 slide modals
-    // public function catAdd() 
-    // {
-    //     $this->loadModel('Categories');
-    //     $cat=$this->Categories->newEntity();
-    //     if($this->request->is('ajax')) {
-    //         $this->autoRender=false;
-    //         $this->request->data['name']=$this->request->query['name'];
-    //         $cat=$this->Categories->patchEntity($cat,$this->request->data);
-    //         if($result=$this->Categories->save($cat)) {
-    //             echo $result->id;
-    //         }
-    //         else {
-    //             // echo "Error: some error";
-    //         }
-    //     }
-    // }
-
-    // public function typeAdd()
-    // {
-    //     $this->loadModel('Types');
-    //     $cat = $this->Types->newEntity();
-    //     if ($this->request->is('ajax')) {
-    //         $this->autoRender = false;
-    //         $this->request->data['name']=$this->request->query['name'];
-    //         $cat = $this->Types->patchEntity($cat, $this->request->data);
-    //         if ($result = $this->Types->save($cat)) {
-    //             echo $result->id;
-    //         } else {
-    //             // echo "Error: some error";
-    //         }
-    //     }
-    // }
-
-    // public function seriesAdd() 
-    // {
-    //     $this->loadModel('Series');
-    //     $cat=$this->Series->newEntity();
-    //     if($this->request->is('ajax')) {
-    //         $this->autoRender=false;
-    //         $this->request->data['name']=$this->request->query['name'];
-    //         $cat=$this->Series->patchEntity($cat,$this->request->data);
-    //         if($result=$this->Series->save($cat)) {
-    //             echo $result->id;
-    //         } else {
-    //             // echo "Error: some error";
-    //         }
-    //     }
-    // }
-
-    // public function connAdd() 
-    // {
-    //     $this->loadModel('Connections');
-    //     $cat=$this->Connections->newEntity();
-    //     if($this->request->is('ajax')) {
-    //         $this->autoRender=false;
-    //         $this->request->data['name']=$this->request->query['name'];
-    //         $cat=$this->Connections->patchEntity($cat,$this->request->data);
-    //         if($result=$this->Connections->save($cat)) {
-    //             echo $result->id;
-    //         } else {
-    //             // echo "Error: some error";
-    //         }
-    //     }
-    // }
-
-    // public function partAdd() 
-    // {
-    //     if($this->request->is('post')) {
-    //         $this->loadModel('Parts');
-
-    //         $data = [];
-    //         $part=$this->Parts->newEntity();
-    //         $part=$this->Parts->patchEntity($part,$this->request->data);
-    //         if($result=$this->Parts->save($part)) {
-    //             $data['response'] = "Success: data saved";
-    //         }
-    //         else {
-    //             $data['response'] = "Error: some error";
-    //         }
-    //         $this->redirect(array('controller' => 'admin', 'action' => 'editProductTwo', $part->partID));
-    //     }
-    // }
 
     // AJAX function to toggle new status, products + catalog + type pages
     public function checkNew() 

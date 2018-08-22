@@ -62,42 +62,6 @@
                         <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     </div>
                 </div>
-
-                <div class="row no-gutters justify-content-between">
-                    <div class="col">
-                        <p class="drop-header"><A HREF="/products/catalog/1">Flow Regulating Valves</A></p>
-                        <p class="drop-content"><a href="/products/type/8">Flow Dividers & Combiners</a></p>
-                        <p class="drop-content"><a href="/products/type/6">Flow Regulators</a></p>
-                    </div>
-                    <div class="col">
-                        <p class="drop-header"><A HREF="/products/catalog/2">Directional Valves</A></p>
-                        <p class="drop-content"><a href="/products/type/9">Check Valves - Ball</a></p>
-                        <p class="drop-content"><a href="/products/type/7">Check Valves - Poppet</a></p>
-                        <p class="drop-content"><a href="/products/type/10">Shuttle Valves</a></p>
-                    </div>
-                    <div class="col">
-                        <p class="drop-header"><A HREF="/products/catalog/3">Safety Valves</A></p>
-                        <p class="drop-content"><a href="/products/type/12">Flow Limiters</a></p>
-                        <p class="drop-content"><a href="/products/type/11">Velocity Fuses</a></p>
-                    </div>
-                    <div class="col">
-                        <p class="drop-header"><A HREF="/products/catalog/5">Pressure Controls</A></p>
-                        <p class="drop-content"><a href="/products/type/15">Counterbalance Valves</a></p>
-                        <p class="drop-content"><a href="/products/type/14">Relief Valves - Differential Area</a></p>
-                        <p class="drop-content"><a href="/products/type/13">Relief Valves - Direct Acting</a></p>
-                    </div>
-                    <div class="col">
-                        <p class="drop-header"><A HREF="/products/catalog/7">Cartridge Bodies</A></p>
-                        <p class="drop-content"><a href="/products/type/24">2-Way Manifolds</a></p>
-                        <p class="drop-content"><a href="/products/type/22">3-Way Manifolds</a></p>
-                        <p class="drop-content"><a href="/products/type/19">3-Way T-Series Manifolds</a></p>
-                        <p class="drop-content"><a href="/products/type/30">Cavity Plugs</a></p>
-                    </div>
-                    <div class="col last-prod-drop">
-                        <p class="drop-header"><A HREF="/products/customization">Product Customization</A></p>
-                        <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
-                    </div>
-                </div>
             </div>
         </div>
 

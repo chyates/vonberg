@@ -31,7 +31,15 @@
                         }  
                         ?>
                     <div class="product-text-block mt-lg-3 mt-sm-5 mb-sm-0 mb-4">
-                        <h3 class="product-name"><?= h($part->series->name) ?></h3>
+                        <h3 class="product-name">
+                            <?php
+                                if(!empty($part->series->name)) {
+                                    echo $part->series->name;
+                                } elseif(empty($part->series->name) || $part->seriesID == "0") {
+                                    echo "No series";
+                                } 
+                            ?>
+                        </h3>
                         <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                         <p class="product-info"><?php echo "No style or connection"; ?></p>
                         <?php } else if(!empty($part->style->name) && empty($part->connection->name)) { ?>
