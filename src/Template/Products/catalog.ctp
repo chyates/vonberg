@@ -1,4 +1,4 @@
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <?php
     if ($category->name === "Pressure Controls") {
         $this->assign('keywords', $this->Html->meta(
@@ -144,8 +144,17 @@
         var cols = $(".prod-category-main.row").find(".col-6");
         $(cols).each(function(index) {
             var id = parseInt($(this).attr('id'));
-            if(id > 3) {
-                $(this).addClass('needs-border');
+
+            if($(window).width() <= 576) {
+                if(id > 2) {
+                    $(this).addClass('needs-border');
+                }
+            }
+
+            else if($(window).width() > 576) {
+                if(id > 3) {
+                    $(this).addClass('needs-border');
+                }
             }
         })
     })

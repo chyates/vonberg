@@ -1,6 +1,6 @@
 <div id="cms-manage-resource-main" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">Manage General Information</h1>
-    <p class="text-center">
+    <p class="text-center my-4">
         <a class="btn btn-primary mr-4" href="/admin/add-resource">Add New Resource</a><a class="btn btn-primary mr-4" href="/admin/edit-general-information">Edit or Delete Resources</a>
     </p>
     <hr class="resource-divider mb-5">

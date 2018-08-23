@@ -27,7 +27,7 @@
                 <div id="<?= $col_id; ?>" class="col-sm-4">
                     <a href=<?= "/products/view/".$part->partID; ?>>
                     <?php if (file_exists('img/parts/'.$part->partID.'/thumbnail.jpg')) { ?>
-                        <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg"; ?>" alt="product-map">
+                        <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/thumbnail.jpg" ?>" alt="product-map">
                     <?php } elseif(file_exists('img/parts/'.$part->partID.'/schematic_drawing.jpg')) { ?>
                         <img class="product-img-block img-fluid" src="<?= "/img/parts/".$part->partID."/schematic_drawing.jpg"; ?>" alt="product-map">
                         <?php } else { ?>

@@ -30,7 +30,7 @@ use Cake\Routing\Router;
     </div>
 
     <div class="col-10 mx-auto">
-        <div class="spec-row row">
+        <div class="spec-row row mt-4">
             <div class="col-md-4">
                 <h4 class="rsrc-col-title">Edit Title</h4>
             </div>

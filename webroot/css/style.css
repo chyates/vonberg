@@ -912,11 +912,12 @@ hr.tm-cat {
 .product-render,
 .product-schematic,
 .product-performance {
-    height: 180px;
+    height: auto;
 }
 
 .product-order {
-    width: 380px;
+    width: auto;
+    max-width: 380px;
     height: auto;
 }
 
@@ -2286,6 +2287,10 @@ hr.edit-rsrc-div:last-of-type {
 
 #cms-model-price-table form {
     width: 100%
+}
+
+#cms-model-price-main .form-inline .form-control {
+    width: 100%;
 }
 
 #cms-model-price-table .edit {

@@ -86,7 +86,6 @@ class ContactController extends AppController
                     }
                 }
 
-                Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
                 $data['response'] = "Success: data saved";
                 $data['debug'] = $result;
                 $models = [];
@@ -99,6 +98,7 @@ class ContactController extends AppController
                     exec($cmd_vars . '/home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/doTheStp.js');
                 }
                 exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
+                // Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
             }
             else {
                 $data['response'] = "Error: some error";

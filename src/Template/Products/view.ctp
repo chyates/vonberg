@@ -365,7 +365,7 @@
     </div>
 
     <div class="legalese row no-gutters mx-sm-5 px-sm-5 ;px-3 pb-sm-5 pb-3">
-        <p class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
+        <p id="lastupdated" class="legal-title mx-auto mb-1">Page last updated: <?php echo $part->last_updated;?></p>
         <p class="legal-block">This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met.</p>
         <p class="legal-block">The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of vonberg valve, inc. without prior notification.</p>
     </div> <!-- .legalese end -->
@@ -387,28 +387,31 @@
             form.addEventListener('submit', function(event) {
                 console.log("Hit form validation function");
                 if (form.checkValidity() === false) {
-                    console.log("Form is invalid, check");
-                    // loop through checkboxes to find if any have been selected
-                    for(var i = 0; i < checkboxes.length; i++) {
-                        var divs = checkboxes[i].children;
-                        for(var j = 0; j < divs.length; j++) {
-                            var labels = divs[j].children;
-                            for(var k = 0; k < labels.length; k++) {
-                                var inputs = labels[k].children;
-                                for(var m = 0; m < inputs.length; m++) {
-                                    if(inputs[m].checked) {
-                                        checkStatus.push(inputs[m].checked);
-                                    }
-                                }
-                            }
-
-                        }
-                    }
-                    if (checkStatus.length < 1) {
-                        showDiv.style.display = 'block';
-                    }
                     event.preventDefault();
                     event.stopPropagation();
+                    console.log("Form is invalid, check");
+                    // loop through checkboxes to find if any have been selected
+                    // for(var i = 0; i < checkboxes.length; i++) {
+                    //     var divs = checkboxes[i].children;
+                    //     for(var j = 0; j < divs.length; j++) {
+                    //         var labels = divs[j].children;
+                    //         for(var k = 0; k < labels.length; k++) {
+                    //             var inputs = labels[k].children;
+                    //             for(var m = 0; m < inputs.length; m++) {
+                    //                 if(inputs[m].checked) {
+                    //                     checkStatus.push(inputs[m].checked);
+                    //                 }
+                    //             }
+                    //         }
+
+                    //     }
+                    // }
+                    // if (checkStatus.length < 1) {
+                    //     showDiv.style.display = 'block';
+                    // }
+                } else {
+                    var modal = document.getElementById
+                    var thanks = document.getElementById('')
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -472,18 +475,14 @@
             if (this.readyState == 4 && this.status == 200) {
                 let logo = ajax.response
                 
-                // console.log('jax', ajax)
-
-                let type = document.getElementById('typeid').innerText.replace(/ /g, "_")
-                // let type = selType.innerText.replace(/ /g, "_")
+                let type = document.getElementById('typeid').innerText
+                console.log(type.length)
                 let category = document.getElementById('categoryid').innerText
-                // let category = selCat.innerText
                 let style = document.getElementById('styleid').innerText
                 let series = document.getElementById('seriesid').innerText
-                // let series = selSeries.innerText
                 let connection = document.getElementById('connectionid').innerText
-                // let shortDescription = selShortDesc.innerText
                 let description = document.getElementById('description').innerText.toUpperCase().replace(/˚/g, '\u00B0')
+                let lastUpdated = document.getElementById('lastupdated').innerText
                 let operation = []
                 let features = []
                 let specifications = []
@@ -529,6 +528,7 @@
                 doc.addPage({
                     margin: 15
                 })
+
                 doc.info.Title = type
                 doc.info.Author = 'Vonberg Valve, inc.'
 
@@ -547,9 +547,29 @@
                     doc.fillColor('#00703c')
                     doc.font('Helvetica-Bold')
                     doc.fontSize(16)
-                    doc.text(type, 0, 35, {
-                        align: 'center'
-                    })
+
+                    if(type.length > 25) {
+                        var lastSpace = 0;
+                        for(var i = type.length-1; i > 0; i--) {
+                            if(type[i] == " ") {
+                                lastSpace = i+1
+                                break
+                            }
+                        }
+
+                        let addl = type.slice(lastSpace)
+                        type = type.slice(0, lastSpace)
+                        doc.text(type, 0, 35, {
+                            align: 'center'
+                        })  
+                        doc.text(addl, 0, 50, { 
+                            align: 'center'
+                        })
+                    } else {
+                        doc.text(type, 0, 35, {
+                            align: 'center'
+                        })  
+                    }
 
                     // default line height for 12px font is 14.4, rounding up to 15
                     doc.fontSize(12)
@@ -580,32 +600,39 @@
                 doc.rect(colWidth + 30, 90, 2, 80 + colWidth * 1.9).fillAndStroke('#00703c')
                 doc.fontSize(9)
 
+                let leftBase = 90
+                let imgHeight = (product && schematic && performance) ? colWidth * .6 : colWidth
+                let gapHeight = (product && schematic && performance) ? colWidth * .63 : colWidth
+
                 // column 1
                 if (product) {
                     doc.fillColor('#000000')
-                    doc.text('PRODUCT', 15, 120 + colWidth)
-                    doc.rect(15, 130 + colWidth, colWidth, 1).fillAndStroke('#00703c')
-                    doc.image(product, 15, 140 + colWidth, {
-                        fit: [colWidth, colWidth * .3]
+                    doc.text('PRODUCT', 15, leftBase) // 15 is x coord, 90 is y
+                    doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
+                    doc.image(product, 15, leftBase + 20, {
+                        fit: [colWidth, imgHeight], align: 'center'
                     })
+                    leftBase += 20 + gapHeight
                 }
 
                 if (schematic) {
                     doc.fillColor('#000000')
-                    doc.text('SCHEMATIC', 15, 90)
-                    doc.rect(15, 100, colWidth, 1).fillAndStroke('#00703c')
-                    doc.image(schematic, 15, 110, {
-                        fit: [colWidth, colWidth]
+                    doc.text('SCHEMATIC', 15, leftBase)
+                    doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
+                    doc.image(schematic, 15, leftBase + 20, {
+                        fit: [colWidth, imgHeight], align: 'center'
                     })
+                    leftBase += 20 + gapHeight
                 }
 
                 if (performance) {
                     doc.fillColor('#000000')
-                    doc.text('TYPICAL PERFORMANCE', 15, 150 + colWidth + colWidth * .3)
-                    doc.rect(15, 160 + colWidth + colWidth * .3, colWidth, 1).fillAndStroke('#00703c')
-                    doc.image(performance, 15, 170 + colWidth + colWidth * .3, {
-                        fit: [colWidth, colWidth * .6]
+                    doc.text('TYPICAL PERFORMANCE', 15, leftBase)
+                    doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
+                    doc.image(performance, 15, leftBase + 20, {
+                        fit: [colWidth, imgHeight], align: 'center'
                     })
+                    // leftBase += 20 + gapHeight
                 }
 
                 // column 2
@@ -660,21 +687,21 @@
                     })
                 }
 
-                let tooMuchShit
-                if (210 + extra > 150 + colWidth * 1.3) tooMuchShit = true
-                let origin = (tooMuchShit) ? 210 + extra : 150 + colWidth * 1.3
+                let tooMuchStuff
+                if (210 + extra > 150 + colWidth * 1.3) tooMuchStuff = true
+                // let origin = (tooMuchStuff) ? 210 + extra : 150 + colWidth * 1.3
                 
                 if (ordering) {
                     doc.font('Helvetica-Bold')
                     doc.fillColor('#000000')
-                    doc.text('ORDERING INFORMATION', colWidth + 45, origin)
-                    doc.rect(colWidth + 45, 10 + origin, inverseWidth, 1).fillAndStroke('#00703c')
-                    doc.image(ordering, colWidth + 45, 20 + origin, {
-                        fit: [colWidth, colWidth * .6]
+                    doc.text('ORDERING INFORMATION', colWidth + 45, 210 + extra)
+                    doc.rect(colWidth + 45, 220 + extra, inverseWidth, 1).fillAndStroke('#00703c')
+                    doc.image(ordering, colWidth + 45 + ((inverseWidth - colWidth) / 2), 230 + extra, {
+                        fit: [colWidth, colWidth * .6], align: 'center'
                     })
                 }
 
-                let availableSpace = (docHeight - 75) - (20 + origin + colWidth * .6)
+                let availableSpace = (docHeight - 75) - (230 + extra + colWidth * .6)
                 let maxRows = Math.floor((availableSpace - 8) / 15)
                 // console.log('maxRows', maxRows)
                 
@@ -688,12 +715,24 @@
                         15, docHeight - 75
                     )
 
+                    // doc.moveDown()
+                    // doc.fillColor('#000000')
+                    // doc.fontSize(10)
+                    // doc.font('Helvetica')
+                    // doc.text(lastUpdated, docHeight - 55)
+
+                    doc.fillColor('#00703c')
+                    doc.fontSize(8)
+                    doc.text(
+                        lastUpdated,
+                        15, docHeight - 52, {width: docWidth - 30, align: 'right'}
+                    )
+
                     doc.rect(15, docHeight - 43, docWidth - 30, 2).fillAndStroke('#00703c')
 
                     if (oldLogo) doc.image(oldLogo, 15, docHeight - 40, {fit: [172, 30]})
 
                     doc.fillColor('#000000')
-                    doc.fontSize(8)
                     doc.text(
                         '3800 Industrial Avengue • Rolling Meadows, IL 60008-1085 USA © 2015',
                         colWidth + 45, docHeight - 35
@@ -714,7 +753,7 @@
                     }
                 }
 
-                let base = (tooMuchShit) ? origin + colWidth * .6 : 170 + colWidth * 1.9 + 10
+                let base = (tooMuchStuff) ? 210 + extra + colWidth * .6 : 170 + colWidth * 1.9 + 10
 
                 let tableColWidth = Math.floor((docWidth - 30) / totalCol)
                 let cellWidths = {cols: seriesTable[0].length}
@@ -777,6 +816,7 @@
 
                     let cat_repl = titleCase(category)
                     let ser_repl = titleCase(series)
+                    // let type_repl = type.replace(/ /g, "_")
                     cat_repl = cat_repl.replace(/ /g, "_")
                     ser_repl = ser_repl.replace(/ /g, "_")
 
@@ -799,39 +839,39 @@
             $(this).after(feedback)
         });
         $("#get-stp-form .input").not("#get-stp-form .input.checkbox").addClass('form-group');
-        $("#get-stp-form").submit(function(e){
-            e.preventDefault();
-            var myform = $("#get-stp-form");
-            var fd = myform.serializeArray();
-            $.ajax({
-                type: 'POST',
-                encoding:"UTF-8",
-                url:'/contact/stp/',
-                data: fd,
-                cache: false,
-                error: function (xhr, ajaxOptions, thrownError) {
-                    console.log(xhr.responseText);
-                    console.log("Error: "+thrownError);
-                },
-                xhr: function () {
-                    var xhr = new window.XMLHttpRequest();
-                    return xhr;
-                },
-                beforeSend: function () {
-                    //do sth
-                  //  xhr.setRequestHeader('X-CSRF-Token', <?= json_encode($this->request->param('_csrfToken')); ?>);
-                },
-                complete: function () {
-                    //do sth
-                },
-                success: function (response) {
-                    // console.log("Model information");
-                    $(".modal_message").html(response);
-                }
-            });
-            $(this).hide();
-            $(".get-header").hide();
-            $(".thanks").show();
+        // $("#get-stp-form").submit(function(e){
+        //     e.preventDefault();
+        //     var myform = $("#get-stp-form");
+        //     var fd = myform.serializeArray();
+        //     $.ajax({
+        //         type: 'POST',
+        //         encoding:"UTF-8",
+        //         url:'/contact/stp/',
+        //         data: fd,
+        //         cache: false,
+        //         error: function (xhr, ajaxOptions, thrownError) {
+        //             console.log(xhr.responseText);
+        //             console.log("Error: "+thrownError);
+        //         },
+        //         xhr: function () {
+        //             var xhr = new window.XMLHttpRequest();
+        //             return xhr;
+        //         },
+        //         beforeSend: function () {
+        //             //do sth
+        //           //  xhr.setRequestHeader('X-CSRF-Token', <?= json_encode($this->request->param('_csrfToken')); ?>);
+        //         },
+        //         complete: function () {
+        //             //do sth
+        //         },
+        //         success: function (response) {
+        //             // console.log("Model information");
+        //             $(".modal_message").html(response);
+        //         }
+        //     });
+        //     $(this).hide();
+        //     $(".get-header").hide();
+        //     $(".thanks").show();
         });
 
         $("a.drop-toggle").click(function(e) {

@@ -30,27 +30,31 @@
                                 <?php
                                     clearstatcache();
                                     $ext = "/". strval($row->model_table_rowID) . ".stp";
-                                    $step = WWW_ROOT . "img/parts/" .strval($part->partID) . "/" . strval($row->model_table_rowID) . ".STP";
+                                    $low_step = WWW_ROOT . "img/parts/" .strval($part->partID) . "/" . strval($row->model_table_row_text) . ".stp";
+                                    $up_step = WWW_ROOT . "img/parts/" .strval($part->partID) . "/" . strval($row->model_table_row_text) . ".STP";
 
-                                    if (file_exists($step)) {
+                                    if (file_exists($low_step) || file_exists($up_step)) {
+                                        echo strval($row->model_table_row_text) . ".stp";
+                                    } elseif(file_exists(WWW_ROOT . "img/parts/" . strval($part->partID) . "/" . strval($row->model_table_rowID). ".STP")) {
                                         echo strval($row->model_table_rowID) . ".stp";
                                     } else {
-                                        // echo "<BR>updated: ".date('m/d/Y', filemtime(WWW_ROOT.'img/parts/'.strval($part->partID).'/'.strval($row->model_table_rowID).'.STP'));
                                         echo "No current file";
                                     } 
                                 ?>
                             </td>
                             <?php 
-                            if(file_exists($step)) { ?>
-                                <td class="model-table-data"><?php echo date('m/d/Y', filemtime($step)); ?></td>
-                            <?php } else { ?>
+                            if(file_exists($low_step)) { ?>
+                                <td class="model-table-data"><?php echo date('m/d/Y', filemtime($low_step)); ?></td>
+                            <?php } elseif(file_exists($up_step)) { ?>
+                                <td class="model-table-data"><?php echo date('m/d/Y', filemtime($up_step)); ?></td>
+                           <?php } else { ?>
                                 <td class="model-table-data"><?php echo "No associated date"; ?></td>
-                           <?php } ?>
+                        <?  } ?>
                             <td class="d-flex model-table-data justify-content-between">
                                 <label class="fileContainer dark">Browse
                                     <?php echo $this->Form->input('stp_files[]', ['label'=>False, 'type' => 'file', 'class'=>'form-control']);?>
                                 </label>
-                                <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_rowID]);?>
+                                <?php echo $this->Form->hidden('filename[]', ['default' => $row->model_table_row_text]);?>
                                 <p class="file-text">No file chosen</p>
                             </td>
                         </tr>

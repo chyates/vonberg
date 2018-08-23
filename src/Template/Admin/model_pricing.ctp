@@ -2,6 +2,7 @@
     <h1 class="page-title">Model Pricing</h1>
     <div class="table-responsive justify-content-between rsrc-table col-md-8 mx-auto">
         <h2 class="category-title">CSV File</h2>
+        <?php echo "correct file"; ?>
         <table class="table">
             <thead>
                 <tr>
@@ -15,7 +16,13 @@
                         <span class="pr-2">
                             <img class="img-fluid" src="/img/download.svg"/>
                         </span>
-                        <A HREF="/admin/priceExport">model_prices.csv</A></td>
+                        <?php
+                            echo $this->Html->link(
+                                'model_prices.csv',
+                                '/admin/priceExport'
+                            );
+                        ?>
+                    </td>
                     <td class="d-flex justify-content-between">
                         <?= $this->Form->create('priceImport',['type' => 'file','url' => ['controller'=>'admin','action' => 'priceImport'],'class'=>'form-inline','role'=>'form',]) ?>
                         <div class="form-group">
