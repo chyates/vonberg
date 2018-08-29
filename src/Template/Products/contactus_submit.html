@@ -1,0 +1,198 @@
+[-
+
+$escmode = 0;
+BEGIN {$ENV{DOCUMENT_ROOT} =~ /(.*)htdocs/;$LIB = $1.'lib/';}
+use lib $LIB;
+use DB_vonberg;
+use Util_vonberg;
+use MIME::Lite;
+
+$t = new DB_vonberg unless $t;
+
+### CAPTCHA ###
+use Captcha::reCAPTCHA;
+$c = Captcha::reCAPTCHA->new;
+$challenge = $fdat{'recaptcha_challenge_field'};
+$response  = $fdat{'recaptcha_response_field'};
+
+# Verify submission
+$result = $c->check_answer(
+    "6Lch_-wSAAAAAOYnv_R3pBtYxWKw83FJvF5OmBIr", $ENV{'REMOTE_ADDR'}, $challenge, $response
+);
+
+if ( $result->{is_valid} ) { $spam_test = "GOOD"; } else { $spam_test = "BAD"; }
+### END ###
+
+-]
+
+[$ if ($spam_test ne 'GOOD') $]
+<script>
+    history.go(-1);
+</script>
+[- exit; -]
+[$ endif $]
+
+[-
+
+### VARIABLES ###
+$name         = $fdat{fullname};
+$company      = $fdat{company};
+$address      = $fdat{address};
+$address2     = $fdat{address2};
+$city         = $fdat{city};
+$state        = $fdat{state};
+$zip          = $fdat{zip};
+$country      = $fdat{country};
+$phone        = $fdat{phone};
+$fax          = $fdat{fax};
+$email        = $fdat{email};
+
+$manufacturer = $fdat{manufacturer};
+$distributor  = $fdat{distributor};
+$enduser      = $fdat{enduser};
+$sendcatalog  = $fdat{sendcatalog};
+$contactme    = $fdat{contactme};
+$questions    = $fdat{questions};
+
+$check = '';
+if ($manufacturer) { $check .= "$manufacturer\n"; }
+if ($distributor)  { $check .= "$distributor\n"; }
+if ($enduser)      { $check .= "$enduser\n"; }
+if ($sendcatalog)  { $check .= "$sendcatalog\n"; }
+if ($contactme)    { $check .= "$contactme\n"; }
+
+-]
+
+[$ if ($name && $company && $address && $city && $state && $phone && $email) $]
+
+[-
+
+### INSERT INTO TABLE CONTACT ###
+$t->execute_sql_no_fetch("INSERT INTO contact (
+    name,
+    company,
+    address,
+    address2,
+    city,
+    state,
+    zip,
+    phone,
+    fax,
+    email,
+    manufacturer,
+    distributor,
+    enduser,
+    sendcatalog,
+    contactme,
+    questions
+) VALUES (
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?,
+    ?
+)",
+    $name,
+    $company,
+    $address,
+    $address2,
+    $city,
+    $state,
+    $zip,
+    $phone,
+    $fax,
+    $email,
+    $manufacturer,
+    $distributor,
+    $enduser,
+    $sendcatalog,
+    $contactme,
+    $questions
+);
+
+
+### START HTML EMAIL ###
+$html = "
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>TEST</title>
+
+</head>
+
+<body style=\"font-family:Lucida Grande, Arial, Helvetica, sans-serif;font-size:10pt;\">
+
+    <div align=\"center\">
+        
+        <div style=\"width:600px;border:1px solid #000;background-color:#ffffff;text-align:left;\">
+
+            <div style=\"width:560px;padding:30px;\">
+                
+                <img src=\"http://www.vonberg.com/images/logo-vonberg-email.png\" width=\"200\" height=\"65\">
+
+                <p><b>$name<br/>
+                $company</b><br/>
+                $address $address2<br/>
+                $city $state $zip<br/>
+                $country</p>
+
+                <p>E. $email<br/>
+                P. $phone<br/>
+                F. $fax</p>
+
+                <p><b>Check All That Apply:</b><br/>
+                $check</p>
+                
+                <p><b>Remarks, Special Requests, or Questions:</b><br/>
+                $questions</p>
+            
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+</html>
+
+";
+### END HTML EMAIL ###
+
+
+# create a new MIME Lite based email
+my $msg = MIME::Lite->new
+(
+To      => 'info@vonberg.com',
+Bcc     => 'forms@impactcsg.com',
+Subject => "Vonberg Valve, inc. - Contact Us Form",
+From    => "$email",
+Type    => 'text/html',
+Data    => $html);
+
+$msg->send();
+
+### END EMAIL ###
+
+$http_headers_out{'Location'} = "/contactus.html?m=1";
+exit;
+
+-]
+
+[$ else $]
+
+<script>
+    history.go(-1);
+</script>
+
+[$ endif $]

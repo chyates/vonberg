@@ -2297,6 +2297,10 @@ hr.edit-rsrc-div:last-of-type {
     cursor: pointer
 }
 
+#cms-model-price-main .table-responsive ul.pagination li:not(:last-child) {
+    padding-right: 28px;
+}
+
 .inactive .model-table-data .input,
 .inactive .model-table-data input,
 .inactive .model-table-data span, 

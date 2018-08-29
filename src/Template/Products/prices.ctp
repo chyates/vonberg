@@ -31,11 +31,14 @@
         </div>
 
         <div class="col-lg-4 col-sm-5">
-        <?php if(!empty($prices)) {  ?>
-            <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
+        <?php if(!empty($prices)) {  
+                if(file_exists('img/parts/'. $prices[0]['partID'] .'/product_image.jpg')) { ?>
+                    <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/product_image.jpg"; ?>" alt="product-map">
+        <?php } elseif(file_exists('img/parts/'. $prices[0]['partID'] .'/schematic_drawing.jpg')) { ?>
+                    <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
         <?php } else { ?>
-            <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
-        <?php } ?>
+                    <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
+        <?php } } ?>
         </div>
     </div>
 
@@ -78,7 +81,11 @@
                 <tbody>
                     <tr>
                         <td class="model-table-data"><?php echo $item['model_text']; ?></td>
-                        <td class="model-table-data"><?php echo $item['description']; ?></td>
+                        <?php if(!empty($item->description)) { ?>
+                            <td class="model-table-data"><?php echo $item['description']; ?></td>
+                        <?php } else { ?>
+                            <td class="model-table-data">N/A</td>
+                        <?php } ?>
                         <td class="prices-last model-table-data"><?php echo money_format('$%.2n', $item['unit_price']); ?></td>
                     </tr>
                 </tbody>

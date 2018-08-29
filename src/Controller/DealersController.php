@@ -80,24 +80,41 @@ class DealersController extends AppController
     
                     $handle = fopen($_FILES['upload']['tmp_name'], "r");
                     while(($line = fgetcsv($handle)) !== FALSE) {
-                        $new_dist = $dists->newEntity();
-                        $new_dist->price_class = array_pop($line);
-                        $new_dist->fax = array_pop($line);
-                        $new_dist->long = array_pop($line);
-                        $new_dist->lat = array_pop($line);
-                        $new_dist->telephone = array_pop($line);
-                        $new_dist->zip = array_pop($line);
-                        $new_dist->state = array_pop($line);
-                        $new_dist->country = array_pop($line);
-                        $new_dist->city = array_pop($line);
-                        $new_dist->address2 = array_pop($line);
-                        $new_dist->address1 = array_pop($line);
-                        $new_dist->name = array_pop($line);
-                        if($dists->save($new_dist)) {
-                            $this->Flash->success(__('The dealers have been saved. '));
-                        } else {
-                            $this->Flash->error(__('Please choose a file to upload.'));
-                        }
+                        $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
+                        $cmd_vars .= 'PRICECLASS="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'LNG="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'LAT="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'FAX="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'TELEPHONE="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'ZIP="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'STATE="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'COUNTRY="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'CITY="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'ADDRESS2="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'ADDRESS1="' . array_pop($line) . '" ';
+                        $cmd_vars .= 'NAME="' . array_pop($line) . '" ';
+
+                        exec($cmd_vars . '/home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/dealerImport.js');
+
+                        // $new_dist = $dists->newEntity();
+                        // $new_dist->price_class = array_pop($line);
+                        // print_r($line);
+                        // $new_dist->long = array_pop($line);
+                        // $new_dist->lat = array_pop($line);
+                        // $new_dist->fax = array_pop($line);
+                        // $new_dist->telephone = array_pop($line);
+                        // $new_dist->zip = array_pop($line);
+                        // $new_dist->state = array_pop($line);
+                        // $new_dist->country = array_pop($line);
+                        // $new_dist->city = array_pop($line);
+                        // $new_dist->address2 = array_pop($line);
+                        // $new_dist->address1 = array_pop($line);
+                        // $new_dist->name = array_pop($line);
+                        // if($dists->save($new_dist)) {
+                        //     $this->Flash->success(__('The dealers have been saved. '));
+                        // } else {
+                        //     $this->Flash->error(__('Please choose a file to upload.'));
+                        // }
                     }
                     fclose($handle);
                 }

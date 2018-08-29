@@ -1,5 +1,8 @@
 <script src="/js/pdfkit.js"></script>
 <script src="/js/blob-stream.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <!-- Get STP Modal -->
 <div class="modal fade" id="get-stp-modal" tabindex="-1" role="dialog" aria-labelledby="stp-modal-label" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -36,7 +39,7 @@
                              echo $this->Form->control('model[]', 
                              [
                                  'type' => 'checkbox', 
-                                 'value'=> $row->model_table_rowID, 
+                                 'value'=> $row->model_table_row_text, 
                                  'class' => 'form-check-input', 
                                  'label' => 
                                     [
@@ -61,6 +64,15 @@
                     <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
 
                     <?php 
+                        echo $this->Form->input('part', 
+                        [
+                            'type' => 'text',
+                            'label' => false,
+                            'class' => 'hidden form-control',
+                            'id' => 'part',
+                            'value' => $part->partID
+                        ]);
+
                         echo $this->Form->control('first_name', 
                         [
                             'label' => 'First Name*',
@@ -112,10 +124,10 @@
                     </div>
                 <?php echo $this->Form->end();?>
 
-                <div class="thanks text-center">
+                <div id="thanks" class="thanks text-center">
                     <h1 class="page-header">Thank you!</h1>
                     <div class="modal_message"></div>
-                    <p>You will be receiving an email with the STP files shortly.</p>
+                    <p class="my-3">You will be receiving an email with the STP files shortly.</p>
                     <button type="button" class="thanks-close btn btn-primary" data-dismiss="modal">Close</button>
                 </div>
             </div>
@@ -371,8 +383,13 @@
     </div> <!-- .legalese end -->
 </div><!-- #single-prod-main-container end -->
 
-<script type="text/javascript">
-
+<script>
+    var redir = <?php echo json_encode($redirect); ?>;
+    <?php if(!empty($r_check)) { ?>
+        var check = <?php echo json_encode($r_check); ?>;
+        console.log(check);
+    <? } ?>
+    // var check = <?php if(!empty($r_check)) { echo json_encode($r_check); } ?>;
     (function() {
     'use strict';
     window.addEventListener('load', function() {
@@ -391,27 +408,29 @@
                     event.stopPropagation();
                     console.log("Form is invalid, check");
                     // loop through checkboxes to find if any have been selected
-                    // for(var i = 0; i < checkboxes.length; i++) {
-                    //     var divs = checkboxes[i].children;
-                    //     for(var j = 0; j < divs.length; j++) {
-                    //         var labels = divs[j].children;
-                    //         for(var k = 0; k < labels.length; k++) {
-                    //             var inputs = labels[k].children;
-                    //             for(var m = 0; m < inputs.length; m++) {
-                    //                 if(inputs[m].checked) {
-                    //                     checkStatus.push(inputs[m].checked);
-                    //                 }
-                    //             }
-                    //         }
+                    for(var i = 0; i < checkboxes.length; i++) {
+                        var divs = checkboxes[i].children;
+                        for(var j = 0; j < divs.length; j++) {
+                            var labels = divs[j].children;
+                            for(var k = 0; k < labels.length; k++) {
+                                var inputs = labels[k].children;
+                                for(var m = 0; m < inputs.length; m++) {
+                                    if(inputs[m].checked) {
+                                        checkStatus.push(inputs[m].checked);
+                                    }
+                                }
+                            }
 
-                    //     }
-                    // }
-                    // if (checkStatus.length < 1) {
-                    //     showDiv.style.display = 'block';
-                    // }
+                        }
+                    }
+                    if (checkStatus.length < 1) {
+                        showDiv.style.display = 'block';
+                    }
                 } else {
-                    var modal = document.getElementById
-                    var thanks = document.getElementById('')
+                    // var stepForm = document.getElementById('get-stp-form')
+                    // var thanks = document.getElementById('thanks')
+                    // stepForm.style.display = 'none'
+                    // thanks.style.display = 'block'
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -538,6 +557,16 @@
 
                 let totalPages = 1
                 let currentPage = 1 // yes i'm starting from 1 not 0 don't judge me
+
+                function wrangleImages(index) {
+                    let images = Object.keys(doc._imageRegistry).map(key => (doc._imageRegistry[key]))
+                    if (index) return index == -1 ? images[images.length - 1] : images[index]
+                    else return images
+                }
+                function getImageHeight(image, width) {
+                    let ratio = image.height / image.width
+                    return Math.ceil(ratio * width)
+                }
                 
                 function header() {
                     doc.image(logo, 10, 10, {
@@ -597,12 +626,11 @@
                 // let inverseWidth = (docWidth - 30) / 2 - 15
                 let inverseWidth = (docWidth - 30) * .6 - 15
 
-                doc.rect(colWidth + 30, 90, 2, 80 + colWidth * 1.9).fillAndStroke('#00703c')
+                // this is dynamic now
+                // doc.rect(colWidth + 30, 90, 2, 80 + colWidth * 1.9).fillAndStroke('#00703c')
                 doc.fontSize(9)
 
                 let leftBase = 90
-                let imgHeight = (product && schematic && performance) ? colWidth * .6 : colWidth
-                let gapHeight = (product && schematic && performance) ? colWidth * .63 : colWidth
 
                 // column 1
                 if (product) {
@@ -610,9 +638,9 @@
                     doc.text('PRODUCT', 15, leftBase) // 15 is x coord, 90 is y
                     doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
                     doc.image(product, 15, leftBase + 20, {
-                        fit: [colWidth, imgHeight], align: 'center'
+                        width: colWidth
                     })
-                    leftBase += 20 + gapHeight
+                    leftBase += 30 + getImageHeight(wrangleImages(-1), colWidth)
                 }
 
                 if (schematic) {
@@ -620,9 +648,9 @@
                     doc.text('SCHEMATIC', 15, leftBase)
                     doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
                     doc.image(schematic, 15, leftBase + 20, {
-                        fit: [colWidth, imgHeight], align: 'center'
+                        width: colWidth
                     })
-                    leftBase += 20 + gapHeight
+                    leftBase += 30 + getImageHeight(wrangleImages(-1), colWidth)
                 }
 
                 if (performance) {
@@ -630,9 +658,9 @@
                     doc.text('TYPICAL PERFORMANCE', 15, leftBase)
                     doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
                     doc.image(performance, 15, leftBase + 20, {
-                        fit: [colWidth, imgHeight], align: 'center'
+                        width: colWidth
                     })
-                    // leftBase += 20 + gapHeight
+                    leftBase += 20 + getImageHeight(wrangleImages(-1), colWidth)
                 }
 
                 // column 2
@@ -686,22 +714,23 @@
                         extra += 15
                     })
                 }
-
-                let tooMuchStuff
-                if (210 + extra > 150 + colWidth * 1.3) tooMuchStuff = true
-                // let origin = (tooMuchStuff) ? 210 + extra : 150 + colWidth * 1.3
                 
                 if (ordering) {
                     doc.font('Helvetica-Bold')
                     doc.fillColor('#000000')
                     doc.text('ORDERING INFORMATION', colWidth + 45, 210 + extra)
                     doc.rect(colWidth + 45, 220 + extra, inverseWidth, 1).fillAndStroke('#00703c')
-                    doc.image(ordering, colWidth + 45 + ((inverseWidth - colWidth) / 2), 230 + extra, {
-                        fit: [colWidth, colWidth * .6], align: 'center'
+                    doc.image(ordering, colWidth + 45, 230 + extra, {
+                        width: colWidth
                     })
+                    extra += getImageHeight(wrangleImages(-1), colWidth)
                 }
 
-                let availableSpace = (docHeight - 75) - (230 + extra + colWidth * .6)
+                let theBottom = (leftBase > 230 + extra) ? leftBase : 230 + extra
+
+                doc.rect(colWidth + 30, 90, 2, theBottom - 90).fillAndStroke('#00703c')
+
+                let availableSpace = (docHeight - 75) - (theBottom)
                 let maxRows = Math.floor((availableSpace - 8) / 15)
                 // console.log('maxRows', maxRows)
                 
@@ -714,12 +743,6 @@
                         "This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met. The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of Vonberg Valve, Inc. without prior notification.",
                         15, docHeight - 75
                     )
-
-                    // doc.moveDown()
-                    // doc.fillColor('#000000')
-                    // doc.fontSize(10)
-                    // doc.font('Helvetica')
-                    // doc.text(lastUpdated, docHeight - 55)
 
                     doc.fillColor('#00703c')
                     doc.fontSize(8)
@@ -753,7 +776,7 @@
                     }
                 }
 
-                let base = (tooMuchStuff) ? 210 + extra + colWidth * .6 : 170 + colWidth * 1.9 + 10
+                let base = theBottom + 10
 
                 let tableColWidth = Math.floor((docWidth - 30) / totalCol)
                 let cellWidths = {cols: seriesTable[0].length}
@@ -778,7 +801,7 @@
                     return total
                 }
 
-                if (seriesTable.length > maxRows || seriesTable.length > 7) {
+                if (seriesTable.length > maxRows) {
                     totalPages++
                     footer()
                     doc.addPage({
@@ -833,46 +856,22 @@
         ajax.send()
     }
 
+
     $(document).ready(function(){
+        // console.log("Redirected? ", redir)
+        if(redir['reload'] == 'no') {
+            console.log("Page has not been reloaded");
+        } else if (check['reload'] == 'yes') {
+            $("#get-stp-form").css('display', 'none');
+            $(".get-header").css('display', 'none');
+            $("#thanks").css('display', 'block');
+            $("#get-stp-modal").modal('show');
+        }
         var feedback = '<p class="invalid-feedback">This field is required.</p>';
         $("input:not(input[type=hidden])").each(function(index) {
             $(this).after(feedback)
         });
         $("#get-stp-form .input").not("#get-stp-form .input.checkbox").addClass('form-group');
-        // $("#get-stp-form").submit(function(e){
-        //     e.preventDefault();
-        //     var myform = $("#get-stp-form");
-        //     var fd = myform.serializeArray();
-        //     $.ajax({
-        //         type: 'POST',
-        //         encoding:"UTF-8",
-        //         url:'/contact/stp/',
-        //         data: fd,
-        //         cache: false,
-        //         error: function (xhr, ajaxOptions, thrownError) {
-        //             console.log(xhr.responseText);
-        //             console.log("Error: "+thrownError);
-        //         },
-        //         xhr: function () {
-        //             var xhr = new window.XMLHttpRequest();
-        //             return xhr;
-        //         },
-        //         beforeSend: function () {
-        //             //do sth
-        //           //  xhr.setRequestHeader('X-CSRF-Token', <?= json_encode($this->request->param('_csrfToken')); ?>);
-        //         },
-        //         complete: function () {
-        //             //do sth
-        //         },
-        //         success: function (response) {
-        //             // console.log("Model information");
-        //             $(".modal_message").html(response);
-        //         }
-        //     });
-        //     $(this).hide();
-        //     $(".get-header").hide();
-        //     $(".thanks").show();
-        });
 
         $("a.drop-toggle").click(function(e) {
             e.preventDefault();

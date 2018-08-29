@@ -1,6 +1,6 @@
 <div id="contact-main-container" class="inner-main col-lg-8 col-12 mx-auto p-md-5 p-3">
-    <div class="row no-gutters px-md-5 justify-content-sm-between">
-        <div class="col-lg-4 col-sm-5 mr-sm-5 py-2 contact-left">
+    <div class="row no-gutters px-md-5">
+        <div class="col-md-4 py-2 contact-left">
             <div class="contact-block p-4">
                 <h3 class="product-name">Vonberg Valve, Inc.</h3>
                 <p>3800 Industrial Avenue<br>Rolling Meadows, IL<br>60008-1085 USA</p>

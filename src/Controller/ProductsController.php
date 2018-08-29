@@ -3,6 +3,7 @@ namespace App\Controller;
 
 use App\Controller\AppController;
 use Cake\Event\Event;
+use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 
@@ -45,7 +46,62 @@ class ProductsController extends AppController
     public function view($id=null)
     {
         $this->loadModel('Parts');
+        $this->loadModel('StpUsers');
+        $this->loadModel('StpFile');
+        // $this->loadModel('Parts');
+        $this->loadModel('ModelTableRows');
+        $stp_table = TableRegistry::get('StpFile');
+        $redir = array('reload' => 'no');
+        // $redir['reload'] = 'false';
+
+        // instantiate empty STP user and STP file objects:
+        $emp = $this->StpUsers->newEntity();
+
+        if($this->request->is('post') || $this->request->is('put')) {
+            // update STP user object
+            $emp = $this->StpUsers->patchEntity($emp,$this->request->data);
+            // $emp->
+            if($result = $this->StpUsers->save($emp)) {
+                // Send email to client:
+                $file_paths = '';
+                if(!empty($this->request->data['model'])) {
+                    foreach($this->request->data['model'] as $str_model) {
+                        if(strval($str_model) != "0") {
+                            $file_paths .= 'Model ';
+                            $file_paths .= strval($str_model);
+                            $file_paths .= ".stp, ";
+                        }
+                    }
+                }
+
+                $data['response'] = "Success: data saved";
+                $data['debug'] = $result;
+                $models = [];
+                // $this->Flash->success(__('The request has been saved.'));
+                foreach ($this->request->data['model'] as $model) {
+                    $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
+                    $cmd_vars .= 'USERID=' . $result->stp_userID . ' ';
+                    $cmd_vars .= 'PARTID=' . $this->request->data['part'] . ' ';
+                    $cmd_vars .= 'MODELID=' . $model . ' ';
+                    exec($cmd_vars . '/home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/doTheStp.js');
+                }
+                exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
+
+                Email::deliver('chyatesil@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                Email::deliver('whyyesitscar@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                $redir['reload'] = 'yes';
+                $this->set('r_check', $redir);
+                // return $this->redirect($this->referer());
+                // $this->autoRender = false;
+            }
+            else {
+                $data['response'] = "Error: some error";
+                // print_r($emp);
+                // $this->Flash->success(__('The request has not been saved.'));
+            }
+        }
         $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
+        $this->set('redirect', $redir);
         $this->set('part', $part);
     }
 

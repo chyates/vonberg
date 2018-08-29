@@ -1,0 +1,293 @@
+[-
+$escmode = 0;
+$message = $fdat{m};
+-]
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<title>Contact Vonberg Valve, inc. | Rolling Meadows, IL | Hydraulic Valve Specialists</title>
+<meta name="description" content="Ask a technical question or get the latest up-to-date pricing quotes on Vonberg Valves.">
+<meta name="keywords" content="technical question, Hydraulic valves, safety, control, directional, pressure, relief and check Valves.">
+
+<link rel="stylesheet" href="/css/reset.css">
+<link rel="stylesheet" href="/css/vonberg.css">
+<!--[if lte IE 7]>
+<link rel="stylesheet" href="/css/ie7-and-down.css" />
+<![endif]-->
+<!--[if lt IE 9]>
+     <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+<![endif]-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js"></script>
+<script src="/js/vonberg.js"></script>
+<script src="/js/form.js"></script>
+
+<script>
+required = [
+    "fullname",
+    "company",
+    "address",
+    "city",
+    "state",
+    "country-selector",
+    "phone",
+    "email",
+    "recaptcha_response_field"
+];
+</script>
+
+<style>
+#main #abouttext {
+    width: 265px;
+}
+#main #rightphoto {
+    width: 640px;
+	margin: 10px 0;
+	text-align: left;
+}
+label > span {
+    font-size: 12pt;
+    color: #c33;
+    padding-left: 2px;
+    vertical-align: middle;
+}
+p > span {
+    font-size: 12pt;
+    color: #c33;
+    padding-left: 2px;
+    vertical-align: middle;
+}
+button {
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    padding: 4px 8px;
+
+    color: #fff;
+    background-color: #89b19e;
+    border: 1px solid #288850;
+    box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -o-border-radius: 3px;
+    box-shadow: inset 0 2px 5px #ccc;
+    -moz-box-shadow: inset 0 2px 5px #ccc;
+    -webkit-box-shadow: inset 1 2px 5px #ccc;
+    -o-box-shadow: inset 0 2px 5px #ccc;
+
+    cursor: pointer;
+}
+button:hover {
+    background-color: #288850;
+}
+
+.ui-autocomplete {
+    padding: 0;
+    list-style: none;
+    background-color: #fff;
+    width: 218px;
+    border: 1px solid #B0BECA;
+    max-height: 350px;
+    overflow-y: scroll;
+}
+.ui-autocomplete .ui-menu-item a {
+    border-top: 1px solid #B0BECA;
+    display: block;
+    padding: 4px 6px;
+    color: #353D44;
+    cursor: pointer;
+}
+.ui-autocomplete .ui-menu-item:first-child a {
+    border-top: none;
+}
+.ui-autocomplete .ui-menu-item a.ui-state-hover {
+    background-color: #D5E5F4;
+    color: #161A1C;
+}
+</style>
+
+
+<script src="js/jquery-ui-autocomplete.js"></script>
+<script src="js/jquery.select-to-autocomplete.min.js"></script>
+<script type="text/javascript" charset="utf-8">
+(function($){
+    $(function(){
+        $('select').selectToAutocomplete();
+    });
+})(jQuery);
+</script>
+
+</head>
+
+<body>
+[- Execute('include/header.html',contactus); -]
+
+<div id="mainwrapper">
+
+    [- Execute('include/catalog_nav_types.html'); -]
+
+    <section id="main">
+
+        <div id="bordered">
+
+            <div id="abouttext" class="floatcolumn">
+
+                <h1>Contact Vonberg</h1>
+                <p class="smalltext bold">Vonberg Valve, inc.<br>
+                3800 Industrial Avenue<br>
+                Rolling Meadows, IL<br>
+                60008-1085 USA<br><br>
+                Phone: (847) 259-3800<br>
+                Fax: (847) 259-3997<br>
+                Email: <a href="mailto:info@vonberg.com">info@vonberg.com</a></p>
+
+                <div style="display:block;width:220px;height:280px;border:1px solid #000;">
+                    <a href="https://www.google.com/maps/place/3800+Industrial+Ave,+Rolling+Meadows,+IL" target="_blank"><img src="/images/map.jpg" width="220" height="280" alt="map of Vonberg location"></a>
+                </div>
+
+                <p><a href="https://www.google.com/maps/place/3800+Industrial+Ave,+Rolling+Meadows,+IL" target="_blank">View Google Map</a></p>
+
+            </div> <!-- /abouttext -->
+
+	        <div id="rightphoto" class="floatcolumn">
+
+                <h1>Request More Information</h1>
+
+                [$ if ($message) $]
+
+                    <p style="height:300px;">Thank you for filling out our online form. We will be contacting you shortly regarding your request.</p>
+
+                [$ else $]
+
+                    <p><span>*</span> Required Fields</p>
+
+                <form id="form" name="form" method="post" action="contactus_submit.html">
+
+                    <h2>Please provide the following information:</h2>
+
+                    <label for="fullname">Name:<span>*</span></label>
+                    <input name="fullname" type="text" id="fullname" class="md" autofocus>
+
+                    <label for="company">Company Name:<span>*</span></label>
+                    <input name="company" type="text" id="company" class="md">
+                    <br class="clear"/>
+
+                    <label for="address">Address 1:<span>*</span></label>
+                    <input name="address" type="text" id="address" class="md">
+
+                    <label for="address2">Address 2:</label>
+                    <input name="address2" type="text" id="address2" class="md">
+                    <br class="clear"/>
+
+                    <label for="city">City:<span>*</span></label>
+                    <input name="city" type="text" id="city" class="md">
+
+                    <label for="state">State/Province/Region:<span>*</span></label>
+                    <input name="state" type="text" id="state" class="md">
+                    <br class="clear"/>
+
+                    <label for="zip">Zip/Postal Code:</label>
+                    <input name="zip" type="text" id="zip" class="md">
+
+                    <label for="country-selector">Country:<span>*</span></label>
+                    [- Execute('country_codes.html'); -]
+                    <br class="clear"/>
+
+                    <label for="phone">Phone:<span>*</span></label>
+                    <input name="phone" type="text" id="phone" class="md">
+
+                    <label for="fax">Fax:</label>
+                    <input name="fax" type="text" id="fax" class="md">
+                    <br class="clear"/>
+
+                    <label for="email">Email Address:<span>*</span></label>
+                    <input name="email" type="text" id="email" class="md">
+                    <br class="clear"/>
+                    <br/>
+
+                    <h2>Check All That Apply:</h2>
+                    <div style="float:left;padding-right:20px;">
+                        <input type="checkbox" name="manufacturer" value="Manufacturer"> Manufacturer<br/>
+                        <input type="checkbox" name="distributor" value="Distributor"> Distributor<br/>
+                    </div>
+                    <div style="float:left;">
+                        <input type="checkbox" name="enduser" value="End User"> End User<br/>
+                        <input type="checkbox" name="contactme" value="Please have someone contact me"> Please have someone contact me<br/>
+                    </div>
+                    <br class="clear"/>
+                    <br/>
+
+                    <h2>Remarks, Special Requests, or Questions:</h2>
+                    <textarea name="questions" cols="50" rows="5"></textarea>
+                    <br/>
+                    <br class="clear"/>
+
+                    <h2>Please fill in the text below:</h2>
+                    <script type="text/javascript">
+                        var RecaptchaOptions = {
+                            theme : 'white'
+                        };
+                    </script>
+                    <script type="text/javascript" src="https://www.google.com/recaptcha/api/challenge?k=6Lch_-wSAAAAAOcsS4Z_jxX4OvSprRRWiKdGPe9-"></script>
+                    <noscript>
+                    <iframe src="https://www.google.com/recaptcha/api/noscript?k=6Lch_-wSAAAAAOcsS4Z_jxX4OvSprRRWiKdGPe9-" height="300" width="500" frameborder="0"></iframe><br>
+                    </noscript>
+
+                    <br class="clear"/>
+                    <!--p><input type="submit" name="submit" value="Submit"/></p-->
+                    <button>Submit</button>
+
+                </form>
+
+                [$ endif $]
+
+            </div> <!-- /rightphoto -->
+
+        </div> <!-- /bordered -->
+        [###
+        <div class="centered">
+            <img src="images/about-logos.png" alt="NFPA - FPDA - NAM - Made in the USA" width="572" height="80">
+        </div> <!-- centered -->
+        <br/>
+        ###]
+
+    </section> <!-- /main -->
+
+</div> <!-- /mainwrapper -->
+
+<div id="footerwrapper">
+    
+    <footer id="footer">
+    
+        <div id="footerlogo" class="floatcolumn">
+            <img src="/images/logo-footer-vonberg.png" alt="Vonberg Valve, inc. - Hydraulic Valve Specialists" width="257" height="44">
+        </div> <!-- /footerlogo -->
+
+        <div id="footertext" class="floatcolumn">
+            Vonberg Valve, inc. &bull; 
+            3800 Industrial Avenue &bull; 
+            Rolling Meadows, IL 60008-1085 USA 
+            &copy; 2014 <br>
+            847/259-3800 &bull; 
+            fax 847/259-3997 &bull; 
+            email: <a href="mailto:info@vonberg.com">info@vonberg.com</a>
+        </div> <!-- /footertext -->
+<div class="floatcolumn" style="padding-left:20px;padding-top:5px;">
+<a href="https://www.facebook.com/pages/Vonberg-Valve-Inc/287776044572811" target="_blank"><img src="/images/facebook.png" width="41" height="41"/></a>
+<a href="http://www.linkedin.com/company/vonberg-valve-inc-?trk=hb_tab_compy_id_3135225" target="_blank"><img src="/images/linkdin.png" width="40" height="41"/></a>
+</div>
+        
+    </footer> <!-- /footer -->
+
+</div> <!-- /footerwrapper -->
+
+[- use GoogleTrack; $google_return=GoogleTrack->tracking_code(); -]
+[+ $google_return +]
+
+</body>
+</html>

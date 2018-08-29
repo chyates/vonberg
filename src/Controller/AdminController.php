@@ -153,7 +153,7 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         $query = $this->paginate($this->Parts->find('all', array(
-            'order' => array('Categories.name' => 'ASC', 'Parts.expires' => 'DESC')))->contain(['Connections', 'Types', 'Series', 'Styles', 'Categories']));
+            'order' => array( 'Parts.expires' => 'DESC', 'Series.name' => 'ASC')))->contain(['Connections', 'Types', 'Series', 'Styles', 'Categories']));
 
         $this->set('parts', $query);
         $this->set('pagename', 'All Products');
@@ -165,7 +165,7 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         // query for main categories:
-        $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+        $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories'], 'order' => array( 'Parts.expires' => 'DESC', 'Series.name' => 'ASC')]));
 
         $cat = TableRegistry::get('Categories')->find();
         $cat1 = TableRegistry::get('Categories')->find()->where(['categoryID' => $id])->first();
@@ -182,7 +182,7 @@ class AdminController extends AppController
         $this->loadModel('Parts');
         $subcat = TableRegistry::get('Types')->find();
 
-        $type_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.typeID =' => $id], 'order' => 'Series.name ASC', 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
+        $type_query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.typeID =' => $id], 'order' => array('Parts.expires' => 'DESC', 'Series.name ASC'), 'contain' => ['Connections', 'Types','Series','Styles', 'Categories']]));
         $subcat1 = TableRegistry::get('Types')->find()->where(['typesID' => $id])->first();
         $this->set('parts', $type_query);
         $this->set('id', $id);
@@ -1262,6 +1262,7 @@ class AdminController extends AppController
         $this->loadModel('ModelPrices');
         $series = TableRegistry::get('Series')->find('all');
         $pricing = TableRegistry::get('ModelPrices')->find('all')->orderAsc('model_text');
+        $query =  $this->paginate($this->ModelPrices->find('all', ['order' => array('model_text' => 'ASC')]));
 
         if($this->request->is('post') || $this->request->is('put'))  {
             $id = intval($this->request->data['id']);
@@ -1275,8 +1276,22 @@ class AdminController extends AppController
             TableRegistry::get('ModelPrices')->save($target);
         }
 
-        $this->set('prices', $pricing);
+        $this->set('prices', $query);
         $this->set(compact('series'));
+    }
+
+    public function addPrice()
+    {
+        $this->viewBuilder()->setLayout('admin');
+        $this->loadModel('ModelPrices');
+        if($this->request->is('post') || $this->request->is('put')) {
+            $new_price = $this->ModelPrices->newEntity();
+            $new_price->model_text = $this->request->data['add_text'];
+            $new_price->unit_price = $this->request->data['add_price'];
+
+            $this->ModelPrices->save($new_price);
+            return $this->redirect($this->referer());
+        }
     }
 
     public function priceImport() 

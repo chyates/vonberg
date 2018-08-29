@@ -26,6 +26,7 @@
             <div class="search-block mt-2 p-4 d-flex" style="height: 300px; overflow-y : scroll;">
             <?php
                 if (!empty($query)) {
+                    // echo $query;
                     echo '<div id="markers_info">';
                     $u_id = 1;
                     foreach ($query as $dealer): ?>

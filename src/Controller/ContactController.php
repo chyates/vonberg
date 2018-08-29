@@ -41,45 +41,71 @@ class ContactController extends AppController
         $this->viewBuilder()->setLayout('vonberg');
         $this->loadModel('Contacts');
         $cat=$this->Contacts->newEntity();
-        if($this->request->is('post')) {
-            if ($this->request->is('post')) {
-                if ($this->Recaptcha->verify()) { 
-                    $cat=$this->Contacts->patchEntity($cat,$this->request->data);
-                    if($result=$this->Contacts->save($cat)) {
-                        $this->redirect(array('action' => 'success'));
+        $message = '';
+        if ($this->request->is('post') || $this->request->is('put')) {
+            if ($this->Recaptcha->verify()) { 
+                $cat=$this->Contacts->patchEntity($cat,$this->request->data);
+                if($result=$this->Contacts->save($cat)) {
+                    $message .= 'Name: ';
+                    $message .= $this->request->data['name'];
+                    $message .= "\n";
+                    $message .= 'Phone: ';
+                    $message .= $this->request->data['phone'];
+                    $message .= "\n";
+                    $message .= 'Email: ';
+                    $message .= $this->request->data['email'];
+                    $message .= "\n";
+                    $message .= 'Role: ';
+
+                    if(!empty($this->request->data['manufacturer'])) {
+                        $message .= $this->request->data['manufacturer'];
+                    } else if(!empty($this->request->data['distributor'])) {
+                        $message .= $this->request->data['distributor'];
+                    } else if(!empty($this->request->data['enduser'])) {
+                        $message .= $this->request->data['enduser'];
                     }
-                    else {
-                        echo "Error: some error";
-                    }
-                } else {
-                    $recaptcha_passed = false;
-                    $this->set(compact('recaptcha_passed'));
+
+                    $message .= "\n";
+                    $message .= 'Additional comments: ';
+                    $message .= $this->request->data['contactme'];
+                    // echo $message;
+                    Email::deliver('chyatesil@gmail.com', 'Vonberg Contact Form Request', $message, ['from' => 'do-not-reply@vonberg.com']);
+
+                    $this->redirect(array('action' => 'success'));
                 }
+                else {
+                    echo "Error: some error";
+                }
+            } else {
+                $recaptcha_passed = false;
+                $this->set(compact('recaptcha_passed'));
             }
-        }    
+        }   
     }
 
     public function stp()
     {
         $data = [];
+        $stp_table = TableRegistry::get('StpFile');
         $this->loadModel('StpUsers');
         $this->loadModel('StpFile');
-        $stp_table = TableRegistry::get('StpFile');
         $this->loadModel('Parts');
         $this->loadModel('ModelTableRows');
 
         // instantiate empty STP user and STP file objects:
-        $emp=$this->StpUsers->newEntity();
+        $emp = $this->StpUsers->newEntity();
 
         if($this->request->is('post') || $this->request->is('put')) {
             // update STP user object
-            $emp=$this->StpUsers->patchEntity($emp,$this->request->data);
-            if($result=$this->StpUsers->save($emp)) {
+            $emp = $this->StpUsers->patchEntity($emp,$this->request->data);
+            // $emp->
+            if($result = $this->StpUsers->save($emp)) {
                 // Send email to client:
                 $file_paths = '';
                 if(!empty($this->request->data['model'])) {
                     foreach($this->request->data['model'] as $str_model) {
                         if(strval($str_model) != "0") {
+                            $file_paths .= 'Model ';
                             $file_paths .= strval($str_model);
                             $file_paths .= ".stp, ";
                         }
@@ -98,7 +124,11 @@ class ContactController extends AppController
                     exec($cmd_vars . '/home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/doTheStp.js');
                 }
                 exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
-                // Email::deliver('info@vonberg.com', 'STP File Request From: '.$this->request->data['first_name']." ".$this->request->data['last_name'], 'Please respond to: '.$this->request->data['email'].' with the following files: '.$file_paths, ['from' => 'do-not-reply@vonberg.com']);
+
+                Email::deliver('chyatesil@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                Email::deliver('whyyesitscar@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                return $this->redirect($this->referer());
+                // $this->autoRender = false;
             }
             else {
                 $data['response'] = "Error: some error";
