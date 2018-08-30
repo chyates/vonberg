@@ -25,10 +25,10 @@
 
                         <!-- If the user downloaded more than one file, they should populate with line breaks within the table data tag -->
                         <td class="model-table-data">
-                            <?php foreach ($user->stp_file as $model): 
-                                if(isset($model->model_table_row->model_table_row_text)) { ?>
-                                    <p>MODEL <?= h($model->model_table_row->model_table_row_text) ?></p>
-                                <?php }
+                            <?php foreach ($user->stp_file as $model): ?>
+
+                                    <p>MODEL <?= h($model->modelID) ?></p>
+                                <?php
                             endforeach; ?>
                         </td>
                     </tr>

@@ -11,7 +11,7 @@ namespace App\Controller;
 use App\Controller\File;
 use Cake\ORM\TableRegistry;
 use Cake\Event\Event;
-
+use Cake\Datasource\ConnectionManager;
 
 class AdminController extends AppController
 {
@@ -782,6 +782,7 @@ class AdminController extends AppController
         if ($this->request->is('post') || $this->request->is('put')) {
             if(!empty($this->request->data['thumbnail']['name']))
             {
+
                 $file = $this->request->data['thumbnail']; //put the data into a var for easy use
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
                 $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
@@ -798,14 +799,15 @@ class AdminController extends AppController
 
             if(!empty($this->request->data['product_image']['name']))
             {
+                // echo $this->request->data['product_image'];
                 $file = $this->request->data['product_image']; 
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif'); 
+                // $arr_ext = array('jpg', 'jpeg', 'gif'); 
 
                 if(in_array($ext, $arr_ext))
                 {
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/product_image.' . $ext);
-                    // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
+                    $this->Flash->success(__('The file PRODUCT IMAGE was saved.', h($part->partid)));
                 }
             }
 
@@ -1266,14 +1268,16 @@ class AdminController extends AppController
 
         if($this->request->is('post') || $this->request->is('put'))  {
             $id = intval($this->request->data['id']);
+            // echo $id;
             $model_text = $this->request->data['model_text'];
             $unit_price = $this->request->data['unit_price'];
 
-            $target = TableRegistry::get('ModelPrices')->get($id);
+            $target = $this->ModelPrices->get($id);
             $target->model_text = $model_text;
             $target->unit_price = $unit_price;
 
-            TableRegistry::get('ModelPrices')->save($target);
+            $this->ModelPrices->save($target);
+            return $this->redirect($this->referer());
         }
 
         $this->set('prices', $query);
@@ -1288,6 +1292,9 @@ class AdminController extends AppController
             $new_price = $this->ModelPrices->newEntity();
             $new_price->model_text = $this->request->data['add_text'];
             $new_price->unit_price = $this->request->data['add_price'];
+            if(!empty($this->request->data['description'])) {
+                $new_price->description = $this->request->data['description'];
+            }
 
             $this->ModelPrices->save($new_price);
             return $this->redirect($this->referer());
@@ -1349,12 +1356,16 @@ class AdminController extends AppController
     public function stpExport()
     {
         $data = TableRegistry::get('StpUsers')->find('all')->orderDesc('stp_userID');
-        $file_data = TableRegistry::get('StpFile')->find('all')->orderDesc('stp_userID');
-        $_serialize = ['data', 'file_data'];
-        $_header = ['User ID', 'Email', 'First Name', 'Last Name', 'Company', 'Last Login', 'Files Acquired'];
+        $l = ConnectionManager::get('default');
+        $lookup = "SELECT stp_users.email, stp_users.first_name, stp_users.last_name, stp_users.company, DATE(stp_users.last_login), stp_userxstp_file.modelID FROM stp_userxstp_file JOIN stp_users ON stp_users.stp_userID = stp_userxstp_file.stp_userID ORDER BY stp_userxstp_file.stp_userxstp_fileID DESC";
+        $stmt = $l->execute($lookup);
+        $res = $stmt->fetchAll();
+
+        $_serialize = 'res';
+        $_header = ['Email', 'First Name', 'Last Name', 'Company', 'Last Login', 'Files Acquired'];
         $this->response->download('stp_downloads.csv'); // <= setting the file name
         $this->viewBuilder()->className('CsvView.Csv');
-        $this->set(compact('data', 'file_data', '_serialize', '_header'));
+        $this->set(compact('res', '_serialize', '_header'));
     }
 
     public function contacts()

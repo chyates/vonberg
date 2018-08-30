@@ -36,9 +36,10 @@
                     <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/product_image.jpg"; ?>" alt="product-map">
         <?php } elseif(file_exists('img/parts/'. $prices[0]['partID'] .'/schematic_drawing.jpg')) { ?>
                     <img class="img-fluid" src="<?= "/img/parts/".$prices[0]['partID'] ."/schematic_drawing.jpg"; ?>" alt="product-map">
-        <?php } else { ?>
-                    <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
-        <?php } } ?>
+        <?php }
+         } else { ?>
+            <img class="img-fluid" src="/img/product-prices-image@2x-min.png" alt="product-map">
+      <?php  } ?>
         </div>
     </div>
 
@@ -140,7 +141,7 @@
             foreach($prices as $mob_price): 
         ?>
             <div class="row no-gutters">
-                <div class="col-3">
+                <div class="col-4">
                     <p class="top-data model-table-header">Model</p>
                     <div class="mob-hidden">
                         <p class="model-table-header">Description</p>
@@ -149,7 +150,7 @@
                         <p class="model-table-header">Base Price</p>
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                     <p class="top-data model-table-data"><?php echo $mob_price['model_text']; ?>
                         <a class="drop-toggle" href="">View More</a>
                         <span class="">
@@ -170,14 +171,14 @@
             foreach($no_series as $mob_item): 
         ?>
             <div class="row no-gutters">
-                <div class="col-3">
+                <div class="col-4">
                     <p class="top-data model-table-header">Model</p>
                     <div class="mob-hidden">
                         <p class="model-table-header">Description</p>
                         <p class="model-table-header">Base Price</p>
                     </div>
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                     <p class="top-data model-table-data"><?php echo $mob_item['model_text']; ?>
                         <a class="drop-toggle" href="">View More</a>
                         <span class="">
@@ -211,7 +212,7 @@
             }
         for($j = 0; $j < count($mob_model_nums); $j++) { ?>
             <div class="row no-gutters">
-                <div class="col-3">
+                <div class="col-4">
                     <p class="top-data model-table-header">Model</p>
                     <div class="mob-hidden">
                         <p class="model-table-header">Description</p>
@@ -221,7 +222,7 @@
                     </div>
                 </div>
 
-                <div class="col-9">
+                <div class="col-8">
                     <p class="top-data model-table-data"><?php echo $mob_model_nums[$j]; ?>
                         <a class="drop-toggle" href="">View More</a>
                         <span class="">
@@ -266,7 +267,7 @@
             e.preventDefault();
             var eachClass = $(this).closest("p.model-table-data").next(".mob-hidden").attr("class");
             var res = eachClass.replace(' ', '.');
-            var leftDiv = $(this).closest(".col-9").prev(".col-3").find("div").filter('.' + res);
+            var leftDiv = $(this).closest(".col-8").prev(".col-4").find("div").filter('.' + res);
             if(leftDiv.css('display') == "none") {
                 $(this).closest("p.model-table-data").next('.mob-hidden').show();
                 leftDiv.show();

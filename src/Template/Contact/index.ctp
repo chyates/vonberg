@@ -20,38 +20,115 @@
                 )); ?>
                 
                 <div class="form-group">
-                    <?php echo $this->Form->control('name', ['label' => 'Full Name*', 'type' => 'text', 'class' => 'form-control','required']); ?>
+                    <?php 
+                        echo $this->Form->control('name', 
+                        [
+                            'label' => 'Full Name*', 
+                            'type' => 'text', 
+                            'class' => 'form-control',
+                            'required'
+                        ]); 
+                    ?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo $this->Form->control('company', ['type' => 'text', 'class' => 'form-control']); ?>
+                    <?php 
+                        echo $this->Form->control('company', 
+                        [
+                            'type' => 'text', 
+                            'class' => 'form-control'
+                        ]); 
+                    ?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo $this->Form->control('phone', ['label' => 'Phone*', 'type' => 'tel', 'class' => 'form-control', 'required']); ?>
+                    <?php 
+                        echo $this->Form->control('phone', 
+                        [
+                            'label' => 'Phone*', 
+                            'type' => 'tel', 
+                            'class' => 'form-control', 
+                            'required'
+                        ]); 
+                    ?>
                 </div>
 
                 <div class="form-group">
-                    <?php echo $this->Form->control('email', ['label' => 'Email*', 'type' => 'email', 'class' => 'form-control','required']); ?>
+                    <?php 
+                        echo $this->Form->control('email', 
+                        [
+                            'label' => 'Email*', 
+                            'type' => 'email', 
+                            'class' => 'form-control',
+                            'required'
+                        ]); 
+                    ?>
                 </div>
 
                 <div class="form-group">
                     <label id="user-role" >What is your role?</label>
-                    <div class="form-check form-check-inline">
-                        <?php echo $this->Form->control('manufacturer', ['label' => ['text' => 'Manufacturer', 'class' => 'form-check-label'], 'value' => 'Manufacturer','type' => 'checkbox', 'class' => 'form-check-input']); ?>
+                    <div class="form-check form-check-inline check-req">
+                        <?php 
+                            echo $this->Form->control('manufacturer', 
+                            [
+                                'label' => [
+                                    'text' => 'Manufacturer', 
+                                    'class' => 'form-check-label'
+                                ], 
+                                'value' => 'Manufacturer',
+                                'type' => 'checkbox', 
+                                'class' => 'form-check-input',
+                                'hiddenField' => false
+                            ]); 
+                        ?>
                     </div>
 
-                    <div class="form-check form-check-inline">
-                        <?php echo $this->Form->control('distributor', ['label' => ['text' => 'Distributor', 'class' => 'form-check-label'], 'value' => 'Distributor','type' => 'checkbox', 'class' => 'form-check-input']); ?>
+                    <div class="form-check form-check-inline check-req">
+                        <?php 
+                            echo $this->Form->control('distributor', 
+                            [
+                                'label' => [
+                                    'text' => 'Distributor', 
+                                    'class' => 'form-check-label'
+                                ], 
+                                'value' => 'Distributor',
+                                'type' => 'checkbox', 
+                                'class' => 'form-check-input',
+                                'hiddenField' => false
+                            ]); 
+                        ?>
                     </div>
 
-                    <div class="form-check form-check-inline">
-                        <?php echo $this->Form->control('enduser', ['label' => ['text' => 'End User', 'class' => 'form-check-label'], 'value' => 'End User','type' => 'checkbox', 'class' => 'form-check-input']); ?>
+                    <div class="form-check form-check-inline check-req">
+                        <?php 
+                            echo $this->Form->control('enduser', 
+                            [
+                                'label' => [
+                                    'text' => 'End User', 
+                                    'class' => 'form-check-label'
+                                ], 
+                                'value' => 'End User',
+                                'type' => 'checkbox', 
+                                'class' => 'form-check-input',
+                                'hiddenField' => false
+                            ]); 
+                        ?>
                     </div>
+                    <p id="check-validity" class="invalid-feedback" style="display: none;">
+                        Please select a checkbox.
+                    </p>
                 </div>
 
                 <div class="form-group">
-                    <?php echo $this->Form->control('contactme', ['label' => 'Remarks, Special Requests, or Questions*', 'type' => 'textarea', 'class' => 'form-control', 'required']); ?>
+                    <?php 
+                        echo $this->Form->control('contactme', 
+                        [
+                            'label' => 'Remarks, Special Requests, or Questions*', 
+                            'type' => 'textarea', 
+                            'class' => 'form-control', 
+                            'required'
+                        ]); 
+                    ?>
                 </div>
 
                 <div class="form-group">
@@ -71,8 +148,8 @@
                 </div>
                 
                <?php 
-                $this->Form->unlockField('g-recaptcha-response');
-                echo $this->Form->end(); 
+                    $this->Form->unlockField('g-recaptcha-response');
+                    echo $this->Form->end(); 
                ?><!-- Contact form end -->
         </div><!-- .contact-right end -->
     </div><!-- .row no-gutters end -->
@@ -84,14 +161,35 @@
     window.addEventListener('load', function() {
         // Fetch all the forms we want to apply custom Bootstrap validation styles to
         var forms = document.getElementsByClassName('needs-validation');
+        var checkboxes = document.querySelectorAll('.check-req');
+        var checkStatus = [];
+        var showDiv = document.getElementById('check-validity');
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
                 console.log("Hit form validation function");
                 if (form.checkValidity() === false) {
-                    console.log("Form is invalid, check");
                     event.preventDefault();
                     event.stopPropagation();
+                    console.log("Form is invalid, check");
+                    for(var i = 0; i < checkboxes.length; i++) {
+                        var divs = checkboxes[i].children;
+                        for(var j = 0; j < divs.length; j++) {
+                            var labels = divs[j].children;
+                            for(var k = 0; k < labels.length; k++) {
+                                var inputs = labels[k].children;
+                                for(var m = 0; m < inputs.length; m++) {
+                                    if(inputs[m].checked) {
+                                        checkStatus.push(inputs[m].checked);
+                                    }
+                                }
+                            }
+
+                        }
+                    }
+                    if (checkStatus.length < 1) {
+                        showDiv.style.display = 'block';
+                    }
                 }
                 form.classList.add('was-validated');
             }, false);

@@ -24,7 +24,14 @@
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse
-                                <?php echo $this->Form->input('thumbnail', ['type' => 'file', 'class'=>'form-control', 'label' => false]);?>
+                                <?php 
+                                    echo $this->Form->input('thumbnail', 
+                                    [
+                                        'type' => 'file',
+                                        'class'=>'form-control',
+                                        'label' => false
+                                    ]);
+                                ?>
                             </label>
                             <p class="file-text">No file chosen</p>
                         </td>

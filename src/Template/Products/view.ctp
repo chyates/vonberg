@@ -275,10 +275,21 @@
                 <?php 
                     $columns = 0;
                     $count = 1;
-                    foreach ($part->model_table->model_table_headers as $header): ?>
-                        <th id=<?php echo $count . "-" . ($columns+1); ?> class="mt-pdf model-table-header"><?php echo $header->model_table_text; ?></th>
-                <?php
-                    $columns++;
+                    $head_space = 0;
+
+                    foreach ($part->model_table->model_table_headers as $header): 
+                        if(strpos($header->model_table_text, " ") !== false) {
+                            $head_space = strpos($header->model_table_text, " ");
+                            $up_head = substr_replace($header->model_table_text, "<br>", $head_space, 0);
+                        }
+
+                        if(!empty($up_head)) {
+                            echo '<th id="' . $count . "-" . ($columns+1) .'" class="mt-pdf model-table-header">' . $up_head . '</th>';
+                            $up_head = NULL;
+                        } else {
+                            echo '<th id="' . $count . "-" . ($columns+1) .'" class="mt-pdf model-table-header">' . $header->model_table_text . '</th>';
+                        }
+                        $columns++;
                     endforeach; 
                 ?>
                 </thead>
@@ -288,17 +299,20 @@
                     <?php 
                         $mobCount = 0;
                         $r_columns = 1;
-                        foreach ($part->model_table->model_table_rows as $row):
-                            // for($s = 0; $s < strlen($row->model_table_row_text); $s++) {
-                            //     if($row->model_table_row_text[$s] == '/') {
-                            //         $up_text = substr_replace($row->model_table_row_text, "<br>", $s+1, 0);
-                            //         echo '<td id="' . ($r_columns+1) . "-" . $count . '" class="mt-pdf model-table-data">' . $up_text . '</td>';
-                            //     } else {
-                            //     }
-                            // }
-                            echo '<td id="' . ($r_columns+1) . "-" . $count . '"class="mt-pdf model-table-data">'.$row->model_table_row_text.'</td>';
 
-                            if(empty($up_text)) {
+                        $last_space = 0;
+                        $w_ds = " /";
+
+                        foreach ($part->model_table->model_table_rows as $row):                            
+                            if(strpos($row->model_table_row_text, $w_ds) !== false) {
+                                $last_space = strpos($row->model_table_row_text, $w_ds);
+                                $up_text = substr_replace($row->model_table_row_text, "<br>", $last_space+2, 0);
+                            }
+                            
+                            if(!empty($up_text)) {
+                                echo '<td id="' . ($r_columns+1) . "-" . $count . '"class="mt-pdf model-table-data">'.$up_text.'</td>';
+                            } else {
+                                echo '<td id="' . ($r_columns+1) . "-" . $count . '"class="mt-pdf model-table-data">'.$row->model_table_row_text.'</td>';
                             }
                             if ($count >= $columns){
                                 echo '</tr>';
@@ -319,7 +333,7 @@
     <!-- Mobile model table/dropdowns -->
     <div id="mob-model-tables" class="col-12">
         <div class="row no-gutters pt-4 pb-3">
-                <div class="col-4">
+                <div class="col-5">
                     <?php $mobHead = 1;
                         $divID = 1;
                         for($i = 0; $i <= ($mobCount/$columns)-1; $i++) {
@@ -343,7 +357,7 @@
                             } 
                     ?>
                 </div>
-                <div class="col-8">
+                <div class="col-7">
                     <?php 
                         $mobRow = 1;
                         $rowID = 1;
@@ -372,7 +386,7 @@
         <div class="col text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#get-stp-modal">Get STP File</button>
             <a class="btn btn-primary" href=<?= "/img/pdfs/catalog/" . $part->partID . ".pdf"; ?> download >Download PDF</a>
-            <a class="center-link" href="/products/prices">View Pricing</a>
+            <a class="center-link" href="/products/prices?q=&seriesID=<?php echo $part->seriesID; ?>">View Pricing</a>
         </div>
     </div>
 
@@ -426,11 +440,6 @@
                     if (checkStatus.length < 1) {
                         showDiv.style.display = 'block';
                     }
-                } else {
-                    // var stepForm = document.getElementById('get-stp-form')
-                    // var thanks = document.getElementById('thanks')
-                    // stepForm.style.display = 'none'
-                    // thanks.style.display = 'block'
                 }
                 form.classList.add('was-validated');
             }, false);
@@ -820,7 +829,14 @@
                         doc.fillColor('#000000')
                         if (yIndex === 0) doc.font('Helvetica-Bold')
                         row.forEach(function(cell, xIndex) {
-                            doc.text(cell.val, 15 + quickSum(widthRef.slice(0, xIndex)), base)
+                            let match = /\r|\n/.exec(cell.val)
+                            if(match) {
+                                console.log("Cell value: ", cell.val)
+                                let updated = cell.val.replace(/\r|\n/g, ' ')
+                                doc.text(updated, 15 + quickSum(widthRef.slice(0, xIndex)), base)
+                            } else {
+                                doc.text(cell.val, 15 + quickSum(widthRef.slice(0, xIndex)), base)
+                            }
                         })
                         doc.rect(15, base + 10, docWidth - 30, 1).fillAndStroke('#00703c')
                         base += 15
@@ -849,7 +865,7 @@
                     setTimeout(() => {
                         document.body.removeChild(a)
                         window.URL.revokeObjectURL(url)
-                    }, 0)
+                    }, 3000)
                 })
             }
         }
@@ -877,7 +893,7 @@
             e.preventDefault();
             var eachClass = $(this).closest("p.model-table-data").next(".mob-hidden").attr("class");
             var res = eachClass.replace(' ', '.');
-            var leftDiv = $(this).closest(".col-8").prev(".col-4").find("div").filter('.' + res);
+            var leftDiv = $(this).closest(".col-7").prev(".col-5").find("div").filter('.' + res);
             if(leftDiv.css('display') == "none") {
                 $(this).closest("p.model-table-data").next('.mob-hidden').show();
                 leftDiv.show();

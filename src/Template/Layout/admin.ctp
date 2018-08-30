@@ -202,18 +202,6 @@ jQuery(document).ready(function($) {
         }
     })
 
-    // define the function within the global scope
-    // $('#delete-check-modal').on('show.bs.modal', function(e) {
-    //     $(this).find('form').attr('action', $(e.relatedTarget).data('action'));
-    // });
-
-    // $('#delete-check-modal').on('show.bs.modal', function(event) {
-        // $("#partname").text($(event.relatedTarget).data('file'));
-        // var currRoute = $('#delete-confirm').attr('href');
-        // var upId = $(event.relatedTarget).data('pid');
-        // $('#delete-confirm').attr('href', currRoute + upId);
-    // });
-
     var lastA = $('.admin-nav').find('a.cms-greyed.nav-link.nav-item');
     lastA.next().addClass('nav-link').addClass('nav-item');
 

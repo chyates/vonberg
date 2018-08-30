@@ -1,3 +1,4 @@
+<script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <div id="cms-model-price-main" class="inner-main col-md-10 mx-auto p-5">
     <h1 class="page-title">Model Pricing</h1>
 
@@ -45,8 +46,8 @@
             <h3 class="product-name">Modify Prices</h3>
             <div id="cms-model-price-table" class="model-table table table-striped">
                 <div class="row no-gutters">
-                    <div class="col-5 model-table-header">Model</div>
-                    <div class="col-5 model-table-header">Base Price</div>
+                    <div class="col-4 model-table-header">Model</div>
+                    <div class="col-6 model-table-header">Base Price</div>
                     <div class="col-2 model-table-header"></div>
                 </div>
                 <?php foreach($prices as $price): ?>
@@ -59,47 +60,60 @@
                         ]) 
                     ?>
                     <?php 
-                        echo $this->Form->input('id', 
-                        [
-                            'label'=>False, 
-                            'class'=>'hidden form-control', 
-                            'type'=>'text', 
-                            'value'=> strval($price->model_priceID)
+                        if(!empty($price->model_priceID)) {
+
+                            echo $this->Form->input('id', 
+                            [
+                                'label'=>False, 
+                                'class'=>'hidden form-control', 
+                                'type'=>'text', 
+                                'value'=> strval($price->model_priceID)
                             ]);
-                            ?>
+                        } else {
+                            echo "N/A";
+                        }
+                    ?>
                     <div class="row no-gutters align-items-center">
-                        <div class="col-5 model-table-data">
-                            <div>
+                        <div class="col-4 model-table-data">
+                            <?php if(!empty($price->model_text)) { ?>
+                                <div>
+                                    <?php 
+                                        echo $price->model_text; 
+                                    ?>
+                                </div>
                                 <?php 
-                                    echo $price->model_text; 
-                                    ?>
-                            </div>
-                            <?php 
-                                echo $this->Form->input('model_text', 
-                                [
-                                    'label'=>False, 
-                                    'type'=>'text',
-                                    'class' => 'form-control',
-                                    'value'=>$price->model_text
+                                    echo $this->Form->input('model_text', 
+                                    [
+                                        'label'=>False, 
+                                        'type'=>'text',
+                                        'class' => 'form-control',
+                                        'value'=>$price->model_text
                                     ]);
-                                    ?>
+                                } else {
+                                    echo "N/A";
+                                }
+                           ?>
                         </div>
-                        <div class="col-5 model-table-data">
-                            <div>
+                        <div class="col-6 model-table-data">
+                            <?php if(!empty($price->unit_price)) { ?>
+                                <div>
+                                    <?php 
+                                        echo $this->Number->currency($price->unit_price, 'USD', array(['places' => 2])); 
+                                    ?>
+                                </div>
+                                <span>$</span>
                                 <?php 
-                                    echo $this->Number->currency($price->unit_price, 'USD', array(['places' => 2])); 
-                                    ?>
-                            </div>
-                            <span>$</span>
-                            <?php 
-                                echo $this->Form->input('unit_price', 
-                                [
-                                    'label'=>False, 
-                                    'type'=>'text',
-                                    'class' => 'form-control', 
-                                    'value'=> $this->Number->currency($price->unit_price, 'USD', array(['places' => 2])),
+                                    echo $this->Form->input('unit_price', 
+                                    [
+                                        'label'=>False, 
+                                        'type'=>'text',
+                                        'class' => 'form-control', 
+                                        'value'=> $this->Number->precision($price->unit_price, 2),
                                     ]);
-                                    ?>
+                                } else {
+                                    echo "N/A";
+                                }
+                            ?>
                         </div>
                         <div class="col-2 model-table-data">
                             <div class="edit">Edit</div>
@@ -128,7 +142,8 @@
                 [
                     'id' => 'add-price-form',
                     'url' => ['controller' => 'Admin', 'action' => 'addPrice'],
-                    'class' => 'mt-3'
+                    'class' => 'mt-3 needs-validation',
+                    'novalidate'
                 ]);
             ?>
 
@@ -138,8 +153,20 @@
                     [
                         'type' => 'text',
                         'class' => 'form-control',
-                        'label' => 'Model Number'
+                        'label' => 'Model Number',
+                        'required'
                     ]);
+                ?>
+            </div>
+
+            <div class="form-group">
+                <?php 
+                    echo $this->Form->control('description', 
+                    [
+                        'label' => 'Description', 
+                        'type' => 'textarea', 
+                        'class' => 'form-control'
+                    ]); 
                 ?>
             </div>
 
@@ -149,7 +176,8 @@
                     [
                         'type' => 'text',
                         'class' => 'form-control',
-                        'label' => 'Base Price'
+                        'label' => 'Base Price',
+                        'required'
                     ]);
                 ?>
             </div>
@@ -170,7 +198,35 @@
             form.querySelector('.edit').onclick = function() {
                 form.className = 'active'
             }
+        });
+
+        (function() {
+        'use strict';
+        window.addEventListener('load', function() {
+            // Fetch all the forms we want to apply custom Bootstrap validation styles to
+            var forms = document.getElementsByClassName('needs-validation');
+            // Loop over them and prevent submission
+            var validation = Array.prototype.filter.call(forms, function(form) {
+                form.addEventListener('submit', function(event) {
+                    console.log("Hit form validation function");
+                    if (form.checkValidity() === false) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        console.log("Form is invalid, check");
+                    }
+                    form.classList.add('was-validated');
+                }, false);
+            });
+        }, false);
+    })();
+
+    jQuery(document).ready(function($) {
+        var feedback = '<div class="invalid-feedback">This field is required.</div>'
+        $("#add-price-form textarea").after(feedback)
+        $("#add-price-form input").each(function(index) {
+            $(this).after(feedback)
         })
+    })
     </script>
 
 </div><!-- #cms-model-price-main end -->
