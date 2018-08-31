@@ -90,7 +90,7 @@ class ProductsController extends AppController
                 exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
 
                 $subject = "STP File Request From: " . $this->request->data['first_name'] . " " . $this->request->data['last_name'];
-                $message = "Please respond to " . $this->request->data['email'] . " with the following file(s): " . $file_paths;
+                $message = "Please respond to: " . $this->request->data['email'] . " with the following file(s): " . $file_paths;
                 Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
                 Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
                 $redir['reload'] = 'yes';

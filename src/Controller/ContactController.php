@@ -68,9 +68,10 @@ class ContactController extends AppController
                     $message .= "\n";
                     $message .= 'Additional comments: ';
                     $message .= $this->request->data['contactme'];
+                    $subject = "Vonberg Contact Form Request";
                     // echo $message;
-                    Email::deliver('chyatesil@gmail.com', 'Vonberg Contact Form Request', $message, ['from' => 'do-not-reply@vonberg.com']);
-                    Email::deliver('mwhite@vonberg.com', 'Vonberg Contact Form Request', $message, ['from' => 'do-not-reply@vonberg.com']);
+                    Email::deliver('chyatesil@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                    Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
 
                     $this->redirect(array('action' => 'success'));
                 }
