@@ -1,5 +1,5 @@
 <div id="cms-edit-prod-main" class="inner-main col-md-10 mx-auto p-5">
-    <h1 id="title-four"class="active-title page-title">Edit Product: Image Uploads</h1>
+    <h1 id="title-four"class="active-title page-title"><?= "Edit Product: " . $part->series->name . " Image Uploads" ?></h1>
     <?= $this->Form->create('edit-prod-form', ['id' => "edit-prod-form", 'enctype' => 'multipart/form-data']) ?>
 
         <div id="four" class="active-slide form-slide col-md-8 mx-auto table-responsive">

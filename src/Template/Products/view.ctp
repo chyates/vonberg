@@ -161,7 +161,7 @@
                         } 
                     ?>
                 </h1>
-                <h3 id="categoryid" class="product-name"><?= h($part->category->name);?></h3>
+                <h3 id="categoryid" class="product-name"><?= h($part->type->name);?></h3>
                 <?php if(empty($part->style->name) && empty($part->connection->name)) { ?>
                     <p class="product-info"><?php echo "No style or connection"; ?></p>
                 <?php } else if(!empty($part->style->name) && empty($part->connection->name)) { ?>

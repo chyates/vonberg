@@ -802,12 +802,12 @@ class AdminController extends AppController
                 // echo $this->request->data['product_image'];
                 $file = $this->request->data['product_image']; 
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                // $arr_ext = array('jpg', 'jpeg', 'gif'); 
+                $arr_ext = array('jpg', 'jpeg', 'gif'); 
 
                 if(in_array($ext, $arr_ext))
                 {
                     move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/product_image.' . $ext);
-                    $this->Flash->success(__('The file PRODUCT IMAGE was saved.', h($part->partid)));
+                    // $this->Flash->success(__('The file PRODUCT IMAGE was saved.', h($part->partid)));
                 }
             }
 
