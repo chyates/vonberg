@@ -32,7 +32,7 @@
         ));
         $this->assign('description', $this->Html->meta('description', 'View the entire Vonberg product line of cartridge bodies. Our cartridge bodies are available with either industry standard or T-series cavities and a variety of port types and sizes. Cartridge bodies can be ordered individually or as an assembly that includes the Vonberg cartridge valve. ')); 
     }
-    $this->assign('title', $category->name . ' | Hydraulic Innovation');
+    $this->assign('title', $category->name . ' | Vonberg');
 ?>
 
 <div id="category-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">

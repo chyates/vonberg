@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'Product Customization | Vonberg');
+?>
+
 <div id="customize-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-4">
     <div class="row no-gutters">
         <div class="col-lg-10 col-12 mx-auto px-lg-5 pb-lg-5 p-sm-4">

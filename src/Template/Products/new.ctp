@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'New Products | Vonberg');
+?>
+
 <div id="search-main-container" class="inner-main col-lg-10 col-12 mx-auto">
     <div class="row no-gutters">
         <div class="col-lg-10 col-12 mx-auto my-lg-5 my-3">

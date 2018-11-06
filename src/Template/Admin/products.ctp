@@ -82,9 +82,11 @@ use Cake\Routing\Router;
                         <div class="form-check form-check-inline">
                             <input type="hidden" class="form-control" name="part_id" value="<?= $part->partID ?>"/>
                             <?php if($part->new_list == 1) { ?>
+                                <input type="text" value="<?= $part->partID; ?>" class="form-control hidden" name="hid_part">
                                 <input class="form-check-input" type="checkbox" name="new_list" value="<?= $part->expires; ?>" checked>
                                 <label class="form-check-label"><?= h($part->expires) ?> days</label>
                             <?php } else { ?>
+                                <input type="text" value="<?= $part->partID; ?>" class="form-control hidden" name="hid_part">
                                 <input class="form-check-input" type="checkbox" name="new_list">
                             <?php } ?>
                         </div>

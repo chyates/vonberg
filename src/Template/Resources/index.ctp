@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'Resources | Vonberg');
+?>
+
 <div id="resources-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <h1 class="page-title">Resources</h1>
     <div class="row no-gutters my-4">

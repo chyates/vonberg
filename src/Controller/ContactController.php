@@ -40,12 +40,50 @@ class ContactController extends AppController
     {
         $this->viewBuilder()->setLayout('vonberg');
         $this->loadModel('Contacts');
-        $cat=$this->Contacts->newEntity();
+        $cat = $this->Contacts->newEntity();
         $message = '';
         if ($this->request->is('post') || $this->request->is('put')) {
+            // print_r($this->request->data);
+            // if(empty($this->request->data['distributor'])) {
+            //     echo "Empty distributor";
+            // }
             if ($this->Recaptcha->verify()) { 
-                $cat=$this->Contacts->patchEntity($cat,$this->request->data);
-                if($result=$this->Contacts->save($cat)) {
+                $cat->name = $this->request->data['name'];
+                if(!empty($this->request->data['company'])) {
+                    $cat->company = $this->request->data['company'];
+                }
+                $cat->phone = $this->request->data['phone'];
+                $cat->email = $this->request->data['email'];
+
+                if(empty($this->request->data['distributor'])) {
+                    $cat->distributor = 0;
+                } else {
+                    $cat->distributor = 'Distributor';
+                }
+                if(empty($this->request->data['manufacturer'])) {
+                    $cat->manufacturer = 0;
+                } else {
+                    $cat->manufacturer = 'Manufacturer';
+                }
+                if(empty($this->request->data['enduser'])) {
+                    $cat->enduser = 0;
+                } else {
+                    $cat->enduser = 'End User';
+                }
+
+                // if(!empty($this->request->data['distributor'])) {
+                //     $cat->distributor = $this->request->data['distributor'];
+                // }
+                // if(!empty($this->request->data['manufacturer'])) {
+                //     $cat->manufacturer = $this->request->data['manufacturer'];
+                // }
+                // if(!empty($this->request->data['enduser'])) {
+                //     $cat->enduser = $this->request->data['enduser'];
+                // }
+
+                $cat->contactme = $this->request->data['contactme'];
+
+                if($result = $this->Contacts->save($cat)) {
                     $message .= 'Name: ';
                     $message .= $this->request->data['name'];
                     $message .= "\n";
@@ -70,8 +108,9 @@ class ContactController extends AppController
                     $message .= $this->request->data['contactme'];
                     $subject = "Vonberg Contact Form Request";
                     // echo $message;
-                    Email::deliver('chyatesil@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
-                    Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                    // Email::deliver('tatan42@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                    Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                    // Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
 
                     $this->redirect(array('action' => 'success'));
                 }

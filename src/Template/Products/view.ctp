@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', $part->series->name .' | Vonberg');
+?>
+
 <script src="/js/pdfkit.js"></script>
 <script src="/js/blob-stream.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -15,115 +19,142 @@
                 </button>
             </div>
             <div class="modal-body col-lg-10 mx-auto">
+                <?php
+                    $stp_exists = false;
+                    $t_width = count($part->model_table->model_table_headers);
+                    $mod_count = 1;
+                    foreach($part->model_table->model_table_rows as $row) {
+                        if($mod_count >= $t_width) {
+                            $mod_count = 0;
+                        }
+                        if($mod_count == 1) {
+                            if(file_exists('img/parts/'.$part->partID.'/'.$row->model_table_row_text.'.stp')) {
+                                $stp_exists = true;
+                            }
+                        }
+                        $mod_count++;
+                    }
+                ?>
+                <?php if(!$stp_exists) { ?>
+                    <div id="missing-stp" class="text-center">
+                    <h1 class="get-header page-header">Get STP Files</h1>
+                    <p>This part doesn't have any stp files.</p>
+                    <p class="mb-5">Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
+                </div>
+             <?php } else { ?>
                 <h1 class="get-header page-header">Get STP Files</h1>
-                    <?php echo $this->Form->create('get-stp-form', array(
-                        'id' => 'get-stp-form',
-                        'class' => 'needs-validation',
-                        'novalidate',
-                        'inputDefaults' => array(
-                            'label' => false,
-                            'div' => false
-                        )
-                    )); ?>
-                    <p>You will receive an email with the files attached.</p>
-                    <p>Which model(s) are you interested in?*</p>
                     <?php 
-                    $mobRow = 1;
-                    $rowID = 1;
-                    $width = sizeof($part->model_table->model_table_headers); ?>
-                    <div id="check-container">
+                        echo $this->Form->create('get-stp-form', array(
+                            'id' => 'get-stp-form',
+                            'class' => 'needs-validation',
+                            'novalidate',
+                            'inputDefaults' => array(
+                                'label' => false,
+                                'div' => false
+                            )
+                        )); 
+                    ?>
+                        <p>You will receive an email with the files attached.</p>
+                        <p>Which model(s) are you interested in?*</p>
                         <?php 
-                        foreach ($part->model_table->model_table_rows as $row):
-                         if ($mobRow === 1) {
-                             echo '<div class="form-check check-req">';
-                             echo $this->Form->control('model[]', 
-                             [
-                                 'type' => 'checkbox', 
-                                 'value'=> $row->model_table_row_text, 
-                                 'class' => 'form-check-input', 
-                                 'label' => 
-                                    [
-                                     'text' => 'Model ' . $row->model_table_row_text, 
-                                     'class' => 'form-check-label'
-                                    ], 
-                                'id' => $row->model_table_rowID,
-                                'hiddenField' => false
-                            ]);
-                             echo '</div>';
-                            }
-                            if ($mobRow >= $width){
-                                $mobRow=0;
-                            }
-                            $mobRow++;
-                        endforeach;
-                        ?>
-                    </div>
-                    <p id="check-validity" class="invalid-feedback" style="display: none;">
-                        Please select at least one model file.
-                    </p>
-                    <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
-
-                    <?php 
-                        echo $this->Form->input('part', 
-                        [
-                            'type' => 'text',
-                            'label' => false,
-                            'class' => 'hidden form-control',
-                            'id' => 'part',
-                            'value' => $part->partID
-                        ]);
-
-                        echo $this->Form->control('first_name', 
-                        [
-                            'label' => 'First Name*',
-                            'type' => 'text', 
-                            'class' => 'form-control', 
-                            'required'
-                        ]); 
-                    ?>
-
-                    <?php 
-                        echo $this->Form->control('last_name', 
-                        [
-                            'label' => 'Last Name*', 
-                            'type' => 'text', 
-                            'class' => 'form-control', 
-                            'required'
-                        ]); 
-                    ?>
-
-                    <?php 
-                        echo $this->Form->control('company', 
-                        [
-                            'type' => 'text', 
-                            'class' => 'form-control'
-                        ]);
-                    ?>
-
-                    <?php 
-                        echo $this->Form->control('email', 
-                        [
-                            'label' => 'Email*', 
-                            'type' => 'text', 
-                            'class' => 'form-control', 
-                            'required'
-                        ]);
-                    ?>
-
-                    <div class="form-group row no-gutters">
-                        <div class="col-6 my-auto">
-                            <p class="my-auto req-text text-left">*Mandatory</p>
-                        </div>
-                        <div class="col-6 text-right">
-                            <?php
-                            echo $this->Form->submit('SUBMIT',array(
-                                'id' => 'stp-submit',
-                                'class' => 'btn btn-primary'));
+                        $mobRow = 1;
+                        $rowID = 1;
+                        $width = sizeof($part->model_table->model_table_headers); ?>
+                        <div id="check-container">
+                            <?php 
+                            foreach ($part->model_table->model_table_rows as $row):
+                            if ($mobRow === 1) {
+                                echo '<div class="form-check check-req">';
+                                echo $this->Form->control('model[]', 
+                                [
+                                    'type' => 'checkbox', 
+                                    'value'=> $row->model_table_row_text, 
+                                    'class' => 'form-check-input', 
+                                    'label' => 
+                                        [
+                                        'text' => 'Model ' . $row->model_table_row_text, 
+                                        'class' => 'form-check-label'
+                                        ], 
+                                    'id' => $row->model_table_rowID,
+                                    'hiddenField' => false
+                                ]);
+                                echo '</div>';
+                                }
+                                if ($mobRow >= $width){
+                                    $mobRow=0;
+                                }
+                                $mobRow++;
+                            endforeach;
                             ?>
                         </div>
-                    </div>
-                <?php echo $this->Form->end();?>
+                        <p id="check-validity" class="invalid-feedback" style="display: none;">
+                            Please select at least one model file.
+                        </p>
+                        <p>Don’t see the model you’re looking for?<a href="/contact" class="px-2">Contact us!</a></p>
 
+                        <?php 
+                            echo $this->Form->input('part', 
+                            [
+                                'type' => 'text',
+                                'label' => false,
+                                'class' => 'hidden form-control',
+                                'id' => 'part',
+                                'value' => $part->partID
+                            ]);
+
+                            echo $this->Form->control('first_name', 
+                            [
+                                'label' => 'First Name*',
+                                'type' => 'text', 
+                                'class' => 'form-control', 
+                                'required'
+                            ]); 
+                        ?>
+
+                        <?php 
+                            echo $this->Form->control('last_name', 
+                            [
+                                'label' => 'Last Name*', 
+                                'type' => 'text', 
+                                'class' => 'form-control', 
+                                'required'
+                            ]); 
+                        ?>
+
+                        <?php 
+                            echo $this->Form->control('company', 
+                            [
+                                'type' => 'text', 
+                                'class' => 'form-control'
+                            ]);
+                        ?>
+
+                        <?php 
+                            echo $this->Form->control('email', 
+                            [
+                                'label' => 'Email*', 
+                                'type' => 'text', 
+                                'class' => 'form-control', 
+                                'required'
+                            ]);
+                        ?>
+
+                        <div class="form-group row no-gutters">
+                            <div class="col-6 my-auto">
+                                <p class="my-auto req-text text-left">*Mandatory</p>
+                            </div>
+                            <div class="col-6 text-right">
+                                <?php
+                                echo $this->Form->submit('SUBMIT',array(
+                                    'id' => 'stp-submit',
+                                    'class' => 'btn btn-primary'));
+                                ?>
+                            </div>
+                        </div>
+                    <?php 
+                        echo $this->Form->end(); 
+                    }
+                    ?>
                 <div id="thanks" class="thanks text-center">
                     <h1 class="page-header">Thank you!</h1>
                     <div class="modal_message"></div>
@@ -152,6 +183,7 @@
             <div class="left-info">
                 <div id="typeid" class="hidden"><?php echo $part->type->name; ?></div>
                 <div id="partid" class="hidden"><?php echo $part->partID; ?></div>
+                <div id="ultra-cat" hidden><?php echo $part->category->name; ?></div>
                 <h1 id="seriesid" class="page-title">
                     <?php
                         if(!empty($part->series->name)) {
@@ -207,9 +239,16 @@
             <div class="left-img-div mt-sm-4">
                 <h3 class="product-name">Typical Performance</h3>
                 <img id="performance" class="my-3 product-performance img-fluid" src="<?= "/img/parts/".$part->partID."/typical_performance.jpg"; ?>" />
+                <?php if (file_exists('img/parts/' .$part->partID. '/performance_graphs.pdf')) { ?>
+                    <div>
+                        <span class="pr-2">
+                            <img class="img-fluid" src="/img/Adobe_PDF_file_icon@2x.png"/>
+                        </span>
+                        <a target="_blank" id="performance-graphs" rel="noopener"href="<?= "/img/parts/" .$part->partID. '/performance_graphs.pdf'; ?>">Download Performance Curves Graphics</a>
+                    </div>
+                <?php } ?>
             </div>
             <?php } ?>
-
         </div><!-- .single-prod-left-col end -->
 
         <div class="single-prod-right-col col-sm-5 col-12 px-lg-0 pt-4">
@@ -275,20 +314,9 @@
                 <?php 
                     $columns = 0;
                     $count = 1;
-                    $head_space = 0;
 
                     foreach ($part->model_table->model_table_headers as $header): 
-                        if(strpos($header->model_table_text, " ") !== false) {
-                            $head_space = strpos($header->model_table_text, " ");
-                            $up_head = substr_replace($header->model_table_text, "<br>", $head_space, 0);
-                        }
-
-                        if(!empty($up_head)) {
-                            echo '<th id="' . $count . "-" . ($columns+1) .'" class="mt-pdf model-table-header">' . $up_head . '</th>';
-                            $up_head = NULL;
-                        } else {
-                            echo '<th id="' . $count . "-" . ($columns+1) .'" class="mt-pdf model-table-header">' . $header->model_table_text . '</th>';
-                        }
+                        echo '<th id="' . $count . "-" . ($columns+1) .'" class="mt-pdf model-table-header">' . $header->model_table_text . '</th>';
                         $columns++;
                     endforeach; 
                 ?>
@@ -299,7 +327,6 @@
                     <?php 
                         $mobCount = 0;
                         $r_columns = 1;
-
                         $last_space = 0;
                         $w_ds = " /";
 
@@ -311,13 +338,13 @@
                             
                             if(!empty($up_text)) {
                                 echo '<td id="' . ($r_columns+1) . "-" . $count . '"class="mt-pdf model-table-data">'.$up_text.'</td>';
-                            } else {
+                                $up_text = NULL;
+                            } else if(!empty($row->model_table_row_text)){
                                 echo '<td id="' . ($r_columns+1) . "-" . $count . '"class="mt-pdf model-table-data">'.$row->model_table_row_text.'</td>';
                             }
                             if ($count >= $columns){
                                 echo '</tr>';
                                 $count = 0;
-                                // $r_columns = 0;
                                 $r_columns++;
                             }
                             $count++;
@@ -401,9 +428,7 @@
     var redir = <?php echo json_encode($redirect); ?>;
     <?php if(!empty($r_check)) { ?>
         var check = <?php echo json_encode($r_check); ?>;
-        console.log(check);
     <? } ?>
-    // var check = <?php if(!empty($r_check)) { echo json_encode($r_check); } ?>;
     (function() {
     'use strict';
     window.addEventListener('load', function() {
@@ -421,8 +446,9 @@
                     event.preventDefault();
                     event.stopPropagation();
                     console.log("Form is invalid, check");
-                    // loop through checkboxes to find if any have been selected
-                    for(var i = 0; i < checkboxes.length; i++) {
+                }
+                // loop through checkboxes to find if any have been selected
+                for(var i = 0; i < checkboxes.length; i++) {
                         var divs = checkboxes[i].children;
                         for(var j = 0; j < divs.length; j++) {
                             var labels = divs[j].children;
@@ -438,9 +464,10 @@
                         }
                     }
                     if (checkStatus.length < 1) {
+                        event.preventDefault();
+                        event.stopPropagation();    
                         showDiv.style.display = 'block';
                     }
-                }
                 form.classList.add('was-validated');
             }, false);
         });
@@ -504,7 +531,7 @@
                 let logo = ajax.response
                 
                 let type = document.getElementById('typeid').innerText
-                console.log(type.length)
+                let ultraCat = document.getElementById('ultra-cat').innerText.toUpperCase()
                 let category = document.getElementById('categoryid').innerText
                 let style = document.getElementById('styleid').innerText
                 let series = document.getElementById('seriesid').innerText
@@ -515,18 +542,24 @@
                 let features = []
                 let specifications = []
                 let seriesInputs = []
+                let performanceGraphs = document.getElementById('performance-graphs') ? document.getElementById('performance-graphs').href : null
 
                 Array.prototype.forEach.call(document.querySelectorAll('#operation li'), function(bullet) {
                     operation.push(bullet.innerText.toUpperCase().replace(/˚/g, '\u00B0'))
                 })
+                operation = operation.filter(function(op) {return op != ''})
                 Array.prototype.forEach.call(document.querySelectorAll('#features li'), function(bullet) {
                     features.push(bullet.innerText.toUpperCase().replace(/˚/g, '\u00B0'))
                 })
+                features = features.filter(function(feat) {return feat != ''})
                 Array.prototype.forEach.call(document.querySelectorAll('.specifications th'), function(header) {
                     specifications.push([header.innerText])
                 })
                 Array.prototype.forEach.call(document.querySelectorAll('.specifications td'), function(row, index) {
                     specifications[index].push(row.innerText.replace(/˚/g, '\u00B0'))
+                })
+                specifications = specifications.filter(function(spec) {
+                    return spec.filter(function(data) {return data != ''}).length > 0
                 })
 
                 Array.prototype.forEach.call(document.querySelectorAll('#prod-mt .mt-pdf'), function(cell) {
@@ -550,6 +583,23 @@
                 for (let i = 0; i < seriesInputs.length; i += totalCol) {
                     seriesTable.push(seriesInputs.slice(i, i + totalCol))
                 }
+                let slashinRows = () => {
+                    let realCells = seriesTable[seriesTable.length - 1].filter(cell => cell.val)
+                    if (realCells.length === 0) {
+                        seriesTable.pop()
+                        slashinRows()
+                    }
+                }
+                slashinRows()
+                let slashinCols = () => {
+                    let realCells = seriesTable.map(row => row[row.length - 1]).filter(cell => cell.val)
+                    if (realCells.length === 0) {
+                        seriesTable.forEach(row => row.pop())
+                        slashinCols()
+                    }
+                }
+                slashinCols()
+                totalCol = seriesTable.length
 
                 let doc = new PDFDocument({autoFirstPage: false})
                 stream = doc.pipe(blobStream())
@@ -560,7 +610,7 @@
                 doc.info.Title = type
                 doc.info.Author = 'Vonberg Valve, inc.'
 
-                console.log(doc)
+                // console.log(doc)
                 const docWidth = 612
                 const docHeight = 792
 
@@ -611,7 +661,7 @@
 
                     // default line height for 12px font is 14.4, rounding up to 15
                     doc.fontSize(12)
-                    doc.text(category, 0, 15, {
+                    doc.text(ultraCat, 0, 15, {
                         align: 'right'
                     })
                     doc.text(style, 0, 30, {
@@ -630,13 +680,10 @@
                 }
                 header()
                 
-                // let colWidth = (docWidth - 30) / 2 - 15
                 let colWidth = (docWidth - 30) * .4 - 15
-                // let inverseWidth = (docWidth - 30) / 2 - 15
                 let inverseWidth = (docWidth - 30) * .6 - 15
 
                 // this is dynamic now
-                // doc.rect(colWidth + 30, 90, 2, 80 + colWidth * 1.9).fillAndStroke('#00703c')
                 doc.fontSize(9)
 
                 let leftBase = 90
@@ -670,6 +717,12 @@
                         width: colWidth
                     })
                     leftBase += 20 + getImageHeight(wrangleImages(-1), colWidth)
+                    if (performanceGraphs) {
+                        doc.text('Download Performance Curve Graphics', 15, leftBase + 6, {
+                            link: performanceGraphs, align: 'center', width: colWidth
+                        })
+                        leftBase += 12
+                    }
                 }
 
                 // column 2
@@ -684,33 +737,37 @@
                 extra += 12 * Math.ceil(doc.widthOfString(description) / inverseWidth)
                 extra -= 10
 
-                if (operation.length > 1 || operation[0].length > 0) {
+                let bulletTime = doc.widthOfString('• ')
+
+                if (operation.length > 0) {
                     doc.font('Helvetica-Bold')
                     doc.text('OPERATION', colWidth + 45, 120 + extra)
                     doc.rect(colWidth + 45, 130 + extra, inverseWidth, 1).fillAndStroke('#00703c')
                     doc.fillColor('#000000')
                     doc.font('Helvetica')
                     operation.forEach(op => {
-                        doc.text('• ' + op, colWidth + 45, 135 + extra)
-                        extra += 12 * Math.ceil(doc.widthOfString('• ' + op) / inverseWidth)
+                        doc.text('• ', colWidth + 45, 135 + extra)                        
+                        doc.text(op, colWidth + 45 + bulletTime, 135 + extra)
+                        extra += 12 * Math.ceil(doc.widthOfString(op) / (inverseWidth - bulletTime))
                     })
                     extra -= 10
                 }
 
-                if (features.length > 1 || features[0].length > 0) {
+                if (features.length > 0) {
                     doc.font('Helvetica-Bold')
                     doc.text('FEATURES', colWidth + 45, 150 + extra)
                     doc.rect(colWidth + 45, 160 + extra, inverseWidth, 1).fillAndStroke('#00703c')
                     doc.fillColor('#000000')
                     doc.font('Helvetica')
                     features.forEach(feat => {
-                        doc.text('• ' + feat, colWidth + 45, 165 + extra)
-                        extra += 12 * Math.ceil(doc.widthOfString('• ' + feat) / inverseWidth)
+                        doc.text('• ', colWidth + 45, 165 + extra)
+                        doc.text(feat, colWidth + 45 + bulletTime, 165 + extra)
+                        extra += 12 * Math.ceil(doc.widthOfString(feat) / (inverseWidth - bulletTime))
                     })
                     extra -= 10
                 }
 
-                if (specifications.length > 1 || specifications[0][1].length > 0) {
+                if (specifications.length > 0) {
                     doc.font('Helvetica-Bold')
                     doc.text('SPECIFICATIONS', colWidth + 45, 180 + extra)
                     doc.rect(colWidth + 45, 190 + extra, inverseWidth, 1).fillAndStroke('#00703c')
@@ -741,7 +798,6 @@
 
                 let availableSpace = (docHeight - 75) - (theBottom)
                 let maxRows = Math.floor((availableSpace - 8) / 15)
-                // console.log('maxRows', maxRows)
                 
                 // bottom column
                 function footer() {
@@ -768,12 +824,10 @@
                     doc.text(
                         '3800 Industrial Avengue • Rolling Meadows, IL 60008-1085 USA © 2015',
                         colWidth + 45, docHeight - 35
-                        // 187, docHeight - 35, {width: docWidth - 187, align: 'center'}
                     )
                     doc.text(
                         'phone: 847-259-3800 • fax: 847-259-3997 • email: info@vonberg.com',
                         colWidth + 45, docHeight - 25
-                        // 187, docHeight - 25, {width: docWidth - 187, align: 'center'}
                     )
                     if (totalPages > 1) {
                         doc.fontSize(12)
@@ -855,7 +909,6 @@
 
                     let cat_repl = titleCase(category)
                     let ser_repl = titleCase(series)
-                    // let type_repl = type.replace(/ /g, "_")
                     cat_repl = cat_repl.replace(/ /g, "_")
                     ser_repl = ser_repl.replace(/ /g, "_")
 
@@ -872,9 +925,7 @@
         ajax.send()
     }
 
-
     $(document).ready(function(){
-        // console.log("Redirected? ", redir)
         if(redir['reload'] == 'no') {
             console.log("Page has not been reloaded");
         } else if (check['reload'] == 'yes') {

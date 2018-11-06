@@ -1,7 +1,6 @@
 <div id="cms-edit-prod-main" class="inner-main col-md-10 mx-auto p-5">
-    <h1 id="title-five"class="active-title page-title"><?= "Edit Product: " . $part->series->name . "STP File Uploads" ?></h1>
+    <h1 id="title-five"class="active-title page-title"><?php echo "Edit Product: " . $part->series->name . " STP File Uploads"; ?></h1>
     <?= $this->Form->create($part, ['id' => "edit-prod-form", 'enctype' => 'multipart/form-data']) ?>
-
         <div id="five" class="active-slide form-slide col-md-8 mx-auto table-responsive">
             <table class="model-table table">
                 <thead>
@@ -13,17 +12,16 @@
                     </tr>
                 </thead>
                 <tbody>
-                <?php
+            <?php
                 $count=0;
                 $rowcount = 0;
-               //  echo debug($table);
+
                if(isset($table)) {
                 foreach ($table->model_table_headers as $header) {
-                    ++$count;
+                    $count++;
                 }
                 foreach ($table->model_table_rows as $row){
-                    if ($rowcount % $count == 0 ) {
-                        ?>
+                    if ($rowcount % $count == 0 ) { ?>
                         <tr>
                             <td class="model-table-data"><?= $row->model_table_row_text ?></td>
                             <td class="model-table-data">
@@ -58,12 +56,11 @@
                                 <p class="file-text">No file chosen</p>
                             </td>
                         </tr>
-
                         <?php
-                    }
-                    ++$rowcount;
-                } 
-               }  ?>
+                        }
+                        ++$rowcount;
+                    } 
+                }  ?>
                 </tbody>
             </table>
             <div class="row no-gutters justify-content-between">

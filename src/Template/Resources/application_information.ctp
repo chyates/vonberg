@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'Application Information | Vonberg');
+?>
+
 <div id="app-info-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <div class="col-lg-6 col-12 mx-auto">
         <h1 class="page-header">Application Information</h1>

@@ -6,7 +6,7 @@
 ?>
 
 <?php 
-    $this->assign('title', 'Vonberg Valve, Inc. | Hydraulic Innovation');
+    $this->assign('title', 'Vonberg');
     $this->assign('keywords', $this->Html->meta(
         'keywords',
         'Vonberg Hydraulic Innovation, Hydraulic valve, cartridge style valves, integrated manifolds, hydraulic valve specialists, cartridge bodies, hydraulic innovation'
@@ -59,6 +59,6 @@
             <img class="img-fluid" src="/img/mastercardvisa.png">
         </div>
 
-        <p class="home-lower-cert pb-md-0 pb-sm-4">ISO 9001:2008 CERTIFIED</p>
+        <p class="home-lower-cert pb-md-0 pb-sm-4"><a href="/img/pdfs/Vonberg_ISO_9001-2015_Cert_2018.pdf" target="_blank">ISO 9001:2015 CERTIFICATE OF REGISTRATION</a></p>
     </div><!-- home-lower-logos end -->
 </div><!-- home-container end -->

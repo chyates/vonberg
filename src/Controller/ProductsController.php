@@ -7,6 +7,9 @@ use Cake\Mailer\Email;
 use Cake\ORM\TableRegistry;
 use Cake\Datasource\ConnectionManager;
 
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+
 class ProductsController extends AppController
 {
 
@@ -79,6 +82,7 @@ class ProductsController extends AppController
                 $data['response'] = "Success: data saved";
                 $data['debug'] = $result;
                 $models = [];
+                $attachments = array();
                 // $this->Flash->success(__('The request has been saved.'));
                 foreach ($this->request->data['model'] as $model) {
                     $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
@@ -86,13 +90,37 @@ class ProductsController extends AppController
                     $cmd_vars .= 'PARTID=' . $this->request->data['part'] . ' ';
                     $cmd_vars .= 'MODELID=' . $model . ' ';
                     exec($cmd_vars . '/home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/doTheStp.js');
+
+                    
+                    $file_to_attach = array(
+                        'name' => 'Model ' . strval($model) . '.stp',
+                        'path' => WWW_ROOT . 'img/parts/' . $this->request->data['part'] . '/' . $model . '.stp'
+                    );
+                    array_push($attachments, $file_to_attach);
                 }
                 exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
 
-                $subject = "STP File Request From: " . $this->request->data['first_name'] . " " . $this->request->data['last_name'];
-                $message = "Please respond to: " . $this->request->data['email'] . " with the following file(s): " . $file_paths;
-                Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
-                Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                // $subject = "STP File Request From: " . $this->request->data['first_name'] . " " . $this->request->data['last_name'];
+                // $message = "Please respond to: " . $this->request->data['email'] . " with the following file(s): " . $file_paths . "partid" . $this->request->data['part'] . "modelid" . $model;
+                // Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                // Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                // Email::deliver('tatan42@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                // mail('tatan42@gmail.com', $subject, $message);
+
+                // Cakephp's email system sucks and PHP's mail() doesn't handle attachments well
+                // So I installed PHPMailer
+                $email = new PHPMailer();
+                $email->SetFrom('do-not-reply@vonberg.com');
+                $email->Subject = "STP File Request for " . $file_paths;
+                $email->Body = $this->request->data['first_name'] . " " . $this->request->data['last_name'] . ", here are the STP files you requested.";
+                // $email->AddAddress('tatan42@gmail.com');
+                $email->AddAddress($this->request->data['email']);
+                $email->AddBCC('mwhite@vonberg.com');
+                foreach ($attachments as $file) {
+                    $email->AddAttachment($file['path'], $file['name']);
+                }
+                $email->Send();
+
                 $redir['reload'] = 'yes';
                 $this->set('r_check', $redir);
                 // return $this->redirect($this->referer());
@@ -104,7 +132,7 @@ class ProductsController extends AppController
                 // $this->Flash->success(__('The request has not been saved.'));
             }
         }
-        $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
+        $part =  $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications' => ['sort' => ['Specifications.spec_name' => 'ASC']], 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
         $this->set('redirect', $redir);
         $this->set('part', $part);
     }

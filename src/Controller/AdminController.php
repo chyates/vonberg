@@ -23,7 +23,6 @@ class AdminController extends AppController
 
     public function beforeFilter(Event $event)
     {
-        // allow all action
         $this->viewBuilder()->setLayout('admin');
         $this->Security->setConfig('unlockedActions', ['editProduct','editProductTwo','editProductThree','editProductFour','editProductFive', 'editApplicationInformation', 'editGeneralInformation', 'editTechnicalDocumentation', 'addResource']);
     }
@@ -63,10 +62,7 @@ class AdminController extends AppController
         $this->loadModel('TextBlocks');
         $this->loadModel('TextBlockBullets');
 
-        // $copy = $this->Parts->newEntity();
         $copy = $this->Parts->get($id, ['contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
-        // $copy->last_updated = date("Y-m-d H:i:s");
-        
         $dupe = $this->Parts->newEntity();
         
         // parts table duplication:
@@ -93,7 +89,6 @@ class AdminController extends AppController
             
             // text block/bullets duplication
             if(!empty($copy->text_blocks)) {
-
                 foreach($copy->text_blocks as $old_block) {
                     $new_tb = $this->TextBlocks->newEntity();
                     $new_tb->partID = $dupe->partID;
@@ -112,10 +107,6 @@ class AdminController extends AppController
                     }
                 }
             }
-            
-            // foreach($copy->text_blocks->text_block_bullets as $old_bullet) {
-
-            // }
             
             // model table + headers/rows duplication
             if(!empty($copy->model_table)) {
@@ -164,7 +155,6 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        // query for main categories:
         $query =  $this->paginate($this->Parts->find('all', ['conditions' => ['Parts.categoryID =' => $id],'contain' => ['Connections', 'Types','Series','Styles', 'Categories'], 'order' => array( 'Parts.expires' => 'DESC', 'Series.name' => 'ASC')]));
 
         $cat = TableRegistry::get('Categories')->find();
@@ -208,7 +198,6 @@ class AdminController extends AppController
     {
         $this->loadModel('Parts');
         if($this->request->is('ajax')) {
-            $this->autoRender = false;
             $part = $this->Parts->get(intval($this->request->query['id']));
 
             if($part->new_list == 0) {
@@ -246,7 +235,10 @@ class AdminController extends AppController
         if($this->request->is('post') || $this->request->is('put'))  {
             // create part:
             $part = $this->Parts->newEntity();
-            $part->styleID = $this->request->data['styleID'];
+
+            if(!empty($this->request->data['styleID'])) {
+                $part->styleID = $this->request->data['styleID'];
+            }
 
             if(!empty($this->request->data['newcat'])) {
                 $new_cat = $this->Categories->newEntity();
@@ -254,7 +246,7 @@ class AdminController extends AppController
                 if($this->Categories->save($new_cat)) {
                     $part->categoryID = $new_cat->categoryID;
                 }
-            } else {
+            } else if(!empty($this->request->data['categoryID'])) {
                 $part->categoryID = $this->request->data['categoryID'];
             }
 
@@ -264,7 +256,7 @@ class AdminController extends AppController
                 if($this->Series->save($new_sr)) {
                     $part->seriesID = $new_sr->seriesID;
                 }
-            } else {
+            } else if(!empty($this->request->data['seriesID'])) {
                 $part->seriesID = $this->request->data['seriesID'];
             }
 
@@ -274,7 +266,7 @@ class AdminController extends AppController
                 if($this->Types->save($new_type)) {
                     $part->typeID = $new_type->typesID;
                 }
-            } else {
+            } else if(!empty($this->request->data['typeID'])) {
                 $part->typeID = $this->request->data['typeID'];
             }
 
@@ -284,12 +276,17 @@ class AdminController extends AppController
                 if($this->Connections->save($new_conn)) {
                     $part->connectionID = $new_conn->connectionID;
                 }
-            } else {
+            } else if(!empty($this->request->data['connectionID'])) {
                 $part->connectionID = $this->request->data['connectionID'];
             }
 
-            $part->expires = intval($this->request->data['expires']);
-            $part->new_list = intval($this->request->data['new_list']);
+            if(!empty($this->request->data['expires'])) {
+                $part->expires = intval($this->request->data['expires']);
+            }
+            
+            if(!empty($this->request->data['new_list'])) {
+                $part->new_list = intval($this->request->data['new_list']);
+            }
 
             // save part:
             if($result = $this->Parts->save($part)) {
@@ -318,12 +315,12 @@ class AdminController extends AppController
         $this->loadModel('Connections');
         $this->loadModel('Categories');
 
-        $part = $this->Parts->get($id);
+        $part = $this->Parts->get($id, ['contain' => ['Series']]);
         $data = [];
         if($this->request->is('post') || $this->request->is('put'))  {
             $data['debug'] = "passing post";
 
-            if($this->request->data['styleID'] != $part->styleID) {
+            if($this->request->data['styleID'] != $part->styleID && !empty($this->request->data['styleID'])) {
                 $part->styleID = $this->request->data['styleID'];
             }
 
@@ -333,7 +330,7 @@ class AdminController extends AppController
                 if($this->Categories->save($new_cat)) {
                     $part->categoryID = $new_cat->categoryID;
                 }
-            } elseif($this->request->data['styleID'] != $part->categoryID) {
+            } else if($this->request->data['categoryID'] != $part->categoryID && !empty($this->request->data['categoryID'])) {
                 $part->categoryID = $this->request->data['categoryID'];
             }
 
@@ -343,7 +340,7 @@ class AdminController extends AppController
                 if($this->Series->save($new_sr)) {
                     $part->seriesID = $new_sr->seriesID;
                 }
-            } elseif($this->request->data != $part->seriesID) {
+            } elseif($this->request->data != $part->seriesID && !empty($this->request->data['seriesID'])) {
                 $part->seriesID = $this->request->data['seriesID'];
             }
 
@@ -353,7 +350,7 @@ class AdminController extends AppController
                 if($this->Types->save($new_type)) {
                     $part->typeID = $new_type->typesID;
                 }
-            } elseif($this->request->data['typeID'] != $part->typeID) {
+            } elseif($this->request->data['typeID'] != $part->typeID && !empty($this->request->data['typeID'])) {
                 $part->typeID = $this->request->data['typeID'];
             }
 
@@ -363,12 +360,17 @@ class AdminController extends AppController
                 if($this->Connections->save($new_conn)) {
                     $part->connectionID = $new_conn->connectionID;
                 }
-            } elseif($this->request->data['connectionID'] != $part->connectionID) {
+            } elseif($this->request->data['connectionID'] != $part->connectionID && !empty($this->request->data['connectionID'])) {
                 $part->connectionID = $this->request->data['connectionID'];
             }
 
-            $part->expires = intval($this->request->data['expires']);
-            $part->new_list = intval($this->request->data['new_list']);
+            if($part->expires != intval($this->request->data['expires'])) {
+                $part->expires = intval($this->request->data['expires']);
+            }
+
+            if($part->new_list != intval($this->request->data['new_list'])) {
+                $part->new_list = intval($this->request->data['new_list']);
+            }
 
             if($result=$this->Parts->save($part)) {
                 $data['response'] = "Success: data saved";
@@ -407,12 +409,11 @@ class AdminController extends AppController
     public function editProductTwo($id)
     {
         $this->viewBuilder()->setLayout('admin');
-        // first call: load appropriate variables--existing text blocks + specs, part data, DB data for form options:
         $this->loadModel('Parts');
         $this->loadModel('Specifications');
         $this->loadModel('TextBlocks');
         $this->loadModel('TextBlockBullets');
-        $part = $this->Parts->get($id);        
+        $part = $this->Parts->get($id, ['contain' => ['Series']]);        
 
         $cat = TableRegistry::get('Categories')->find('list');
         $type = TableRegistry::get('Types')->find('list');
@@ -438,11 +439,12 @@ class AdminController extends AppController
             'TextBlockBullets.order_num',
             'TextBlockBullets.text_block_bulletID']]),
         ));
-            // specifications
+        // specifications
         $specs = $this->Specifications->find('all',array(
             'conditions' => array(
-                'partID' => $id,
+                'partID' => $id
             ),
+            'order' => 'spec_name ASC'
         ));
 
         // if the part doesn't exist, populate all specifications in dropdown
@@ -452,8 +454,6 @@ class AdminController extends AppController
             'order' => 'spec_name ASC'
         ), 'list');
 
-        
-        // second call: user has filled out the form--submit the data
         if ($this->request->is('post') || $this->request->is('put'))  {
             $tb_table = TableRegistry::get('TextBlocks');
             $specs_table = TableRegistry::get('Specifications');
@@ -476,51 +476,69 @@ class AdminController extends AppController
             $specifications = array();
             $spec_names = array();
             $spec_vals = array();
-
             // loop over form data and insert into arrays
             $ops_rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'op_bullet_text') !== false);
             }, 2);
             foreach($ops_rows as $op_name => $name_text) {
-                array_push($operations, $name_text);
+                if(!empty($name_text)) {
+                    array_push($operations, $name_text);
+                }
             }
 
             $feat_rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'feat_bullet_text') !== false);
             }, 2);
             foreach($feat_rows as $feat_name => $name_text) {
-                array_push($features, $name_text);
+                if(!empty($name_text)) {
+                    array_push($features, $name_text);
+                }
             }
 
             $names_rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'spec_name') !== false);
             }, 2);
             foreach($names_rows as $specif_name => $name_text) {
-                array_push($spec_names, $name_text);
+                if($name_text != -1 && !empty($name_text)) {
+                    array_push($spec_names, $name_text);
+                }
             }
-
+            
             $vals_rows = array_filter($this->request->data, function($key) {
                 return (strpos($key, 'spec_value') !== false);
             }, 2);
             foreach($vals_rows as $val_name => $name_text) {
-                array_push($spec_vals, $name_text);
+                if(!empty($name_text)) {
+                    array_push($spec_vals, $name_text);
+                }
+            }
+            
+            $long = count($spec_names);
+            $short = count($spec_vals);
+            if($short > $long) {
+                $short = count($spec_names);
+                $long = count($spec_vals);
+            }
+            for($h = 0; $h < $short; $h++) {
+                if($spec_names[$h] != "" && $spec_vals[$h] != "") {
+                    $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
+                }
             }
 
-            $name_index = 0;
-            for($h = 0; $h < count($spec_names); $h++) {
-                $specifications[$h][$spec_names[$h]] = $spec_vals[$h];
-            }
-
-            // new operations + features objects: 
+            // new operations + features objects:
             $new_ops = $this->TextBlocks->newEntity();
-            $new_ops->partID = $part->partID;
-            $new_ops->order_num = 1;
-            $new_ops->header = "Operation";
+            if(count($operations) != 0) {
+                $new_ops->partID = $part->partID;
+                $new_ops->order_num = 1;
+                $new_ops->header = "Operation";
+            } 
             
             $new_feats = $this->TextBlocks->newEntity();
-            $new_feats->partID = $part->partID;
-            $new_feats->order_num = 2;
-            $new_feats->header = "Features";
+            if(count($features) != 0) {
+                $new_feats->partID = $part->partID;
+                $new_feats->order_num = 2;
+                $new_feats->header = "Features";
+            }
             
             if($this->TextBlocks->save($new_ops) && $this->TextBlocks->save($new_feats)) {
                 // create new text block bullet associations w/ newly created objects
@@ -560,14 +578,16 @@ class AdminController extends AppController
             }
 
             // update part with description and timestamp
-            $part->description = $this->request->data['description'];
+            if(!empty($this->request->data['description'])) {
+                $part->description = $this->request->data['description'];
+            }
             $part->last_updated = date("Y-m-d H:i:s");
+
             if($this->Parts->save($part)){
                 $this->redirect(array('action' => 'editProductThree', $part->partID));
             }
         }
 
-        // set view variables
         $this->set('cat', $cat);
         $this->set(compact('series'));
         $this->set('part', $part);
@@ -584,108 +604,109 @@ class AdminController extends AppController
         // load appropriate variables
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
-        $part = $this->Parts->get($id);
+        $part = $this->Parts->get($id, ['contain' => ['Series']]);
         $this->set('part', $part);
         $this->loadModel('ModelTables');
         $this->loadModel('ModelTableHeaders');
         $this->loadModel('ModelTableRows');
 
         $found = $this->ModelTables->find('all', ['conditions' => ['partID' => $id]])->first();
-
         // handle form submission
         if ($this->request->is('post') || $this->request->is('put'))  {
             // load vars for model tables
             $headerTable = TableRegistry::get('ModelTableHeaders');
             $rowsTable = TableRegistry::get('ModelTableRows');
             $m_tables = TableRegistry::get('ModelTables');
-            if(!empty($found)) {   
-                $headers = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
-                $m_rows = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
-                $head_count = 0;
 
-                foreach(array_filter($this->request->data, function($key) {
-                    $head_up = strpos($key, 'table_header');
-                    return ($head_up === 0);
-                }, 2) as $head_up) {
-                    $head_count++;
-                    $ht_update = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $head_count]])->first();
+            if(!empty($found)) {
+                // $headers = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
+                // $m_rows = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
+                $m_tables->delete($found);
+                $headerTable->deleteAll(['model_tableID' => $found->model_tableID]);
+                $rowsTable->deleteAll(['model_tableID' => $found->model_tableID]);
 
-                    if(!empty($ht_update)) {
-                        $h_update = $headerTable->get($ht_update->model_table_headerID);
-                        if(!empty($h_update)) {
-                            if($h_update->model_table_text != $head_up) {
-                                $h_update->model_table_text = $head_up;
-                            }
-                            $headerTable->save($h_update);
-                        }
-                    } else {
-                        $h_new = $this->ModelTableHeaders->newEntity();
-                        $h_new->model_tableID = $found->model_tableID;
-                        $h_new->model_table_text = $head_up;
-                        $h_new->order_num = $head_count;
-                        $headerTable->save($h_new);
-                    }
-                }
+            //     foreach(array_filter($this->request->data, function($key) {
+            //         $head_up = strpos($key, 'table_header');
+            //         return ($head_up === 0);
+            //     }, 2) as $head_up) {
+            //         $head_count++;
+            //         $ht_update = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $head_count]])->first();
 
-                $row_order = 0;
-                $vert_data = array_filter($this->request->data, function($key) {
-                    return (strpos($key, 'table_row') === 0);
-                }, 2);
+            //         if(!empty($ht_update)) {
+            //             $h_update = $headerTable->get($ht_update->model_table_headerID);
+            //             if(!empty($h_update)) {
+            //                 if($h_update->model_table_text != $head_up) {
+            //                     $h_update->model_table_text = $head_up;
+            //                 }
+            //                 $headerTable->save($h_update);
+            //             }
+            //         } else {
+            //             $h_new = $this->ModelTableHeaders->newEntity();
+            //             $h_new->model_tableID = $found->model_tableID;
+            //             $h_new->model_table_text = $head_up;
+            //             $h_new->order_num = $head_count;
+            //             $headerTable->save($h_new);
+            //         }
+            //     }
 
-                $horiz_data = array();
-                foreach ($vert_data as $key => $val) {
-                    $horiz_data[substr($key, 10)] = $val;
-                }
+            //     $row_order = 0;
+            //     $vert_data = array_filter($this->request->data, function($key) {
+            //         return (strpos($key, 'table_row') === 0);
+            //     }, 2);
 
-                uksort($horiz_data, function($a, $b) {
-                    $a_x = strpos($a, '-');
-                    $a_row = intval(substr($a, 0, $a_x));
-                    $a_col = intval(substr($a, $a_x + 1));
+            //     $horiz_data = array();
+            //     foreach ($vert_data as $key => $val) {
+            //         $horiz_data[substr($key, 10)] = $val;
+            //     }
 
-                    $b_x = strpos($b, '-');
-                    $b_row = intval(substr($b, 0, $b_x));
-                    $b_col = intval(substr($b, $b_x + 1));
+            //     uksort($horiz_data, function($a, $b) {
+            //         $a_x = strpos($a, '-');
+            //         $a_row = intval(substr($a, 0, $a_x));
+            //         $a_col = intval(substr($a, $a_x + 1));
 
-                    $ret_val = 0;
-                    if ($a_row < $b_row) {$ret_val = -1;}
-                    else if ($b_row < $a_row) {$ret_val = 1;}
-                    else if ($a_col < $b_col) {$ret_val = -1;}
-                    else if ($b_col < $a_col) {$ret_val = 1;}
-                    else {$ret_val = 0;}
-                    return $ret_val;
-                });
+            //         $b_x = strpos($b, '-');
+            //         $b_row = intval(substr($b, 0, $b_x));
+            //         $b_col = intval(substr($b, $b_x + 1));
+
+            //         $ret_val = 0;
+            //         if ($a_row < $b_row) {$ret_val = -1;}
+            //         else if ($b_row < $a_row) {$ret_val = 1;}
+            //         else if ($a_col < $b_col) {$ret_val = -1;}
+            //         else if ($b_col < $a_col) {$ret_val = 1;}
+            //         else {$ret_val = 0;}
+            //         return $ret_val;
+            //     });
                 
-                foreach ($horiz_data as $cell_up) {
-                    $row_order++;
-                    $rt_update = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $row_order]])->first();
-                    if(!empty($rt_update)) {
-                        $r_update = $rowsTable->get($rt_update->model_table_rowID);
-                        if(!empty($r_update)) {
-                            if($r_update->model_table_row_text != $cell_up) {
-                                $r_update->model_table_row_text = $cell_up;
-                            }
-                            if($this->ModelTableRows->save($r_update)) {
-                                // $this->redirect(array('action' => 'editProductFour', $part->partID));
-                            }
-                        }
-                    } else {
-                        $r_new = $this->ModelTableRows->newEntity();
-                        $r_new->model_tableID = $found->model_tableID;
-                        $r_new->model_table_row_text = $cell_up;
-                        $r_new->order_num = $row_order;
-                        if ($this->ModelTableRows->save($r_new)) {
-                            // $this->redirect(array('action' => 'editProductFour', $part->partID));
-                        } else {
-                            // $this->Flash->error(__('Error saving model table rows'));
-                            $debug = debug($new);
-                        }
-                    }
-                }
-                $this->redirect(array('action' => 'editProductFour', $part->partID));
-            } else {
+            //     foreach ($horiz_data as $cell_up) {
+            //         $row_order++;
+            //         $rt_update = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $row_order]])->first();
+            //         if(!empty($rt_update)) {
+            //             $r_update = $rowsTable->get($rt_update->model_table_rowID);
+            //             if(!empty($r_update)) {
+            //                 if($r_update->model_table_row_text != $cell_up) {
+            //                     $r_update->model_table_row_text = $cell_up;
+            //                 }
+            //                 if($this->ModelTableRows->save($r_update)) {
+            //                     // $this->redirect(array('action' => 'editProductFour', $part->partID));
+            //                 }
+            //             }
+            //         } else {
+            //             $r_new = $this->ModelTableRows->newEntity();
+            //             $r_new->model_tableID = $found->model_tableID;
+            //             $r_new->model_table_row_text = $cell_up;
+            //             $r_new->order_num = $row_order;
+
+            //             if ($this->ModelTableRows->save($r_new)) {
+            //                 // $this->redirect(array('action' => 'editProductFour', $part->partID));
+            //             }
+            //         }
+            //         $this->redirect(array('action' => 'editProductFour', $part->partID));
+            //     }
+            // } else {
                 $table = $this->ModelTables->newEntity();
                 $table->partID = $part->partID;
                 $table->order_num = 1;
+
                 if($this->ModelTables->save($table)) {                   
                     $headerCounter = 0;
                     foreach (array_filter($this->request->data, function($key) {
@@ -740,11 +761,11 @@ class AdminController extends AppController
                         $new->order_num = $order_num;
                         if ($this->ModelTableRows->save($new)) {
                             $model_table_header_id = $new->model_table_headerID;
-                            $this->redirect(array('action' => 'editProductFour', $part->partID));
                         } else {
                             // $this->Flash->error(__('Error saving model table rows'));
                             $debug = debug($new);
                         }
+                        $this->redirect(array('action' => 'editProductFour', $part->partID));
                     }
                 } else {
                     // $this->Flash->error(__('Error saving model table'));
@@ -782,33 +803,33 @@ class AdminController extends AppController
         if ($this->request->is('post') || $this->request->is('put')) {
             if(!empty($this->request->data['thumbnail']['name']))
             {
+                $file = $this->request->data['thumbnail'];
+                $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
+                $arr_ext = array('jpg', 'jpeg', 'gif');
 
-                $file = $this->request->data['thumbnail']; //put the data into a var for easy use
-                $ext = substr(strtolower(strrchr($file['name'], '.')), 1); //get the extension
-                $arr_ext = array('jpg', 'jpeg', 'gif'); //set allowed extensions
-
-                //only process if the extension is valid
                 if(in_array($ext, $arr_ext))
                 {
-                    //do the actual uploading of the file. First arg is the tmp name, second arg is
-                    //where we are putting it
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/thumbnail.' . $ext);
+                    // James: I'm forcing all files to be named .jpg even when they aren't jpgs so we can delete them more easily
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/thumbnail.jpg');
                     // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
                 }
+            } elseif (isset($this->request->data['kill-thumbnail']) && $this->request->data['kill-thumbnail']) {
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/thumbnail.jpg');
             }
 
             if(!empty($this->request->data['product_image']['name']))
             {
-                // echo $this->request->data['product_image'];
                 $file = $this->request->data['product_image']; 
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
                 $arr_ext = array('jpg', 'jpeg', 'gif'); 
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/product_image.' . $ext);
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/product_image.jpg');
                     // $this->Flash->success(__('The file PRODUCT IMAGE was saved.', h($part->partid)));
                 }
+            } elseif (isset($this->request->data['kill-product_image']) && $this->request->data['kill-product_image']) {
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/product_image.jpg');
             }
 
             if(!empty($this->request->data['schematic']['name']))
@@ -819,9 +840,11 @@ class AdminController extends AppController
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.' . $ext);
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/schematic_drawing.jpg');
                     // $this->Flash->success(__('The file SCHEMATIC_DRAWING.JPG was saved.', h($part->partid)));
                 }
+            } elseif (isset($this->request->data['kill-schematic']) && $this->request->data['kill-schematic']) {
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/schematic_drawing.jpg');
             }
 
             if(!empty($this->request->data['ordering']['name']))
@@ -832,9 +855,11 @@ class AdminController extends AppController
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.' . $ext);
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/ordering_information.jpg');
                     // $this->Flash->success(__('The file ORDERING_INFORMATION.JPG was saved.', h($part->partid)));
                 }
+            } elseif (isset($this->request->data['kill-ordering']) && $this->request->data['kill-ordering']) {
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/ordering_information.jpg');
             }
 
             if(!empty($this->request->data['performance']['name']))
@@ -845,9 +870,11 @@ class AdminController extends AppController
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.' . $ext);
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/typical_performance.jpg');
                     // $this->Flash->success(__('The file TYPICAL_PERFORMANCE.JPG was saved.', h($part->partid)));
                 }
+            } elseif (isset($this->request->data['kill-performance']) && $this->request->data['kill-performance']) {
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/typical_performance.jpg');
             }
 
             if(!empty($this->request->data['graph']['name']))
@@ -858,9 +885,11 @@ class AdminController extends AppController
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/performance_graph.' . $ext);
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/performance_graph.jpg');
                     // $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
                 }
+            } elseif (isset($this->request->data['kill-graph']) && $this->request->data['kill-graph']) {
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/performance_graph.jpg');
             }
 
             $this->redirect(array('action' => 'editProductFive',$part->partID));
@@ -891,14 +920,11 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
+        $count = 0;
 
-        $count=0;
         if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
             mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
         }
-        $part = $this->Parts->get($id, [
-            'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
-        ]);
 
         if ($this->request->is('post') || $this->request->is('put')) {
             $files = $this->request->data['stp_files'];
@@ -915,6 +941,7 @@ class AdminController extends AppController
 
             $this->redirect(array('action' => 'index'));
         }
+
         $this->loadModel('ModelTables');
         $this->loadModel('Parts');
         $table = $this->ModelTables->find('all',array(
@@ -923,8 +950,10 @@ class AdminController extends AppController
             ),
             'contain' => array('ModelTableHeaders', 'ModelTableRows'),
         ))->first();
-        $part = $this->Parts->get($id);
 
+        $part = $this->Parts->get($id, [
+            'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
+        ]);
         $this->set('table', $table);
         $this->set('part', $part);
     }
@@ -1230,7 +1259,6 @@ class AdminController extends AppController
     {
         $this->viewBuilder()->setLayout('admin');
 
-        // load variables to generate form options:
         $cat = TableRegistry::get('Categories')->find('list')->orderAsc('name');
         $type = TableRegistry::get('Types')->find('list')->orderAsc('name');
         $style = TableRegistry::get('Styles')->find('list')->orderAsc('name');
@@ -1244,12 +1272,6 @@ class AdminController extends AppController
             'order' => 'spec_name ASC'
         ), 'list');
 
-        // handle submit
-        if($this->request->is('post') || $this->request->is('put'))  {
-            // $this->redirect(array('controller' => 'admin', 'action' => 'generatePdf2'));
-        }
-
-        // set variables for form data:
         $this->set('cat', $cat);
         $this->set('conn', $conn);
         $this->set(compact('series'));
@@ -1264,11 +1286,10 @@ class AdminController extends AppController
         $this->loadModel('ModelPrices');
         $series = TableRegistry::get('Series')->find('all');
         $pricing = TableRegistry::get('ModelPrices')->find('all')->orderAsc('model_text');
-        $query =  $this->paginate($this->ModelPrices->find('all', ['order' => array('model_text' => 'ASC')]));
+        $query =  $this->ModelPrices->find('all', ['order' => array('model_text' => 'ASC')]);
 
         if($this->request->is('post') || $this->request->is('put'))  {
             $id = intval($this->request->data['id']);
-            // echo $id;
             $model_text = $this->request->data['model_text'];
             $unit_price = $this->request->data['unit_price'];
 
@@ -1337,9 +1358,8 @@ class AdminController extends AppController
     public function priceExport()
     {
         $this->loadModel('ModelPrices');
-        $data = $this->ModelPrices->find('all')->orderAsc('model_priceID')->toArray();
+        $data = $this->ModelPrices->find('all', array('fields' => array('ModelPrices.model_text', 'ModelPrices.description', 'ModelPrices.unit_price')))->orderAsc('model_priceID')->toArray();
         $_serialize = 'data';
-        // $_header = ['Model Pricing Record ID', 'Description', 'Unit Price', 'Price Class'];
         $this->response->download('model_prices.csv');
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize'));
@@ -1350,7 +1370,7 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $stp_users = TableRegistry::get('StpUsers')->find('all')->orderDesc('last_login');
         $stp_users->contain(['StpFile'=>['Parts','ModelTableRows']]);
-        $this->set('stp_users', $this->paginate($stp_users));
+        $this->set('stp_users', $stp_users);
     }
 
     public function stpExport()
@@ -1362,7 +1382,7 @@ class AdminController extends AppController
         $res = $stmt->fetchAll();
 
         $_serialize = 'res';
-        $_header = ['Email', 'First Name', 'Last Name', 'Company', 'Last Login', 'Files Acquired'];
+        $_header = ['Email', 'First Name', 'Last Name', 'Company', 'Last Login', 'Files Requested'];
         $this->response->download('stp_downloads.csv'); // <= setting the file name
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('res', '_serialize', '_header'));

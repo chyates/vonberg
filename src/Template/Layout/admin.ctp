@@ -42,158 +42,276 @@ $cakeDescription = 'Vonberg Dev Site';
 
 <script>
 jQuery(document).ready(function($) {
-
     $("#cms-prod-cat-main").find('input[name="new_list"]').change(function(){
-        var hidden = $(this).prev('input[type=hidden]');
+        var hidden = $(this).prev();
+        var check = $("#cms-prod-cat-main").find(this);
         var id = $(hidden).val();
         var label;
-        $.get('/admin/checknew?id='+id, function(data) {
-            if($(hidden).siblings('label.form-check-label').length > 0) {
-                label = $(hidden).siblings('label.form-check-label');
-                label.remove();
-            } else {
-                label = "<label class='form-check-label'>30 days</label>";
-                $(hidden).parents('div.form-check.form-check-inline').append(label);
-            }
+        if($(hidden).siblings('label.form-check-label').length > 0) {
+            label = $(hidden).siblings('label.form-check-label');
+            label.remove();
+        } else {
+            label = "<label class='form-check-label'>30 days</label>";
+            $(check).parent().append(label);
         }
-        );
+        $.get('/admin/checknew?id='+id, function(data) {
+
+        });
     })
 
 // fxn to insert input fields upon add bullet click:
-    var colCount = 0;
-    var rowCount = 0;
-    if(!$(".creation-row #2.data-column").length) {
-        colCount = 1;
-    } else {
-        $(".creation-row .data-column").each(function(index) {
-            colCount++
-        });
-    }
+    $("a.add-bullet.plus").click(function(e){
+        e.preventDefault()
+        var tableSlide = $(".table-create-box").find(this)
+        var featSlide = $(".form-slide .w-bullet").find(this)
 
-    $(".creation-row .data-column").find("input[id*='-1']").each(function(index) {
-        rowCount++;
-    });
-
-    $(".add-bullet").click(function(e) {
-        e.preventDefault();
-
-        if($(this).hasClass('del')) {
-            if($(this).siblings('div.input.text').length > 0) {
-                $(this).siblings('div.input.text').find('input[name*="bullet_text"]').last().remove();
-            } else if ($(this).siblings('div.row.specifications').length > 0) {
-                var row = $(this).siblings('div.row.specifications');
-                row.find('select[name*="spec_name"]').last().remove();
-                row.find('input[name*="spec_value"]').last().remove();
+        if(featSlide.length > 0) {
+            let parent = $(this).parent()
+            let cl = $(parent).attr('class')
+            let last
+            let text
+            let id
+            let newFirst
+            let newText
+            let newSelect
+            let divRow
+            
+            if(cl.indexOf('operation') != -1) {
+                divRow = "<div class='input text'>"
+                if(!$(parent).find("input[name='op_bullet_text_1']").length ) {
+                    newFirst = "<input type='text' name='op_bullet_text_1' class='form-control' placeholder='Enter bullet copy...' id='1' />"
+                    divRow += newFirst
+                } else {
+                    last = $(parent).find("input[name*='op_bullet_text']").last()
+                    id = parseInt($(last).attr('id'))
+                    newText = "<input type='text' name='op_bullet_text_"+(id+1)+"' class='form-control' placeholder='Enter bullet copy...' id='"+(id+1)+"' />"
+                    divRow += (newText + "</div>")
+                }
+                $(parent).find("a.add-bullet.plus").before(divRow)
+            } if(cl.indexOf('features') != -1) {
+                divRow = "<div class='input text'>"
+                if(!$(parent).find("input[name='feat_bullet_text_1']").length ) {
+                    newFirst = "<input type='text' name='feat_bullet_text_1' class='form-control' placeholder='Enter bullet copy...' id='1' />"
+                    divRow += newFirst
+                } else {
+                    last = $(parent).find("input[name*='feat_bullet_text']").last()
+                    id = parseInt($(last).attr('id'))
+                    newText = "<input type='text' name='feat_bullet_text_"+(id+1)+"' class='form-control' placeholder='Enter bullet copy...' id='"+(id+1)+"' />"
+                    divRow += (newText + "</div>")
+                }
+                $(parent).find("a.add-bullet.plus").before(divRow)
+            } if(cl.indexOf('specifications') != -1) {
+                if(!$(parent).find('select[name="spec_name_1"]').length) {
+                    let hidden = $("#cms-edit-prod-main").find('select[name="default-ops"]').clone()
+                    newFirst = "<select name='spec_name_1' class='accept form-control' id='1'>"
+                    newText = "<input type='text' name='spec_value_1' class='form-control' placeholder='Enter bullet copy...' id='1' />"
+                    let options = $(hidden).find('option')
+                    let vals = []
+                    $(options).each(function(index){
+                        vals.push($(this).attr('value'))
+                    })
+                    let custom = "<option value='-1'>Add new specification</option>"
+                    newFirst += custom
+                    for(x = 0; x < vals.length; x++) {
+                        let newOpt
+                        if(x == 0) {
+                            newOpt = "<option selected value='" + vals[x] + "'>" + vals[x] + "</option>"
+                        } else {
+                            newOpt = "<option value='" + vals[x] + "'>" + vals[x] + "</option>"
+                        }
+                        newFirst += newOpt
+                    }
+                    newFirst += "</select>"
+                    divRow = "<div class='row'><div class='col-sm-6 spec-left'>"
+                    divRow += newFirst + "</div><div class='col-sm-6 spec-right'><div class='input text'>" + newText + "</div></div></div>"
+                    $(parent).find('a.add-bullet.plus').before(divRow)
+                } else {
+                    let clone = $(parent).find("select[name*='spec_name']").last()
+                    last = $(parent).find(".row").last().find('.spec-left.col-sm-6').last().find(":last-child")
+                    text = $(parent).find("input[name*='spec_value']").last()
+                    id = parseInt($(clone).attr('id'))
+                    newSelect = $(clone).clone()
+                    if($(newSelect).hasClass('hidden')) {
+                        $(newSelect).toggleClass('hidden')
+                    }
+                    newText = $(text).clone()
+                    $(newSelect).attr('id', (id+1))
+                        .attr('name', 'spec_name_'+(id+1))
+                        .attr('value', "")
+                    $(newText).attr('id', (id+1))
+                        .attr('name', 'spec_value_'+(id+1))
+                        .attr('value', "")
+                        .attr('placeholder', 'Enter bullet copy')
+                    $(last).after(newSelect)
+                    $(text).after(newText)
+                }
+            } 
+        } else if(tableSlide.length > 0) {
+            let colCount = 0;
+            let rowCount = 0;
+            if(!$(".creation-row #2.data-column").length) {
+                colCount = 1;
+            } else {
+                $(".creation-row .data-column").each(function(index) {
+                    colCount++
+                })
             }
-        } else if($(this).hasClass('plus')) {
-            var tableSlide = $(".table-create-box").find(this);
-            var featSlide = $(".form-slide .w-bullet").find(this);
 
-            // logic for model table slide
-            if(tableSlide.length > 0) {
-                // input name/id structure: table_(header/row)_rowCount-colCount
-                if( $(this).hasClass('model-column') ){
-                    colCount += 1;
-                    var existingRow = $(".creation-row");
-                    var newColDiv = "<div class='data-column' id='"+colCount+"'>"
-                    var colHead;
+            $(".creation-row .data-column").find("input[id$='-1']").each(function(index) {
+                rowCount++;
+            });
 
-                    for(var j = 0; j < rowCount-1; j++) {
-                        var newCol = "<input type='text' class='model-row-input form-control' name='table_row_"+(j+2)+"-"+colCount+"' placeholder='Enter value' id='"+(j+2)+"-"+colCount+"'/>";
-                        if(j < 1) {
-                            colHead = "<input type='text' class='model-header-input form-control' name='table_header_"+(j+1)+"-"+colCount+"' placeholder='Enter table header' id='"+(j+1)+"-"+colCount+"'/>";
-                            newColDiv += colHead;
-                            newColDiv += newCol;
-                        } else {
-                            newColDiv += newCol;
-                        }
-                    }
+            if( $(this).hasClass('model-column') ){
+                colCount += 1;
+                var existingRow = $(".creation-row");
+                var newColDiv = "<div class='data-column' id='"+colCount+"'>"
+                var colHead;
 
-                    newColDiv += "</div>";
-                    existingRow.find('.data-column').last().after(newColDiv);
-
-                    var currentWidth = parseInt($("#three .buffer-div .table-create-box").css("width")) +200;
-                    if(colCount > 8) {
-                        $("#three .buffer-div .table-create-box").css("width", currentWidth);
-                    }
-                } else if( $(this).hasClass('model-row') ){
-                    rowCount += 1;
-                    var newRow;
-                    
-                    for(var k = 0; k < colCount; k++) {
-                        if(k == 0) {
-                            newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter model'/>";
-                        } else {
-                            newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name ='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter value'/>";
-                        }
-                        if(k < colCount) {
-                            $("div#"+(k+1)+".data-column").append(newRow);
-                        }
+                for(var j = 0; j < rowCount; j++) {
+                    var newCol = "<input type='text' class='model-row-input form-control' name='table_row_"+(j+2)+"-"+colCount+"' placeholder='Enter value' id='"+(j+2)+"-"+colCount+"'/>";
+                    if(j < 1) {
+                        newColDiv += "<div class='input text'>"
+                        colHead = "<input type='text' class='model-header-input form-control' name='table_header_"+(j+1)+"-"+colCount+"' placeholder='Enter table header' id='"+(j+1)+"-"+colCount+"'/>";
+                        newColDiv += colHead;
+                        newColDiv += "</div><div class='input text'>"
+                        newColDiv += newCol;
+                        newColDiv += "</div>"
+                    } else if(j < rowCount-1){
+                        newColDiv += "<div class='input text'>"
+                        newColDiv += newCol;
+                        newColDiv += "</div>"
                     }
                 }
 
-            // logic for ops/feats/specs slide
-            } else if(featSlide.length > 0) {
-                var parentDiv = $(this).parents('.w-bullet');
-                var newBullet;
-                var opID = parseInt(parentDiv.find('input[name="op_bullet_text_1"]').attr('id'));
-                var secOp = parseInt(opID) + 1;
-                var featID = parseInt(parentDiv.find('input[name="feat_bullet_text_1"]').attr('id'));
-                var secFeat = parseInt(featID) + 1;
+                newColDiv += "</div>";
+                existingRow.find('.data-column').last().after(newColDiv);
 
-                if($(this).prev().hasClass('input text')) {
-                    // ops + feats bullets
-                    if(parentDiv.hasClass('operation')) {
-                        if(!parentDiv.find('input[name="op_bullet_text_2"]').length) {
-                            newBullet = "<input type='text' name='op_bullet_text_"+secOp+"' class='form-control' placeholder='Enter bullet copy...' id='"+secOp+"' />";
-                            $(parentDiv).find('input[name="op_bullet_text_1"]').after(newBullet);
-                            extraID = secOp + 1;
-                        } else {
-                            extraID = parseInt(parentDiv.find('input[type=text]').last().attr('id'))+1;
-                            newBullet = "<input type='text' name='op_bullet_text_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"' />";
-                            $(parentDiv).find('input[type=text]').last().after(newBullet);
-                        }
-                    } else if(parentDiv.hasClass('features')) {
-                        if(!parentDiv.find('input[name="feat_bullet_text_2"]').length) {
-                            newBullet = "<input type='text' name='feat_bullet_text_"+secFeat+"' class='form-control' placeholder='Enter bullet copy...' id='"+secFeat+"' />";
-                            $(parentDiv).find('input[name="feat_bullet_text_1"]').after(newBullet);
-                            extraID = secFeat + 1;
-                        } else {
-                            extraID = parseInt(parentDiv.find('input[type=text]').last().attr('id'))+1;
-                            newBullet = "<input type='text' name='feat_bullet_text_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"' />";
-                            $(parentDiv).find('input[type=text]').last().after(newBullet);
-                        }
-                    }
-                }  else if ($(this).prev().hasClass('specifications')) {
-                    // specs bullets
-                    var firstSelect = parentDiv.find('select[name="spec_name_1"]');
-                    var lastSelect = parentDiv.find('div.specifications select').last();
-                    var firstPair = parentDiv.find('input[name="spec_value_1"]');
-                    var lastPair = parentDiv.find('.specifications').find('input[type=text]').last();
-                    var specID = parseInt(parentDiv.find('select[name="spec_name_1"]').attr('id'));
-                    var sID = parseInt(specID) + 1;
-                    var newSelect = firstSelect.clone();
-                    newSelect.val(lastSelect.find('option:first').val());
-                    var newPair;
-                    
-                    if($(this).prev().find("#1").length) {
-                        newSelect.attr('id', sID).attr('name', 'spec_name_'+sID);
-                        firstSelect.after(newSelect);
-                        var firstPair = parentDiv.find('.specifications').find('input[name="spec_value_1"]');
-                        newPair = "<input type='text' name='spec_value_"+sID+"' class='form-control' placeholder='Enter bullet copy...' id='"+sID+"'/>";
-                        firstPair.after(newPair);
-                        extraID = sID + 1;
+                var currentWidth = parseInt($("#three .buffer-div .table-create-box").css("width")) +200;
+                if(colCount > 8) {
+                    $("#three .buffer-div .table-create-box").css("width", currentWidth);
+                }
+            } else if( $(this).hasClass('model-row') ){
+                rowCount += 1;
+                var newRow;
+                var rowDiv;
+                
+                for(var k = 0; k < colCount; k++) {
+                    rowDiv = "<div class='input text'>"
+                    if(k == 0) {
+                        newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter model'/>";
+                        newRow += "</div>"
+                        rowDiv += newRow
                     } else {
-                        extraID = parseInt(lastSelect.attr('id'))+1;
-                        $(newSelect).attr('id', extraID).attr('name', "spec_name_"+extraID);
-                        lastSelect.after(newSelect);
-                        newPair = "<input type='text' name='spec_value_"+extraID+"' class='form-control' placeholder='Enter bullet copy...' id='"+extraID+"'/>";
-                        lastPair.after(newPair);
-                    }                
-                }          
+                        newRow = "<input type='text' class='model-row-input form-control' id='"+rowCount+"-"+(k+1)+"' name ='table_row_"+rowCount+"-"+(k+1)+"' placeholder='Enter value'/>";
+                        newRow += "</div>"
+                        rowDiv += newRow
+                    }
+                    if(k < colCount) {
+                        $("div#"+(k+1)+".data-column").append(rowDiv);
+                    }
+                }
             }
         }
     });
+
+    $("a.add-bullet.del").click(function(e){
+        e.preventDefault()
+        let row
+        let lastRow
+        let leftLast
+        let rightLast
+        let extraSel
+        if($(this).siblings('div.input.text').length > 0) {
+            lastRow = $(this).parent().find('div.input.text').last()
+            $(lastRow).remove()  
+        } if ($(this).parent('div.row.specifications').length > 0) {
+            lastRow = $(this).parent().find('.row').last()
+            row = $(this).parent().find('div.row').last().find('.col-sm-6.spec-left')
+            if($(row).children().length > 1) {
+                leftLast = $(row).children().last()
+                rightLast = $(this).parent().find('div.row').find('.col-sm-6.spec-right').children().find('input[type=text]').last()
+                if($(leftLast).prev().is('select.accept.form-control.hidden')) {
+                    extraSel = $(leftLast).prev()
+                    $(extraSel).remove()
+                    if($(row).children().length < 1) {
+                        $(row).parent().remove()
+                    }
+                }
+                $(leftLast).remove()
+                $(rightLast).remove()
+            } else {
+                lastRow = $(this).parent().find('div.row').last()
+                lastRow.remove()
+            }
+        }
+    })
+
+    $("#three .creation-row .data-column div.input.text").find('input').keyup(function(e){
+        if(e.keyCode == 8) {
+            $(this).val("")
+        }
+    })
+
+    // to delete empty rows/columns in model table 
+    let colCheck
+    let rowCheck
+    let ecCount = 0
+    let children = 0
+    let rowArr = []
+    let colArr = []
+    $(".empty-text p.empty-err a.add-bullet.del").click(function(e){
+        let erCount = 0
+        let rowCount = $("#three .creation-row .data-column").find("input[id$='-1']")
+        let colCount = parseInt($("#three .creation-row .data-column").last().attr('id'))
+        colCheck = $("#three .creation-row .data-column")
+
+        $(colCheck).each(function(index){
+            for(var r = 0; r < rowCount.length; r++) {
+                rowCheck = $(this).find("div.input.text").eq(r).find("input")
+                if($(rowCheck).val() == "") {
+                    erCount++
+                }
+                if(erCount == colCount) {
+                    let foundID = $(rowCheck).attr('id').substring(0, $(rowCheck).attr('id').indexOf("-"))
+                    rowArr.push(foundID)
+                    erCount = 0;
+                    console.log("Row array: ", rowArr)
+                }
+            }
+            // console.log(rowArr)
+
+            $(this).children().children().each(function(index){
+                if($(this).val() == "") {
+                    ecCount++
+                }
+            })
+
+            if(ecCount == $(this).children().length && ecCount != 0) {
+                let foundID = $(this).attr('id')
+                colArr.push(foundID)
+            }
+            ecCount = 0
+        })
+
+        if(colArr.length > 0) {
+            for(var c = 0; c < colArr.length; c++) {
+                let colDel = $("#three .creation-row #" + colArr[c] + ".data-column")
+                $(colDel).remove()
+            }
+            colArr = []
+        }
+
+        if(rowArr.length > 0) {
+            for(var f = 0; f < rowArr.length; f++) {
+                let collection = $(colCheck).find('input[id^="'+rowArr[f]+'"]')
+                $(collection).each(function(index){
+                    $(this).parent().remove()
+                })
+            }
+            rowArr = []
+        }
+
+    })
 
     // update input value on keypress, model table slide edit product form:
     $("#three .creation-row .data-column").find("input[type=text]").on("keypress", function() {
@@ -263,10 +381,9 @@ jQuery(document).ready(function($) {
                 $(this).parents('.form-group').siblings('button.update-button').show();
             }
         }
-        
         $(this).parents('label.fileContainer').toggleClass('dark light');
     })
-});
+})
 </script>
 
 </body>

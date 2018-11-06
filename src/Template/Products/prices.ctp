@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'Pricing | Vonberg');
+?>
+
 <div id="prices-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <div class="row no-gutters justify-content-lg-center justify-content-sm-between">
         <div class="col-lg-4 col-sm-6 mr-lg-3 px-lg-4">

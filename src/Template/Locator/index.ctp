@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'Find a Distributor | Vonberg');
+?>
+
 <div id="find-distributor-main" class="inner-main col-lg-10 col-12 mx-auto p-sm-5 p-3">
     <div class="row">
         <div class="col-md-5 col-sm-10 mx-sm-auto left-search">
@@ -212,15 +216,18 @@
                     } else {
                         // center map on user's current location
                         if (navigator.geolocation) {
-                        navigator.geolocation.getCurrentPosition(function(position) {
-                            var pos = {
-                                lat: position.coords.latitude,
-                                lng: position.coords.longitude
-                            };
-                            map.setCenter(pos);
-                        }, function() {
-                            handleLocationError(true, infoWindow, map.getCenter());
-                        });
+                            navigator.geolocation.getCurrentPosition(function(position) {
+                                var pos = {
+                                    lat: position.coords.latitude,
+                                    lng: position.coords.longitude
+                                };
+                                map.setCenter(pos);
+                            }, function() {
+                                handleLocationError(true, infoWindow, map.getCenter());
+                            });
+                            if (document.getElementById('geocomplete').value != '') {
+                                document.querySelector('.search-block > div').innerText = 'No results found.';
+                            }
                         } else {
                             // Browser doesn't support Geolocation
                             handleLocationError(false, infoWindow, map.getCenter());

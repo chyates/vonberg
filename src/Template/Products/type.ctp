@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', $types->name . ' | Vonberg');
+?>
+
 <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <div id="subcat-main-container" class="inner-main col-lg-10 col-12 mx-auto p-lg-5 p-3">
     <h1 class="page-title"><?= h($types->name) ?></h1>

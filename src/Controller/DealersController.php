@@ -68,10 +68,11 @@ class DealersController extends AppController
         $this->viewBuilder()->setLayout('admin');
 
         $uploadData = '';
-        if ($this->request->is('post')) {
+        if ($this->request->is('post') || $this->request->is('put')) {
             if($_FILES['upload']) {
-                $filename = explode('.', $_FILES['upload']['name']);
-                if($filename[1] == 'csv') {
+                // $filename = explode('.', $_FILES['upload']['name']);
+                $filename = substr($_FILES['upload']['name'], -4);
+                if($filename == '.csv') {
                     $dists = TableRegistry::get('Dealers');
                     $d_old = $dists->find('all')->toArray();
                     foreach($d_old as $d) {
@@ -179,7 +180,7 @@ class DealersController extends AppController
         $data = $this->Dealers->find()->all();
         $_serialize = 'data';
         // $_headers = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
-        $_extract = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'price_class'];
+        $_extract = ['name', 'address1', 'address2', 'city', 'country', 'state', 'zip', 'telephone', 'fax', 'lat', 'lng', 'price_class'];
         $this->response->download('distributors.csv');
         $this->viewBuilder()->className('CsvView.Csv');
         $this->set(compact('data', '_serialize', '_extract'));

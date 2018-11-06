@@ -1,3 +1,7 @@
+<?php 
+    $this->assign('title', 'Contact | Vonberg');
+?>
+
 <div id="contact-main-container" class="inner-main col-lg-8 col-12 mx-auto p-md-5 p-3">
     <h1 id="m-header" class="page-header">Contact Us</h1>
     <div class="row no-gutters px-md-5">
@@ -75,7 +79,7 @@
                                     'text' => 'Manufacturer', 
                                     'class' => 'form-check-label'
                                 ], 
-                                'value' => 'Manufacturer',
+                                'value' => 'manufacturer',
                                 'type' => 'checkbox', 
                                 'class' => 'form-check-input',
                                 'hiddenField' => false
@@ -91,7 +95,7 @@
                                     'text' => 'Distributor', 
                                     'class' => 'form-check-label'
                                 ], 
-                                'value' => 'Distributor',
+                                'value' => 'distributor',
                                 'type' => 'checkbox', 
                                 'class' => 'form-check-input',
                                 'hiddenField' => false
@@ -107,7 +111,7 @@
                                     'text' => 'End User', 
                                     'class' => 'form-check-label'
                                 ], 
-                                'value' => 'End User',
+                                'value' => 'enduser',
                                 'type' => 'checkbox', 
                                 'class' => 'form-check-input',
                                 'hiddenField' => false
@@ -149,6 +153,9 @@
                 
                <?php 
                     $this->Form->unlockField('g-recaptcha-response');
+                    $this->Form->unlockField('manufacturer');
+                    $this->Form->unlockField('distributor');
+                    $this->Form->unlockField('enduser');
                     echo $this->Form->end(); 
                ?><!-- Contact form end -->
         </div><!-- .contact-right end -->
@@ -167,32 +174,56 @@
         // Loop over them and prevent submission
         var validation = Array.prototype.filter.call(forms, function(form) {
             form.addEventListener('submit', function(event) {
+                // console.log("STOP RIGHT THERE MISTER")
+                // event.preventDefault()
+                // event.stopPropagation()
+                // console.dir(form)
                 console.log("Hit form validation function");
                 if (form.checkValidity() === false) {
                     event.preventDefault();
                     event.stopPropagation();
                     console.log("Form is invalid, check");
-                    for(var i = 0; i < checkboxes.length; i++) {
-                        var divs = checkboxes[i].children;
-                        for(var j = 0; j < divs.length; j++) {
-                            var labels = divs[j].children;
-                            for(var k = 0; k < labels.length; k++) {
-                                var inputs = labels[k].children;
-                                for(var m = 0; m < inputs.length; m++) {
-                                    if(inputs[m].checked) {
-                                        checkStatus.push(inputs[m].checked);
-                                    }
+                }
+                for(var i = 0; i < checkboxes.length; i++) {
+                    var divs = checkboxes[i].children;
+                    for(var j = 0; j < divs.length; j++) {
+                        var labels = divs[j].children;
+                        for(var k = 0; k < labels.length; k++) {
+                            var inputs = labels[k].children;
+                            for(var m = 0; m < inputs.length; m++) {
+                                if(inputs[m].checked) {
+                                    checkStatus.push(inputs[m].checked);
                                 }
                             }
-
                         }
+
                     }
-                    if (checkStatus.length < 1) {
-                        showDiv.style.display = 'block';
-                    }
+                }
+                if (checkStatus.length < 1) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                    showDiv.style.display = 'block';
                 }
                 form.classList.add('was-validated');
             }, false);
+            form.addEventListener('submit', function(e) {
+                // doing this because controller was throwing a hissy fit over unchecked boxes
+                let manu = document.getElementById('manufacturer')
+                let distrib = document.getElementById('distributor')
+                let endUser = document.getElementById('enduser')
+                if (!manu.checked) {
+                    manu.value = '0'
+                    manu.checked = true
+                }
+                if (!distrib.checked) {
+                    distrib.value = '0'
+                    distrib.checked = true
+                }
+                if (!endUser.checked) {
+                    endUser.value = '0'
+                    endUser.checked = true
+                }
+            })
         });
     }, false);
   })();

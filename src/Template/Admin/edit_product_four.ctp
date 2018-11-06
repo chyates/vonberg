@@ -1,7 +1,6 @@
 <div id="cms-edit-prod-main" class="inner-main col-md-10 mx-auto p-5">
     <h1 id="title-four"class="active-title page-title"><?= "Edit Product: " . $part->series->name . " Image Uploads" ?></h1>
     <?= $this->Form->create('edit-prod-form', ['id' => "edit-prod-form", 'enctype' => 'multipart/form-data']) ?>
-
         <div id="four" class="active-slide form-slide col-md-8 mx-auto table-responsive">
             <table class="model-table table">
                 <thead>
@@ -19,8 +18,23 @@
                         if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/thumbnail.jpg')) {
                                 echo "None";
                             } else {
-                                echo "parts/" .strval($part->partID). "/thumbnail.jpg";
-                        } ?>
+                                echo strval($part->partID). "/thumbnail.jpg"; 
+                            ?>
+                                <div class="remove">
+                                    <?php
+                                        echo $this->Form->input('kill-thumbnail',
+                                        [
+                                            'templates' => [
+                                                'inputContainer' => '<div class="form-check form-check-inline {{type}}">{{content}}</div>'
+                                            ],
+                                            'type' => 'checkbox',
+                                            'label' => false,
+                                            'class' => 'form-check-input'
+                                        ]);
+                                    ?>
+                                    <label class="follow-me">Remove File</label>
+                                </div>
+                            <?php } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse
@@ -44,8 +58,23 @@
                         if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/product_image.jpg')) {
                                 echo "None";
                             } else {
-                                echo "parts/" .strval($part->partID). "/product_image.jpg";
-                        } ?>
+                                echo strval($part->partID). "/product_image.jpg";
+                        ?>
+                            <div class="remove">
+                                <?php
+                                    echo $this->Form->input('kill-product_image',
+                                    [
+                                        'templates' => [
+                                            'inputContainer' => '<div class="form-check form-check-inline {{type}}">{{content}}</div>'
+                                        ],
+                                        'type' => 'checkbox',
+                                        'label' => false,
+                                        'class' => 'form-check-input'
+                                    ]);
+                                ?>
+                                <label class="follow-me">Remove File</label>
+                            </div>
+                            <?php } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse
@@ -62,9 +91,23 @@
                                 if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/schematic_drawing.jpg')) {
                                     echo "None";
                                 } else {
-                                    echo "parts/" .strval($part->partID). "/schematic_drawing.jpg";
-                            } ?>
-
+                                    echo strval($part->partID). "/schematic_drawing.jpg";
+                            ?>
+                            <div class="remove">
+                                <?php
+                                    echo $this->Form->input('kill-schematic', 
+                                    [
+                                        'templates' => [
+                                            'inputContainer' => '<div class="form-check form-check-inline {{type}}">{{content}}</div>'
+                                        ],
+                                        'type' => 'checkbox',
+                                        'label' => false,
+                                        'class' => 'form-check-input'
+                                    ]);
+                                ?>
+                                <label class="follow-me">Remove File</label>
+                            </div>
+                            <?php } ?>
                             </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse
@@ -77,11 +120,26 @@
                     <tr>
                         <td class="first model-table-data">Ordering Information</td>
                         <td class="model-table-data">
-                            <?php    if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/ordering_information.jpg')) {
+                            <?php if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/ordering_information.jpg')) {
                                 echo "None";
                             } else {
-                                echo "parts/" .strval($part->partID). "/ordering_information.jpg";
-                            } ?>
+                                echo strval($part->partID). "/ordering_information.jpg";
+                            ?>
+                            <div class="remove">
+                                <?php
+                                    echo $this->Form->input('kill-ordering',
+                                    [
+                                        'templates' => [
+                                            'inputContainer' => '<div class="form-check form-check-inline {{type}}">{{content}}</div>'
+                                        ],
+                                        'type' => 'checkbox',
+                                        'label' => false,
+                                        'class' => 'form-check-input'
+                                    ]);
+                                ?>
+                                <label class="follow-me">Remove File</label>
+                            </div>
+                            <?php } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse
@@ -98,8 +156,23 @@
                                 if (!file_exists(WWW_ROOT.'img/parts/'.strval($part->partID).'/typical_performance.jpg')) {
                                     echo "None";
                                 } else {
-                                    echo "parts/" .strval($part->partID). "/typical_performance.jpg";
-                            } ?>
+                                    echo strval($part->partID). "/typical_performance.jpg";
+                            ?>
+                            <div class="remove">
+                                <?php
+                                    echo $this->Form->input('kill-performance',
+                                    [
+                                        'templates' => [
+                                            'inputContainer' => '<div class="form-check form-check-inline {{type}}">{{content}}</div>'
+                                        ],
+                                        'type' => 'checkbox',
+                                        'label' => false,
+                                        'class' => 'form-check-input'
+                                        ]);
+                                ?>
+                                <label class="follow-me">Remove File</label>
+                            </div>
+                            <?php } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse
@@ -117,7 +190,18 @@
                                     echo "None";
                                 } else {
                                     echo "parts/" .strval($part->partID). "/performance_graphs.pdf";
-                            } ?>
+                            ?>
+                            <div>
+                                <label class="follow-me">Remove File</label>
+                                <?php
+                                    echo $this->Form->input('kill-graph',
+                                    [
+                                        'type' => 'checkbox',
+                                        'label' => false
+                                    ]);
+                                ?>
+                            </div>
+                            <?php } ?>
                         </td>
                         <td class="d-flex model-table-data justify-content-between">
                             <label class="fileContainer light">Browse

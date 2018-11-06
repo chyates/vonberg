@@ -1,12 +1,11 @@
 <?php 
-    $this->assign('title', 'About | Vonberg Valve, Inc. ');
+    $this->assign('title', 'About | Vonberg');
     $this->assign('keywords', $this->Html->meta(
         'keywords',
         'Vonberg Hydraulic Innovation, Hydraulic valve, cartridge style valves, integrated manifolds, hydraulic valve specialists, cartridge bodies, hydraulic innovation'
     ));
     $this->assign('description', $this->Html->meta('description', 'Learn how Vonberg delivers hydraulic innovation through a focus on design & engineering, manufacturing, assembly & testing and quality assurance. Since 1971, we’ve been dedicated to the timely delivery of innovative, competitively priced, quality products.')); 
 ?>
-
 
 <div id="about-main-container" class="inner-main col-lg-10 col-12 mx-auto py-lg-4 px-lg-5 p-3">
     <div class="hero-row row no-gutters mb-sm-4">

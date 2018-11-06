@@ -133,128 +133,22 @@
             </div>
 
             <p class="text-right">
-            <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
-
+                <?= $this->Form->submit('Next',array('class'=>'btn btn-primary'));?>
             </p>
         </div><!-- #one end -->
     <?= $this->Form->end(); ?>
 </div><!-- #cms-add-prod-main end -->
 
 <script>
-    var idArr = [];
-
-    function createArr(sel) {
-        sel.find('option')
-        .each(function(index) {
-            var idInt = parseInt($(this).attr('value'));
-            idArr.push(idInt);
-        });
-        var max = idArr[0];
-        for(var i = 1; i < idArr.length; i++) {
-            if (idArr[i] > max) {
-                max = idArr[i];
-            }
-        }
-        return max;
-    }
-
-    function catAdd() {
-        var select = $("#add-prod-form").find('#categoryid');
-        var last = createArr(select);
-        var added = last + 1;
-        var name = $("#cat").val();
-        $.get('/admin/catadd?name='+name, function(d) {
-            $('#categoryid').prepend($('<option>', {
-                value: added,
-                text: name,
-                selected: selected
-            }));
-            location.reload(false);
-        });
-    }
-
-    function typeAdd() {
-        var select = $("#add-prod-form").find('#typeid');
-        var last = createArr(select);
-        var added = last + 1;
-        var name=$("#type").val();
-        $.get('/admin/typeadd?name='+name, function(d) {
-            $('#typeid').append($('<option>', {
-                value: added,
-                text: name,
-                selected: selected
-            }));
-            location.reload(false);
-
-        });
-    }
-
-    function seriesAdd() {
-        var select = $("#add-prod-form").find('#seriesid');
-        var last = createArr(select);
-        var added = last + 1;
-        var name=$("#series").val();
-        $.get('/admin/seriesadd?name='+name, function(d) {
-            $('#seriesid').append($('<option>', {
-                value: added,
-                text: name,
-                selected: selected
-            }));
-            location.reload(false);
-        });
-    }
-
-    function connAdd() {
-        var select = $("#add-prod-form").find('#connectionid');
-        var last = createArr(select);
-        var added = last + 1;
-        var name=$("#conn").val();
-        $.get('/admin/connadd?name='+name, function(d) {
-            $('#connectionid').append($('<option>', {
-                value: added,
-                text: name,
-                selected: selected
-            }));
-            location.reload(false);
-        });
-    }
-
-    function partAdd() {
-        $.ajax({
-            url: '/admin/part_add',
-            type:"POST",
-            data:$('#add-prod-form').serialize(),
-            success:function(response) {
-                alert("success:  "+response);
-                location.reload(false);
-            },
-            error: function (jqXHR,exception) {
-
-                console.log(jqXHR);
-                var msg = '';
-                if (jqXHR.status === 0) {
-                    msg = 'Not connect.\n Verify Network.'+jqXHR.statusText;
-                } else if (jqXHR.status == 404) {
-                    msg = 'Requested page not found. [404]';
-                } else if (jqXHR.status == 500) {
-                    msg = 'Internal Server Error [500].';
-                } else if (exception === 'parsererror') {
-                    msg = 'Requested JSON parse failed.';
-                } else if (exception === 'timeout') {
-                    msg = 'Time out error.';
-                } else if (exception === 'abort') {
-                    msg = 'Ajax request aborted.';
-                } else {
-                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
-                }
-
-                alert(msg);
-            }
-        });
-        location.reload(false);
-    }
-
     jQuery(document).ready(function() {
+        $("select.accept.form-control").on("change", function () {
+            var id = $(this).find('option:selected').val()
+            if(id == 0) {
+                var next = $(this).parents("div.input.select").next('div.input.text').find('.hidden')
+                next.show();
+            }
+        });
+
         // add "add series" to select
         $('#seriesid').prepend($('<option>', {
             value: 0,
@@ -274,9 +168,6 @@
             id: 'testID'
         }));
 
-        $("select.accept.form-control").on("change", function () {
-            var next = $(this).parent("div.input.select").next('div.input.text').find('.hidden')
-            next.show();
-        });
+        $("#edit-prod-form div.input.checkbox").addClass('form-check form-check-inline');
     })
 </script>

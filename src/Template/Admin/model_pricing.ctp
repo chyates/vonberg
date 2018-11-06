@@ -114,6 +114,7 @@
                                     echo "N/A";
                                 }
                             ?>
+                            <div class="cancel">Cancel</div>
                         </div>
                         <div class="col-2 model-table-data">
                             <div class="edit">Edit</div>
@@ -124,16 +125,6 @@
                 <?php endforeach; ?>
             </div>
 
-            <div class="paginator">
-                <ul class="pagination">
-                    <?= $this->Paginator->first('<< ' . __('first')) ?>
-                    <?= $this->Paginator->prev('< ' . __('previous')) ?>
-                    <?= $this->Paginator->numbers() ?>
-                    <?= $this->Paginator->next(__('next') . ' >') ?>
-                    <?= $this->Paginator->last(__('last') . ' >>') ?>
-                </ul>
-                <p><?= $this->Paginator->counter(['format' => __('Page {{page}} of {{pages}}, showing {{current}} record(s) out of {{count}} total')]) ?></p>
-            </div>
         </div><!-- pricing table end -->
 
         <div class="col-md-3 mx-3">
@@ -197,6 +188,9 @@
         Array.prototype.forEach.call(document.querySelectorAll('#cms-model-price-table form'), function(form) {
             form.querySelector('.edit').onclick = function() {
                 form.className = 'active'
+            }
+            form.querySelector('.cancel').onclick = function() {
+                form.className = 'inactive'
             }
         });
 

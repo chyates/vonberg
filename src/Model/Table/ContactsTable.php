@@ -50,6 +50,9 @@ class ContactsTable extends Table
             ->scalar('email')
             ->maxLength('email', 100)
             ->allowEmpty('email');
+        
+        $validator
+            ->allowEmpty('manufacturer', 'enduser', 'distributor');
 
         return $validator;
     }

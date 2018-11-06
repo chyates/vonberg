@@ -80,9 +80,14 @@ use Cake\Routing\Router;
                     <td class="model-table-data"><?= h(date('M j Y', strtotime($part->last_updated)))?></td>
                     <td class="model-table-data">
                         <div class="form-check form-check-inline">
-                            <input class="form-check-input" type="checkbox" name="new_list" value="<?= h($part->expires) ?>"
-                                   checked>
-                            <label class="form-check-label"><?php echo $part->expires . " days"; ?></label>
+                        <?php if($part->new_list == 1) { ?>
+                            <input type="text" value="<?= $part->partID; ?>" class="form-control hidden" name="hid_part">
+                            <input class="form-check-input" type="checkbox" name="new_list" value="<?= $part->expires; ?>" checked>
+                            <label class="form-check-label"><?= h($part->expires) ?> days</label>
+                        <?php } else { ?>
+                            <input type="text" value="<?= $part->partID; ?>" class="form-control hidden" name="hid_part">
+                            <input class="form-check-input" type="checkbox" name="new_list">
+                        <?php } ?>
                         </div>
                     <td class="model-table-data actions">
                         <?= $this->Html->link(__('View'), ['controller'=>'Products','action' => 'view', $part->partID]) ?>

@@ -1,5 +1,7 @@
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
 <div id="cms-gen-pdf-main" class="inner-main col-md-10 mx-auto p-5">
-    <style>#one select option[value*="0"] {display: none}</style>
+    <!-- <style>#one select option[value*="0"] {display: none}</style> -->
     <script src="/js/pdfkit.js"></script>
     <script src="/js/blob-stream.js"></script>
     <?= $this->Form->create('', ['id' => "gen-pdf-form", 'enctype' => 'multipart/form-data']) ?>
@@ -15,6 +17,15 @@
                     'options' => $cat,
                     'label' => 'Category',
                     'class' => 'form-control'
+                ]);
+
+                echo $this->Form->input('newcat', 
+                [
+                    'type' => 'text',
+                    'label' => false,
+                    'class' => 'hidden form-control',
+                    'id' => 'newcat',
+                    'placeholder' => 'Enter custom category'
                 ]);
             ?>
         </div>
@@ -45,19 +56,37 @@
                     'label' => 'Type',
                     'class' => 'form-control'
                 ]);
+
+                echo $this->Form->input('newtype', 
+                [
+                    'type' => 'text',
+                    'label' => false,
+                    'class' => 'hidden form-control',
+                    'id' => 'newtype',
+                    'placeholder' => 'Enter custom type'
+                ]);
             ?>
         </div>
             
         <!-- Series -->
         <div class="form-group">
             <?php
-            echo $this->Form->input('seriesID',
+                echo $this->Form->input('seriesID',
                 [
                     'type' => 'select',
                     'multiple' => false,
                     'options' => $series,
                     'label' => 'Series',
                     'class' => 'form-control'
+                ]);
+
+                echo $this->Form->input('newseries', 
+                [
+                    'type' => 'text',
+                    'label' => false,
+                    'class' => 'accept hidden form-control',
+                    'id' => 'newseries',
+                    'placeholder' => 'Enter custom series'
                 ]);
             ?>
         </div>
@@ -72,6 +101,15 @@
                     'options' => $conn,
                     'label' => 'Short Description',
                     'class' => 'form-control'
+                ]);
+
+            echo $this->Form->input('newconn', 
+                [
+                    'type' => 'text',
+                    'label' => false,
+                    'class' => 'accept hidden form-control',
+                    'id' => 'newconn',
+                    'placeholder' => 'Enter custom short description'
                 ]);
             ?>
         </div>
@@ -95,7 +133,7 @@
         </div>
 
         <div class="form-group w-bullet operation">
-            <div class="form-group">
+            <!-- <div class="form-group"> -->
                 <label>Operation</label>
                 <?php 
                     echo $this->Form->input('op_bullet_text_1', array(
@@ -106,7 +144,7 @@
                 ?>
                 <a class="plus add-bullet" href="">Add Bullet</a>
                 <a class="del add-bullet" href="">Remove Bullet</a>
-            </div>
+            <!-- </div> -->
         </div>
 
         <div class="form-group w-bullet features">
@@ -122,8 +160,9 @@
             <a class="del add-bullet" href="">Remove Bullet</a>
         </div>
 
-        <div class="form-group row no-gutters align-items-center w-bullet">
+        <div class="form-group row no-gutters align-items-center w-bullet specifications">
             <label>Specifications</label>
+            <!-- <style>.holdit select, .holdit input {display: inline-block; width: 50%}</style> -->
             <?php
                 $spec_array = [];
                 $options = [];
@@ -136,8 +175,8 @@
                     $options[$x] = ['text' => $spec_array[$x], 'value' => $spec_array[$x]];
                 }
             ?>
-            <div class="row specifications">
-                <div class="col-sm-6">
+            <div class="row">
+                <div class="spec-left col-sm-6">
                 <?php 
                     echo $this->Form->select('spec_name_1', $options, 
                     [
@@ -147,7 +186,7 @@
                     ]);
                 ?>
                 </div>
-                <div class="col-sm-6">
+                <div class="spec-right col-sm-6">
                     <?= $this->Form->input('spec_value_1', array(
                         'class' => 'form-control',
                         'label'=> False, 
@@ -155,8 +194,10 @@
                     ?>
                 </div>
             </div>
-            <a class="plus add-bullet" href="">Add Bullet</a>
-            <a class="del add-bullet" href="">Remove Bullet</a>
+            <!-- <a class="plus add-bullet" href="">Add Bullet</a>
+            <a class="del add-bullet" href="">Remove Bullet</a> -->
+            <div class="yes-bullet">Add Bullet</div>
+            <div class="no-bullet">Remove Bullet</div>
         </div>
 
         <div class="row no-gutters justify-content-between">
@@ -375,14 +416,14 @@
                         let logo = ajax.response
 
                         let selType = document.getElementById('typeid')
-                        let type = selType[selType.selectedIndex].innerText
+                        let type = selType[selType.selectedIndex].value != -1 ? selType[selType.selectedIndex].innerText : document.getElementById('newtype').value
                         let selCat = document.getElementById('categoryid')
-                        let category = selCat[selCat.selectedIndex].innerText
+                        let category = selCat[selCat.selectedIndex].value != -1 ? selCat[selCat.selectedIndex].innerText : document.getElementById('newcat').value
                         let style = document.getElementById('styleid-1').checked ? 'INLINE' : 'CARTRIDGE'
                         let selSeries = document.getElementById('seriesid')
-                        let series = selSeries[selSeries.selectedIndex].innerText
+                        let series = selSeries[selSeries.selectedIndex].value != -1 ? selSeries[selSeries.selectedIndex].innerText : document.getElementById('newseries').value
                         let selShortDesc = document.getElementById('connectionid')
-                        let shortDescription = selShortDesc[selShortDesc.selectedIndex].innerText
+                        let shortDescription = selShortDesc[selShortDesc.selectedIndex].value != -1 ? selShortDesc[selShortDesc.selectedIndex].innerText : document.getElementById('newconn').value
 
                         let description = document.getElementById('description').value.toUpperCase().replace(/˚/g, '\u00B0')
 
@@ -390,16 +431,25 @@
                         Array.prototype.forEach.call(document.querySelectorAll('.w-bullet.operation input'), function(bullet) {
                             operation.push(bullet.value.toUpperCase().replace(/˚/g, '\u00B0'))
                         })
+                        operation = operation.filter(function(op) {return op != ''})
                         let features = []
                         Array.prototype.forEach.call(document.querySelectorAll('.w-bullet.features input'), function(bullet) {
                             features.push(bullet.value.toUpperCase().replace(/˚/g, '\u00B0'))
                         })
-                        let specifications = []
-                        Array.prototype.forEach.call(document.querySelectorAll('.w-bullet .specifications select'), function(select) {
-                            specifications.push([select[select.selectedIndex].innerText])
+                        features = features.filter(function(feat) {return feat != ''})
+                        var specifications = []
+                        Array.prototype.forEach.call(document.querySelectorAll('.w-bullet.specifications select'), function(select) {
+                            if (select[select.selectedIndex].value != -1) {
+                                specifications.push([select[select.selectedIndex].innerText])
+                            } else {
+                                specifications.push([document.getElementById('cuspec-' + select.id).value])
+                            }
                         })
-                        Array.prototype.forEach.call(document.querySelectorAll('.w-bullet .specifications input'), function(input, index) {
+                        Array.prototype.forEach.call(document.querySelectorAll('.w-bullet.specifications .spec-right input'), function(input, index) {
                             specifications[index].push(input.value.replace(/˚/g, '\u00B0'))
+                        })
+                        specifications = specifications.filter(function(spec) {
+                            return spec.filter(function(data) {return data != ''}).length > 0
                         })
 
                         let seriesInputs = []
@@ -424,6 +474,23 @@
                         for (let i = 0; i < seriesInputs.length; i += totalCol) {
                             seriesTable.push(seriesInputs.slice(i, i + totalCol))
                         }
+                        let slashinRows = () => {
+                            let realCells = seriesTable[seriesTable.length - 1].filter(cell => cell.val)
+                            if (realCells.length === 0) {
+                                seriesTable.pop()
+                                slashinRows()
+                            }
+                        }
+                        slashinRows()
+                        let slashinCols = () => {
+                            let realCells = seriesTable.map(row => row[row.length - 1]).filter(cell => cell.val)
+                            if (realCells.length === 0) {
+                                seriesTable.forEach(row => row.pop())
+                                slashinCols()
+                            }
+                        }
+                        slashinCols()
+                        totalCol = seriesTable.length
 
                         let doc = new PDFDocument({autoFirstPage: false})
                         stream = doc.pipe(blobStream())
@@ -557,33 +624,40 @@
                         extra += 12 * Math.ceil(doc.widthOfString(description) / inverseWidth)
                         extra -= 10
 
-                        if (operation.length > 1 || operation[0].length > 0) {
+                        let bulletTime = doc.widthOfString('• ')
+
+                        // if (operation.length > 1 || operation[0].length > 0) {
+                        if (operation.length > 0) {
                             doc.font('Helvetica-Bold')
                             doc.text('OPERATION', colWidth + 45, 120 + extra)
                             doc.rect(colWidth + 45, 130 + extra, inverseWidth, 1).fillAndStroke('#00703c')
                             doc.fillColor('#000000')
                             doc.font('Helvetica')
                             operation.forEach(op => {
-                                doc.text('• ' + op, colWidth + 45, 135 + extra)
-                                extra += 12 * Math.ceil(doc.widthOfString('• ' + op) / inverseWidth)
+                                doc.text('• ', colWidth + 45, 135 + extra)                        
+                                doc.text(op, colWidth + 45 + bulletTime, 135 + extra)
+                                extra += 12 * Math.ceil(doc.widthOfString(op) / (inverseWidth - bulletTime))
                             })
                             extra -= 10
                         }
 
-                        if (features.length > 1 || features[0].length > 0) {
+                        // if (features.length > 1 || features[0].length > 0) {
+                        if (features.length > 0) {
                             doc.font('Helvetica-Bold')
                             doc.text('FEATURES', colWidth + 45, 150 + extra)
                             doc.rect(colWidth + 45, 160 + extra, inverseWidth, 1).fillAndStroke('#00703c')
                             doc.fillColor('#000000')
                             doc.font('Helvetica')
                             features.forEach(feat => {
-                                doc.text('• ' + feat, colWidth + 45, 165 + extra)
-                                extra += 12 * Math.ceil(doc.widthOfString('• ' + feat) / inverseWidth)
+                                doc.text('• ', colWidth + 45, 165 + extra)
+                                doc.text(feat, colWidth + 45 + bulletTime, 165 + extra)
+                                extra += 12 * Math.ceil(doc.widthOfString(feat) / (inverseWidth - bulletTime))
                             })
                             extra -= 10
                         }
 
-                        if (specifications.length > 1 || specifications[0][1].length > 0) {
+                        // if (specifications.length > 1 || specifications[0][1].length > 0) {
+                        if (specifications.length > 0) {
                             doc.font('Helvetica-Bold')
                             doc.text('SPECIFICATIONS', colWidth + 45, 180 + extra)
                             doc.rect(colWidth + 45, 190 + extra, inverseWidth, 1).fillAndStroke('#00703c')
@@ -735,3 +809,213 @@
 
     <?= $this->Form->end(); ?>
 </div><!-- #cms-gen-pdf-main end -->
+
+<!-- yo dawg i hurd you liek jquery -->
+<script>
+    var idArr = [];
+
+    function createArr(sel) {
+        sel.find('option')
+        .each(function(index) {
+            var idInt = parseInt($(this).attr('value'));
+            idArr.push(idInt);
+        });
+        var max = idArr[0];
+        for(var i = 1; i < idArr.length; i++) {
+            if (idArr[i] > max) {
+                max = idArr[i];
+            }
+        }
+        return max;
+    }
+
+    function catAdd() {
+        var select = $("#add-prod-form").find('#categoryid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name = $("#cat").val();
+        $.get('/admin/catadd?name='+name, function(d) {
+            $('#categoryid').prepend($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+        });
+    }
+
+    function typeAdd() {
+        var select = $("#add-prod-form").find('#typeid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name=$("#type").val();
+        $.get('/admin/typeadd?name='+name, function(d) {
+            $('#typeid').append($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+
+        });
+    }
+
+    function seriesAdd() {
+        var select = $("#add-prod-form").find('#seriesid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name=$("#series").val();
+        $.get('/admin/seriesadd?name='+name, function(d) {
+            $('#seriesid').append($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+        });
+    }
+
+    function connAdd() {
+        var select = $("#add-prod-form").find('#connectionid');
+        var last = createArr(select);
+        var added = last + 1;
+        var name=$("#conn").val();
+        $.get('/admin/connadd?name='+name, function(d) {
+            $('#connectionid').append($('<option>', {
+                value: added,
+                text: name,
+                selected: selected
+            }));
+            location.reload(false);
+        });
+    }
+
+    function partAdd() {
+        $.ajax({
+            url: '/admin/part_add',
+            type:"POST",
+            data:$('#add-prod-form').serialize(),
+            success:function(response) {
+                alert("success:  "+response);
+                location.reload(false);
+            },
+            error: function (jqXHR,exception) {
+
+                console.log(jqXHR);
+                var msg = '';
+                if (jqXHR.status === 0) {
+                    msg = 'Not connect.\n Verify Network.'+jqXHR.statusText;
+                } else if (jqXHR.status == 404) {
+                    msg = 'Requested page not found. [404]';
+                } else if (jqXHR.status == 500) {
+                    msg = 'Internal Server Error [500].';
+                } else if (exception === 'parsererror') {
+                    msg = 'Requested JSON parse failed.';
+                } else if (exception === 'timeout') {
+                    msg = 'Time out error.';
+                } else if (exception === 'abort') {
+                    msg = 'Ajax request aborted.';
+                } else {
+                    msg = 'Uncaught Error.\n' + jqXHR.responseText;
+                }
+
+                alert(msg);
+            }
+        });
+        location.reload(false);
+    }
+
+    jQuery(document).ready(function() {
+        // add "add series" to select
+        $('#seriesid').prepend($('<option>', {
+            value: -1,
+            text: 'Custom series...'
+        }));
+        $('#categoryid').prepend($('<option>', {
+            value: -1,
+            text: 'Custom category...'
+        }));
+        $('#typeid').prepend($('<option>', {
+            value: -1,
+            text: 'Custom type...'
+        }));
+        $('#connectionid').prepend($('<option>', {
+            value: -1,
+            text: 'Custom short description...',
+            id: 'testID'
+        }));
+
+        $("#one select.form-control").on("change", function (e) {
+            if (e.target[e.target.selectedIndex].value == -1) {
+                var next = $(this).parent("div.input.select").next('div.input.text').find('.hidden')
+                next.show();
+            }
+        });
+
+        $("#edit-prod-form div.input.checkbox").addClass('form-check form-check-inline');
+
+        // i don't get how specs are handled on edit-product-two so i went rogue
+        $('.specifications select.form-control').prepend($('<option>', {
+            value: -1,
+            text: 'Custom specification...'
+        }));
+        $('.specifications select.form-control').on('change', function(e) {
+            if (e.target[e.target.selectedIndex].value == -1) {
+                let custom = document.createElement('input')
+                custom.id = 'cuspec-' + e.target.id
+                custom.className = 'accept form-control custom-spec'
+                custom.style.position = 'absolute'
+                custom.placeholder = "Enter new specification"
+                // custom.style.right = '100%'
+                custom.style.width = 'calc(100% - 30px)'
+                custom.style.top = (Number(e.target.id) * 38) - 38 + 'px'
+                document.querySelector('.specifications .row .col-sm-6').appendChild(custom)
+            }
+        });
+
+        // coding a unique way of handling everything cause
+        // COPULATE THIS FECES
+
+        let specLeft = document.querySelector('.specifications .spec-left')
+        let specRight = document.querySelector('.specifications .spec-right')
+        let baseSpec = document.querySelector('.specifications .spec-left select').cloneNode(true)
+        
+        document.querySelector('.specifications .yes-bullet').addEventListener('click', function(e) {
+            let newIndex = Array.from(document.querySelectorAll('.specifications .spec-left select')).length + 1
+            let newSpec = baseSpec.cloneNode(true)
+            newSpec.id = newIndex
+            newSpec.selectedIndex = 1
+            newSpec.addEventListener('change', function(e) {
+                if (e.target[e.target.selectedIndex].value == -1) {
+                    let custom = document.createElement('input')
+                    custom.id = 'cuspec-' + e.target.id
+                    custom.className = 'accept form-control custom-spec'
+                    custom.style.position = 'absolute'
+                    custom.placeholder = "Enter new specification"
+                    // custom.style.right = '100%'
+                    custom.style.width = 'calc(100% - 30px)'
+                    custom.style.top = (Number(e.target.id) * 38) - 38 + 'px'
+                    document.querySelector('.specifications .spec-left').appendChild(custom)
+                }
+            })
+            specLeft.appendChild(newSpec)
+            let newInput = document.createElement('input')
+            newInput.id = newIndex
+            newInput.className = 'form-control'
+            specRight.appendChild(newInput)
+        })
+
+        document.querySelector('.specifications .no-bullet').addEventListener('click', function(e) {
+            let selects = Array.from(document.querySelectorAll('.specifications .spec-left select'))
+            let lastSelect = (selects.length > 0) ? selects[selects.length - 1] : null
+            if (lastSelect && lastSelect[lastSelect.selectedIndex].value == -1) {
+                document.getElementById('cuspec-' + lastSelect.id).remove()
+            }
+            lastSelect.remove()
+            let inputs = Array.from(document.querySelectorAll('.specifications .spec-right input'))
+            let lastInput = (inputs.length > 0) ? inputs[inputs.length - 1] : null
+            lastInput.remove()
+        })
+
+    })
+</script>

@@ -10,7 +10,7 @@
             <p>P: 847-259-3800<br>F: 847-259-3997</p>
         </div>
         <div class="col-md col-7 mx-auto my-auto">
-            <p><a href="mailto:info@vonberg.com">info@vonberg.com</a></p>
+            <p><a href="mailto:info@vonberg.com">info@vonberg.com</a><br>&copy; <?php echo date('Y'); ?></p>
         </div>
         <div class="icon-col col-md col-7 mx-auto my-auto">
             <a href="https://www.linkedin.com/company/vonberg-valve-inc-/?trk=hb_tab_compy_id_3135225" target="_blank"><img class="img-fluid" src="/img/linkedin.svg"></a>
