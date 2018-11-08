@@ -182,7 +182,6 @@ jQuery(document).ready(function($) {
                         newColDiv += "</div>"
                     }
                 }
-
                 newColDiv += "</div>";
                 existingRow.find('.data-column').last().after(newColDiv);
 
@@ -246,6 +245,7 @@ jQuery(document).ready(function($) {
         }
     })
 
+    // erase val of MTR input if backspace key is struck
     $("#three .creation-row .data-column div.input.text").find('input').keyup(function(e){
         if(e.keyCode == 8) {
             $(this).val("")
@@ -256,61 +256,56 @@ jQuery(document).ready(function($) {
     let colCheck
     let rowCheck
     let ecCount = 0
-    let children = 0
+    let erCount = 0
     let rowArr = []
     let colArr = []
     $(".empty-text p.empty-err a.add-bullet.del").click(function(e){
-        let erCount = 0
-        let rowCount = $("#three .creation-row .data-column").find("input[id$='-1']")
-        let colCount = parseInt($("#three .creation-row .data-column").last().attr('id'))
-        colCheck = $("#three .creation-row .data-column")
-
-        $(colCheck).each(function(index){
-            for(var r = 0; r < rowCount.length; r++) {
-                rowCheck = $(this).find("div.input.text").eq(r).find("input")
-                if($(rowCheck).val() == "") {
-                    erCount++
+        if($(this).hasClass('e-row')) {
+            let lr = $("#three .creation-row .data-column").find('input[id$="-1"]').last()
+            let lrID = parseInt($(lr).attr('id').substring(0, $(lr).attr('id').indexOf("-")))
+            for(var r = 1; r <= lrID; r++) {
+                rowCheck = $("#three .creation-row .data-column").find("input[id^='"+r+"']")
+                for(var t = 0; t < rowCheck.length; t++) {
+                    if($(rowCheck[t]).val() == "" ) {
+                        erCount++
+                    }
                 }
-                if(erCount == colCount) {
-                    let foundID = $(rowCheck).attr('id').substring(0, $(rowCheck).attr('id').indexOf("-"))
-                    rowArr.push(foundID)
-                    erCount = 0;
-                    console.log("Row array: ", rowArr)
+                if(erCount == rowCheck.length) {
+                    if(!rowArr.includes(r)) {
+                        rowArr.push(r)
+                    }
+                    erCount = 0
                 }
             }
-            // console.log(rowArr)
-
-            $(this).children().children().each(function(index){
-                if($(this).val() == "") {
-                    ecCount++
-                }
-            })
-
-            if(ecCount == $(this).children().length && ecCount != 0) {
-                let foundID = $(this).attr('id')
-                colArr.push(foundID)
+            for(var e = 0; e <= rowArr.length; e++) {
+                let foundRow = $("#three .creation-row .data-column").find("input[id^='"+rowArr[e]+"']")
+                $(foundRow).parent().remove()
             }
-            ecCount = 0
-        })
+        } else if($(this).hasClass('e-col')) {
+            colCheck = $("#three .creation-row .data-column")
 
-        if(colArr.length > 0) {
-            for(var c = 0; c < colArr.length; c++) {
-                let colDel = $("#three .creation-row #" + colArr[c] + ".data-column")
-                $(colDel).remove()
-            }
-            colArr = []
-        }
-
-        if(rowArr.length > 0) {
-            for(var f = 0; f < rowArr.length; f++) {
-                let collection = $(colCheck).find('input[id^="'+rowArr[f]+'"]')
-                $(collection).each(function(index){
-                    $(this).parent().remove()
+            $(colCheck).each(function(index){
+                let downCheck = $(this).children().find('input')
+                $(downCheck).each(function(index){
+                    if($(this).val() == "") {
+                        ecCount++
+                    }
+                    if(ecCount == downCheck.length) {
+                        let cID = $(this).attr('id').substring(parseInt($(this).attr('id').indexOf("-")+1), $(this).attr('id').length)
+                        if(!colArr.includes(cID)) {
+                            colArr.push(cID)
+                        }
+                        ecCount = 0
+                    } else if(index == downCheck.length-1 && ecCount != 0) {
+                        ecCount = 0
+                    }
                 })
+            })
+            for(var c = 0; c < colArr.length; c++) {
+                let rc = $("#three .creation-row #" + colArr[c] + ".data-column")
+                $(rc).remove()
             }
-            rowArr = []
         }
-
     })
 
     // update input value on keypress, model table slide edit product form:

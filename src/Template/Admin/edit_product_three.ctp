@@ -117,7 +117,7 @@
                     </div>
                 </div><!-- add row row end -->
                 <div class="empty-text success">
-                    <p class="empty-err">There are one or more empty cells; please fill them out and re-submit. Or, <a href="" class="del add-bullet">delete</a> an extra row or column.</p>
+                    <p class="empty-err">There are one or more empty cells; please fill them out and re-submit. Or, delete an extra <a href="" class="del e-row add-bullet">row</a> or <a href="" class="del e-col add-bullet">column</a>.</p>
                 </div>
             </div><!-- table create box end -->
         </div><!-- buffer div end -->
