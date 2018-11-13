@@ -2468,4 +2468,5 @@ p.empty-err {
 #three .empty-text p.empty-err a.del.add-bullet {
     margin-left: 0;
     color: #dc3545;
+    font-weight: bold;
 }

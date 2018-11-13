@@ -264,16 +264,14 @@ jQuery(document).ready(function($) {
             let lr = $("#three .creation-row .data-column").find('input[id$="-1"]').last()
             let lrID = parseInt($(lr).attr('id').substring(0, $(lr).attr('id').indexOf("-")))
             for(var r = 1; r <= lrID; r++) {
-                rowCheck = $("#three .creation-row .data-column").find("input[id^='"+r+"']")
+                rowCheck = $("#three .creation-row .data-column").find("input[id^='"+r+"-']")
                 for(var t = 0; t < rowCheck.length; t++) {
                     if($(rowCheck[t]).val() == "" ) {
                         erCount++
                     }
                 }
                 if(erCount == rowCheck.length) {
-                    if(!rowArr.includes(r)) {
                         rowArr.push(r)
-                    }
                     erCount = 0
                 }
             }
@@ -281,6 +279,7 @@ jQuery(document).ready(function($) {
                 let foundRow = $("#three .creation-row .data-column").find("input[id^='"+rowArr[e]+"']")
                 $(foundRow).parent().remove()
             }
+            rowArr = []
         } else if($(this).hasClass('e-col')) {
             colCheck = $("#three .creation-row .data-column")
 
