@@ -86,7 +86,7 @@
                 <tbody>
                     <tr>
                         <td class="model-table-data"><?php echo $item['model_text']; ?></td>
-                        <?php if(!empty($item->description)) { ?>
+                        <?php if(!empty($item['description'])) { ?>
                             <td class="model-table-data"><?php echo $item['description']; ?></td>
                         <?php } else { ?>
                             <td class="model-table-data">N/A</td>

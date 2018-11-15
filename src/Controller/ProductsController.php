@@ -253,11 +253,12 @@ class ProductsController extends AppController
         if ($q) {
             $conn = ConnectionManager::get('default');
             $like_where = 'mp.model_text LIKE "%' . $q . '%"';
+            $eq = 'mp.model_text = "' . $q . '"';
 
             $query = "SELECT mp.model_text, mp.unit_price, mp.description
             FROM
                 model_prices as mp
-            WHERE " . $like_where . "
+            WHERE " . $like_where . " OR " . $eq . "
             ORDER BY mp.model_text";
 
             $stmt = $conn->execute($query);
@@ -265,7 +266,7 @@ class ProductsController extends AppController
             $this->set('no_series', $rows);
         } elseif ($seriesID) {
             $conn = ConnectionManager::get('default');
-            $like_where = 'mp.model_text LIKE "%' . $q . '%"';
+            $like_where = 'mp.model_text = "' . $q . '"';
 
             $query = 'SELECT
                 p.partID,

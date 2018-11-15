@@ -921,6 +921,9 @@ class AdminController extends AppController
         $this->viewBuilder()->setLayout('admin');
         $this->loadModel('Parts');
         $count = 0;
+        $part = $this->Parts->get($id, [
+            'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
+        ]);
 
         if (!file_exists(WWW_ROOT.'img/parts/'.strval($id))) {
             mkdir(WWW_ROOT.'img/parts/'.strval($id), 0777, true);
@@ -951,9 +954,6 @@ class AdminController extends AppController
             'contain' => array('ModelTableHeaders', 'ModelTableRows'),
         ))->first();
 
-        $part = $this->Parts->get($id, [
-            'contain' => ['Series','Specifications','TextBlocks' => ['TextBlockBullets']]
-        ]);
         $this->set('table', $table);
         $this->set('part', $part);
     }
