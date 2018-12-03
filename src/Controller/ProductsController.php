@@ -247,14 +247,39 @@ class ProductsController extends AppController
     public function prices()
     {
         $this->loadModel('Parts');
+        $this->loadModel('Series');
+        $this->loadModel('ModelTables');
+        $this->loadModel('ModelTableHeaders');
+        $this->loadModel('ModelTableRows');
         $seriesID = $this->request->query('seriesID');
         $q = $this->request->query('q');
-        $rows=NULL;
+        $rows = NULL;
+        
         if ($q) {
             $conn = ConnectionManager::get('default');
-            $like_where = 'mp.model_text LIKE "%' . $q . '%"';
+            $like_where = "mp.model_text LIKE '%" . $q . "%'";
             $eq = 'mp.model_text = "' . $q . '"';
 
+            // $query = 'SELECT
+            //     s.name,
+            //     st.name,
+            //     c.name,
+            //     ty.name,
+            //     mp.unit_price,
+            //     mp.model_text,
+            //     mp.description  
+            // FROM
+            //     model_tables as mt
+            //     LEFT JOIN parts as p ON mt.partID = p.partID
+            //     LEFT JOIN model_table_rows as mtr ON mt.model_tableID = mtr.model_tableID
+            //     LEFT JOIN model_prices as mp ON mp.model_text = mtr.model_table_row_text
+            //     LEFT JOIN series as s ON p.seriesID = s.seriesID
+            //     LEFT JOIN styles as st ON p.styleID = st.styleID
+            //     LEFT JOIN connections as c ON p.connectionID = c.connectionID
+            //     LEFT JOIN types as ty ON p.typeID = ty.typesID
+            //     WHERE ' . $like_where . ' 
+            // ORDER BY
+            //     mp.model_text';
             $query = "SELECT mp.model_text, mp.unit_price, mp.description
             FROM
                 model_prices as mp
@@ -266,52 +291,115 @@ class ProductsController extends AppController
             $this->set('no_series', $rows);
         } elseif ($seriesID) {
             $conn = ConnectionManager::get('default');
-            $like_where = 'mp.model_text = "' . $q . '"';
+
+            $calc = $this->Parts->find('all', ['conditions' => ['Parts.seriesID' => $seriesID], 'contain' => ['Series', 'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]])->first();
+            $c_head = count($calc->model_table->model_table_headers);
+            $c_row = count($calc->model_table->model_table_rows);
+
+            $diff = $c_row / $c_head;
+            $order_arr = [1];
+            $c_start = 1;
+            $loop = 1; 
+
+            while($loop < $diff) {
+                if($c_start < $c_row) {
+                    $f_order = $c_start + $c_head;
+                    array_push($order_arr, $f_order);
+                    $c_start = $f_order;
+                }
+                $loop++;
+            }
+
+            $array_as_string = '(';
+            foreach ($order_arr as $bob) {
+                $array_as_string .= '"' . $bob . '",';
+            }
+            $array_as_string = substr($array_as_string, 0, strlen($array_as_string)-1);
+            $array_as_string .= ')';
+
+            // $query = 'SELECT
+            //     p.partID,
+            //     s.name as se,
+            //     st.name as sty,
+            //     c.name as conn,
+            //     ty.name as tipe,
+            //     mp.unit_price,
+            //     mp.model_text
+            // FROM
+            //     series as s,
+            //     styles as st,
+            //     connections as c,
+            //     parts as p,
+            //     types as ty,
+            //     model_prices as mp,
+            //     model_table_rows as mtr,
+            //     model_tables as mt
+            // WHERE
+            //     s.seriesID = "' . $seriesID . '"
+            // AND
+            //     s.seriesID = p.seriesID
+            // AND
+            //     p.partID = mt.partID
+            // AND
+            //     mt.model_tableID = mtr.model_tableID
+            // AND
+            //     mtr.model_table_row_text = mp.model_text
+            // AND
+            //     p.styleID = st.styleID
+            // AND
+            //     p.connectionID  = c.connectionID
+            // AND
+            //     p.typeID = ty.typesID
+            // ORDER BY
+            //     mp.model_text, s.name';
 
             $query = 'SELECT
-                p.partID,
-                s.name as series,
-                st.name as style,
-                c.name as conn,
-                ty.name as tipe,
-                mp.unit_price,
-                mp.model_text  
-            FROM
-                series as s,
-                styles as st,
-                connections as c,
-                parts as p,
-                types as ty,
-                model_prices as mp,
-                model_table_rows as mtr,
-                model_tables as mt
-            WHERE
-                s.seriesID = '.$seriesID.'
-            AND
-                s.seriesID = p.seriesID
-            AND
-                p.partID = mt.partID
-            AND
-                mt.model_tableID = mtr.model_tableID
-            AND
-                mtr.model_table_row_text = mp.model_text
-            AND
-                p.styleID = st.styleID
-            AND
-                p.connectionID  = c.connectionID
-            AND
-                p.typeID = ty.typesID
-            ORDER BY
-                mp.model_text';
+            p.partID,
+            s.name as se,
+            st.name as sty,
+            c.name as conn,
+            ty.name,
+            mp.unit_price,
+            mp.model_text  
+        FROM
+            series as s,
+            styles as st,
+            connections as c,
+            parts as p,
+            types as ty,
+            model_prices as mp,
+            model_table_rows as mtr,
+            model_tables as mt
+        WHERE
+            s.seriesID = '.$seriesID.'
+        AND
+            s.seriesID = p.seriesID
+        AND
+            p.partID = mt.partID
+        AND
+            mt.model_tableID = mtr.model_tableID
+        AND
+            mtr.model_table_row_text = mp.model_text
+        AND 
+            mtr.order_num IN ' . $array_as_string . '
+        AND
+            p.styleID = st.styleID
+        AND
+            p.connectionID  = c.connectionID
+        AND
+            p.typeID = ty.typesID
+        ORDER BY
+            mp.model_text';
 
             $stmt = $conn->execute($query);
             $rows = $stmt->fetchAll('assoc');
-            $this->set('prices', $rows);
-
+            
             if(empty($rows)) {
-                $empty = $this->Parts->find('all', ['conditions' => ['Parts.seriesID' => $seriesID], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'Specifications', 'TextBlocks' => ['TextBlockBullets'],'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
-
+                $empty = $this->Parts->find('all', ['conditions' => ['Parts.seriesID' => $seriesID], 'contain' => ['Connections', 'Types','Series','Styles', 'Categories', 'ModelTables' => ['ModelTableHeaders','ModelTableRows'] ]]);
+                
                 $this->set('empty_prices', $empty);
+            } else {
+                $this->set('prices', $rows);
             }
         }
 

@@ -619,90 +619,11 @@ class AdminController extends AppController
             $m_tables = TableRegistry::get('ModelTables');
 
             if(!empty($found)) {
-                // $headers = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
-                // $m_rows = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID]]);
                 $m_tables->delete($found);
                 $headerTable->deleteAll(['model_tableID' => $found->model_tableID]);
                 $rowsTable->deleteAll(['model_tableID' => $found->model_tableID]);
+            }
 
-            //     foreach(array_filter($this->request->data, function($key) {
-            //         $head_up = strpos($key, 'table_header');
-            //         return ($head_up === 0);
-            //     }, 2) as $head_up) {
-            //         $head_count++;
-            //         $ht_update = $this->ModelTableHeaders->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $head_count]])->first();
-
-            //         if(!empty($ht_update)) {
-            //             $h_update = $headerTable->get($ht_update->model_table_headerID);
-            //             if(!empty($h_update)) {
-            //                 if($h_update->model_table_text != $head_up) {
-            //                     $h_update->model_table_text = $head_up;
-            //                 }
-            //                 $headerTable->save($h_update);
-            //             }
-            //         } else {
-            //             $h_new = $this->ModelTableHeaders->newEntity();
-            //             $h_new->model_tableID = $found->model_tableID;
-            //             $h_new->model_table_text = $head_up;
-            //             $h_new->order_num = $head_count;
-            //             $headerTable->save($h_new);
-            //         }
-            //     }
-
-            //     $row_order = 0;
-            //     $vert_data = array_filter($this->request->data, function($key) {
-            //         return (strpos($key, 'table_row') === 0);
-            //     }, 2);
-
-            //     $horiz_data = array();
-            //     foreach ($vert_data as $key => $val) {
-            //         $horiz_data[substr($key, 10)] = $val;
-            //     }
-
-            //     uksort($horiz_data, function($a, $b) {
-            //         $a_x = strpos($a, '-');
-            //         $a_row = intval(substr($a, 0, $a_x));
-            //         $a_col = intval(substr($a, $a_x + 1));
-
-            //         $b_x = strpos($b, '-');
-            //         $b_row = intval(substr($b, 0, $b_x));
-            //         $b_col = intval(substr($b, $b_x + 1));
-
-            //         $ret_val = 0;
-            //         if ($a_row < $b_row) {$ret_val = -1;}
-            //         else if ($b_row < $a_row) {$ret_val = 1;}
-            //         else if ($a_col < $b_col) {$ret_val = -1;}
-            //         else if ($b_col < $a_col) {$ret_val = 1;}
-            //         else {$ret_val = 0;}
-            //         return $ret_val;
-            //     });
-                
-            //     foreach ($horiz_data as $cell_up) {
-            //         $row_order++;
-            //         $rt_update = $this->ModelTableRows->find('all', ['conditions' => ['model_tableID' => $found->model_tableID, 'order_num' => $row_order]])->first();
-            //         if(!empty($rt_update)) {
-            //             $r_update = $rowsTable->get($rt_update->model_table_rowID);
-            //             if(!empty($r_update)) {
-            //                 if($r_update->model_table_row_text != $cell_up) {
-            //                     $r_update->model_table_row_text = $cell_up;
-            //                 }
-            //                 if($this->ModelTableRows->save($r_update)) {
-            //                     // $this->redirect(array('action' => 'editProductFour', $part->partID));
-            //                 }
-            //             }
-            //         } else {
-            //             $r_new = $this->ModelTableRows->newEntity();
-            //             $r_new->model_tableID = $found->model_tableID;
-            //             $r_new->model_table_row_text = $cell_up;
-            //             $r_new->order_num = $row_order;
-
-            //             if ($this->ModelTableRows->save($r_new)) {
-            //                 // $this->redirect(array('action' => 'editProductFour', $part->partID));
-            //             }
-            //         }
-            //         $this->redirect(array('action' => 'editProductFour', $part->partID));
-            //     }
-            // } else {
                 $table = $this->ModelTables->newEntity();
                 $table->partID = $part->partID;
                 $table->order_num = 1;
@@ -770,7 +691,6 @@ class AdminController extends AppController
                 } else {
                     // $this->Flash->error(__('Error saving model table'));
                 }
-            }
         } else {
             $tables = $this->ModelTables->find('all',array(
                 'conditions' => array(

@@ -2,8 +2,6 @@
 
 <div id="cms-gen-pdf-main" class="inner-main col-md-10 mx-auto p-5">
     <!-- <style>#one select option[value*="0"] {display: none}</style> -->
-    <script src="/js/pdfkit.js"></script>
-    <script src="/js/blob-stream.js"></script>
     <?= $this->Form->create('', ['id' => "gen-pdf-form", 'enctype' => 'multipart/form-data']) ?>
     
     <div id="one" class="active-slide form-slide col-md-5 mx-auto">

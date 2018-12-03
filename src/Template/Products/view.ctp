@@ -2,8 +2,6 @@
     $this->assign('title', $part->series->name .' | Vonberg');
 ?>
 
-<script src="/js/pdfkit.js"></script>
-<script src="/js/blob-stream.js"></script>
 <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
@@ -261,7 +259,7 @@
             <div class="right-main-content mt-sm-3 p-sm-4">
                 <?php
                     $typecount='';
-                    echo '<div class="row no-gutters">';
+                    echo '<div>';
                     foreach ($part->text_blocks as $block):
                         if ($typecount <> $block->header) {
                             if ($typecount <> '') {
@@ -279,6 +277,8 @@
                     endforeach;
                     echo '</ul>'; 
                 ?>
+
+                <div hidden><?php print_r($part->text_blocks); ?></div>
 
                 <h3 class="product-name">Specifications</h3>
                 <div class="spec-table table-sm">

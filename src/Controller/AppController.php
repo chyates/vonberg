@@ -28,6 +28,8 @@ use Cake\Event\Event;
 class AppController extends Controller
 {
 
+    // AppController wasn't extending correctly for ApiController
+    public $components = array('Auth');
 
     /**
      * Initialization hook method.

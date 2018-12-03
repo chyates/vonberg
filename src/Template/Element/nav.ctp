@@ -74,7 +74,8 @@
                     <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
                     <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                     <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
-                    <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" target="_blank">Download Our Catalog</a></p>
+                    <!-- <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" target="_blank">Download Our Catalog</a></p> -->
+                    <p class="drop-header"><a id="download-catalog">Download Our Catalog</a></p>
                 </div>
             </div>
         </div>
@@ -143,7 +144,8 @@
                         <p class="drop-header"><a href="/resources/technical-documentation">Technical Documentation</a></p>
                         <p class="drop-header"><a href="/resources/application-information">Application Information</a></p>
                         <p class="drop-header"><a href="/products/prices">Base Product Prices</a></p>
-                        <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" download>Download Our Catalog</a></p>
+                        <!-- <p class="drop-header"><a href="/img/pdfs/catalog/VONBERG-Product_Catalog.pdf" download>Download Our Catalog</a></p> -->
+                        <p class="drop-header"><a id="download-catalog">Download Our Catalog</a></p>
                     </div>
                     <li class="nav-item">
                         <a class="nav-link" href="/about">About</a>
@@ -159,3 +161,9 @@
         </nav>
     </div><!-- #m-burger-nav end -->
 </div><!-- mobile-header end -->
+
+<script>
+document.querySelectorAll('#download-catalog').forEach(link => {
+    link.onclick = downloadCatalog
+})
+</script>
