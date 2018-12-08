@@ -210,7 +210,7 @@ class ProductsController extends AppController
         // $found = array();
         if($this->request->is('post') || $this->request->is('put')) {
             // $this->request->data['lookup'] = $this->request->['lookup'];
-
+            print_r($this->request->data['lookup']);
             $l = ConnectionManager::get('default');
             $like_str = ' LIKE "%' . $this->request->data['lookup'] . '%"';
             $lookup ="SELECT p.partID

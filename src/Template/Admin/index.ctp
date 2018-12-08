@@ -161,7 +161,7 @@
             </div>
         </div><!-- #dealers-csv end -->
 
-        <div id="catalog-row">
+        <!-- <div id="catalog-row">
             <div class="catalog row no-gutters py-3">
                 <div class="col-12">
                     <?= $this->Form->create('up-catalog', 
@@ -229,6 +229,6 @@
                     <?= $this->Form->end(); ?>
                 </div>
             </div>
-        </div><!-- #dealers-csv end -->
+        </div>#dealers-csv end -->
     </div>
 </div>

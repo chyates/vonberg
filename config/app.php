@@ -10,6 +10,7 @@ return [
      * true: Errors and warnings shown.
      */
     'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+    // 'debug' => false,
 
     /**
      * Configure basic information about the application.
@@ -231,7 +232,7 @@ return [
             //'port' => 'non_standard_port_number',
             'username' => 'impact_vvi',
             'password' => 'SpaceGhost4#',
-            'database' => 'vvi_dev',
+            'database' => 'vvi_live',
             'encoding' => 'utf8',
             'timezone' => 'UTC',
             'flags' => [],

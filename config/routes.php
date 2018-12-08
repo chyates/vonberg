@@ -44,6 +44,12 @@ use Cake\Routing\Route\DashedRoute;
 Router::defaultRouteClass(DashedRoute::class);
 // for prefix admin
 
+// Router::scope('/api', function (RouteBuilder $routes) {
+//     // Router::extensions(['json', 'xml']);
+//     // $routes->setExtensions(['json', 'xml']);
+//     $routes->connect('/products', ['controller' => 'Api', 'action' => 'allProducts']);
+// });
+
 Router::scope('/', function (RouteBuilder $routes) {
     /**
      * Here, we are connecting '/' (base path) to a controller called 'Pages',
@@ -56,6 +62,10 @@ Router::scope('/', function (RouteBuilder $routes) {
      * ...and connect the rest of 'Pages' controller's URLs.
      */
     $routes->connect('/pages/*', ['controller' => 'Pages', 'action' => 'display']);
+
+    // Custom api
+    $routes->setExtensions(['json', 'xml']);
+    $routes->connect('/api-products', ['controller' => 'Api', 'action' => 'allProducts']);
 
     /**
      * Connect catchall routes for all controllers.

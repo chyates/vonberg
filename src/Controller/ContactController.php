@@ -27,7 +27,7 @@ class ContactController extends AppController
     public function beforeFilter(Event $event)
     {
         // allow all action
-        $this->Auth->allow(['stp','index', 'process']);
+        $this->Auth->allow(['stp','index', 'process','success']);
         $this->Security->setConfig('unlockedActions', ['stp']);
         if ($this->request->param('action') === 'stp') {
             $this->eventManager()->off($this->Csrf);
@@ -112,7 +112,9 @@ class ContactController extends AppController
                     Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
                     // Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
 
-                    $this->redirect(array('action' => 'success'));
+                    $this->redirect(
+                        ['controller' => 'Contact', 'action' => 'success']
+                    );
                 }
                 else {
                     echo "Error: some error";

@@ -527,7 +527,9 @@
         ajax.responseType = 'arraybuffer'
 
         ajax.onreadystatechange = function() {
+                console.log("Hit ajax ready state change")
             if (this.readyState == 4 && this.status == 200) {
+                console.log("Hit ajax ready state change if")
                 let logo = ajax.response
                 
                 let type = document.getElementById('typeid').innerText
