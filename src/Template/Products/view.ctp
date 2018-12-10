@@ -412,7 +412,7 @@
     <div id="mob-bottom-links" class="row no-gutters">
         <div class="col text-center">
             <button class="btn btn-primary" data-toggle="modal" data-target="#get-stp-modal">Get STP File</button>
-            <a class="btn btn-primary" href=<?= "/img/pdfs/catalog/" . $part->partID . ".pdf"; ?> download >Download PDF</a>
+            <a id="mob-gen-pdf" class="btn btn-primary" href="">Download PDF</a>
             <a class="center-link" href="/products/prices?q=&seriesID=<?php echo $part->seriesID; ?>">View Pricing</a>
         </div>
     </div>
@@ -520,6 +520,414 @@
     })
     
     document.getElementById('gen-pdf').onclick = function(e) {
+        e.preventDefault()
+
+        let ajax = new XMLHttpRequest()
+        ajax.open('GET', '/img/vonberg_logo.png')
+        ajax.responseType = 'arraybuffer'
+
+        ajax.onreadystatechange = function() {
+                console.log("Hit ajax ready state change")
+            if (this.readyState == 4 && this.status == 200) {
+                console.log("Hit ajax ready state change if")
+                let logo = ajax.response
+                
+                let type = document.getElementById('typeid').innerText
+                let ultraCat = document.getElementById('ultra-cat').innerText.toUpperCase()
+                let category = document.getElementById('categoryid').innerText
+                let style = document.getElementById('styleid').innerText
+                let series = document.getElementById('seriesid').innerText
+                let connection = document.getElementById('connectionid').innerText
+                let description = document.getElementById('description').innerText.toUpperCase().replace(/˚/g, '\u00B0')
+                let lastUpdated = document.getElementById('lastupdated').innerText
+                let operation = []
+                let features = []
+                let specifications = []
+                let seriesInputs = []
+                let performanceGraphs = document.getElementById('performance-graphs') ? document.getElementById('performance-graphs').href : null
+
+                Array.prototype.forEach.call(document.querySelectorAll('#operation li'), function(bullet) {
+                    operation.push(bullet.innerText.toUpperCase().replace(/˚/g, '\u00B0'))
+                })
+                operation = operation.filter(function(op) {return op != ''})
+                Array.prototype.forEach.call(document.querySelectorAll('#features li'), function(bullet) {
+                    features.push(bullet.innerText.toUpperCase().replace(/˚/g, '\u00B0'))
+                })
+                features = features.filter(function(feat) {return feat != ''})
+                Array.prototype.forEach.call(document.querySelectorAll('.specifications th'), function(header) {
+                    specifications.push([header.innerText])
+                })
+                Array.prototype.forEach.call(document.querySelectorAll('.specifications td'), function(row, index) {
+                    specifications[index].push(row.innerText.replace(/˚/g, '\u00B0'))
+                })
+                specifications = specifications.filter(function(spec) {
+                    return spec.filter(function(data) {return data != ''}).length > 0
+                })
+
+                Array.prototype.forEach.call(document.querySelectorAll('#prod-mt .mt-pdf'), function(cell) {
+                    let coords = cell.id.split('-')
+                    seriesInputs.push({
+                        row: Number(coords[0]),
+                        col: Number(coords[1]),
+                        val: cell.innerText.toUpperCase().replace(/˚/g, '\u00B0')
+                    })
+                })
+                seriesInputs.sort(function(a, b) {
+                    if (a.row > b.row) return 1
+                    else if (a.row < b.row) return -1
+                    else if (a.col > b.col) return 1
+                    else if (a.col < b.col) return -1
+                    else return 0 // should not happen
+                })
+                // group cells by row
+                let totalCol = seriesInputs[seriesInputs.length - 1].col
+                let seriesTable = []
+                for (let i = 0; i < seriesInputs.length; i += totalCol) {
+                    seriesTable.push(seriesInputs.slice(i, i + totalCol))
+                }
+                let slashinRows = () => {
+                    let realCells = seriesTable[seriesTable.length - 1].filter(cell => cell.val)
+                    if (realCells.length === 0) {
+                        seriesTable.pop()
+                        slashinRows()
+                    }
+                }
+                slashinRows()
+                let slashinCols = () => {
+                    let realCells = seriesTable.map(row => row[row.length - 1]).filter(cell => cell.val)
+                    if (realCells.length === 0) {
+                        seriesTable.forEach(row => row.pop())
+                        slashinCols()
+                    }
+                }
+                slashinCols()
+                totalCol = seriesTable.length
+
+                let doc = new PDFDocument({autoFirstPage: false})
+                stream = doc.pipe(blobStream())
+                doc.addPage({
+                    margin: 15
+                })
+
+                doc.info.Title = type
+                doc.info.Author = 'Vonberg Valve, inc.'
+
+                // console.log(doc)
+                const docWidth = 612
+                const docHeight = 792
+
+                let totalPages = 1
+                let currentPage = 1 // yes i'm starting from 1 not 0 don't judge me
+
+                function wrangleImages(index) {
+                    let images = Object.keys(doc._imageRegistry).map(key => (doc._imageRegistry[key]))
+                    if (index) return index == -1 ? images[images.length - 1] : images[index]
+                    else return images
+                }
+                function getImageHeight(image, width) {
+                    let ratio = image.height / image.width
+                    return Math.ceil(ratio * width)
+                }
+                
+                function header() {
+                    doc.image(logo, 10, 10, {
+                        height: 60
+                    })
+                    
+                    doc.fillColor('#00703c')
+                    doc.font('Helvetica-Bold')
+                    doc.fontSize(16)
+
+                    if(type.length > 25) {
+                        var lastSpace = 0;
+                        for(var i = type.length-1; i > 0; i--) {
+                            if(type[i] == " ") {
+                                lastSpace = i+1
+                                break
+                            }
+                        }
+
+                        let addl = type.slice(lastSpace)
+                        type = type.slice(0, lastSpace)
+                        doc.text(type, 0, 35, {
+                            align: 'center'
+                        })  
+                        doc.text(addl, 0, 50, { 
+                            align: 'center'
+                        })
+                    } else {
+                        doc.text(type, 0, 35, {
+                            align: 'center'
+                        })  
+                    }
+
+                    // default line height for 12px font is 14.4, rounding up to 15
+                    doc.fontSize(12)
+                    doc.text(ultraCat, 0, 15, {
+                        align: 'right'
+                    })
+                    doc.text(style, 0, 30, {
+                        align: 'right'
+                    })
+                    doc.fillColor('#000000')
+                    doc.fontSize(10)
+                    doc.text(series, 0, 45, {
+                        align: 'right'
+                    })
+                    doc.text(connection, 0, 60, {
+                        align: 'right'
+                    })
+
+                    doc.rect(15, 75, docWidth - 30, 2).fillAndStroke('#00703c')
+                }
+                header()
+                
+                let colWidth = (docWidth - 30) * .4 - 15
+                let inverseWidth = (docWidth - 30) * .6 - 15
+
+                // this is dynamic now
+                doc.fontSize(9)
+
+                let leftBase = 90
+
+                // column 1
+                if (product) {
+                    doc.fillColor('#000000')
+                    doc.text('PRODUCT', 15, leftBase) // 15 is x coord, 90 is y
+                    doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
+                    doc.image(product, 15, leftBase + 20, {
+                        width: colWidth
+                    })
+                    leftBase += 30 + getImageHeight(wrangleImages(-1), colWidth)
+                }
+
+                if (schematic) {
+                    doc.fillColor('#000000')
+                    doc.text('SCHEMATIC', 15, leftBase)
+                    doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
+                    doc.image(schematic, 15, leftBase + 20, {
+                        width: colWidth
+                    })
+                    leftBase += 30 + getImageHeight(wrangleImages(-1), colWidth)
+                }
+
+                if (performance) {
+                    doc.fillColor('#000000')
+                    doc.text('TYPICAL PERFORMANCE', 15, leftBase)
+                    doc.rect(15, leftBase + 10, colWidth, 1).fillAndStroke('#00703c')
+                    doc.image(performance, 15, leftBase + 20, {
+                        width: colWidth
+                    })
+                    leftBase += 20 + getImageHeight(wrangleImages(-1), colWidth)
+                    if (performanceGraphs) {
+                        doc.text('Download Performance Curve Graphics', 15, leftBase + 6, {
+                            link: performanceGraphs, align: 'center', width: colWidth
+                        })
+                        leftBase += 12
+                    }
+                }
+
+                // column 2
+                let extra = 0
+
+                doc.fillColor('#000000')
+                doc.text('DESCRIPTION', colWidth + 45, 90)
+                doc.rect(colWidth + 45, 100, inverseWidth, 1).fillAndStroke('#00703c')
+                doc.fillColor('#000000')
+                doc.font('Helvetica')
+                doc.text(description, colWidth + 45, 105)
+                extra += 12 * Math.ceil(doc.widthOfString(description) / inverseWidth)
+                extra -= 10
+
+                let bulletTime = doc.widthOfString('• ')
+
+                if (operation.length > 0) {
+                    doc.font('Helvetica-Bold')
+                    doc.text('OPERATION', colWidth + 45, 120 + extra)
+                    doc.rect(colWidth + 45, 130 + extra, inverseWidth, 1).fillAndStroke('#00703c')
+                    doc.fillColor('#000000')
+                    doc.font('Helvetica')
+                    operation.forEach(op => {
+                        doc.text('• ', colWidth + 45, 135 + extra)                        
+                        doc.text(op, colWidth + 45 + bulletTime, 135 + extra)
+                        extra += 12 * Math.ceil(doc.widthOfString(op) / (inverseWidth - bulletTime))
+                    })
+                    extra -= 10
+                }
+
+                if (features.length > 0) {
+                    doc.font('Helvetica-Bold')
+                    doc.text('FEATURES', colWidth + 45, 150 + extra)
+                    doc.rect(colWidth + 45, 160 + extra, inverseWidth, 1).fillAndStroke('#00703c')
+                    doc.fillColor('#000000')
+                    doc.font('Helvetica')
+                    features.forEach(feat => {
+                        doc.text('• ', colWidth + 45, 165 + extra)
+                        doc.text(feat, colWidth + 45 + bulletTime, 165 + extra)
+                        extra += 12 * Math.ceil(doc.widthOfString(feat) / (inverseWidth - bulletTime))
+                    })
+                    extra -= 10
+                }
+
+                if (specifications.length > 0) {
+                    doc.font('Helvetica-Bold')
+                    doc.text('SPECIFICATIONS', colWidth + 45, 180 + extra)
+                    doc.rect(colWidth + 45, 190 + extra, inverseWidth, 1).fillAndStroke('#00703c')
+                    doc.font('Helvetica')
+                    specifications.forEach(spec => {
+                        doc.fillColor('#000000')
+                        doc.text(spec[0], colWidth + 45, 195 + extra)
+                        doc.text(spec[1], 0, 195 + extra, {align: 'right'})
+                        doc.rect(colWidth + 45, 205 + extra, inverseWidth, 1).fillAndStroke('#00703c')
+                        extra += 15
+                    })
+                }
+                
+                if (ordering) {
+                    doc.font('Helvetica-Bold')
+                    doc.fillColor('#000000')
+                    doc.text('ORDERING INFORMATION', colWidth + 45, 210 + extra)
+                    doc.rect(colWidth + 45, 220 + extra, inverseWidth, 1).fillAndStroke('#00703c')
+                    doc.image(ordering, colWidth + 45, 230 + extra, {
+                        width: colWidth
+                    })
+                    extra += getImageHeight(wrangleImages(-1), colWidth)
+                }
+
+                let theBottom = (leftBase > 230 + extra) ? leftBase : 230 + extra
+
+                doc.rect(colWidth + 30, 90, 2, theBottom - 90).fillAndStroke('#00703c')
+
+                let availableSpace = (docHeight - 75) - (theBottom)
+                let maxRows = Math.floor((availableSpace - 8) / 15)
+                
+                // bottom column
+                function footer() {
+                    doc.fillColor('#000000')
+                    doc.fontSize(6)
+                    doc.font('Helvetica')
+                    doc.text(
+                        "This document, as well as all catalogs, price lists and information provided by Vonberg Valve, Inc., is intended to provide product information for further consideration by users having substantial technical expertise due to the variety of operating conditions and applications for these valves, the user, through its own analysis, testing and evaluation, is solely responsible for making the final selection of the products and ensuring that all safety, warning and performance requirements of the application or use are met. The valves described herein, including without limitation, all component features, specifications, designs, pricing and availability, are subject to change at any time at the sole discretion of Vonberg Valve, Inc. without prior notification.",
+                        15, docHeight - 75
+                    )
+
+                    doc.fillColor('#00703c')
+                    doc.fontSize(8)
+                    doc.text(
+                        lastUpdated,
+                        15, docHeight - 52, {width: docWidth - 30, align: 'right'}
+                    )
+
+                    doc.rect(15, docHeight - 43, docWidth - 30, 2).fillAndStroke('#00703c')
+
+                    if (oldLogo) doc.image(oldLogo, 15, docHeight - 40, {fit: [172, 30]})
+
+                    doc.fillColor('#000000')
+                    doc.text(
+                        '3800 Industrial Avengue • Rolling Meadows, IL 60008-1085 USA © 2015',
+                        colWidth + 45, docHeight - 35
+                    )
+                    doc.text(
+                        'phone: 847-259-3800 • fax: 847-259-3997 • email: info@vonberg.com',
+                        colWidth + 45, docHeight - 25
+                    )
+                    if (totalPages > 1) {
+                        doc.fontSize(12)
+                        doc.text(
+                            `${currentPage} / ${totalPages}`,
+                            15, docHeight - 30, {width: docWidth - 30, align: 'right'}
+                        )
+                        currentPage++
+                    }
+                }
+
+                let base = theBottom + 10
+
+                let tableColWidth = Math.floor((docWidth - 30) / totalCol)
+                let cellWidths = {cols: seriesTable[0].length}
+                seriesTable.forEach(function(row) {
+                    row.forEach(function(cell, index) {
+                        if (!cellWidths[index]) cellWidths[index] = 1
+                        if (cell.val.length > cellWidths[index]) cellWidths[index] = cell.val.length
+                    })
+                })
+                cellWidths.total = 0
+                for (let i = 0; i < cellWidths.cols; i++) {
+                    cellWidths.total += cellWidths[i]
+                }
+                let widthRef = []
+                for (let i = 0; i < cellWidths.cols; i++) {
+                    widthRef.push(Math.floor((docWidth - 30) * (cellWidths[i] / cellWidths.total)))
+                }
+
+                function quickSum(arr) {
+                    let total = 0
+                    if (arr) arr.forEach(function(n) {total += n})
+                    return total
+                }
+
+                if (seriesTable.length > maxRows) {
+                    totalPages++
+                    footer()
+                    doc.addPage({
+                        margin: 15
+                    })
+                    header()
+                    base = 90
+                } else if (seriesTable[0].length > 1) {
+                    doc.rect(15, base, docWidth - 30, 2).fillAndStroke('#00703c')
+                    base += 8
+                }
+
+                if (seriesTable[0].length > 1) {
+                    if (seriesTable[0].length > 8) doc.fontSize(8)
+                    seriesTable.forEach(function(row, yIndex) {
+                        doc.fillColor('#000000')
+                        if (yIndex === 0) doc.font('Helvetica-Bold')
+                        row.forEach(function(cell, xIndex) {
+                            let match = /\r|\n/.exec(cell.val)
+                            if(match) {
+                                console.log("Cell value: ", cell.val)
+                                let updated = cell.val.replace(/\r|\n/g, ' ')
+                                doc.text(updated, 15 + quickSum(widthRef.slice(0, xIndex)), base)
+                            } else {
+                                doc.text(cell.val, 15 + quickSum(widthRef.slice(0, xIndex)), base)
+                            }
+                        })
+                        doc.rect(15, base + 10, docWidth - 30, 1).fillAndStroke('#00703c')
+                        base += 15
+                        if (yIndex === 0) doc.font('Helvetica')
+                    })
+                }
+
+                footer()
+
+                doc.end()
+                stream.on('finish', () => {
+                    blob = stream.toBlob('application/pdf')
+                    let a = document.createElement('a')
+                    let url = URL.createObjectURL(blob)
+                    a.href = url
+
+                    let cat_repl = titleCase(category)
+                    let ser_repl = titleCase(series)
+                    cat_repl = cat_repl.replace(/ /g, "_")
+                    ser_repl = ser_repl.replace(/ /g, "_")
+
+                    a.download = "VONBERG-" + cat_repl + "-" + style + "-" + ser_repl + '.pdf'
+                    document.body.appendChild(a)
+                    a.click()
+                    setTimeout(() => {
+                        document.body.removeChild(a)
+                        window.URL.revokeObjectURL(url)
+                    }, 3000)
+                })
+            }
+        }
+        ajax.send()
+    }
+
+    document.getElementById('mob-gen-pdf').onclick = function(e) {
         e.preventDefault()
 
         let ajax = new XMLHttpRequest()

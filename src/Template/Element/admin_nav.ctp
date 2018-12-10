@@ -63,7 +63,7 @@
                 <p class="drop-header"><a href="/admin/technical-documentation">Technical Documentation</a></p>
                 <p class="drop-header"><a href="/admin/application-information">Application Information</a></p>
                 <p class="drop-header"><a href="/admin/model-pricing">Base Product Prices</a></p>
-                <p class="cms-greyed drop-header">Download Our Catalog</p>
+                <p class="cms-greyed drop-header"><a id="download-catalog">Download Our Catalog</a></p>
             </div>
         </div>
     </div><!-- #resources-dropdown end -->
@@ -71,5 +71,15 @@
     <a class="cms-greyed nav-link nav-item" disabled>About</a>
     <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
     <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
+    <a class="nav-link nav-item" href="/users/users/add">Create New User</a>
     <?= $this->User->logout(); ?>
 </nav><!-- main-navbar end -->
+
+<script src="/js/pdfkit.js"></script>
+<script src="/js/blob-stream.js"></script>
+<script src="/js/catalog.js"></script>
+<script>
+document.querySelectorAll('#download-catalog').forEach(link => {
+    link.onclick = downloadCatalog
+})
+</script>

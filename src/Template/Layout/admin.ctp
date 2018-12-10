@@ -314,8 +314,8 @@ jQuery(document).ready(function($) {
         }
     })
 
-    var lastA = $('.admin-nav').find('a.cms-greyed.nav-link.nav-item');
-    lastA.next().addClass('nav-link').addClass('nav-item');
+    var lastA = $('.admin-nav').find('a.nav-link.nav-item').last();
+    lastA.next().addClass('nav-link nav-item');
 
     $('#image-file').change(function() {
         var filename = $('#image-file').val();

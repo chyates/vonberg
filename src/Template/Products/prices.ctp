@@ -149,7 +149,7 @@
                 <div class="col-4">
                     <p class="top-data model-table-header">Model</p>
                     <div class="mob-hidden">
-                        <p class="model-table-header">Description</p>
+                        <p class="model-table-header">Series</p>
                         <p class="model-table-header">Style</p>
                         <p class="model-table-header">Connections</p>
                         <p class="model-table-header">Base Price</p>
@@ -163,9 +163,21 @@
                         </span>
                     </p>
                     <div class="mob-hidden">
-                        <p class="model-table-data"><?php echo $mob_price['series']; ?></p>
-                        <p class="model-table-data"><?php echo $mob_price['style']?></p>
-                        <p class="model-table-data"><?php echo $mob_price['conn']; ?></p>
+                        <?php if(!empty($mob_price['se'])) { ?>
+                            <p class="model-table-data"><?php echo $mob_price['se']; ?></p>
+                        <?php } else { ?>
+                            <p class="model-table-data">N/A</p>
+                        <?php } ?>
+                        <?php if(!empty($mob_price['sty'])) { ?>
+                            <p class="model-table-data"><?php echo $mob_price['sty']?></p>
+                        <?php } else { ?>
+                            <p class="model-table-data">N/A</p>
+                        <?php } ?>
+                        <?php if(!empty($mob_price['conn'])) { ?>
+                            <p class="model-table-data"><?php echo $mob_price['conn']; ?></p>
+                        <?php } else { ?>
+                            <p class="model-table-data">N/A</p>
+                        <?php } ?>
                         <p class="model-table-data"><?php echo money_format('$%.2n', $mob_price['unit_price']); ?></p>
                     </div>
                 </div>
@@ -220,7 +232,7 @@
                 <div class="col-4">
                     <p class="top-data model-table-header">Model</p>
                     <div class="mob-hidden">
-                        <p class="model-table-header">Description</p>
+                        <p class="model-table-header">Series</p>
                         <p class="model-table-header">Style</p>
                         <p class="model-table-header">Connections</p>
                         <p class="model-table-header">Base Price</p>

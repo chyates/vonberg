@@ -54,7 +54,14 @@
 
 <body>
 <div id="site-container" class="outer-container container-fluid">
-    <?= $this->element('nav') ?>
+    <?php 
+        $nav_url = $_SERVER['REQUEST_URI'];
+        if(strpos($nav_url, "users") != false) {
+            echo $this->element('admin_nav');
+        } else {
+            echo $this->element('nav');
+        }
+    ?>
 
     <?= $this->fetch('content') ?>
 
@@ -67,8 +74,12 @@
 
 
     jQuery(document).ready(function($){
+        var lastA = $('.admin-nav').find('a.nav-link.nav-item').last();
+        lastA.next().addClass('nav-link nav-item');
         // jQuery for CMS login + register screens
         var logForm = $("#site-container div.users.form");
+        $(logForm).find("fieldset").find('a').first().css('display', 'none');
+
         logForm.addClass('inner-main col-lg-8 col-12 mx-auto p-md-5 p-3');
         logForm.find('form').addClass('col-6 mx-auto');
         var notChecks = logForm.find('div.input:not(.checkbox)');
@@ -79,6 +90,12 @@
         checks.find('label').addClass('form-check-label');
         checks.find('input').addClass('form-check-input');
         logForm.find('button').addClass('btn btn-primary');
+
+        let userTable = $("#site-container div.users.index");
+        $(userTable).removeClass('large-10 medium-9 columns').addClass('inner-main inner-main table-responsive col-lg-8 col-12 mx-auto p-md-5 p-3');
+        $(userTable).find('table').addClass('model-table table table-striped');
+        $(userTable).find('table').find('th').addClass('model-table-header');
+        $(userTable).find('table').find('td').addClass('model-table-data');
 
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');
@@ -101,18 +118,10 @@
         );
 
         $("a.nav-link").click(function(){
-            // var open = $(this).find("a.nav-link:not(.collapsed)");
-            // var collapsed = $(this).find("a.nav-link.collapsed");
             if( $("#m-burger-nav #prod-drop").css('display') == 'block' ) {
-                console.log("Your dropdown is showing...");
                 var arrow = $(this).find("span").find("img.mob-arrow");
                 $(arrow).attr("src", "/img/Arrow-Down.svg");
             }
-            // if( $(this).hasClass('collapsed') ) {
-            //     console.log("Found collapsed");
-            //     $(arrow).attr("src", "/img/Arrow-Right.svg");
-            // } else {
-            // }
         });
     })
 

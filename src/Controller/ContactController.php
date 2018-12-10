@@ -43,10 +43,6 @@ class ContactController extends AppController
         $cat = $this->Contacts->newEntity();
         $message = '';
         if ($this->request->is('post') || $this->request->is('put')) {
-            // print_r($this->request->data);
-            // if(empty($this->request->data['distributor'])) {
-            //     echo "Empty distributor";
-            // }
             if ($this->Recaptcha->verify()) { 
                 $cat->name = $this->request->data['name'];
                 if(!empty($this->request->data['company'])) {
@@ -70,16 +66,6 @@ class ContactController extends AppController
                 } else {
                     $cat->enduser = 'End User';
                 }
-
-                // if(!empty($this->request->data['distributor'])) {
-                //     $cat->distributor = $this->request->data['distributor'];
-                // }
-                // if(!empty($this->request->data['manufacturer'])) {
-                //     $cat->manufacturer = $this->request->data['manufacturer'];
-                // }
-                // if(!empty($this->request->data['enduser'])) {
-                //     $cat->enduser = $this->request->data['enduser'];
-                // }
 
                 $cat->contactme = $this->request->data['contactme'];
 
@@ -107,10 +93,9 @@ class ContactController extends AppController
                     $message .= 'Additional comments: ';
                     $message .= $this->request->data['contactme'];
                     $subject = "Vonberg Contact Form Request";
-                    // echo $message;
                     // Email::deliver('tatan42@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
-                    Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
-                    // Email::deliver('mwhite@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                    // Email::deliver('whyyesitscar@gmail.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
+                    Email::deliver('info@vonberg.com', $subject, $message, ['from' => 'do-not-reply@vonberg.com']);
 
                     $this->redirect(
                         ['controller' => 'Contact', 'action' => 'success']
@@ -168,8 +153,8 @@ class ContactController extends AppController
                 }
                 exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
 
-                Email::deliver('chyatesil@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
-                Email::deliver('whyyesitscar@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                Email::deliver('mwhite@vonberg.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
+                // Email::deliver('whyyesitscar@gmail.com', 'STP File Request From: ' . $this->request->data['first_name'] . " " . $this->request->data['last_name'], 'Please respond to: ' . $this->request->data['email'] . ' with the following files: ' . $file_paths, ['from' => 'do-not-reply@vonberg.com']);
                 return $this->redirect($this->referer());
                 // $this->autoRender = false;
             }

@@ -304,16 +304,10 @@ a.btn.btn-primary {
 
 /* === HEADER STYLES: GLOBAL / DESTKOP === */
 
-@media(min-width: 1500px) {
+@media (min-width: 1500px) {
     #home-top-header {
         padding: 1vh 16vw;
-    }
-
-    #main-navbar {
-        /* padding: 0 15vw; */
-    }
-}
-@media (min-width: 1421px) {    
+    }    
 }
 
 @media (min-width: 992px) and (max-width: 1500px) {
@@ -322,17 +316,19 @@ a.btn.btn-primary {
     }
 }
 
-@media (min-width: 992px) and (max-width: 1499px) {
-    #main-navbar {
-        /* padding: 0 5vw; */
-    }
-}
-
 @media (min-width: 992px) {
-    #product-dropdown .dropdown-menu,
-    #resources-dropdown .dropdown-menu {
+    #product-dropdown .dropdown-menu {
         width: 81%;
         left: 10%;
+    }
+
+    #resources-dropdown .dropdown-menu {
+        width: 75%;
+        left: 15%;
+    }
+
+    #main-navbar {
+        padding: 0 15vw;
     }
 }
 
@@ -360,19 +356,15 @@ a.btn.btn-primary {
     height: 75px;
 }
 
-#n-wrapper {
+#main-navbar {
     background-color: #017d44;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.15);
-}
-
-#main-navbar {
     height: 40px;
-    max-width: 1240px;
+    max-width: 100%;
+    width: 100%;
     justify-content: flex-end;
     max-height: 100%;
     align-items: center;
-    padding: 0;
-    margin: 0 auto;
 }
 
 #product-dropdown .dropdown-menu,
@@ -499,10 +491,6 @@ a.btn.btn-primary {
 @media (max-width: 991px) {
     #home-top-header {
         padding: 1vh 2vw;
-    }
-
-    #main-navbar {
-        padding: 0;
     }
 
     #product-dropdown .dropdown-menu {
@@ -2132,6 +2120,7 @@ label.fileContainer.dark,
 }
 
 /* === CMS PAGINATION: GLOBAL / DESKTOP === */
+
 ul.pagination li {
     padding-right: 10px;
 }
@@ -2146,6 +2135,10 @@ ul.pagination li {
 #site-container div.users.form form a {
     display: inline-block;
     margin: 10px 0;
+}
+
+#site-container div.actions.columns.large-2.medium-3 {
+    display: none;
 }
 
 /* === CMS HOMEPAGE: GLOBAL / DESKTOP === */
@@ -2517,6 +2510,7 @@ p.empty-err {
 /* loading box for downloading catalog */
 #load-box {
     position: fixed;
+    z-index: 1021;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
