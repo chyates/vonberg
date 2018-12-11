@@ -74,7 +74,7 @@
 
 
     jQuery(document).ready(function($){
-        var lastA = $('.admin-nav').find('a.nav-link.nav-item').last();
+        var lastA = $('.admin-nav').find('#users-dropdown');
         lastA.next().addClass('nav-link nav-item');
         // jQuery for CMS login + register screens
         var logForm = $("#site-container div.users.form");
@@ -96,6 +96,7 @@
         $(userTable).find('table').addClass('model-table table table-striped');
         $(userTable).find('table').find('th').addClass('model-table-header');
         $(userTable).find('table').find('td').addClass('model-table-data');
+        $(userTable).find('table').find('td.actions a:first-child').css('display', 'none')
 
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');

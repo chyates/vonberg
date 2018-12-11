@@ -71,7 +71,13 @@
     <a class="cms-greyed nav-link nav-item" disabled>About</a>
     <a class="cms-greyed nav-link nav-item" disabled>Find a Distributor</a>
     <a class="cms-greyed nav-link nav-item" disabled>Contact</a>
-    <a class="nav-link nav-item" href="/users/users/add">Create New User</a>
+    <div id="users-dropdown" class="dropdown">
+        <a class="main-nav-hov nav-link nav-item btn dropdown-toggle" href="">Users</a>
+        <div class="dropdown-menu" aria-labelledby="users-dropdown">
+            <p class="drop-header"><a href="/users/users/add">Add New</a></p>
+            <p class="drop-header"><a href="/users/users">View All</a></p>
+        </div>
+    </div>
     <?= $this->User->logout(); ?>
 </nav><!-- main-navbar end -->
 

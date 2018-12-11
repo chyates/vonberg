@@ -314,7 +314,7 @@ jQuery(document).ready(function($) {
         }
     })
 
-    var lastA = $('.admin-nav').find('a.nav-link.nav-item').last();
+    var lastA = $('.admin-nav').find('#users-dropdown');
     lastA.next().addClass('nav-link nav-item');
 
     $('#image-file').change(function() {
