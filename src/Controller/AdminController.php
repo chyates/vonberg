@@ -19,6 +19,7 @@ class AdminController extends AppController
     {
         parent::initialize();
         $this->loadComponent('Security');
+        $this->loadComponent('Flash');
     }
 
     public function beforeFilter(Event $event)

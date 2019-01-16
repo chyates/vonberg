@@ -96,7 +96,7 @@
         $(userTable).find('table').addClass('model-table table table-striped');
         $(userTable).find('table').find('th').addClass('model-table-header');
         $(userTable).find('table').find('td').addClass('model-table-data');
-        $(userTable).find('table').find('td.actions a:first-child').css('display', 'none')
+        $(userTable).find('table').find('td.actions a:not(:last-child)').css('display', 'none')
 
         $('.animated-icon1').click(function(){
             $(this).toggleClass('open');

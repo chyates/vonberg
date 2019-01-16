@@ -81,7 +81,7 @@ class DealersController extends AppController
     
                     $handle = fopen($_FILES['upload']['tmp_name'], "r");
                     while(($line = fgetcsv($handle)) !== FALSE) {
-                        $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
+                        $cmd_vars = 'DB=' . 'vvi_live' . ' ';
                         $cmd_vars .= 'PRICECLASS="' . array_pop($line) . '" ';
                         $cmd_vars .= 'LNG="' . array_pop($line) . '" ';
                         $cmd_vars .= 'LAT="' . array_pop($line) . '" ';

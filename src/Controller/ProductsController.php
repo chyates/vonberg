@@ -31,6 +31,7 @@ class ProductsController extends AppController
         $this->viewBuilder()->setLayout('default');
 
     }
+    
     public function index()
     {
         $this->loadModel('Parts');
@@ -85,7 +86,7 @@ class ProductsController extends AppController
                 $attachments = array();
                 // $this->Flash->success(__('The request has been saved.'));
                 foreach ($this->request->data['model'] as $model) {
-                    $cmd_vars = 'DB=' . 'vvi_dev' . ' ';
+                    $cmd_vars = 'DB=' . 'vvi_live' . ' ';
                     $cmd_vars .= 'USERID=' . $result->stp_userID . ' ';
                     $cmd_vars .= 'PARTID=' . $this->request->data['part'] . ' ';
                     $cmd_vars .= 'MODELID=' . $model . ' ';
@@ -98,7 +99,7 @@ class ProductsController extends AppController
                     );
                     array_push($attachments, $file_to_attach);
                 }
-                exec('DB=vvi_dev /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
+                exec('DB=vvi_live /home/impact_vvi/.nvm/versions/node/v8.11.3/bin/node /home/impact_vvi/db_routines/getMeACsv.js');
 
                 // $subject = "STP File Request From: " . $this->request->data['first_name'] . " " . $this->request->data['last_name'];
                 // $message = "Please respond to: " . $this->request->data['email'] . " with the following file(s): " . $file_paths . "partid" . $this->request->data['part'] . "modelid" . $model;

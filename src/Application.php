@@ -20,6 +20,7 @@ use Cake\Http\BaseApplication;
 use Cake\Routing\Middleware\AssetMiddleware;
 use Cake\Routing\Middleware\RoutingMiddleware;
 
+
 /**
  * Application setup class.
  *
@@ -34,8 +35,11 @@ class Application extends BaseApplication
      * @param \Cake\Http\MiddlewareQueue $middlewareQueue The middleware queue to setup.
      * @return \Cake\Http\MiddlewareQueue The updated middleware queue.
      */
+
     public function middleware($middlewareQueue)
     {
+
+        // Add the middleware to the middleware queue
         $middlewareQueue
             // Catch any exceptions in the lower layers,
             // and make an error page/response

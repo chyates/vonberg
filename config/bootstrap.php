@@ -208,6 +208,8 @@ Type::build('timestamp')
  *
  */
 Plugin::load('BootstrapUI');
+// Plugin::load('Authentication');
+// Configure::write('Users.config', ['users']);
 Plugin::load('CakeDC/Users', ['routes' => true, 'bootstrap' => true]);
 Plugin::load('Geo', ['bootstrap' => true]);
 Plugin::load('CsvView');

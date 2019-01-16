@@ -53,7 +53,7 @@ class AppController extends Controller
          */
         $this->loadComponent('Security');
         $this->loadComponent('Csrf');
-	    $this->loadComponent('CakeDC/Users.UsersAuth');
+        $this->loadComponent('CakeDC/Users.UsersAuth');
         $this->viewBuilder()->setLayout('default');
     }
     public function beforeRender(Event $event) {
