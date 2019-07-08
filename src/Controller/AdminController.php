@@ -726,7 +726,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['thumbnail'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-                $arr_ext = array('jpg', 'jpeg', 'gif');
+                $arr_ext = array('jpg', 'jpeg', 'gif', 'png');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -742,7 +742,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['product_image']; 
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif'); 
+                $arr_ext = array('jpg', 'jpeg', 'gif', 'png'); 
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -757,7 +757,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['schematic'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1);
-                $arr_ext = array('jpg', 'jpeg', 'gif');
+                $arr_ext = array('jpg', 'jpeg', 'gif', 'png');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -772,7 +772,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['ordering'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif');
+                $arr_ext = array('jpg', 'jpeg', 'gif', 'png');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -787,7 +787,7 @@ class AdminController extends AppController
             {
                 $file = $this->request->data['performance'];
                 $ext = substr(strtolower(strrchr($file['name'], '.')), 1); 
-                $arr_ext = array('jpg', 'jpeg', 'gif');
+                $arr_ext = array('jpg', 'jpeg', 'gif', 'png');
 
                 if(in_array($ext, $arr_ext))
                 {
@@ -806,11 +806,11 @@ class AdminController extends AppController
 
                 if(in_array($ext, $arr_ext))
                 {
-                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/'.strval($id).'/performance_graph.jpg');
-                    // $this->Flash->success(__('The file HYDRAULIC_SYMBOL.JPG was saved.', h($part->partid)));
+                    move_uploaded_file($file['tmp_name'], WWW_ROOT . 'img/parts/' . strval($id) . '/performance_graphs.pdf');
+                    $this->Flash->success(__('The file PERFORMANCE GRAPHS was saved.', h($part->partid)));
                 }
             } elseif (isset($this->request->data['kill-graph']) && $this->request->data['kill-graph']) {
-                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/performance_graph.jpg');
+                unlink(WWW_ROOT . 'img/parts/' . strval($id) . '/performance_graphs.pdf');
             }
 
             $this->redirect(array('action' => 'editProductFive',$part->partID));

@@ -341,33 +341,39 @@ jQuery(document).ready(function($) {
         var form;
         var substr = filename.slice(12).replace(/[^\w\s?.]|_/g, "").replace(/\s+/g, "_");
 
+        // edit resource file from cateogry/general pages
         if($(this).parents('.col-md-5').length > 0) {
             toChange = $(this).parents('label.fileContainer').next('p.file-text');
             nextUpdate = $(this).parents('label.fileContainer').siblings('div.submit').find('input.update-button');
             var techID = $(this).parents(".edit-rsrc-form").find("input[name='id']");
             form = $(this).parents('.edit-rsrc-form');
-            hiddenTitle = form.find("input[name='tech_title']");
-            hiddenAdd = form.find('input[name="filepath"]');
+            hiddenTitle = $(form).find("input[name='tech_title']");
+            hiddenAdd = $(form).find('input[name="filepath"]');
             $(nextUpdate).show();
             $(toChange).text(substr);
-            hiddenAdd.attr('value', substr);
+            $(hiddenAdd).attr('value', substr);
         }
 
+        // add new resource file from add resource form
         if($(this).parents().prev('#up-label-addrsrc').length > 0) {
             toChange = $(this).parents('label.fileContainer').next('p.file-text');
             hiddenAdd = $(this).parent('div.input.file').siblings('input[type=hidden]');
             $(toChange).text(substr);
-            hiddenAdd.val(substr);
+            $(hiddenAdd).val(substr);
         }
 
+        // file add for product forms, slides 4/5
         if($(this).parents('.model-table-data').length > 0) {
+            hiddenAdd = $(this).parents('label.fileContainer').find('input[type=file]')
             toChange = $(this).parents('label.fileContainer').siblings('p.file-text');
             $(toChange).html(substr);
             if($(this).parent().siblings('button.update-button').length > 0) {
                 $(this).parents().siblings('button.update-button').toggleClass('dark light').show();
             }
+            $(hiddenAdd).attr('value', substr)
         }
 
+        // model pricing file add
         if($(this).parents('.fileContainer').siblings('label.sr-only').length > 0) {
             toChange = $(this).parents('.form-group').siblings('p.file-text');
             $(toChange).html(substr);
